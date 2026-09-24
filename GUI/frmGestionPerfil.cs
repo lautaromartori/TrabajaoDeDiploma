@@ -1,7 +1,5 @@
 ﻿using BLL;
-using LibreriasExternas;
 using Servicios;
-using Servicios.Patron_Memento;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,7 +8,7 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class frmGestionPerfiles : Form,IObserver
+    public partial class frmGestionPerfiles : Form, IObserver
     {
         int posX, posY;
         bool arrastrando = false;
@@ -24,13 +22,10 @@ namespace GUI
         private Familia _familiaSeleccionada = null;
         private Familia _perfilSeleccionado = null;
 
-        private Stack<MementoTransaccion> _historialDeshacer = new Stack<MementoTransaccion>();
-
         public frmGestionPerfiles()
         {
             InitializeComponent();
             _bll = new PerfilBLL();
-       
 
             ValidarPermisos();
 
@@ -58,7 +53,6 @@ namespace GUI
                 MessageBox.Show("No tiene permisos para acceder a Gestión de Perfiles.",
                     "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 
-                
                 if (Application.OpenForms["Menu"] != null)
                     Application.OpenForms["Menu"].Show();
                 else
@@ -99,6 +93,7 @@ namespace GUI
             BtnAsignarPermisoPerfil.Enabled = usuarioActual.TienePermiso("Asignar Permiso Perfil");
             BtnQuitarPermisoPerfil.Enabled = usuarioActual.TienePermiso("Quitar Permiso Perfil");
         }
+
         private void CentrarPanelesContenedores()
         {
             int contenedorAncho = this.ClientSize.Width;
@@ -114,7 +109,6 @@ namespace GUI
                 int yAlineada = panel4.Top - 10;
 
                 panelActivo.Location = new Point(xDelCentro, yAlineada);
-                textBox1.Location = new Point(xDelCentro + 600, yAlineada + 20);
             }
         }
 
@@ -136,7 +130,6 @@ namespace GUI
 
             treeView1.EndUpdate();
         }
-
 
         private void CargarDatosFormulario()
         {
@@ -289,10 +282,8 @@ namespace GUI
         private void LstFamilias_SelectedIndexChanged(object sender, EventArgs e)
         {
             _familiaSeleccionada = lstFamilias.SelectedItem as Familia;
-            ExportarArbol();
             VisualizarDetallesFamilia();
         }
-
 
         private void BtnCrearFamilia_Click(object sender, EventArgs e)
         {
@@ -538,7 +529,7 @@ namespace GUI
                 CargarDatosFormulario();
                 MessageBox.Show($"{LanguageManager.Instance.GetTraduction("PerfilmsjP")} '{nombre}'{LanguageManager.Instance.GetTraduction("CreadoExitoP")}", LanguageManager.Instance.GetTraduction("ExitoP"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message,LanguageManager.Instance.GetTraduction("ErrorP") , MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (Exception ex) { MessageBox.Show(ex.Message, LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         private void BtnAsignarFamiliaPerfil_Click(object sender, EventArgs e)
@@ -658,18 +649,6 @@ namespace GUI
                     MessageBox.Show(detalleError, LanguageManager.Instance.GetTraduction("ValiPerPerfp"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
-                MementoTransaccion snapshot = null;
-                if(_perfilSeleccionado != null)
-                {
-                    snapshot = new MementoTransaccion(_perfilSeleccionado.Nombre, permiso, TipoOperacion.Asignacion, TipoComponente.Permiso);
-                    _historialDeshacer.Push(snapshot);
-                }
-                else
-                {
-                    snapshot = new MementoTransaccion(_familiaSeleccionada.Nombre, permiso, TipoOperacion.Asignacion, TipoComponente.Permiso);
-                    _historialDeshacer.Push(snapshot);
-                }
             }
 
             CargarDatosFormulario();
@@ -704,7 +683,7 @@ namespace GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message,LanguageManager.Instance.GetTraduction("RestAsigUsup") , MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ex.Message, LanguageManager.Instance.GetTraduction("RestAsigUsup"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -784,7 +763,7 @@ namespace GUI
 
             var rbtnCancelar = new RadioButton
             {
-                Text =LanguageManager.Instance.GetTraduction("text22"),
+                Text = LanguageManager.Instance.GetTraduction("text22"),
                 Location = new Point(20, 265),
                 Size = new Size(560, 30),
                 Font = new Font("Segoe UI", 9F)
@@ -865,7 +844,7 @@ namespace GUI
 
             var rbtnCancelar = new RadioButton
             {
-                Text =LanguageManager.Instance.GetTraduction("text32"),
+                Text = LanguageManager.Instance.GetTraduction("text32"),
                 Location = new Point(20, 165),
                 Size = new Size(460, 25),
                 Font = new Font("Segoe UI", 9F)
@@ -905,7 +884,6 @@ namespace GUI
         {
             if (RbPermisos.Checked)
             {
-            
                 ActualizarEstadoBotonesSegunPermisos();
                 SincronizarVisibilidadPaneles();
             }
@@ -956,8 +934,6 @@ namespace GUI
             this.WindowState = FormWindowState.Minimized;
         }
 
-
-
         private void RefrescarSeguridad()
         {
             ActualizarEstadoBotonesSegunPermisos();
@@ -991,6 +967,7 @@ namespace GUI
             LanguageManager.Instance.AgregarObservador(this);
             Actualizar(LanguageManager.Instance);
         }
+
         private void BarraTitulo_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -1000,6 +977,7 @@ namespace GUI
                 posY = e.Y;
             }
         }
+
         private void BarraTitulo_MouseMove(object sender, MouseEventArgs e)
         {
             if (arrastrando)
@@ -1007,6 +985,7 @@ namespace GUI
                 this.Location = new Point(this.Location.X + (e.X - posX), this.Location.Y + (e.Y - posY));
             }
         }
+
         private void BarraTitulo_MouseUp(object sender, MouseEventArgs e)
         {
             arrastrando = false;
@@ -1040,8 +1019,8 @@ namespace GUI
             BtnQuitarPermisoPerfil.Text = LanguageManager.Instance.GetTraduction("BtnQuitarPermisoPerfil");
 
             label6.Text = LanguageManager.Instance.GetTraduction("label6");
-            label10.Text= LanguageManager.Instance.GetTraduction("label10");
-            label15.Text= LanguageManager.Instance.GetTraduction("label15");
+            label10.Text = LanguageManager.Instance.GetTraduction("label10");
+            label15.Text = LanguageManager.Instance.GetTraduction("label15");
 
             lblNombrePermisos.Text = LanguageManager.Instance.GetTraduction("lblNombrePermisos");
             btnCrearPermiso.Text = LanguageManager.Instance.GetTraduction("btnCrearPermiso");
@@ -1057,32 +1036,6 @@ namespace GUI
             btnAsignarPermisos.Text = LanguageManager.Instance.GetTraduction("btnAsignarPermisos");
             label8.Text = LanguageManager.Instance.GetTraduction("label8");
             btnQuitarPermisos.Text = LanguageManager.Instance.GetTraduction("btnQuitarPermisos");
-        }
-
-        private void btnDeshacerPermisoSimple_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (_historialDeshacer.Count < 0) throw new Exception("No hay nada que deshacer");
-                    MementoTransaccion snapshot = _historialDeshacer.Pop();
-
-                _bll.DeshacerTransaccion(snapshot);
-                CargarDatosFormulario();
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message);
-            }
-            
-
-        }
-
-        private void ExportarArbol()
-        {
-            IExportadorPermisos adaptador = new PermisosEstructuraAdapter(new AnalizadorEstructurasPlanas());
-            
-            textBox1.Text = _bll.exportarArbol(_familiaSeleccionada, adaptador);
         }
     }
 }

@@ -65,6 +65,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panelPerfiles = new System.Windows.Forms.Panel();
+            this.btnDeshacerPermisoSimple = new System.Windows.Forms.Button();
             this.lblAsignados = new System.Windows.Forms.Label();
             this.lblPermisoDisponible = new System.Windows.Forms.Label();
             this.lblFamiliaAsignadas = new System.Windows.Forms.Label();
@@ -98,8 +99,6 @@
             this.pnlPermisos = new System.Windows.Forms.Panel();
             this.pnlPerfiles = new System.Windows.Forms.Panel();
             this.pnlFamilias = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.btnDeshacerPermisoSimple = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPermisos)).BeginInit();
             this.panelPermisos.SuspendLayout();
             this.panelFamilias.SuspendLayout();
@@ -504,6 +503,15 @@
             this.panelPerfiles.Size = new System.Drawing.Size(460, 367);
             this.panelPerfiles.TabIndex = 30;
             // 
+            // btnDeshacerPermisoSimple
+            // 
+            this.btnDeshacerPermisoSimple.Location = new System.Drawing.Point(22, 335);
+            this.btnDeshacerPermisoSimple.Name = "btnDeshacerPermisoSimple";
+            this.btnDeshacerPermisoSimple.Size = new System.Drawing.Size(188, 23);
+            this.btnDeshacerPermisoSimple.TabIndex = 34;
+            this.btnDeshacerPermisoSimple.Text = "Deshacer";
+            this.btnDeshacerPermisoSimple.UseVisualStyleBackColor = true;
+            // 
             // lblAsignados
             // 
             this.lblAsignados.AutoSize = true;
@@ -863,31 +871,12 @@
             this.pnlFamilias.Size = new System.Drawing.Size(484, 645);
             this.pnlFamilias.TabIndex = 42;
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(1037, 71);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(288, 574);
-            this.textBox1.TabIndex = 43;
-            // 
-            // btnDeshacerPermisoSimple
-            // 
-            this.btnDeshacerPermisoSimple.Location = new System.Drawing.Point(22, 335);
-            this.btnDeshacerPermisoSimple.Name = "btnDeshacerPermisoSimple";
-            this.btnDeshacerPermisoSimple.Size = new System.Drawing.Size(188, 23);
-            this.btnDeshacerPermisoSimple.TabIndex = 34;
-            this.btnDeshacerPermisoSimple.Text = "Deshacer";
-            this.btnDeshacerPermisoSimple.UseVisualStyleBackColor = true;
-            this.btnDeshacerPermisoSimple.Click += new System.EventHandler(this.btnDeshacerPermisoSimple_Click);
-            // 
             // frmGestionPerfiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1381, 716);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.pnlFamilias);
             this.Controls.Add(this.pnlPerfiles);
             this.Controls.Add(this.RbPermisos);
@@ -1006,7 +995,6 @@
         private System.Windows.Forms.Panel pnlFamilias;
         private System.Windows.Forms.Label lblArbol;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnDeshacerPermisoSimple;
     }
 }
