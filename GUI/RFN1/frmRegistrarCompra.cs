@@ -37,7 +37,7 @@ namespace GUI.RFN1
 
         private void ConfigurarControles()
         {
-            // Dejamos que WinForms cree las columnas automáticamente según las propiedades
+            
             dgvDetalles.AutoGenerateColumns = true;
             dgvProveedores.AutoGenerateColumns = true;
             dgvProductos.AutoGenerateColumns = true;
@@ -194,12 +194,14 @@ namespace GUI.RFN1
             _facturaActual.Impuestos = _facturaActual.Detalles.Sum(d => d.Impuestos);
             _facturaActual.Total = _facturaActual.Detalles.Sum(d => d.Subtotal);
 
-            txtImpuestosFactura.Text = _facturaActual.Impuestos.ToString("N2");
-            txtTotalFactura.Text = _facturaActual.Total.ToString("N2");
+         
+            txtImpuestosFactura.Text = _facturaActual.Impuestos.ToString("C2");
+            txtTotalFactura.Text = _facturaActual.Total.ToString("C2");
 
             dgvDetalles.Columns.Clear();
             dgvDetalles.AutoGenerateColumns = true;
 
+          
             dgvDetalles.DataSource = null;
             dgvDetalles.DataSource = _facturaActual.Detalles.Select(d => new
             {
@@ -210,6 +212,21 @@ namespace GUI.RFN1
                 Impuestos = d.Impuestos,
                 Subtotal = d.Subtotal
             }).ToList();
+
+           
+            FormatearColumnasDetalle();
+        }
+
+        private void FormatearColumnasDetalle()
+        {
+            if (dgvDetalles.Columns["PrecioUnitario"] != null)
+                dgvDetalles.Columns["PrecioUnitario"].DefaultCellStyle.Format = "N2"; 
+
+            if (dgvDetalles.Columns["Impuestos"] != null)
+                dgvDetalles.Columns["Impuestos"].DefaultCellStyle.Format = "N2";
+
+            if (dgvDetalles.Columns["Subtotal"] != null)
+                dgvDetalles.Columns["Subtotal"].DefaultCellStyle.Format = "N2";
         }
 
         private void btnConfirmarCompra_Click(object sender, EventArgs e)

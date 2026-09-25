@@ -21,7 +21,7 @@ namespace DAL.RFN1
 
                     try
                     {
-                        // 1. Insertar Cabecera en dbo.Factura
+                  
                         _sqlcommand.CommandText = @"
                             INSERT INTO dbo.Factura (IdProveedor, NumeroFactura, Fecha, TipoComprobante, Impuestos, Total)
                             VALUES (@IdProveedor, @NumeroFactura, @Fecha, @TipoComprobante, @Impuestos, @Total);
@@ -37,7 +37,7 @@ namespace DAL.RFN1
 
                         factura.Id = Convert.ToInt32(_sqlcommand.ExecuteScalar());
 
-                        // 2. Insertar Detalle en dbo.DetalleFactura
+                      
                         foreach (var detalle in factura.Detalles)
                         {
                             _sqlcommand.CommandText = @"

@@ -19,7 +19,7 @@ namespace BLL.RFN1
 
         public bool RegistrarFactura(Factura factura)
         {
-            // Validaciones de Cabecera
+        
             if (factura == null)
                 throw new ArgumentNullException(nameof(factura), "La factura no puede ser nula.");
 
@@ -35,7 +35,7 @@ namespace BLL.RFN1
             if (factura.Detalles == null || !factura.Detalles.Any())
                 throw new Exception("La factura debe contener al menos un ítem en el detalle.");
 
-            // Recálculo y Validación de Líneas de Detalle
+
             decimal totalFactura = 0;
             decimal totalImpuestosFactura = 0;
 
@@ -50,7 +50,7 @@ namespace BLL.RFN1
                 if (detalle.PrecioUnitario < 0)
                     throw new Exception($"El precio unitario para el producto '{detalle.Producto.Nombre}' no es válido.");
 
-                // Cálculo automático del ítem
+     
                 decimal baseImponible = detalle.Cantidad * detalle.PrecioUnitario;
                 detalle.Impuestos = baseImponible * (detalle.Producto.ImpuestoPorcentaje / 100m);
                 detalle.Subtotal = baseImponible + detalle.Impuestos;
@@ -59,11 +59,11 @@ namespace BLL.RFN1
                 totalFactura += detalle.Subtotal;
             }
 
-            // Asignación de totales consolidados a la cabecera
+ 
             factura.Impuestos = totalImpuestosFactura;
             factura.Total = totalFactura;
 
-            // Persistencia en la base de datos
+      
             return _facturaDAL.RegistrarFacturaConDetalles(factura);
         }
     }

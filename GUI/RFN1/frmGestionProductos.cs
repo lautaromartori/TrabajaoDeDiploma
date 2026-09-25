@@ -21,7 +21,7 @@ namespace GUI.RFN1
             InitializeComponent();
             _productoBLL = new ProductoBLL();
 
-            // Habilitar autogeneración y cargar datos directamente en el constructor
+      
             dgvProductos.AutoGenerateColumns = true;
             CargarProductos();
         }
