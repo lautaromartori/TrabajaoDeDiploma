@@ -1,4 +1,5 @@
 ﻿using BLL;
+using GUI.RFN1;
 using Servicios;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace GUI
         {
             panelAdminSubmenu.Visible = false;
             panelUsuarioSubmenu.Visible = false;
+            panelGestionSubmenu.Visible = false;
 
         }
         private void esconderSubmenu()
@@ -33,6 +35,8 @@ namespace GUI
                 panelAdminSubmenu.Visible = false;
             if (panelUsuarioSubmenu.Visible == true)
                 panelUsuarioSubmenu.Visible = false;
+            if (panelGestionSubmenu.Visible == true) 
+                panelGestionSubmenu.Visible = false;
         }
         private void mostrarSubmenu(Panel submenu)
         {
@@ -245,6 +249,53 @@ namespace GUI
             frmReparacionDV.Show();
         }
 
+        private void btnGestion_Click(object sender, EventArgs e)
+        {
+            mostrarSubmenu(panelGestionSubmenu);
+        }
+
+        private void btnRegistrarCompra_Click(object sender, EventArgs e)
+        {
+            if (!SessionManager.Instance.UsuarioActual().TienePermiso("Registrar Compra"))
+            {
+                MessageBox.Show("No tiene permisos para acceder a Registrar Compras.",
+                    "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            this.Hide();
+            frmRegistrarCompra frm = new frmRegistrarCompra();
+            frm.Show();
+        }
+
+        private void btnGestionProveedores_Click(object sender, EventArgs e)
+        {
+            if (!SessionManager.Instance.UsuarioActual().TienePermiso("Gestionar Proveedores"))
+            {
+                MessageBox.Show("No tiene permisos para acceder a la Gestión de Proveedores.",
+                    "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            this.Hide();
+            frmGestionProveedores frm = new frmGestionProveedores();
+            frm.Show();
+        }
+
+        private void btnGestionProductos_Click(object sender, EventArgs e)
+        {
+            if (!SessionManager.Instance.UsuarioActual().TienePermiso("Gestionar Productos"))
+            {
+                MessageBox.Show("No tiene permisos para acceder a la Gestión de Productos.",
+                    "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            this.Hide();
+            frmGestionProductos frm = new frmGestionProductos();
+            frm.Show();
+        }
+
         public void Actualizar(LanguageManager lenguaje)
         {
             btnAdmin.Text = LanguageManager.Instance.GetTraduction("btnAdmin");
@@ -254,12 +305,15 @@ namespace GUI
             btnRestore.Text = LanguageManager.Instance.GetTraduction("btnRestore");
             btnBitacora.Text = LanguageManager.Instance.GetTraduction("btnBitacora");
             btnDigitoVerificador.Text = LanguageManager.Instance.GetTraduction("btnDigitoVerificador");
-            btnMaestro.Text = LanguageManager.Instance.GetTraduction("btnMaestro");
+            btnGestion.Text = LanguageManager.Instance.GetTraduction("btnMaestro");
             btnUsuario.Text = LanguageManager.Instance.GetTraduction("btnUsuario");
             btnReLogin.Text = LanguageManager.Instance.GetTraduction("btnReLogin");
             btnCambiarClave.Text = LanguageManager.Instance.GetTraduction("btnCambiarClave");
             btnLogout.Text = LanguageManager.Instance.GetTraduction("btnLogout");
             btnCambiarIdioma.Text = LanguageManager.Instance.GetTraduction("btnCambiarIdioma");
+
+            btnGestion.Text = LanguageManager.Instance.GetTraduction("btnGestion");
+            btnRegistrarCompra.Text = LanguageManager.Instance.GetTraduction("btnRegistrarCompra");
         }
     }
 }

@@ -222,6 +222,24 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RFN1\frmGestionProductos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN1\frmGestionProductos.Designer.cs">
+      <DependentUpon>frmGestionProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RFN1\frmGestionProveedores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN1\frmGestionProveedores.Designer.cs">
+      <DependentUpon>frmGestionProveedores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RFN1\frmRegistrarCompra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN1\frmRegistrarCompra.Designer.cs">
+      <DependentUpon>frmRegistrarCompra.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Usuarios.cs">
       <SubType>Form</SubType>
@@ -273,6 +291,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RFN1\frmGestionProductos.resx">
+      <DependentUpon>frmGestionProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RFN1\frmGestionProveedores.resx">
+      <DependentUpon>frmGestionProveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RFN1\frmRegistrarCompra.resx">
+      <DependentUpon>frmRegistrarCompra.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Usuarios.resx">
       <DependentUpon>Usuarios.cs</DependentUpon>
     </EmbeddedResource>
@@ -311,6 +338,7 @@
     <Content Include="Resources\OjoAbierto.png" />
     <Content Include="Resources\OjoCerrado.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
