@@ -8,8 +8,7 @@ namespace DAL.RFN1
 {
     public class VentaDAL : AbstractDAL<Venta>
     {
-        // Graba en una sola transacción: la Venta, su DetalleVenta, el LotePuntos (si hay)
-        // y el nivel recalculado del cliente. Si algo falla se revierte todo (flujo 10.1).
+     
         public void Guardar(Venta v)
         {
             _sqlserver.Open();

@@ -26,7 +26,7 @@ namespace BE.RFN1
 
         public string NombreCompleto => $"{Apellido}, {Nombre}";
 
-        // Columnas que entran en el DVH (mismo orden que en la tabla).
+        // Columnas que entran en el DVH.
         public string CadenaDVH() =>
             FormatoDV.Entero(IdCliente) + Dni + Nombre + Apellido + Email + Telefono +
             FormatoDV.Fecha(FechaInscripcion) + FormatoDV.Entero(Nivel.IdNivel);

@@ -1,6 +1,6 @@
 ﻿namespace BE.RFN1
 {
-    // Los valores se guardan en la BD tal cual (en minúscula), como en el modelo conceptual.
+    // Los valores se guardan en la BD  (en minúscula).
     public enum OrigenPuntos
     {
         venta,

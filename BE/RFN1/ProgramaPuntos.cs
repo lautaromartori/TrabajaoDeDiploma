@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BE.RFN1
 {
-    // Parámetros del programa. Se cargan una sola vez en memoria (precondición de los CU).
+    
     public class ProgramaPuntos
     {
         private int idPrograma;

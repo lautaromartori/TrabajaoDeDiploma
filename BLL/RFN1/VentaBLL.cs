@@ -18,7 +18,7 @@ namespace BLL.RFN1
         // Venta que se está armando en frmVenta.
         public Venta VentaActual { get; private set; } = new Venta();
 
-        // Se completa en RegistrarVenta si el cliente cambió de nivel (flujo 10.3).
+      
         public Nivel? NivelAnterior { get; private set; }
 
         public void NuevaVenta(Cliente? cliente)
@@ -32,7 +32,7 @@ namespace BLL.RFN1
             VentaActual.Cliente = cliente;
         }
 
-        // Pasos 5-6: agrega el ítem y recalcula subtotal y total.
+        // agrega el ítem y recalcula subtotal y total.
         public void AgregarItem(DetalleVenta i)
         {
             if (i.Producto == null || i.Producto.IdProducto == 0)
@@ -66,7 +66,7 @@ namespace BLL.RFN1
             v.Total = v.Detalle.Sum(d => d.Subtotal);
         }
 
-        // Paso 8: puntos de cada ítem = subtotal / montoPorPunto x multiplicador de categoría x multiplicador de nivel.
+        //  puntos de cada ítem = subtotal / montoPorPunto x multiplicador de categoría x multiplicador de nivel.
         // El total se redondea hacia abajo. Sin cliente no hay puntos.
         public int CalcularPuntos(Venta v, Cliente? c)
         {
@@ -95,11 +95,11 @@ namespace BLL.RFN1
 
         public Nivel CalcularNivel(Cliente c) => _nivelBLL.CalcularNivel(c, 0);
 
-        // Pasos 9-11: cierra la venta. Una sola transacción en VentaDAL.Guardar.
+    
         public void RegistrarVenta(Venta v)
         {
             if (v.Detalle.Count == 0)
-                throw new Exception("La venta no tiene ítems."); // flujo 9.1
+                throw new Exception("La venta no tiene ítems."); 
 
             Usuario vendedor = SessionManager.Instance.UsuarioActual();
             v.Vendedor = vendedor;
@@ -112,7 +112,7 @@ namespace BLL.RFN1
             {
                 if (v.PuntosAcreditados > 0)
                 {
-                    v.Lote = ArmarLote(v); // si no alcanza para un punto, se graba sin lote (flujo 10.2)
+                    v.Lote = ArmarLote(v); 
                 }
 
                 Nivel nivelActual = v.Cliente.Nivel;
@@ -131,7 +131,7 @@ namespace BLL.RFN1
             }
             catch (Exception ex)
             {
-                // Flujo 10.1: VentaDAL ya hizo rollback; se informa y queda en bitácora.
+               
                 if (NivelAnterior != null && v.Cliente != null) v.Cliente.Nivel = NivelAnterior;
                 NivelAnterior = null;
                 RegistrarEvento("Error al grabar venta: " + Recortar(ex.Message, 60), 3);
@@ -164,7 +164,7 @@ namespace BLL.RFN1
             };
         }
 
-        // CU-N01-004 paso 4. null = no existe una venta con ese comprobante.
+       
         public Venta? ObtenerPorNro(string nro)
         {
             nro = (nro ?? "").Trim().ToUpperInvariant();

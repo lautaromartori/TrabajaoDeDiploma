@@ -8,14 +8,7 @@ using System.Linq;
 
 namespace BLL
 {
-    /// <summary>
-    /// Dígitos verificadores.
-    ///  - DVH: hash de la fila (cadena armada con sus columnas).
-    ///  - DVV: un hash por columna (todas las filas, ordenadas por PK) + TOTAL_TABLA (hash de los DVV de columna)
-    ///         + SISTEMA/TOTAL_BASE_DATOS (hash de los TOTAL_TABLA de todas las tablas).
-    /// Cada tabla se define una sola vez en <see cref="ArmarTablas"/>; recalcular y auditar usan esa misma definición,
-    /// así lo que se graba y lo que se controla no puede quedar distinto.
-    /// </summary>
+ 
     public class DigitoVerificadorBLL
     {
         private readonly DigitoVerificadorDAL _controlDVDal = new DigitoVerificadorDAL();

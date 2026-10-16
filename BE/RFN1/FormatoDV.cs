@@ -3,8 +3,7 @@ using System.Globalization;
 
 namespace BE.RFN1
 {
-    // Formato único para armar la cadena del DVH. Lo usan los BE del RFN1 y el DigitoVerificadorBLL,
-    // así la cadena que se graba y la que se audita salen siempre iguales.
+   
     public static class FormatoDV
     {
         public static string Fecha(DateTime f) => f.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);

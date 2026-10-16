@@ -10,13 +10,11 @@ namespace BLL.RFN1
     {
         private readonly LoteDAL _loteDAL = new LoteDAL();
 
-        // CU-N01-002 Consultar saldo. El saldo no se guarda: se calcula con los lotes no vencidos.
         public int ConsultarSaldo(Cliente c)
         {
             return ConsultarSaldo(c, out _);
         }
 
-        // Igual que ConsultarSaldo(c) pero devuelve también los lotes vigentes para la grilla de frmSaldo.
         public int ConsultarSaldo(Cliente c, out List<LotePuntos> lotesVigentes)
         {
             List<LotePuntos> lotes = _loteDAL.ObtenerPorCliente(c.IdCliente);

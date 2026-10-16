@@ -19,7 +19,7 @@ namespace BLL
         {
             try
             {
-                // Sin milisegundos: SQL Server redondea el datetime y podía cambiar el segundo que entra en el DVH.
+              
                 unEvento.Fecha = AhoraSinMilisegundos();
                 string cadenaDVH = DigitoVerificadorBLL.CadenaDVH_Bitacora(unEvento);
 

@@ -16,12 +16,10 @@ namespace BLL.RFN1
         private readonly BitacoraBLL _bitacoraBLL = new BitacoraBLL();
         private readonly DigitoVerificadorBLL _digitoVerificadorBLL = new DigitoVerificadorBLL();
 
-        // Motivo por el que el último Validar dio false (flujos 5.1 a 5.3).
+       
         public string MensajeValidacion { get; private set; } = "";
 
-        // ---------------- CU-N01-004 Registrar reclamo ----------------
-
-        // Paso 5: la venta no tiene puntos, está en plazo y no tiene otro reclamo pendiente.
+     
         public bool Validar(Venta v)
         {
             MensajeValidacion = "";
@@ -48,14 +46,14 @@ namespace BLL.RFN1
         public bool ValidarPlazo(Venta v) =>
             (DateTime.Today - v.Fecha.Date).TotalDays <= ProgramaPuntosBLL.Obtener().PlazoReclamoDias;
 
-        // Paso 6: puntos que hubiera generado la compra con el nivel actual del cliente.
+  
         public int CalcularPuntosReclamo(Venta v, Cliente c) => _ventaBLL.CalcularPuntos(v, c);
 
         public void Registrar(Reclamo r)
         {
             r.Motivo = (r.Motivo ?? "").Trim();
             if (r.Motivo.Length == 0)
-                throw new Exception("Ingrese el motivo del reclamo."); // flujo 7.1
+                throw new Exception("Ingrese el motivo del reclamo."); 
             if (r.Motivo.Length > 200)
                 throw new Exception("El motivo no puede superar los 200 caracteres.");
             if (r.Venta.Cliente != null && r.Venta.Cliente.IdCliente != r.Cliente.IdCliente)
@@ -77,11 +75,10 @@ namespace BLL.RFN1
             RegistrarEvento($"Registrar reclamo {r.IdReclamo} venta {r.Venta.NroComprobante} cliente {r.Cliente.Dni}", 1);
         }
 
-        // ---------------- CU-N01-005 Resolver reclamo ----------------
+ 
 
         public List<Reclamo> ListarPendientes() => _reclamoDAL.ListarPendientes();
 
-        // El Supervisor ya cargó en el reclamo la decisión (Estado) y el motivo.
         public void Resolver(Reclamo r)
         {
             r.MotivoResolucion = string.IsNullOrWhiteSpace(r.MotivoResolucion) ? null : r.MotivoResolucion!.Trim();
@@ -89,7 +86,7 @@ namespace BLL.RFN1
             if (r.Estado == EstadoReclamo.pendiente)
                 throw new Exception("Elija aprobar o rechazar el reclamo.");
             if (r.Estado == EstadoReclamo.rechazado && r.MotivoResolucion == null)
-                throw new Exception("Para rechazar el reclamo el motivo es obligatorio."); // flujos 4.1 y 4.2
+                throw new Exception("Para rechazar el reclamo el motivo es obligatorio."); 
             if (r.MotivoResolucion != null && r.MotivoResolucion.Length > 200)
                 throw new Exception("El motivo no puede superar los 200 caracteres.");
 
