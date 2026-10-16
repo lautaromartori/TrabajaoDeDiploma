@@ -45,7 +45,7 @@ namespace DAL
                 string query = @"SELECT b.Id_Evento, b.Login, b.Fecha, b.Modulo, 
                                  b.Evento, b.Criticidad
                                  FROM Bitacora b 
-                                 INNER JOIN Usuario u ON b.Login = u.UserName
+                                 LEFT JOIN Usuario u ON b.Login = u.UserName
                                  WHERE 1=1";
 
                 _sqlcommand.Parameters.Clear();

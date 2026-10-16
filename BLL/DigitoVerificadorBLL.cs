@@ -1,13 +1,21 @@
-﻿using DAL;
+﻿using BE.RFN1;
+using DAL;
+using DAL.RFN1;
 using Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Windows.Forms;
 
 namespace BLL
 {
+    /// <summary>
+    /// Dígitos verificadores.
+    ///  - DVH: hash de la fila (cadena armada con sus columnas).
+    ///  - DVV: un hash por columna (todas las filas, ordenadas por PK) + TOTAL_TABLA (hash de los DVV de columna)
+    ///         + SISTEMA/TOTAL_BASE_DATOS (hash de los TOTAL_TABLA de todas las tablas).
+    /// Cada tabla se define una sola vez en <see cref="ArmarTablas"/>; recalcular y auditar usan esa misma definición,
+    /// así lo que se graba y lo que se controla no puede quedar distinto.
+    /// </summary>
     public class DigitoVerificadorBLL
     {
         private readonly DigitoVerificadorDAL _controlDVDal = new DigitoVerificadorDAL();
@@ -15,441 +23,372 @@ namespace BLL
         private readonly UsuarioDAL _usuarioDal = new UsuarioDAL();
         private readonly BitacoraDAL _bitacoraDal = new BitacoraDAL();
         private readonly IdiomaDAL _idiomaDal = new IdiomaDAL();
+        private readonly ClienteDAL _clienteDal = new ClienteDAL();
+        private readonly VentaDAL _ventaDal = new VentaDAL();
+        private readonly LoteDAL _loteDal = new LoteDAL();
+        private readonly ReclamoDAL _reclamoDal = new ReclamoDAL();
 
-        
-        public void RecalcularDVH_Usuario()
+        // Orden fijo de las tablas para el DVV global de la base. Si se agrega una tabla, va al final.
+        private static readonly string[] TablasDelSistema =
         {
-            var listaUsuarios = _usuarioDal.ListarTodosLosUsuariosDVH();
-            foreach (var usuario in listaUsuarios)
-            {
-                string dvhCalculado = usuario.DNI +
-                        usuario.Nombre +
-                        usuario.Apellido +
-                        usuario.Username +
-                        usuario.Password +
-                        usuario.Email +
-                        usuario.Bloqueado +
-                        usuario.Activo +
-                        usuario.Rol;
-
-                
-                _usuarioDal.ActualizarDVH(usuario.DNI, DigitoVerificador.CalcularDVH(dvhCalculado));
-            }
-        }
-
-
-        
-        public void RecalcularDVH_Bitacora()
-        {
-            var listaBitacora = _bitacoraDal.listarTodosLosEventos();
-            foreach (var evento in listaBitacora)
-            {
-                string dvhCalculado = evento.Login +
-                        evento.Fecha.ToString("yyyy-MM-dd HH:mm:ss") +
-                        evento.Modulo +
-                        evento.Evento +
-                        evento.Criticidad;
-                _bitacoraDal.ActualizarDVH(evento.Id_Evento.ToString(), DigitoVerificador.CalcularDVH(dvhCalculado));
-            }
-        }
-        public void RecalcularDVH_Idioma()
-        {
-            var listaIdiomas = _idiomaDal.listarTodosLosIdiomas();
-            foreach (var idioma in listaIdiomas)
-            {
-                string dvhCalculado = idioma.UserName + idioma.CodigoIdioma;
-                
-                _idiomaDal.ActualizarDVH(idioma.UserName, DigitoVerificador.CalcularDVH(dvhCalculado));
-            }
-        }
-        public void RecalcularDVH_Perfil()
-        {
-            var listaPerfiles = _perfilDal.ObtenerPerfiles();
-            foreach (var perfil in listaPerfiles)
-            {
-                string dvhCalculado = perfil.Nombre;
-                _perfilDal.ActualizarPefilDVH(perfil.Nombre, DigitoVerificador.CalcularDVH(dvhCalculado));
-            }
-        }
-        public void RecalcularDVH_PermisoSimple()
-        {
-            var listaPermisos = _perfilDal.ObtenerPermisos();
-            foreach (var permiso in listaPermisos)
-            {
-                string dvhCalculado = permiso.Nombre;
-                _perfilDal.ActualizarPermisoSimpleDVH(permiso.Nombre, DigitoVerificador.CalcularDVH(dvhCalculado));
-            }
-        }
-        public void RecalcularDVH_Familia()
-        {
-            var listaFamilias = _perfilDal.ObtenerFamilias();
-            foreach (var familia in listaFamilias)
-            {
-                string dvhCalculado = familia.Nombre;
-                _perfilDal.ActualizarDVH(familia.Nombre, DigitoVerificador.CalcularDVH(dvhCalculado));
-            }
-        }
-       
-        public void RecalcularDVV_Perfil()
-        {
-            var lista = _perfilDal.ObtenerPerfiles();
-            var datos = new Dictionary<string, List<string>> {
-            { "Nombre", lista.Select(x => x.Nombre).ToList() }
-        };
-            RecalcularDVVDeTablaGenerica("Perfil", datos);
-        }
-
-        public void RecalcularDVV_Usuario()
-        {
-            var lista = _usuarioDal.ListarTodosLosUsuariosDVH();
-            var datos = new Dictionary<string, List<string>> {
-            { "DNI", lista.Select(x => x.DNI).ToList() },
-            { "Nombre", lista.Select(x => x.Nombre).ToList() },
-            { "Apellido", lista.Select(x => x.Apellido).ToList() },
-            { "UserName", lista.Select(x => x.Username).ToList() },
-            { "Password", lista.Select(x => x.Password).ToList() },
-            { "Email", lista.Select(x => x.Email).ToList() },
-            { "Bloqueado", lista.Select(x => x.Bloqueado ? "1" : "0").ToList() },
-            { "Activo", lista.Select(x => x.Activo ? "1" : "0").ToList() },
-            { "Rol", lista.Select(x => x.Rol).ToList() },
-            { "Intentos", lista.Select(x => x.Intentos.ToString()).ToList() }
-        };
-            RecalcularDVVDeTablaGenerica("Usuario", datos);
-        }
-
-        public void RecalcularDVV_Bitacora()
-        {
-            var lista = _bitacoraDal.listarTodosLosEventos();
-            var datos = new Dictionary<string, List<string>> {
-            { "Login", lista.Select(x => x.Login).ToList() },
-            { "Fecha", lista.Select(x => x.Fecha.ToString("yyyy-MM-dd HH:mm:ss")).ToList() },
-            { "Modulo", lista.Select(x => x.Modulo).ToList() },
-            { "Evento", lista.Select(x => x.Evento).ToList() },
-            { "Criticidad", lista.Select(x => x.Criticidad.ToString()).ToList() }
-        };
-            RecalcularDVVDeTablaGenerica("Bitacora", datos);
-        }
-
-        public void RecalcularDVV_Idioma()
-        {
-            var lista = _idiomaDal.listarTodosLosIdiomas();
-            var datos = new Dictionary<string, List<string>> {
-            { "UserName", lista.Select(x => x.UserName).ToList() },
-            { "CodigoIdioma", lista.Select(x => x.CodigoIdioma).ToList() }
-        };
-            RecalcularDVVDeTablaGenerica("Idioma", datos);
-        }
-
-        public void RecalcularDVV_PermisoSimple()
-        {
-            var lista = _perfilDal.ObtenerPermisos();
-            var datos = new Dictionary<string, List<string>> {
-            { "Nombre", lista.Select(x => x.Nombre).ToList() }
-        };
-            RecalcularDVVDeTablaGenerica("PermisoSimple", datos);
-        }
-
-        public void RecalcularDVV_Familia()
-        {
-            var lista = _perfilDal.ObtenerFamilias();
-            var datos = new Dictionary<string, List<string>> {
-            { "Nombre", lista.Select(x => x.Nombre).ToList() }
-        };
-            RecalcularDVVDeTablaGenerica("Familia", datos);
-        }
-
-        
-        private void RecalcularDVVDeTablaGenerica(string nombreTabla, Dictionary<string, List<string>> columnasData)
-        {
-            List<string> hashesDeLasColumnas = new List<string>();
-
-            foreach (KeyValuePair<string, List<string>> columna in columnasData)
-            {
-                string nombreColumna = columna.Key;
-                List<string> valoresFila = columna.Value;
-
-                string DVVColumna = DigitoVerificador.CalcularDVV(valoresFila);
-
-                _controlDVDal.ActualizarDVV(nombreTabla, nombreColumna, DVVColumna);
-
-                hashesDeLasColumnas.Add(DVVColumna);
-            }
-            string dvvTotalTabla = DigitoVerificador.CalcularDVV(hashesDeLasColumnas);
-
-            _controlDVDal.ActualizarDVV(nombreTabla, "TOTAL_TABLA", dvvTotalTabla);
-
-            List<string> todosLosTotalesTablas = ObtenerTodosLosTotalesTablasSistema(nombreTabla, dvvTotalTabla);
-
-            string nuevoDvvGlobalBD = DigitoVerificador.CalcularDVV(todosLosTotalesTablas);
-
-            _controlDVDal.ActualizarDVV("SISTEMA", "TOTAL_BASE_DATOS", nuevoDvvGlobalBD);
-        }
-
-        private List<string> ObtenerTodosLosTotalesTablasSistema(string tablaModificadaActual, string nuevoHashEnMemoria)
-        {
-            List<string> listaTotalesConsolidados = new List<string>();
-
-            
-            string[] arrayTablasNegocio = {
-            "Perfil", "Usuario", "Bitacora", "Idioma", "PermisoSimple",
-            "Familia"
+            "Perfil", "Usuario", "Bitacora", "Idioma", "PermisoSimple", "Familia",
+            "Cliente", "Venta", "DetalleVenta", "Reclamo", "LotePuntos"
         };
 
-            foreach (string tabla in arrayTablasNegocio)
-            {
-                if (tabla == tablaModificadaActual)
-                {
-                    listaTotalesConsolidados.Add(nuevoHashEnMemoria);
-                }
-                else
-                {
-                    string totalHistoricoGuardado = _controlDVDal.ObtenerDVV(tabla, "TOTAL_TABLA") ?? "0";
-                    listaTotalesConsolidados.Add(totalHistoricoGuardado);
-                }
-            }
+        private readonly Dictionary<string, ITablaDV> _tablas;
 
-            return listaTotalesConsolidados;
-        }
-
-       
-        
-        public List<string> EjecutarAuditoriaDetalladaCompleta()
+        public DigitoVerificadorBLL()
         {
-            List<string> reporteInconsistencias = new List<string>();
-
-            var listaPerfil = _perfilDal.ObtenerPerfiles();
-            List<string> colsErrPerfil = new List<string>();
-            if (DigitoVerificador.CalcularDVV(listaPerfil.Select(x => x.Nombre).ToList()) != (_controlDVDal.ObtenerDVV("Perfil", "Nombre") ?? "0")) colsErrPerfil.Add("Nombre");
-
-            AgregarErroresAlReporteOptimizada("Perfil", "Nombre", x => x.Nombre, x => x.DVH, CalcularDVH_Perfil, listaPerfil, colsErrPerfil, reporteInconsistencias);
-
-            var listaUsuario = _usuarioDal.ListarTodosLosUsuariosDVH();
-            List<string> colsErrUsuario = new List<string>();
-            if (DigitoVerificador.CalcularDVV(listaUsuario.Select(x => x.DNI).ToList()) != (_controlDVDal.ObtenerDVV("Usuario", "DNI") ?? "0")) colsErrUsuario.Add("DNI");
-            if (DigitoVerificador.CalcularDVV(listaUsuario.Select(x => x.Nombre).ToList()) != (_controlDVDal.ObtenerDVV("Usuario", "Nombre") ?? "0")) colsErrUsuario.Add("Nombre");
-            if (DigitoVerificador.CalcularDVV(listaUsuario.Select(x => x.Apellido).ToList()) != (_controlDVDal.ObtenerDVV("Usuario", "Apellido") ?? "0")) colsErrUsuario.Add("Apellido");
-            if (DigitoVerificador.CalcularDVV(listaUsuario.Select(x => x.Username).ToList()) != (_controlDVDal.ObtenerDVV("Usuario", "UserName") ?? "0")) colsErrUsuario.Add("UserName");
-            if (DigitoVerificador.CalcularDVV(listaUsuario.Select(x => x.Password).ToList()) != (_controlDVDal.ObtenerDVV("Usuario", "Password") ?? "0")) colsErrUsuario.Add("Password");
-            if (DigitoVerificador.CalcularDVV(listaUsuario.Select(x => x.Email).ToList()) != (_controlDVDal.ObtenerDVV("Usuario", "Email") ?? "0")) colsErrUsuario.Add("Email");
-            if (DigitoVerificador.CalcularDVV(listaUsuario.Select(x => x.Bloqueado ? "1" : "0").ToList()) != (_controlDVDal.ObtenerDVV("Usuario", "Bloqueado") ?? "0")) colsErrUsuario.Add("Bloqueado");
-            if (DigitoVerificador.CalcularDVV(listaUsuario.Select(x => x.Activo ? "1" : "0").ToList()) != (_controlDVDal.ObtenerDVV("Usuario", "Activo") ?? "0")) colsErrUsuario.Add("Activo");
-            if (DigitoVerificador.CalcularDVV(listaUsuario.Select(x => x.Rol).ToList()) != (_controlDVDal.ObtenerDVV("Usuario", "Rol") ?? "0")) colsErrUsuario.Add("Rol");
-            if (DigitoVerificador.CalcularDVV(listaUsuario.Select(x => x.Intentos.ToString()).ToList()) != (_controlDVDal.ObtenerDVV("Usuario", "Intentos") ?? "0")) colsErrUsuario.Add("Intentos");
-
-            AgregarErroresAlReporteOptimizada("Usuario", "DNI", x => x.DNI, x => x.DVH, CalcularDVH_Usuario, listaUsuario, colsErrUsuario, reporteInconsistencias);
-
-            var listaBitacora = _bitacoraDal.listarTodosLosEventos();
-            List<string> colsErrBitacora = new List<string>();
-            if (DigitoVerificador.CalcularDVV(listaBitacora.Select(x => x.Login).ToList()) != (_controlDVDal.ObtenerDVV("Bitacora", "Login") ?? "0")) colsErrBitacora.Add("Login");
-            if (DigitoVerificador.CalcularDVV(listaBitacora.Select(x => x.Fecha.ToString("yyyy-MM-dd HH:mm:ss")).ToList()) != (_controlDVDal.ObtenerDVV("Bitacora", "Fecha") ?? "0")) colsErrBitacora.Add("Fecha");
-            if (DigitoVerificador.CalcularDVV(listaBitacora.Select(x => x.Modulo).ToList()) != (_controlDVDal.ObtenerDVV("Bitacora", "Modulo") ?? "0")) colsErrBitacora.Add("Modulo");
-            if (DigitoVerificador.CalcularDVV(listaBitacora.Select(x => x.Evento).ToList()) != (_controlDVDal.ObtenerDVV("Bitacora", "Evento") ?? "0")) colsErrBitacora.Add("Evento");
-            if (DigitoVerificador.CalcularDVV(listaBitacora.Select(x => x.Criticidad.ToString()).ToList()) != (_controlDVDal.ObtenerDVV("Bitacora", "Criticidad") ?? "0")) colsErrBitacora.Add("Criticidad");
-
-
-            AgregarErroresAlReporteOptimizada("Bitacora", "Id_Evento", x => x.Id_Evento.ToString(), x => x.DVH, CalcularDVH_Bitacora, listaBitacora, colsErrBitacora, reporteInconsistencias);
-
-            var listaIdioma = _idiomaDal.listarTodosLosIdiomas();
-            List<string> colsErrIdioma = new List<string>();
-            if (DigitoVerificador.CalcularDVV(listaIdioma.Select(x => x.UserName).ToList()) != (_controlDVDal.ObtenerDVV("Idioma", "UserName") ?? "0")) colsErrIdioma.Add("UserName");
-            if (DigitoVerificador.CalcularDVV(listaIdioma.Select(x => x.CodigoIdioma).ToList()) != (_controlDVDal.ObtenerDVV("Idioma", "CodigoIdioma") ?? "0")) colsErrIdioma.Add("CodigoIdioma");
-
-            AgregarErroresAlReporteOptimizada("Idioma", "UserName", x => x.UserName, x => x.DVH, CalcularDVH_Idioma, listaIdioma, colsErrIdioma, reporteInconsistencias);
-
-            var listaPermisoSimple = _perfilDal.ObtenerPermisos();
-            List<string> colsErrPermisoSimple = new List<string>();
-            if (DigitoVerificador.CalcularDVV(listaPermisoSimple.Select(x => x.Nombre).ToList()) != (_controlDVDal.ObtenerDVV("PermisoSimple", "Nombre") ?? "0")) colsErrPermisoSimple.Add("Nombre");
-
-            AgregarErroresAlReporteOptimizada("PermisoSimple", "Nombre", x => x.Nombre, x => x.DVH, CalcularDVH_PermisoSimple, listaPermisoSimple, colsErrPermisoSimple, reporteInconsistencias);
-
-            var listaFamilia = _perfilDal.ObtenerFamilias();
-            List<string> colsErrFamilia = new List<string>();
-            if (DigitoVerificador.CalcularDVV(listaFamilia.Select(x => x.Nombre).ToList()) != (_controlDVDal.ObtenerDVV("Familia", "Nombre") ?? "0")) colsErrFamilia.Add("Nombre");
-
-            AgregarErroresAlReporteOptimizada("Familia", "Nombre", x => x.Nombre, x => x.DVH, CalcularDVH_Familia, listaFamilia, colsErrFamilia, reporteInconsistencias);
-
-            return reporteInconsistencias;
+            _tablas = ArmarTablas().ToDictionary(t => t.Nombre, StringComparer.OrdinalIgnoreCase);
         }
-        private void AgregarErroresAlReporteOptimizada<T>(
-            string nombreTabla,
-            string nombreColumnaPK,
-            Func<T, string> selectorPK,
-            Func<T, string> selectorDVHGuardado,
-            Func<T, string> funcionCalcularDVH,
-            List<T> listaRegistros,
-            List<string> columnasErroneas,
-            List<string> reporte)
+
+        // ---------------------------------------------------------------------------------
+        // Cadenas de DVH (públicas porque las usan los BLL al insertar/modificar)
+        // ---------------------------------------------------------------------------------
+        public static string CadenaDVH_Usuario(Usuario u) =>
+            u.DNI + u.Nombre + u.Apellido + u.Username + u.Password + u.Email + u.Bloqueado + u.Activo + u.Rol + u.Intentos;
+
+        public static string CadenaDVH_Bitacora(Bitacora b) =>
+            b.Login + b.Fecha.ToString("yyyy-MM-dd HH:mm:ss") + b.Modulo + b.Evento + b.Criticidad;
+
+        public static string CadenaDVH_Idioma(Idioma i) => i.UserName + i.CodigoIdioma;
+
+        // ---------------------------------------------------------------------------------
+        // Definición de tablas
+        // ---------------------------------------------------------------------------------
+        private IEnumerable<ITablaDV> ArmarTablas()
         {
-            if (columnasErroneas.Count == 0) return;
+            yield return new TablaDV<Familia>("Perfil", "Nombre", _controlDVDal,
+                () => _perfilDal.ObtenerPerfiles(), x => x.Nombre, x => x.DVH, x => x.Nombre,
+                (x, dvh) => _perfilDal.ActualizarPefilDVH(x.Nombre, dvh),
+                Col<Familia>("Nombre", x => x.Nombre));
 
-            List<string> registrosCorruptosPK = new List<string>();
+            yield return new TablaDV<Usuario>("Usuario", "DNI", _controlDVDal,
+                () => _usuarioDal.ListarTodosLosUsuariosDVH(), x => x.DNI, x => x.DVH, CadenaDVH_Usuario,
+                (x, dvh) => _usuarioDal.ActualizarDVH(x.DNI, dvh),
+                Col<Usuario>("DNI", x => x.DNI),
+                Col<Usuario>("Nombre", x => x.Nombre),
+                Col<Usuario>("Apellido", x => x.Apellido),
+                Col<Usuario>("UserName", x => x.Username),
+                Col<Usuario>("Password", x => x.Password),
+                Col<Usuario>("Email", x => x.Email),
+                Col<Usuario>("Bloqueado", x => x.Bloqueado ? "1" : "0"),
+                Col<Usuario>("Activo", x => x.Activo ? "1" : "0"),
+                Col<Usuario>("Rol", x => x.Rol),
+                Col<Usuario>("Intentos", x => x.Intentos.ToString()));
 
-            foreach (T registro in listaRegistros)
-            {
-                string dvhCalculado = funcionCalcularDVH(registro);
-                string dvhGuardado = selectorDVHGuardado(registro);
+            yield return new TablaDV<Bitacora>("Bitacora", "Id_Evento", _controlDVDal,
+                () => _bitacoraDal.listarTodosLosEventos(), x => x.Id_Evento.ToString("D10"), x => x.DVH, CadenaDVH_Bitacora,
+                (x, dvh) => _bitacoraDal.ActualizarDVH(x.Id_Evento.ToString(), dvh),
+                Col<Bitacora>("Login", x => x.Login),
+                Col<Bitacora>("Fecha", x => x.Fecha.ToString("yyyy-MM-dd HH:mm:ss")),
+                Col<Bitacora>("Modulo", x => x.Modulo),
+                Col<Bitacora>("Evento", x => x.Evento),
+                Col<Bitacora>("Criticidad", x => x.Criticidad.ToString()));
 
-                if (dvhCalculado != dvhGuardado)
-                {
-                    string valorPK = selectorPK(registro);
-                    registrosCorruptosPK.Add(valorPK);
+            yield return new TablaDV<Idioma>("Idioma", "UserName", _controlDVDal,
+                () => _idiomaDal.listarTodosLosIdiomas(), x => x.UserName, x => x.DVH, CadenaDVH_Idioma,
+                (x, dvh) => _idiomaDal.ActualizarDVH(x.UserName, dvh),
+                Col<Idioma>("UserName", x => x.UserName),
+                Col<Idioma>("CodigoIdioma", x => x.CodigoIdioma));
 
-                    bool esNuevoConDvhCorrupto = false;
+            yield return new TablaDV<PermisoSimple>("PermisoSimple", "Nombre", _controlDVDal,
+                () => _perfilDal.ObtenerPermisos(), x => x.Nombre, x => x.DVH, x => x.Nombre,
+                (x, dvh) => _perfilDal.ActualizarPermisoSimpleDVH(x.Nombre, dvh),
+                Col<PermisoSimple>("Nombre", x => x.Nombre));
 
-                    foreach (string col in columnasErroneas)
-                    {
-                        string dvvBD = _controlDVDal.ObtenerDVV(nombreTabla, col) ?? "0";
+            yield return new TablaDV<Familia>("Familia", "Nombre", _controlDVDal,
+                () => _perfilDal.ObtenerFamilias(), x => x.Nombre, x => x.DVH, x => x.Nombre,
+                (x, dvh) => _perfilDal.ActualizarDVH(x.Nombre, dvh),
+                Col<Familia>("Nombre", x => x.Nombre));
 
-                        var listaSinEsteRegistro = listaRegistros
-                            .Where(x => selectorPK(x) != valorPK)
-                            .Select(x => {
-                                var p = x.GetType().GetProperty(col);
-                                return p?.GetValue(x, null)?.ToString() ?? "";
-                            })
-                            .ToList();
+            // ----- RFN1 -----
+            yield return new TablaDV<Cliente>("Cliente", "idCliente", _controlDVDal,
+                () => _clienteDal.ListarParaDV(), x => x.IdCliente.ToString("D10"), x => x.DVH, x => x.CadenaDVH(),
+                (x, dvh) => _clienteDal.ActualizarDVH(x.IdCliente, dvh),
+                Col<Cliente>("idCliente", x => FormatoDV.Entero(x.IdCliente)),
+                Col<Cliente>("dni", x => x.Dni),
+                Col<Cliente>("nombre", x => x.Nombre),
+                Col<Cliente>("apellido", x => x.Apellido),
+                Col<Cliente>("email", x => x.Email),
+                Col<Cliente>("telefono", x => x.Telefono),
+                Col<Cliente>("fechaInscripcion", x => FormatoDV.Fecha(x.FechaInscripcion)),
+                Col<Cliente>("idNivel", x => FormatoDV.Entero(x.Nivel.IdNivel)));
 
-                        string dvvSimulado = DigitoVerificador.CalcularDVV(listaSinEsteRegistro);
+            yield return new TablaDV<Venta>("Venta", "idVenta", _controlDVDal,
+                () => _ventaDal.ListarParaDV(), x => x.IdVenta.ToString("D10"), x => x.DVH, x => x.CadenaDVH(),
+                (x, dvh) => _ventaDal.ActualizarDVH(x.IdVenta, dvh),
+                Col<Venta>("idVenta", x => FormatoDV.Entero(x.IdVenta)),
+                Col<Venta>("nroComprobante", x => x.NroComprobante),
+                Col<Venta>("fecha", x => FormatoDV.FechaHora(x.Fecha)),
+                Col<Venta>("idCliente", x => FormatoDV.Entero(x.Cliente?.IdCliente)),
+                Col<Venta>("dniVendedor", x => FormatoDV.Texto(x.Vendedor?.DNI)),
+                Col<Venta>("total", x => FormatoDV.Importe(x.Total)),
+                Col<Venta>("puntosAcreditados", x => FormatoDV.Entero(x.PuntosAcreditados)));
 
-                        if (dvvSimulado == dvvBD)
-                        {
-                            esNuevoConDvhCorrupto = true;
-                            break;
-                        }
-                    }
+            yield return new TablaDV<DetalleVenta>("DetalleVenta", "idDetalle", _controlDVDal,
+                () => _ventaDal.ListarDetalleParaDV(), x => x.IdDetalle.ToString("D10"), x => x.DVH, x => x.CadenaDVH(),
+                (x, dvh) => _ventaDal.ActualizarDVHDetalle(x.IdDetalle, dvh),
+                Col<DetalleVenta>("idDetalle", x => FormatoDV.Entero(x.IdDetalle)),
+                Col<DetalleVenta>("idVenta", x => FormatoDV.Entero(x.IdVenta)),
+                Col<DetalleVenta>("idProducto", x => FormatoDV.Entero(x.Producto.IdProducto)),
+                Col<DetalleVenta>("cantidad", x => FormatoDV.Entero(x.Cantidad)),
+                Col<DetalleVenta>("precioUnitario", x => FormatoDV.Importe(x.PrecioUnitario)),
+                Col<DetalleVenta>("subtotal", x => FormatoDV.Importe(x.Subtotal)),
+                Col<DetalleVenta>("puntosCalculados", x => FormatoDV.Entero(x.PuntosCalculados)));
 
-                    if (esNuevoConDvhCorrupto)
-                    {
-                        reporte.Add($"[ERROR INSERCIÓN NO AUTORIZADA] Tabla: '{nombreTabla}' -> Se insertó un NUEVO registro (PK {nombreColumnaPK}: '{valorPK}') con DVH Inválido/Corrupto.");
-                    }
-                    else
-                    {
-                        string columnaCulpableReal = columnasErroneas.FirstOrDefault() ?? "Desconocida";
-                        dynamic r = registro;
+            yield return new TablaDV<Reclamo>("Reclamo", "idReclamo", _controlDVDal,
+                () => _reclamoDal.ListarParaDV(), x => x.IdReclamo.ToString("D10"), x => x.DVH, x => x.CadenaDVH(),
+                (x, dvh) => _reclamoDal.ActualizarDVH(x.IdReclamo, dvh),
+                Col<Reclamo>("idReclamo", x => FormatoDV.Entero(x.IdReclamo)),
+                Col<Reclamo>("idCliente", x => FormatoDV.Entero(x.Cliente.IdCliente)),
+                Col<Reclamo>("idVenta", x => FormatoDV.Entero(x.Venta.IdVenta)),
+                Col<Reclamo>("fechaReclamo", x => FormatoDV.FechaHora(x.FechaReclamo)),
+                Col<Reclamo>("puntosReclamados", x => FormatoDV.Entero(x.PuntosReclamados)),
+                Col<Reclamo>("motivo", x => x.Motivo),
+                Col<Reclamo>("estado", x => x.Estado.ToString()),
+                Col<Reclamo>("dniVendedor", x => FormatoDV.Texto(x.Vendedor?.DNI)),
+                Col<Reclamo>("dniSupervisor", x => FormatoDV.Texto(x.Supervisor?.DNI)),
+                Col<Reclamo>("motivoResolucion", x => FormatoDV.Texto(x.MotivoResolucion)),
+                Col<Reclamo>("fechaResolucion", x => FormatoDV.FechaHora(x.FechaResolucion)));
 
-                        foreach (string col in columnasErroneas)
-                        {
-                            var p = r.GetType().GetProperty(col);
-                            if (p != null)
-                            {
-                                columnaCulpableReal = col;
-                            }
-                        }
-
-                        if (columnasErroneas.Contains("Criticidad") && nombreTabla == "Bitacora" && columnasErroneas.Count > 1)
-                        {
-                            var columnasFalsas = new List<string> { "Fecha", "Login" };
-                            var candidatasReales = columnasErroneas.Where(c => !columnasFalsas.Contains(c)).ToList();
-                            if (candidatasReales.Count == 1)
-                            {
-                                columnaCulpableReal = candidatasReales[0];
-                            }
-                        }
-
-                        reporte.Add($"[ERROR MODIFICACIÓN] Tabla: '{nombreTabla}' -> Registro {nombreColumnaPK}: '{valorPK}' tiene datos alterados en la Columna: '{columnaCulpableReal}'.");
-                    }
-                }
-            }
-            if (registrosCorruptosPK.Count == 0)
-            {
-                string colsAfectadas = string.Join(", ", columnasErroneas);
-                string registroInfiltradoPK = null;
-
-                foreach (string col in columnasErroneas)
-                {
-                    string dvvBD = _controlDVDal.ObtenerDVV(nombreTabla, col) ?? "0";
-
-                    foreach (T reg in listaRegistros)
-                    {
-                        string pkActual = selectorPK(reg);
-
-                        var listaSinEstaFila = listaRegistros
-                            .Where(x => selectorPK(x) != pkActual)
-                            .Select(x => {
-                                var p = x.GetType().GetProperty(col);
-                                return p?.GetValue(x, null)?.ToString() ?? "";
-                            })
-                            .ToList();
-
-                        string dvvSimulado = DigitoVerificador.CalcularDVV(listaSinEstaFila);
-
-                        if (dvvSimulado == dvvBD)
-                        {
-                            registroInfiltradoPK = pkActual;
-                            break;
-                        }
-                    }
-
-                    if (registroInfiltradoPK != null) break;
-                }
-
-                if (registroInfiltradoPK != null)
-                {
-                    reporte.Add($"[ERROR INSERCIÓN NO AUTORIZADA] Tabla: '{nombreTabla}' -> Se detectó un NUEVO registro no autorizado (PK {nombreColumnaPK}: '{registroInfiltradoPK}') en columnas: {colsAfectadas}.");
-                }
-                else
-                {
-                    reporte.Add($"[ERROR ELIMINACIÓN] Tabla: '{nombreTabla}' -> Se ha detectado la ELIMINACIÓN de uno o más registros (Inconsistencia de DVV en columnas: {colsAfectadas}).");
-                }
-            }
+            yield return new TablaDV<LotePuntos>("LotePuntos", "idLote", _controlDVDal,
+                () => _loteDal.ListarParaDV(), x => x.IdLote.ToString("D10"), x => x.DVH, x => x.CadenaDVH(),
+                (x, dvh) => _loteDal.ActualizarDVH(x.IdLote, dvh),
+                Col<LotePuntos>("idLote", x => FormatoDV.Entero(x.IdLote)),
+                Col<LotePuntos>("idCliente", x => FormatoDV.Entero(x.IdCliente)),
+                Col<LotePuntos>("idVenta", x => FormatoDV.Entero(x.IdVenta)),
+                Col<LotePuntos>("idReclamo", x => FormatoDV.Entero(x.IdReclamo)),
+                Col<LotePuntos>("puntosOriginales", x => FormatoDV.Entero(x.PuntosOriginales)),
+                Col<LotePuntos>("puntosDisponibles", x => FormatoDV.Entero(x.PuntosDisponibles)),
+                Col<LotePuntos>("fechaAcreditacion", x => FormatoDV.Fecha(x.FechaAcreditacion)),
+                Col<LotePuntos>("fechaVencimiento", x => FormatoDV.Fecha(x.FechaVencimiento)),
+                Col<LotePuntos>("origen", x => x.Origen.ToString()));
         }
 
-        private string CalcularDVH_Perfil(Familia p) => DigitoVerificador.CalcularDVH(p.Nombre);
-        private string CalcularDVH_Usuario(Usuario u) => DigitoVerificador.CalcularDVH(u.DNI + u.Nombre + u.Apellido + u.Username + u.Password + u.Email + u.Bloqueado + u.Activo + u.Rol);
-        private string CalcularDVH_Bitacora(Bitacora b) => DigitoVerificador.CalcularDVH(b.Login + b.Fecha.ToString("yyyy-MM-dd HH:mm:ss") + b.Modulo + b.Evento + b.Criticidad.ToString());
-        private string CalcularDVH_Idioma(Idioma i) => DigitoVerificador.CalcularDVH(i.UserName + i.CodigoIdioma);
-        private string CalcularDVH_PermisoSimple(PermisoSimple p) => DigitoVerificador.CalcularDVH(p.Nombre);
-        private string CalcularDVH_Familia(Familia f) => DigitoVerificador.CalcularDVH(f.Nombre);
+        private static KeyValuePair<string, Func<T, string>> Col<T>(string nombre, Func<T, string> valor)
+            => new KeyValuePair<string, Func<T, string>>(nombre, valor);
+
+        // ---------------------------------------------------------------------------------
+        // DVH por fila (lo que usan los BLL después de modificar UNA fila).
+        // Recalcular el DVH de toda la tabla en cada operación "lavaba" cualquier fila adulterada,
+        // por eso ahora solo se recalcula la fila que cambió el sistema.
+        // ---------------------------------------------------------------------------------
+        public void RecalcularDVH_Usuario(string dni)
+        {
+            Usuario? u = _usuarioDal.ListarTodosLosUsuariosDVH().FirstOrDefault(x => x.DNI == dni);
+            if (u != null)
+                _usuarioDal.ActualizarDVH(u.DNI, DigitoVerificador.CalcularDVH(CadenaDVH_Usuario(u)));
+        }
+
+        // Recalculo completo de DVH (solo se usa desde la reparación de DV).
+        public void RecalcularDVH_Usuario() => _tablas["Usuario"].RecalcularDVH();
+        public void RecalcularDVH_Bitacora() => _tablas["Bitacora"].RecalcularDVH();
+        public void RecalcularDVH_Idioma() => _tablas["Idioma"].RecalcularDVH();
+        public void RecalcularDVH_Perfil() => _tablas["Perfil"].RecalcularDVH();
+        public void RecalcularDVH_PermisoSimple() => _tablas["PermisoSimple"].RecalcularDVH();
+        public void RecalcularDVH_Familia() => _tablas["Familia"].RecalcularDVH();
+
+        // ---------------------------------------------------------------------------------
+        // DVV
+        // ---------------------------------------------------------------------------------
+        public void RecalcularDVV_Perfil() => RecalcularDVV("Perfil");
+        public void RecalcularDVV_Usuario() => RecalcularDVV("Usuario");
+        public void RecalcularDVV_Bitacora() => RecalcularDVV("Bitacora");
+        public void RecalcularDVV_Idioma() => RecalcularDVV("Idioma");
+        public void RecalcularDVV_PermisoSimple() => RecalcularDVV("PermisoSimple");
+        public void RecalcularDVV_Familia() => RecalcularDVV("Familia");
+        public void RecalcularDVV_Cliente() => RecalcularDVV("Cliente");
+        public void RecalcularDVV_Venta() => RecalcularDVV("Venta");
+        public void RecalcularDVV_DetalleVenta() => RecalcularDVV("DetalleVenta");
+        public void RecalcularDVV_Reclamo() => RecalcularDVV("Reclamo");
+        public void RecalcularDVV_LotePuntos() => RecalcularDVV("LotePuntos");
+
+        private void RecalcularDVV(string tabla)
+        {
+            _tablas[tabla].RecalcularDVV();
+            RecalcularDVVBaseDeDatos();
+        }
+
+        private void RecalcularDVVBaseDeDatos()
+        {
+            var totales = TablasDelSistema.Select(t => _controlDVDal.ObtenerDVV(t, "TOTAL_TABLA") ?? "0").ToList();
+            _controlDVDal.ActualizarDVV("SISTEMA", "TOTAL_BASE_DATOS", DigitoVerificador.CalcularDVV(totales));
+        }
 
         public void RecalcularDVV_General()
         {
             try
             {
-                
-                RecalcularDVH_Usuario();
-                RecalcularDVH_Familia();
-                RecalcularDVH_PermisoSimple();
-                RecalcularDVH_Perfil();
-                
-                RecalcularDVH_Idioma();
+                foreach (string tabla in TablasDelSistema.Where(t => t != "Bitacora"))
+                {
+                    _tablas[tabla].RecalcularDVH();
+                    _tablas[tabla].RecalcularDVV();
+                }
 
-                
-                
-                RecalcularDVV_Familia();
-                RecalcularDVV_Idioma();
-                RecalcularDVV_Perfil();
-                RecalcularDVV_PermisoSimple();
-                RecalcularDVV_Usuario();
-
+                // La bitácora va al final para que el evento del recálculo también quede cubierto.
                 RegistrarEvento("Recalculo de DVV y DVH realizado correctamente", 1);
-                RecalcularDVH_Bitacora();
-                RecalcularDVV_Bitacora();
+                _tablas["Bitacora"].RecalcularDVH();
+                _tablas["Bitacora"].RecalcularDVV();
+
+                RecalcularDVVBaseDeDatos();
             }
             catch (Exception ex)
             {
                 RegistrarEvento("Error al recalcular DVV y DVH", 3);
                 throw new Exception(LanguageManager.Instance.GetTraduction("TextDV13") + ex.Message);
             }
-            
-
-
         }
+
+        // ---------------------------------------------------------------------------------
+        // Auditoría
+        // ---------------------------------------------------------------------------------
+        public List<string> EjecutarAuditoriaDetalladaCompleta()
+        {
+            var reporte = new List<string>();
+            foreach (string tabla in TablasDelSistema)
+            {
+                _tablas[tabla].Auditar(reporte);
+            }
+            return reporte;
+        }
+
         private void RegistrarEvento(string descripcion, int criticidad)
         {
             try
             {
-                string login = SessionManager.Instance?.UsuarioActual()?.Username ?? "Sistema";
+                string login = SessionManager.Instance.Logueado() ? SessionManager.Instance.UsuarioActual().Username : "Sistema";
                 Bitacora evento = new Bitacora
                 {
                     Login = login,
                     Modulo = "DigitoVerificador",
-                    Fecha = DateTime.Now,
+                    Fecha = BitacoraBLL.AhoraSinMilisegundos(),
                     Evento = descripcion,
                     Criticidad = criticidad
                 };
-                string cadenaDVH = evento.Login + evento.Fecha.ToString("yyyy-MM-dd HH:mm:ss") + evento.Modulo + evento.Evento + evento.Criticidad.ToString();
-                _bitacoraDal.RegistrarEvento(evento, DigitoVerificador.CalcularDVH(cadenaDVH));
+                _bitacoraDal.RegistrarEvento(evento, DigitoVerificador.CalcularDVH(CadenaDVH_Bitacora(evento)));
             }
             catch { }
+        }
+
+        // =================================================================================
+        // Infraestructura genérica
+        // =================================================================================
+        private interface ITablaDV
+        {
+            string Nombre { get; }
+            void RecalcularDVH();
+            void RecalcularDVV();
+            void Auditar(List<string> reporte);
+        }
+
+        private class TablaDV<T> : ITablaDV where T : class
+        {
+            public string Nombre { get; }
+            private readonly string _columnaPK;
+            private readonly DigitoVerificadorDAL _dal;
+            private readonly Func<List<T>> _listar;
+            private readonly Func<T, string> _clave;          // clave de orden (PK; los enteros van con ceros a la izquierda)
+            private readonly Func<T, string> _dvhGuardado;
+            private readonly Func<T, string> _cadenaDVH;
+            private readonly Action<T, string> _actualizarDVH;
+            private readonly KeyValuePair<string, Func<T, string>>[] _columnas;
+
+            public TablaDV(string nombre, string columnaPK, DigitoVerificadorDAL dal, Func<List<T>> listar,
+                           Func<T, string> clave, Func<T, string> dvhGuardado, Func<T, string> cadenaDVH,
+                           Action<T, string> actualizarDVH, params KeyValuePair<string, Func<T, string>>[] columnas)
+            {
+                Nombre = nombre;
+                _columnaPK = columnaPK;
+                _dal = dal;
+                _listar = listar;
+                _clave = clave;
+                _dvhGuardado = dvhGuardado;
+                _cadenaDVH = cadenaDVH;
+                _actualizarDVH = actualizarDVH;
+                _columnas = columnas;
+            }
+
+            // Orden ordinal en memoria: no depende de la collation de SQL Server.
+            private List<T> Filas() => _listar().OrderBy(_clave, StringComparer.Ordinal).ToList();
+
+            // Para mostrar en el reporte: los ids enteros sin los ceros de relleno.
+            private string PK(T fila)
+            {
+                string k = _clave(fila);
+                return _clave(fila).Length == 10 && k.All(char.IsDigit) ? int.Parse(k).ToString() : k;
+            }
+
+            private string DVHCalculado(T fila) => DigitoVerificador.CalcularDVH(_cadenaDVH(fila));
+
+            private static string DVV(IEnumerable<T> filas, Func<T, string> valor) =>
+                DigitoVerificador.CalcularDVV(filas.Select(f => valor(f) ?? "").ToList());
+
+            public void RecalcularDVH()
+            {
+                foreach (T fila in _listar())
+                {
+                    string dvh = DVHCalculado(fila);
+                    if (dvh != _dvhGuardado(fila)) _actualizarDVH(fila, dvh);
+                }
+            }
+
+            public void RecalcularDVV()
+            {
+                List<T> filas = Filas();
+                var hashes = new List<string>();
+                foreach (var col in _columnas)
+                {
+                    string dvv = DVV(filas, col.Value);
+                    _dal.ActualizarDVV(Nombre, col.Key, dvv);
+                    hashes.Add(dvv);
+                }
+                _dal.ActualizarDVV(Nombre, "TOTAL_TABLA", DigitoVerificador.CalcularDVV(hashes));
+            }
+
+            public void Auditar(List<string> reporte)
+            {
+                List<T> filas = Filas();
+                var guardados = _columnas.ToDictionary(c => c.Key, c => _dal.ObtenerDVV(Nombre, c.Key) ?? "");
+                var colsErroneas = _columnas.Where(c => DVV(filas, c.Value) != guardados[c.Key]).ToList();
+                var filasMal = filas.Where(f => DVHCalculado(f) != _dvhGuardado(f)).ToList();
+
+                // ¿Sacando esta fila los DVV de las columnas con error vuelven a coincidir? => la fila fue insertada por fuera del sistema.
+                bool FilaInsertada(T fila) =>
+                    colsErroneas.Count > 0 &&
+                    colsErroneas.All(c => DVV(filas.Where(x => !ReferenceEquals(x, fila)), c.Value) == guardados[c.Key]);
+
+                foreach (T fila in filasMal)
+                {
+                    if (FilaInsertada(fila))
+                    {
+                        reporte.Add($"[ERROR INSERCIÓN NO AUTORIZADA] Tabla: '{Nombre}' -> Se insertó un NUEVO registro (PK {_columnaPK}: '{PK(fila)}') con DVH inválido.");
+                    }
+                    else if (colsErroneas.Count > 0)
+                    {
+                        string columnas = string.Join(", ", colsErroneas.Select(c => c.Key));
+                        reporte.Add($"[ERROR MODIFICACIÓN] Tabla: '{Nombre}' -> Registro {_columnaPK}: '{PK(fila)}' tiene datos alterados en la Columna: '{columnas}'.");
+                    }
+                    else
+                    {
+                        reporte.Add($"[ERROR MODIFICACIÓN] Tabla: '{Nombre}' -> Registro {_columnaPK}: '{PK(fila)}' tiene el DVH alterado.");
+                    }
+                }
+
+                if (filasMal.Count == 0 && colsErroneas.Count > 0)
+                {
+                    string columnas = string.Join(", ", colsErroneas.Select(c => c.Key));
+                    T? insertada = filas.FirstOrDefault(FilaInsertada);
+                    if (insertada != null)
+                    {
+                        reporte.Add($"[ERROR INSERCIÓN NO AUTORIZADA] Tabla: '{Nombre}' -> Se detectó un NUEVO registro no autorizado (PK {_columnaPK}: '{PK(insertada)}') en columnas: {columnas}.");
+                    }
+                    else
+                    {
+                        reporte.Add($"[ERROR ELIMINACIÓN] Tabla: '{Nombre}' -> Se ha detectado la ELIMINACIÓN o alteración de uno o más registros (Inconsistencia de DVV en columnas: {columnas}).");
+                    }
+                }
+            }
         }
     }
 }

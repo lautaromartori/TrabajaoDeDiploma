@@ -89,9 +89,7 @@ namespace GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Menu cambiarContraseña = new Menu();
-            cambiarContraseña.Show();
+            Navegacion.VolverAlMenu(this);
         }
         private void BarraTitulo_MouseDown(object sender, MouseEventArgs e)
         {

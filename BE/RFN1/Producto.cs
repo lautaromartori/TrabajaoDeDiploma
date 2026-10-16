@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BE.RFN1
+﻿namespace BE.RFN1
 {
     public class Producto
     {
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-        public decimal PrecioCosto { get; set; }
-        public decimal ImpuestoPorcentaje { get; set; }
+        private int idProducto;
+        private string nombre = "";
+        private decimal precio;
+        private Categoria categoria = new Categoria();
 
-        public override string ToString()
-        {
-            return Nombre;
-        }
+        public int IdProducto { get => idProducto; set => idProducto = value; }
+        public string Nombre { get => nombre; set => nombre = value; }
+        public decimal Precio { get => precio; set => precio = value; }
+        public Categoria Categoria { get => categoria; set => categoria = value; }
+
+        public override string ToString() => Nombre;
     }
 }

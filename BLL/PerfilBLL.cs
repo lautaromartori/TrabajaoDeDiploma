@@ -89,12 +89,14 @@ namespace BLL
         public void CrearPermiso(string nombre)
         {
             _dal.GuardarPermiso(new PermisoSimple { Nombre = nombre, DVH = DigitoVerificador.CalcularDVH(nombre) });
+            _digitoVerificadorBLL.RecalcularDVV_PermisoSimple();
             RegistrarEnBitacora(SessionManager.Instance.UsuarioActual().Username, $"Crear permiso simple: {nombre}", 1);
         }
 
         public void EliminarPermiso(string nombre)
         {
             _dal.EliminarPermiso(nombre);
+            _digitoVerificadorBLL.RecalcularDVV_PermisoSimple();
             RegistrarEnBitacora(SessionManager.Instance.UsuarioActual().Username, $"Eliminar permiso simple: {nombre}", 1);
             RecargarPermisosUsuarioEnSesion();
         }

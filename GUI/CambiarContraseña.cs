@@ -89,11 +89,10 @@ namespace GUI
 
         private void linkVolver_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if(SessionManager.Instance.UsuarioActual != null)
+            // Antes comparaba el método UsuarioActual con null (siempre true) y abría el menú sin sesión.
+            if (SessionManager.Instance.Logueado())
             {
-                this.Close();
-                Menu menu = new Menu();
-                menu.Show();
+                Navegacion.VolverAlMenu(this);
             }
             else
             {

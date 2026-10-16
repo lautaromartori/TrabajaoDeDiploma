@@ -38,22 +38,35 @@ namespace BLL
                 Usuario usuarioBE = usuarioDAL.ObtenerPorUserName(usuario);
                 if (usuarioBE != null)
                 {
+                    // Un usuario dado de baja (baja lógica) no puede ingresar.
+                    if (!usuarioBE.Activo) return LoginResultado.Inactivo;
                     if (usuarioBE.Bloqueado) return LoginResultado.Bloqueado;
 
                     if (usuarioBE.Password != Encriptador.GetHash256(contraseña))
                     {
                         usuarioDAL.SumarIntentoFallido(usuarioBE);
-
-                        if (usuarioDAL.ObtenerIntentosFallidos(usuarioBE.DNI) >= 3)
+                        bool bloquear = usuarioDAL.ObtenerIntentosFallidos(usuarioBE.DNI) >= 3;
+                        if (bloquear)
                         {
                             usuarioDAL.BloquearUsuario(usuarioBE.Username);
-                            return LoginResultado.Bloqueado;
                         }
-                        return LoginResultado.ContraseñaIncorrecta;
+
+                        // Intentos y Bloqueado forman parte del DV: sin esto el próximo login marcaba inconsistencia.
+                        digitoVerificadorBLL.RecalcularDVH_Usuario(usuarioBE.DNI);
+                        digitoVerificadorBLL.RecalcularDVV_Usuario();
+                        RegistrarEventoLogin(usuarioBE.Username, bloquear ? "Usuario bloqueado por intentos fallidos" : "Login fallido", bloquear ? 3 : 2);
+
+                        return bloquear ? LoginResultado.Bloqueado : LoginResultado.ContraseñaIncorrecta;
                     }
                     else
                     {
-                    
+                        if (usuarioDAL.ObtenerIntentosFallidos(usuarioBE.DNI) > 0)
+                        {
+                            usuarioDAL.ResetearIntentos(usuarioBE);
+                            digitoVerificadorBLL.RecalcularDVH_Usuario(usuarioBE.DNI);
+                            digitoVerificadorBLL.RecalcularDVV_Usuario();
+                        }
+
                         BLL.PerfilBLL perfilBLL = new BLL.PerfilBLL();
                         var todosLosPerfiles = perfilBLL.ObtenerPerfiles();
                         var perfilUsuario = todosLosPerfiles.FirstOrDefault(p => p.Nombre == usuarioBE.Rol);
@@ -74,6 +87,15 @@ namespace BLL
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        private void RegistrarEventoLogin(string login, string evento, int criticidad)
+        {
+            try
+            {
+                bitacoraBLL.RegistrarEvento(new Bitacora { Login = login, Modulo = "Usuarios", Evento = evento, Criticidad = criticidad });
+            }
+            catch { }
         }
 
         public void Desloguear()
@@ -103,17 +125,12 @@ namespace BLL
                 ValidarCaracteresUsuario(usuarioBE);
                 if (usuarioDAL.BuscarUsuarioPorDNI(usuarioBE.DNI) == null)
                 {
-                    string cadenaDV = 
-                        usuarioBE.DNI + 
-                        usuarioBE.Nombre + 
-                        usuarioBE.Apellido + 
-                        usuarioBE.Username + 
-                        usuarioBE.Password + 
-                        usuarioBE.Email + 
-                        usuarioBE.Bloqueado + 
-                        usuarioBE.Activo +
-                        usuarioBE.Rol;
-                    
+                    // El DAL inserta Bloqueado = 0, Activo = 1 e Intentos = 0: el DVH se arma con esos mismos valores.
+                    usuarioBE.Bloqueado = false;
+                    usuarioBE.Activo = true;
+                    usuarioBE.Intentos = 0;
+                    string cadenaDV = DigitoVerificadorBLL.CadenaDVH_Usuario(usuarioBE);
+
                     usuarioDAL.Registrar(usuarioBE, DigitoVerificador.CalcularDVH(cadenaDV));
                     digitoVerificadorBLL.RecalcularDVV_Usuario();
                     Bitacora bitacora = new Bitacora();
@@ -130,7 +147,8 @@ namespace BLL
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                // Antes se mostraba un MessageBox desde la BLL y la pantalla seguía como si se hubiera grabado.
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -158,7 +176,7 @@ namespace BLL
                 if (user.Activo)
                 {
                     usuarioDAL.EliminarLogico(dNI);
-                    digitoVerificadorBLL.RecalcularDVH_Usuario();    
+                    digitoVerificadorBLL.RecalcularDVH_Usuario(dNI);
                     digitoVerificadorBLL.RecalcularDVV_Usuario();
 
                     Bitacora bitacora = new Bitacora();
@@ -171,7 +189,7 @@ namespace BLL
                 else
                 {
                     usuarioDAL.ActivarUsuario(dNI);
-                    digitoVerificadorBLL.RecalcularDVH_Usuario();
+                    digitoVerificadorBLL.RecalcularDVH_Usuario(dNI);
                     digitoVerificadorBLL.RecalcularDVV_Usuario();
                     Bitacora bitacora = new Bitacora();
                     bitacora.Login = SessionManager.Instance.UsuarioActual().Username;
@@ -199,7 +217,7 @@ namespace BLL
                 if (user.Bloqueado) return LoginResultado.Bloqueado;
 
                 usuarioDAL.CambiarClave(usuario, Encriptador.GetHash256(nuevaContra));
-                digitoVerificadorBLL.RecalcularDVH_Usuario();
+                digitoVerificadorBLL.RecalcularDVH_Usuario(user.DNI);
                 digitoVerificadorBLL.RecalcularDVV_Usuario();
                 Bitacora bitacora = new Bitacora();
                 bitacora.Login = usuario;
@@ -229,7 +247,7 @@ namespace BLL
                 else
                 {
                     usuarioDAL.Modificar(dNI, usuarioBE);
-                    digitoVerificadorBLL.RecalcularDVH_Usuario();
+                    digitoVerificadorBLL.RecalcularDVH_Usuario(usuarioBE.DNI);
                     digitoVerificadorBLL.RecalcularDVV_Usuario();
                     Bitacora bitacora = new Bitacora();
                     bitacora.Login = SessionManager.Instance.UsuarioActual().Username;
@@ -252,7 +270,7 @@ namespace BLL
                     string nuevaClave = Encriptador.GetHash256(user.DNI + user.Nombre);
 
                     usuarioDAL.DesbloquearUsuario(user.DNI, nuevaClave);
-                    digitoVerificadorBLL.RecalcularDVH_Usuario();
+                    digitoVerificadorBLL.RecalcularDVH_Usuario(user.DNI);
                     digitoVerificadorBLL.RecalcularDVV_Usuario();
                     Bitacora bitacora = new Bitacora();
                     bitacora.Login = SessionManager.Instance.UsuarioActual().Username;

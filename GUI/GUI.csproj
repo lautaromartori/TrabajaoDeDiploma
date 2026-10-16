@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -220,27 +220,40 @@
     <Compile Include="Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Navegacion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RFN1\frmGestionProductos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RFN1\frmGestionProductos.Designer.cs">
-      <DependentUpon>frmGestionProductos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RFN1\frmGestionProveedores.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RFN1\frmGestionProveedores.Designer.cs">
-      <DependentUpon>frmGestionProveedores.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RFN1\frmRegistrarCompra.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RFN1\frmRegistrarCompra.Designer.cs">
-      <DependentUpon>frmRegistrarCompra.cs</DependentUpon>
-    </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="RFN1\frmRegistrarCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN1\frmRegistrarCliente.Designer.cs">
+      <DependentUpon>frmRegistrarCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RFN1\frmSaldo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN1\frmSaldo.Designer.cs">
+      <DependentUpon>frmSaldo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RFN1\frmVenta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN1\frmVenta.Designer.cs">
+      <DependentUpon>frmVenta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RFN1\frmReclamo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN1\frmReclamo.Designer.cs">
+      <DependentUpon>frmReclamo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RFN1\frmResolverReclamos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN1\frmResolverReclamos.Designer.cs">
+      <DependentUpon>frmResolverReclamos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Usuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -291,15 +304,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="RFN1\frmGestionProductos.resx">
-      <DependentUpon>frmGestionProductos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RFN1\frmGestionProveedores.resx">
-      <DependentUpon>frmGestionProveedores.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RFN1\frmRegistrarCompra.resx">
-      <DependentUpon>frmRegistrarCompra.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Usuarios.resx">
       <DependentUpon>Usuarios.cs</DependentUpon>
     </EmbeddedResource>

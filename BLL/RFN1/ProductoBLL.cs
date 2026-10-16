@@ -1,41 +1,21 @@
-﻿using BE;
-using BE.RFN1;
-using DAL;
+﻿using BE.RFN1;
 using DAL.RFN1;
-using System;
 using System.Collections.Generic;
 
 namespace BLL.RFN1
 {
     public class ProductoBLL
     {
-        private readonly ProductoDAL _productoDAL;
+        private readonly ProductoDAL _productoDAL = new ProductoDAL();
 
-        public ProductoBLL()
+        // null = el producto no existe (flujo 4.1 de CU-N01-003).
+        public Producto? Buscar(string nombre)
         {
-            _productoDAL = new ProductoDAL();
+            nombre = (nombre ?? "").Trim();
+            if (nombre.Length == 0) return null;
+            return _productoDAL.Buscar(nombre);
         }
 
-        public List<Producto> Listar()
-        {
-            return _productoDAL.Listar();
-        }
-
-        public int Guardar(Producto producto)
-        {
-            if (producto == null)
-                throw new ArgumentNullException(nameof(producto), "El producto no puede ser nulo.");
-
-            if (string.IsNullOrWhiteSpace(producto.Nombre))
-                throw new Exception("El nombre del producto es obligatorio.");
-
-            if (producto.PrecioCosto < 0)
-                throw new Exception("El precio de costo no puede ser negativo.");
-
-            if (producto.ImpuestoPorcentaje < 0)
-                throw new Exception("El porcentaje de impuesto no puede ser negativo.");
-
-            return _productoDAL.Guardar(producto);
-        }
+        public List<Producto> Listar() => _productoDAL.Listar();
     }
 }

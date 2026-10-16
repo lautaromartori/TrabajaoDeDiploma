@@ -12,7 +12,7 @@ using Servicios;
 
 namespace GUI
 {
-    public partial class Login : Form,IObserver
+    public partial class Login : Form, IObserver
     {
         BitacoraBLL bitacoraBLL = new BitacoraBLL();
         int posX, posY;
@@ -34,7 +34,8 @@ namespace GUI
             if (mostrar)
             {
                 pbMostrarClave.Image = Properties.Resources.OjoAbierto;
-            }else
+            }
+            else
             {
                 pbMostrarClave.Image = Properties.Resources.OjoCerrado;
             }
@@ -112,23 +113,23 @@ namespace GUI
 
                         LanguageManager.Instance.CargarIdioma(idioma);
 
-                        string rol = usuarioBLL.RetornarRol(username);
-
                         if (Auditoria.Count > 0)
                         {
-                           if(rol == "Administrador") 
-                           {
+                            // Solo quien tiene el permiso de DV (el administrador) puede entrar a reparar.
+                            if (SessionManager.Instance.UsuarioActual().TienePermiso("Gestionar DigitoVerificadores"))
+                            {
                                 this.Hide();
                                 frmReparacionDV frmRep = new frmReparacionDV();
                                 frmRep.Show();
                                 break;
-                           }
-                           else
-                            {
-                                string mensaje = "Se han detectado inconsistencias en la base de datos, porfavor contacte al administrador:\n\n";
-                                MessageBox.Show(mensaje, "Error de Integridad", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                Application.Exit();
                             }
+
+                            string mensaje = "Se han detectado inconsistencias en la base de datos, por favor contacte al administrador.";
+                            MessageBox.Show(mensaje, "Error de Integridad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            // Antes se llamaba a Application.Exit() y el código seguía: registraba el login y abría el menú igual.
+                            SessionManager.Instance.Desloguear();
+                            Application.Exit();
+                            return;
                         }
 
                         Bitacora bitacora = new Bitacora();
@@ -138,11 +139,13 @@ namespace GUI
                         bitacora.Criticidad = 1;
                         bitacoraBLL.RegistrarEvento(bitacora);
 
-                        
+
                         this.Hide();
                         Menu menu = new Menu();
                         menu.ShowDialog();
                         break;
+                    case LoginResultado.Inactivo:
+                        throw new Exception("El usuario está dado de baja. Pedile a un administrador que lo active desde Usuarios.");
                     case LoginResultado.Bloqueado:
                         throw new Exception("Usuario Bloqueado, contacte al administrador.");
                     case LoginResultado.Error:
@@ -154,13 +157,14 @@ namespace GUI
             catch (Exception ex)
             {
                 //cambiar idioma
-                MessageBox.Show(ex.ToString(), "Error! (DEBUG)", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void ValidarCamposVacios()
         {
-            if(txtUsuario.Text == "") { 
+            if (txtUsuario.Text == "")
+            {
                 throw new Exception("Ingrese un Usuario!");
             }
             if (txtContraseña.Text == "")

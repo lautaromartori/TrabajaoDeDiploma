@@ -26,10 +26,18 @@ namespace GUI
 
         private void btnRecalcularDV_Click(object sender, EventArgs e)
         {
-            if(Convert.ToBoolean(MessageBox.Show(LanguageManager.Instance.GetTraduction("TextDV1"), LanguageManager.Instance.GetTraduction("TextDV2"), MessageBoxButtons.YesNo, MessageBoxIcon.Information)))
+            // Antes: Convert.ToBoolean(DialogResult) daba true también con "No" (Yes = 6, No = 7) y recalculaba igual.
+            if (MessageBox.Show(LanguageManager.Instance.GetTraduction("TextDV1"), LanguageManager.Instance.GetTraduction("TextDV2"), MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
             {
-
-                DVBLL.RecalcularDVV_General();
+                try
+                {
+                    DVBLL.RecalcularDVV_General();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 SessionManager.Instance.Desloguear();
                 MessageBox.Show(LanguageManager.Instance.GetTraduction("TextDV3"), LanguageManager.Instance.GetTraduction("TextDV2"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
@@ -126,8 +134,8 @@ namespace GUI
             lblModuloReparacion.Text = lenguaje.GetTraduction("lblModuloReparacion");
             lblForzar.Text = lenguaje.GetTraduction("lblForzar");
             btnRecalcularDV.Text = lenguaje.GetTraduction("btnRecalcularDV");
-            btnRestaurar.Text = lenguaje.GetTraduction("lblSelecVers");
-            lblSelecVers.Text= lenguaje.GetTraduction("btnRestaurar");
+            btnRestaurar.Text = lenguaje.GetTraduction("btnRestaurar");
+            lblSelecVers.Text = lenguaje.GetTraduction("lblSelecVers");
             btnCancelardv.Text = lenguaje.GetTraduction("btnCancelardv");
         }
 

@@ -19,8 +19,9 @@ namespace BLL
         {
             try
             {
-                unEvento.Fecha = DateTime.Now;
-                string cadenaDVH = unEvento.Login + unEvento.Fecha.ToString("yyyy-MM-dd HH:mm:ss") + unEvento.Modulo + unEvento.Evento + unEvento.Criticidad.ToString();
+                // Sin milisegundos: SQL Server redondea el datetime y podía cambiar el segundo que entra en el DVH.
+                unEvento.Fecha = AhoraSinMilisegundos();
+                string cadenaDVH = DigitoVerificadorBLL.CadenaDVH_Bitacora(unEvento);
 
                 DAL.RegistrarEvento(unEvento, DigitoVerificador.CalcularDVH(cadenaDVH));
                 digitoVerificadorBLL.RecalcularDVV_Bitacora();
@@ -31,6 +32,12 @@ namespace BLL
             }
         }
 
+
+        public static DateTime AhoraSinMilisegundos()
+        {
+            DateTime ahora = DateTime.Now;
+            return new DateTime(ahora.Ticks - (ahora.Ticks % TimeSpan.TicksPerSecond), ahora.Kind);
+        }
 
         public List<Bitacora> FiltrarEventos(string nombre, string apellido, string login, string modulo, string evento, DateTime desde, DateTime hasta, int? criticidad)
         {

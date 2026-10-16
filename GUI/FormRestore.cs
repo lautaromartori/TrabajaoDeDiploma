@@ -72,9 +72,7 @@ namespace GUI
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Menu menu = new Menu();
-            menu.Show();
+            Navegacion.VolverAlMenu(this);
         }
 
         private void btnMaximizar_Click(object sender, EventArgs e)

@@ -66,9 +66,7 @@ namespace GUI
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Menu menu = new Menu();
-            menu.Show();
+            Navegacion.VolverAlMenu(this);
         }
 
         private void panel1_MouseUp(object sender, MouseEventArgs e) => arrastrando = false;

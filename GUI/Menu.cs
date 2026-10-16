@@ -167,11 +167,14 @@ namespace GUI
                 string username = SessionManager.Instance.UsuarioActual().Username;
                 idiomaBLL.GuardarIdioma(username, LanguageManager.Instance.CodigoIdiomaActual);
 
-                SessionManager.Instance.Desloguear();
+                // Por UsuarioBLL para que el logout quede en la bitácora.
+                new UsuarioBLL().Desloguear();
 
-                this.Hide();
                 Login login = new Login();
                 login.Show();
+                // Se cierra (no solo se oculta) para que el próximo login no vuelva a este menú viejo.
+                LanguageManager.Instance.EliminarObservador(this);
+                this.Close();
             }
             
         }
@@ -254,47 +257,35 @@ namespace GUI
             mostrarSubmenu(panelGestionSubmenu);
         }
 
-        private void btnRegistrarCompra_Click(object sender, EventArgs e)
+        // ---------------- RFN1: Programa de puntos ----------------
+        // Cada botón abre la pantalla de un CU. Si el usuario no tiene el permiso, no entra.
+        private bool AbrirSiTienePermiso(string permiso, Func<Form> crear)
         {
-            if (!SessionManager.Instance.UsuarioActual().TienePermiso("Registrar Compra"))
+            if (!SessionManager.Instance.UsuarioActual().TienePermiso(permiso))
             {
-                MessageBox.Show("No tiene permisos para acceder a Registrar Compras.",
+                MessageBox.Show($"No tiene permisos para acceder a {permiso}.",
                     "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return;
+                return false;
             }
-
             this.Hide();
-            frmRegistrarCompra frm = new frmRegistrarCompra();
-            frm.Show();
+            crear().Show();
+            return true;
         }
 
-        private void btnGestionProveedores_Click(object sender, EventArgs e)
-        {
-            if (!SessionManager.Instance.UsuarioActual().TienePermiso("Gestionar Proveedores"))
-            {
-                MessageBox.Show("No tiene permisos para acceder a la Gestión de Proveedores.",
-                    "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return;
-            }
+        private void btnRegistrarCliente_Click(object sender, EventArgs e) =>
+            AbrirSiTienePermiso("Registrar Cliente", () => new frmRegistrarCliente());
 
-            this.Hide();
-            frmGestionProveedores frm = new frmGestionProveedores();
-            frm.Show();
-        }
+        private void btnConsultarSaldo_Click(object sender, EventArgs e) =>
+            AbrirSiTienePermiso("Consultar Saldo", () => new frmSaldo());
 
-        private void btnGestionProductos_Click(object sender, EventArgs e)
-        {
-            if (!SessionManager.Instance.UsuarioActual().TienePermiso("Gestionar Productos"))
-            {
-                MessageBox.Show("No tiene permisos para acceder a la Gestión de Productos.",
-                    "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return;
-            }
+        private void btnRegistrarVenta_Click(object sender, EventArgs e) =>
+            AbrirSiTienePermiso("Registrar Venta", () => new frmVenta());
 
-            this.Hide();
-            frmGestionProductos frm = new frmGestionProductos();
-            frm.Show();
-        }
+        private void btnRegistrarReclamo_Click(object sender, EventArgs e) =>
+            AbrirSiTienePermiso("Registrar Reclamo", () => new frmReclamo());
+
+        private void btnResolverReclamos_Click(object sender, EventArgs e) =>
+            AbrirSiTienePermiso("Resolver Reclamo", () => new frmResolverReclamos());
 
         public void Actualizar(LanguageManager lenguaje)
         {
@@ -305,7 +296,6 @@ namespace GUI
             btnRestore.Text = LanguageManager.Instance.GetTraduction("btnRestore");
             btnBitacora.Text = LanguageManager.Instance.GetTraduction("btnBitacora");
             btnDigitoVerificador.Text = LanguageManager.Instance.GetTraduction("btnDigitoVerificador");
-            btnGestion.Text = LanguageManager.Instance.GetTraduction("btnMaestro");
             btnUsuario.Text = LanguageManager.Instance.GetTraduction("btnUsuario");
             btnReLogin.Text = LanguageManager.Instance.GetTraduction("btnReLogin");
             btnCambiarClave.Text = LanguageManager.Instance.GetTraduction("btnCambiarClave");
@@ -313,7 +303,11 @@ namespace GUI
             btnCambiarIdioma.Text = LanguageManager.Instance.GetTraduction("btnCambiarIdioma");
 
             btnGestion.Text = LanguageManager.Instance.GetTraduction("btnGestion");
-            btnRegistrarCompra.Text = LanguageManager.Instance.GetTraduction("btnRegistrarCompra");
+            btnRegistrarCliente.Text = LanguageManager.Instance.GetTraduction("RFN1_RegistrarCliente");
+            btnConsultarSaldo.Text = LanguageManager.Instance.GetTraduction("RFN1_ConsultarSaldo");
+            btnRegistrarVenta.Text = LanguageManager.Instance.GetTraduction("RFN1_RegistrarVenta");
+            btnRegistrarReclamo.Text = LanguageManager.Instance.GetTraduction("RFN1_RegistrarReclamo");
+            btnResolverReclamos.Text = LanguageManager.Instance.GetTraduction("RFN1_ResolverReclamos");
         }
     }
 }

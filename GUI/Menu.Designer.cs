@@ -35,7 +35,11 @@
             this.btnMinimizar = new System.Windows.Forms.PictureBox();
             this.MenuVertical = new System.Windows.Forms.Panel();
             this.panelGestionSubmenu = new System.Windows.Forms.Panel();
-            this.btnRegistrarCompra = new System.Windows.Forms.Button();
+            this.btnRegistrarCliente = new System.Windows.Forms.Button();
+            this.btnConsultarSaldo = new System.Windows.Forms.Button();
+            this.btnRegistrarVenta = new System.Windows.Forms.Button();
+            this.btnRegistrarReclamo = new System.Windows.Forms.Button();
+            this.btnResolverReclamos = new System.Windows.Forms.Button();
             this.panelUsuarioSubmenu = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.btnCambiarIdioma = new System.Windows.Forms.Button();
@@ -131,9 +135,9 @@
             // MenuVertical
             // 
             this.MenuVertical.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.MenuVertical.Controls.Add(this.panelGestionSubmenu);
             this.MenuVertical.Controls.Add(this.panelUsuarioSubmenu);
             this.MenuVertical.Controls.Add(this.btnUsuario);
+            this.MenuVertical.Controls.Add(this.panelGestionSubmenu);
             this.MenuVertical.Controls.Add(this.btnGestion);
             this.MenuVertical.Controls.Add(this.panelAdminSubmenu);
             this.MenuVertical.Controls.Add(this.btnAdmin);
@@ -146,21 +150,98 @@
             // 
             // panelGestionSubmenu
             // 
-            this.panelGestionSubmenu.Controls.Add(this.btnRegistrarCompra);
-            this.panelGestionSubmenu.Location = new System.Drawing.Point(3, 366);
+            this.panelGestionSubmenu.Controls.Add(this.btnResolverReclamos);
+            this.panelGestionSubmenu.Controls.Add(this.btnRegistrarReclamo);
+            this.panelGestionSubmenu.Controls.Add(this.btnRegistrarVenta);
+            this.panelGestionSubmenu.Controls.Add(this.btnConsultarSaldo);
+            this.panelGestionSubmenu.Controls.Add(this.btnRegistrarCliente);
+            this.panelGestionSubmenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.panelGestionSubmenu.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelGestionSubmenu.Location = new System.Drawing.Point(0, 367);
             this.panelGestionSubmenu.Name = "panelGestionSubmenu";
-            this.panelGestionSubmenu.Size = new System.Drawing.Size(200, 100);
-            this.panelGestionSubmenu.TabIndex = 0;
+            this.panelGestionSubmenu.Size = new System.Drawing.Size(200, 175);
+            this.panelGestionSubmenu.TabIndex = 4;
+            this.panelGestionSubmenu.Visible = false;
             // 
-            // btnRegistrarCompra
+            // btnRegistrarCliente
             // 
-            this.btnRegistrarCompra.Location = new System.Drawing.Point(23, 7);
-            this.btnRegistrarCompra.Name = "btnRegistrarCompra";
-            this.btnRegistrarCompra.Size = new System.Drawing.Size(142, 23);
-            this.btnRegistrarCompra.TabIndex = 0;
-            this.btnRegistrarCompra.Text = "Registrar compra";
-            this.btnRegistrarCompra.UseVisualStyleBackColor = true;
-            this.btnRegistrarCompra.Click += new System.EventHandler(this.btnRegistrarCompra_Click);
+            this.btnRegistrarCliente.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnRegistrarCliente.FlatAppearance.BorderSize = 0;
+            this.btnRegistrarCliente.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnRegistrarCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegistrarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistrarCliente.ForeColor = System.Drawing.Color.White;
+            this.btnRegistrarCliente.Location = new System.Drawing.Point(0, 0);
+            this.btnRegistrarCliente.Name = "btnRegistrarCliente";
+            this.btnRegistrarCliente.Size = new System.Drawing.Size(200, 35);
+            this.btnRegistrarCliente.TabIndex = 0;
+            this.btnRegistrarCliente.Text = "Registrar cliente";
+            this.btnRegistrarCliente.UseVisualStyleBackColor = true;
+            this.btnRegistrarCliente.Click += new System.EventHandler(this.btnRegistrarCliente_Click);
+            // 
+            // btnConsultarSaldo
+            // 
+            this.btnConsultarSaldo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnConsultarSaldo.FlatAppearance.BorderSize = 0;
+            this.btnConsultarSaldo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnConsultarSaldo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConsultarSaldo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConsultarSaldo.ForeColor = System.Drawing.Color.White;
+            this.btnConsultarSaldo.Location = new System.Drawing.Point(0, 35);
+            this.btnConsultarSaldo.Name = "btnConsultarSaldo";
+            this.btnConsultarSaldo.Size = new System.Drawing.Size(200, 35);
+            this.btnConsultarSaldo.TabIndex = 1;
+            this.btnConsultarSaldo.Text = "Consultar saldo";
+            this.btnConsultarSaldo.UseVisualStyleBackColor = true;
+            this.btnConsultarSaldo.Click += new System.EventHandler(this.btnConsultarSaldo_Click);
+            // 
+            // btnRegistrarVenta
+            // 
+            this.btnRegistrarVenta.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnRegistrarVenta.FlatAppearance.BorderSize = 0;
+            this.btnRegistrarVenta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnRegistrarVenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegistrarVenta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistrarVenta.ForeColor = System.Drawing.Color.White;
+            this.btnRegistrarVenta.Location = new System.Drawing.Point(0, 70);
+            this.btnRegistrarVenta.Name = "btnRegistrarVenta";
+            this.btnRegistrarVenta.Size = new System.Drawing.Size(200, 35);
+            this.btnRegistrarVenta.TabIndex = 2;
+            this.btnRegistrarVenta.Text = "Registrar venta";
+            this.btnRegistrarVenta.UseVisualStyleBackColor = true;
+            this.btnRegistrarVenta.Click += new System.EventHandler(this.btnRegistrarVenta_Click);
+            // 
+            // btnRegistrarReclamo
+            // 
+            this.btnRegistrarReclamo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnRegistrarReclamo.FlatAppearance.BorderSize = 0;
+            this.btnRegistrarReclamo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnRegistrarReclamo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegistrarReclamo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistrarReclamo.ForeColor = System.Drawing.Color.White;
+            this.btnRegistrarReclamo.Location = new System.Drawing.Point(0, 105);
+            this.btnRegistrarReclamo.Name = "btnRegistrarReclamo";
+            this.btnRegistrarReclamo.Size = new System.Drawing.Size(200, 35);
+            this.btnRegistrarReclamo.TabIndex = 3;
+            this.btnRegistrarReclamo.Text = "Registrar reclamo";
+            this.btnRegistrarReclamo.UseVisualStyleBackColor = true;
+            this.btnRegistrarReclamo.Click += new System.EventHandler(this.btnRegistrarReclamo_Click);
+            // 
+            // btnResolverReclamos
+            // 
+            this.btnResolverReclamos.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnResolverReclamos.FlatAppearance.BorderSize = 0;
+            this.btnResolverReclamos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnResolverReclamos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnResolverReclamos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnResolverReclamos.ForeColor = System.Drawing.Color.White;
+            this.btnResolverReclamos.Location = new System.Drawing.Point(0, 140);
+            this.btnResolverReclamos.Name = "btnResolverReclamos";
+            this.btnResolverReclamos.Size = new System.Drawing.Size(200, 35);
+            this.btnResolverReclamos.TabIndex = 4;
+            this.btnResolverReclamos.Text = "Resolver reclamos";
+            this.btnResolverReclamos.UseVisualStyleBackColor = true;
+            this.btnResolverReclamos.Click += new System.EventHandler(this.btnResolverReclamos_Click);
             // 
             // panelUsuarioSubmenu
             // 
@@ -305,7 +386,7 @@
             this.btnGestion.Name = "btnGestion";
             this.btnGestion.Size = new System.Drawing.Size(200, 35);
             this.btnGestion.TabIndex = 3;
-            this.btnGestion.Text = "Gestion";
+            this.btnGestion.Text = "Programa de puntos";
             this.btnGestion.UseVisualStyleBackColor = true;
             this.btnGestion.Click += new System.EventHandler(this.btnGestion_Click);
             // 
@@ -573,7 +654,11 @@
         private System.Windows.Forms.Button btnCambiarIdioma;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Panel panelGestionSubmenu;
-        private System.Windows.Forms.Button btnRegistrarCompra;
+        private System.Windows.Forms.Button btnRegistrarCliente;
+        private System.Windows.Forms.Button btnConsultarSaldo;
+        private System.Windows.Forms.Button btnRegistrarVenta;
+        private System.Windows.Forms.Button btnRegistrarReclamo;
+        private System.Windows.Forms.Button btnResolverReclamos;
     }
 }
 

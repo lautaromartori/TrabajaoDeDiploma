@@ -7,30 +7,6 @@ namespace DAL
 {
     public class DigitoVerificadorDAL : AbstractDAL<ControlDVV>
     {
-        public List<string> ObtenerTodosLosTotalesTablas(string tablaActual, string nuevoTotalActual)
-        {
-            List<string> totales = new List<string>();
-
-            // Lista fija con los nombres de todas tus tablas del script de la BD
-            string[] tablasDelSistema = { "Usuario", "Bitacora", "Idioma", "Perfil", "Familia" };
-
-            foreach (string tabla in tablasDelSistema)
-            {
-                if (tabla == tablaActual)
-                {
-                    totales.Add(nuevoTotalActual); // Usamos el que acabamos de calcular en memoria
-                }
-                else
-                {
-                    // Buscamos el que ya estaba guardado en la base de datos para las otras tablas
-                    string totalGuardado = ObtenerDVV(tabla, "TOTAL_TABLA") ?? "0";
-                    totales.Add(totalGuardado);
-                }
-            }
-
-            return totales;
-        }
-
         public string? ObtenerDVV(string nomTabla, string nomColumna)
         {
             try

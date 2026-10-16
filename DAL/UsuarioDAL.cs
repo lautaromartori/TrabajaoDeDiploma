@@ -263,7 +263,7 @@ namespace DAL
                 _sqlserver.Open();
                 _sqlcommand.ExecuteNonQuery();
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { throw new Exception(ex.Message, ex); }
             finally
             {
                 _sqlcommand.Parameters.Clear();

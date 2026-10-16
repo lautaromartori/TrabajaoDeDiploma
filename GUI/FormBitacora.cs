@@ -93,23 +93,29 @@ namespace GUI
 
                 cmbModulo.Items.Clear();
                 cmbModulo.Items.Add("Todos");
+                // Módulos que realmente se graban en la bitácora (se quitaron Compras y Maestro del RFN1 viejo).
                 cmbModulo.Items.Add("Usuarios");
-                cmbModulo.Items.Add("Ventas");
-                cmbModulo.Items.Add("Compras");
-                cmbModulo.Items.Add("Maestro");
                 cmbModulo.Items.Add("Perfiles");
+                cmbModulo.Items.Add("Idioma");
+                cmbModulo.Items.Add("DigitoVerificador");
+                cmbModulo.Items.Add("Clientes");
+                cmbModulo.Items.Add("Ventas");
+                cmbModulo.Items.Add("Reclamos");
                 cmbModulo.SelectedIndex = 0;
 
                 cmbEvento.Items.Clear();
                 cmbEvento.Items.Add("Login");
-                cmbEvento.Items.Add("Logout");
+                cmbEvento.Items.Add("Login fallido");
+                cmbEvento.Items.Add("Desloguear");
                 cmbEvento.Items.Add("Crear Usuario");
                 cmbEvento.Items.Add("Cambiar Clave");
-                cmbEvento.Items.Add("Bloquear Usuario");
-                cmbEvento.Items.Add("Generar Carrito");
-                cmbEvento.Items.Add("Generar Factura");
-                cmbEvento.Items.Add("Imprimir Factura");
-                cmbEvento.Items.Add("Eliminar Producto");
+                cmbEvento.Items.Add("bloqueado");
+                cmbEvento.Items.Add("Registrar cliente");
+                cmbEvento.Items.Add("Registrar venta");
+                cmbEvento.Items.Add("Registrar reclamo");
+                cmbEvento.Items.Add("Aprobar reclamo");
+                cmbEvento.Items.Add("Rechazar reclamo");
+                cmbEvento.Items.Add("Recalculo");
 
                 cmbCriticidad.Items.Clear();
                 cmbCriticidad.Items.Add("Todos");
