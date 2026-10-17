@@ -5,7 +5,6 @@ namespace Servicios
 {
     public class Encriptador
     {
-        //IRREVERSIBLE
         public static string GetHash256(string texto)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -23,7 +22,6 @@ namespace Servicios
             }
         }
 
-        // REVERSIBLE 
         private static readonly string Key = "12345678910111213141516171819202";
         private static readonly string IV = "1234567891011121";
 

@@ -6,12 +6,11 @@ namespace DAL
 {
     public class Respaldo
     {
-    
     }
 
     public class RespaldoDAL : AbstractDAL<Respaldo>
     {
-        private const string NombreBaseDatos = "Alejandria_DB";
+        private const string NombreBaseDatos = "LeMarchant_DB";
 
         public RespaldoDAL() { }
 
@@ -60,9 +59,8 @@ namespace DAL
                 cmd.Connection = connMaster;
                 cmd.CommandTimeout = 0;
 
-           
                 cmd.CommandText = $@"
-            SELECT session_id FROM sys.dm_exec_sessions 
+            SELECT session_id FROM sys.dm_exec_sessions
             WHERE database_id = DB_ID('{NombreBaseDatos}')";
 
                 var sesiones = new System.Collections.Generic.List<int>();

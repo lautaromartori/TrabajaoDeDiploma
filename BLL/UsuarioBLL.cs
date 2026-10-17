@@ -38,7 +38,6 @@ namespace BLL
                 Usuario usuarioBE = usuarioDAL.ObtenerPorUserName(usuario);
                 if (usuarioBE != null)
                 {
-                    // Un usuario dado de baja (baja lógica) no puede ingresar.
                     if (!usuarioBE.Activo) return LoginResultado.Inactivo;
                     if (usuarioBE.Bloqueado) return LoginResultado.Bloqueado;
 
@@ -51,7 +50,6 @@ namespace BLL
                             usuarioDAL.BloquearUsuario(usuarioBE.Username);
                         }
 
-                        // Intentos y Bloqueado forman parte del DV: sin esto el próximo login marcaba inconsistencia.
                         digitoVerificadorBLL.RecalcularDVH_Usuario(usuarioBE.DNI);
                         digitoVerificadorBLL.RecalcularDVV_Usuario();
                         RegistrarEventoLogin(usuarioBE.Username, bloquear ? "Usuario bloqueado por intentos fallidos" : "Login fallido", bloquear ? 3 : 2);
@@ -125,7 +123,6 @@ namespace BLL
                 ValidarCaracteresUsuario(usuarioBE);
                 if (usuarioDAL.BuscarUsuarioPorDNI(usuarioBE.DNI) == null)
                 {
-                    // El DAL inserta Bloqueado = 0, Activo = 1 e Intentos = 0: el DVH se arma con esos mismos valores.
                     usuarioBE.Bloqueado = false;
                     usuarioBE.Activo = true;
                     usuarioBE.Intentos = 0;
@@ -147,7 +144,6 @@ namespace BLL
             }
             catch (Exception ex)
             {
-                // Antes se mostraba un MessageBox desde la BLL y la pantalla seguía como si se hubiera grabado.
                 throw new Exception(ex.Message, ex);
             }
         }

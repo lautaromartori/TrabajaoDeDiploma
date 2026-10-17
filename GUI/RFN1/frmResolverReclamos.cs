@@ -9,7 +9,6 @@ using System.Windows.Forms;
 
 namespace GUI.RFN1
 {
-    // CU-N01-005 Resolver reclamo (Supervisor).
     public partial class frmResolverReclamos : Form, IObserver
     {
         private readonly ReclamoBLL _reclamoBLL = new ReclamoBLL();
@@ -24,11 +23,11 @@ namespace GUI.RFN1
         private void frmResolverReclamos_Load(object sender, EventArgs e)
         {
             LanguageManager.Instance.AgregarObservador(this);
+            Estilo.Aplicar(this);
             Actualizar(LanguageManager.Instance);
             CargarPendientes();
         }
 
-        // Paso 2
         private void CargarPendientes()
         {
             try
@@ -60,7 +59,6 @@ namespace GUI.RFN1
 
         private void dgvPendientes_SelectionChanged(object sender, EventArgs e) => MostrarDetalle();
 
-        // Paso 3: detalle de la venta e historial del cliente.
         private void MostrarDetalle()
         {
             Reclamo? r = Seleccionado();
@@ -84,7 +82,6 @@ namespace GUI.RFN1
 
         private void btnRechazar_Click(object sender, EventArgs e) => Decidir(EstadoReclamo.rechazado);
 
-        // Pasos 4-7
         private void Decidir(EstadoReclamo decision)
         {
             Reclamo? r = Seleccionado();
@@ -95,7 +92,6 @@ namespace GUI.RFN1
             }
             if (decision == EstadoReclamo.rechazado && txtMotivoResolucion.Text.Trim().Length == 0)
             {
-                // Flujo 4.2
                 MessageBox.Show(T("RFN1_MotivoRechazo"), T("RFN1_ResolverReclamos"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtMotivoResolucion.Select();
                 return;

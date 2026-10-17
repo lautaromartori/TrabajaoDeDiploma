@@ -49,7 +49,7 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.BackColor = System.Drawing.Color.Maroon;
+            this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnVolver.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnVolver.Location = new System.Drawing.Point(22, 107);
@@ -62,7 +62,7 @@
             // 
             // btnEjecutar
             // 
-            this.btnEjecutar.BackColor = System.Drawing.Color.Maroon;
+            this.btnEjecutar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnEjecutar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEjecutar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnEjecutar.Location = new System.Drawing.Point(22, 62);
@@ -75,7 +75,7 @@
             // 
             // btnExaminar
             // 
-            this.btnExaminar.BackColor = System.Drawing.Color.Maroon;
+            this.btnExaminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnExaminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExaminar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnExaminar.Location = new System.Drawing.Point(22, 17);
@@ -118,7 +118,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Maroon;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel1.Controls.Add(this.txtPath);
             this.panel1.Controls.Add(this.lblPath);
             this.panel1.Location = new System.Drawing.Point(38, 114);
@@ -128,7 +128,7 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.Maroon;
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel2.Controls.Add(this.btnVolver);
             this.panel2.Controls.Add(this.btnEjecutar);
             this.panel2.Controls.Add(this.btnExaminar);
@@ -139,7 +139,7 @@
             // 
             // BarraTitulo
             // 
-            this.BarraTitulo.BackColor = System.Drawing.Color.Maroon;
+            this.BarraTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.BarraTitulo.Controls.Add(this.btnCerrar);
             this.BarraTitulo.Controls.Add(this.btnMinimizar);
             this.BarraTitulo.Dock = System.Windows.Forms.DockStyle.Top;
@@ -179,7 +179,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(399, 388);
             this.Controls.Add(this.BarraTitulo);
             this.Controls.Add(this.panel2);

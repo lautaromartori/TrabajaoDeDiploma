@@ -1,5 +1,4 @@
 {
-  //Form Menu
   "btnAdmin": "管理",
   "btnUsuarios": "ユーザー",
   "btnPerfiles": "プロファイル",
@@ -19,7 +18,6 @@
   "menumsj1": "アウト?",
   "menumsj2": "にセッ",
 
-  //Form Usuario
   "lblTextoTabla": "アクティブユーザー",
   "DNI": "身分証明書",
   "lblApe": "名字",
@@ -67,7 +65,6 @@
   "UserMsj2": "プロファイルが変更されたため、このセクションへのアクセス権限がなくなりました。",
   "UserMsj3": "アクセス権限が取り消されました",
 
-  //Form Cambiar contraserña
   "lblUsuarioFCC": "ユーザー",
   "lblContraseñaActual": "現在のパスワード",
   "lblContraseñaFCC": "パスワード",
@@ -83,7 +80,6 @@
   "CamMsj7": "パスワードを入力してください！",
   "CamMsj8": "新しいパスワードを入力してください！",
 
-  //Form Bitacora
   "lblBitacora": "ログ",
   "lblNombreB": "名前",
   "lblApellidoB": "名字",
@@ -116,7 +112,6 @@
   "BitMsj17": "ログへのアクセス権限がありません。",
   "BitMsj18": "アクセス拒否",
 
-  //Form Cambiar Idioma
   "lblCambiarIdioma": "言語変更",
   "btnCambiarCI": "変更",
   "MsjCambiarIdioma": "言語が変更されました",
@@ -129,7 +124,6 @@
 
 
 
-  //FormGestionPerfiles
   "RbPermisos": "権限",
   "RbFamilias": "ファミリー",
   "RbPerfiles": "プロファイル",
@@ -247,24 +241,18 @@
   "text33": "権限が変更されました。この画面へのアクセス権限はもうありません。",
   "text34": "権限が更新されました",
 
-  //Sesion manager
   "UserLogueado": "既にユーザーがログインしています。",
   "UserNoLogueado": "ログインしているユーザーはいません。",
-  //PermisoSimple
   "PerSimText1": "単純権限にコンポーネントを追加することはできません。",
   "PerSimText2": "単純権限からコンポーネントを削除することはできません。",
-  //UsuarioDAL
   "UserDalText1": "該当するDNIのユーザーが見つかりませんでした",
-  //Perfil Dal
   "PerfilDalText1": "この名前の権限は既にシステム内に存在します。",
   "PerfilDalText2": "指定された",
   "PerfilDalText3": "はこの名前で既にシステム内に存在します。",
-  //BitacoraDal
   "BitText1": "ログへのイベント登録中にエラーが発生しました。",
   "BitText2": "イベントのフィルタリング中にエラーが発生しました。",
   "BitText3": "ログイン情報の取得中にエラーが発生しました。",
   "BitText4": "ユーザー情報の取得中にエラーが発生しました。",
-  //UserBLL
   "UserBLLText1": "既にシステムにログインしているユーザーがいます。",
   "UserBLLText2": "データベースに接続できませんでした。",
   "UserBLLText3": "ユーザーが既に存在します",
@@ -274,21 +262,18 @@
   "UserBLLText7": "このDNIのユーザーは既に存在します",
   "UserBLLText8": "このユーザー名は既に使用されています",
   "UserBLLText9": "ユーザーはロックされていません",
-  //PerfillBLL
   "PerBLLText1": "重複コンポーネントの排除中に操作エラーが発生しました：",
   "PerBLLText2": "コンテナから特定の権限を削除中にエラーが発生しました：",
   "PerfilBLLmsj1": "プロファイルを削除できません",
   "PerfilBLLmsj2": "以下のユーザーに割り当てられているため：",
   "PerfilBllMsj3": "先にそれらのユーザーのプロファイルを設定し直してください。",
   "PerfilBllMsj4": "ルートノードが見つかりませんでした",
-  //BitBLL
   "BitBlltext1": "ログにイベントを登録できませんでした。",
   "BitBlltext2": "開始日は終了日より後の日付にすることはできません。",
   "BitBlltext3": "イベントをフィルタリングできませんでした。",
   "BitBlltext4": "ユーザー一覧を取得できませんでした。",
   "BitBlltext5": "ユーザー情報を取得できませんでした。",
 
-  //FormDigitoVerificador
   "lblErrorDV": "検出された不整合",
   "lblModuloReparacion": "修復モジュール",
   "lblForzar": "新しい検証コードを強制生成",
@@ -297,7 +282,6 @@
   "btnRestaurar": "復元",
   "btnCancelardv": "キャンセル",
 
-  //Text DV
   "TextDV1": "すべてのテーブルの検証コードを再計算します。よろしいですか？",
   "TextDV2": "検証コードの再計算",
   "TextDV3": "検証コードが正常に再計算されました",
@@ -320,7 +304,6 @@
   "TextDV20": "このファイルは有効なデータベースバックアップではありません。",
   "TextDV21": "データベースの復元中にエラーが発生しました。",
 
-  //FormBackUp
   "lblTitulo": "バックアップ",
   "lblPath": "パス",
   "btnExaminar": "参照",
@@ -332,12 +315,10 @@
   "TextBP4": "操作成功",
   "TextBP5": "バックアップを生成できませんでした。",
 
-  //restore
   "lblTituloRes": "復元",
   "btnEjecutar": "実行",
 
-  //RFN1 - Programa de puntos
-  "btnGestion": "ポイントプログラム",
+  "btnGestion": "顧客とポイント",
   "RFN1_RegistrarCliente": "顧客登録",
   "RFN1_ConsultarSaldo": "残高照会",
   "RFN1_RegistrarVenta": "販売登録",
@@ -395,5 +376,72 @@
   "RFN1_SeleccioneReclamo": "申し立てを選択してください。",
   "RFN1_MotivoRechazo": "却下するには理由が必要です。",
   "RFN1_ElReclamoDe": "の申し立て：",
-  "RFN1_ReclamoResuelto": "申し立てを処理しました。"
+  "RFN1_ReclamoResuelto": "申し立てを処理しました。",
+  "UserMsj4": "変更するユーザーを一覧から選択してください。",
+  "btnPremios": "景品と交換",
+  "CMP_Comprobantes": "レシート",
+  "CMP_AbrirArchivo": "ファイルを開く (XML / JSON)",
+  "CMP_Deserializar": "シリアル化されたレシートを開く",
+  "CMP_Serializar": "シリアル化したレシートを保存",
+  "CMP_Serializado": "レシートを次の場所にシリアル化しました:",
+  "CMP_ExportarXml": "XML出力",
+  "CMP_ExportarJson": "JSON出力",
+  "CMP_GenerarPdf": "PDF作成",
+  "CMP_Fecha": "日付",
+  "CMP_Vendedor": "販売員",
+  "CMP_OrigenBase": "取得元: データベース",
+  "CMP_OrigenArchivo": "取得元: 逆シリアル化したファイル",
+  "CMP_PreguntaPdf": "印刷用のPDFレシートを作成しますか?",
+  "RFN2_PremiosCanjeables": "交換可能な景品",
+  "RFN2_RegistrarCanje": "交換を登録",
+  "RFN2_AutorizarCanjes": "交換を承認",
+  "RFN2_EntregarPremio": "景品を渡す",
+  "RFN2_AnularCanje": "交換を取り消す",
+  "RFN2_Comprometidos": "予約済み",
+  "RFN2_Disponible": "利用可能",
+  "RFN2_PremiosQuePuede": "交換できる景品 (在庫あり・ポイント十分)",
+  "RFN2_SinPremios": "お客様のポイントでは在庫のある景品と交換できません。",
+  "RFN2_InfoUmbral": "参考価格がしきい値を超える景品は監督者の承認が必要です。しきい値:",
+  "RFN2_RequiereSupervisor": "監督者が必要",
+  "RFN2_Automatica": "自動",
+  "RFN2_SeleccionePremio": "一覧から景品を選択してください。",
+  "RFN2_ConfirmarCanje": "次の交換を登録しますか:",
+  "RFN2_CanjeRegistrado": "交換を登録しました:",
+  "RFN2_CanjeAutorizado": "自動承認されました。景品を渡せます。",
+  "RFN2_CanjePendiente": "監督者の承認待ちです。",
+  "RFN2_CanjesPendientes": "承認待ちの交換",
+  "RFN2_Premio": "景品",
+  "RFN2_ValorReferencia": "参考価格",
+  "RFN2_SeleccioneCanje": "交換を選択してください。",
+  "RFN2_MotivoRechazo": "交換を却下するには理由が必要です。",
+  "RFN2_MotivoObligatorioRechazo": "理由 (却下時は必須)",
+  "RFN2_Autorizar": "承認",
+  "RFN2_ElCanje": "交換",
+  "RFN2_CanjeAutorizadoOk": "交換を承認しました。",
+  "RFN2_CanjeRechazadoOk": "交換を却下しました。ポイントは差し引かれていません。",
+  "RFN2_CanjesAutorizados": "受け渡し可能な承認済みの交換",
+  "RFN2_VerTodos": "すべて表示",
+  "RFN2_ConfirmarEntrega": "次を渡しますか:",
+  "RFN2_ComprobanteCanje": "交換レシート",
+  "RFN2_PuntosDescontados": "差し引いたポイント",
+  "RFN2_Vence": "有効期限",
+  "RFN2_SaldoRestante": "残りのポイント",
+  "RFN2_PreguntaPdf": "交換レシートをPDFで作成しますか?",
+  "RFN2_NroCanje": "交換番号",
+  "RFN2_Canje": "交換",
+  "RFN2_CanjeNoExiste": "その番号の交換はありません。",
+  "RFN2_FechaEntrega": "受け渡し日",
+  "RFN2_FechaSolicitud": "申請日",
+  "RFN2_Estado": "状態",
+  "RFN2_Estado_pendiente": "承認待ち",
+  "RFN2_Estado_autorizado": "承認済み (未受け渡し)",
+  "RFN2_Estado_rechazado": "却下",
+  "RFN2_Estado_entregado": "受け渡し済み",
+  "RFN2_Estado_anulado": "取り消し済み",
+  "RFN2_FueraDePlazo": "取り消し期限切れ",
+  "RFN2_PuntosPorVencimiento": "有効期限ごとの差し引きポイント",
+  "RFN2_MotivoDeAnulacion": "取り消しの理由",
+  "RFN2_MotivoAnulacion": "取り消しの理由を入力してください。",
+  "RFN2_ConfirmarAnulacion": "次の交換を取り消しますか:",
+  "RFN2_CanjeAnulado": "交換を取り消しました。返還ポイント:"
 }

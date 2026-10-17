@@ -13,7 +13,6 @@ namespace Servicios
         }
         public static void RecalcularDV()
         {
-
         }
 
         private bool CompararDV(string DVCalculado, string DVOriginal)

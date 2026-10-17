@@ -6,7 +6,7 @@ namespace Servicios
     public static class ConexionConfig
     {
         private static readonly string CarpetaConfig =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AlejandriaLibros");
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LeMarchant");
 
         private static readonly string ArchivoConfig =
             Path.Combine(CarpetaConfig, "conexion.cfg");

@@ -7,7 +7,7 @@ namespace GUI
 {
     public partial class FrmConexionInicial : Form
     {
-        private const string BASE_DATOS = "Alejandria_DB";
+        private const string BASE_DATOS = "LeMarchant_DB";
 
         public FrmConexionInicial()
         {

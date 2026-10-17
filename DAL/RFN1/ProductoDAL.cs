@@ -11,7 +11,6 @@ namespace DAL.RFN1
                                                  FROM Producto p
                                                  INNER JOIN Categoria c ON c.idCategoria = p.idCategoria";
 
-        // Busca por nombre exacto; si no hay, devuelve el primero que lo contenga. null = no existe.
         public Producto? Buscar(string nombre)
         {
             try
@@ -36,7 +35,6 @@ namespace DAL.RFN1
             }
         }
 
-        // Se usa solo para el autocompletado del buscador de frmVenta.
         public List<Producto> Listar()
         {
             var lista = new List<Producto>();

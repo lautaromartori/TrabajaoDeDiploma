@@ -3,7 +3,6 @@ using DAL.RFN1;
 
 namespace BLL.RFN1
 {
-    
     public static class ProgramaPuntosBLL
     {
         private static ProgramaPuntos? _actual;

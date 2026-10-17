@@ -8,7 +8,6 @@ namespace DAL.RFN1
 {
     public class VentaDAL : AbstractDAL<Venta>
     {
-     
         public void Guardar(Venta v)
         {
             _sqlserver.Open();
@@ -19,7 +18,6 @@ namespace DAL.RFN1
                                                   VALUES (@nroTmp, @fecha, @idCliente, @dniVendedor, @total, @puntos, '');
                                                   SELECT CAST(SCOPE_IDENTITY() AS int);", _sqlserver, tx))
                 {
-                    // nroComprobante es UNIQUE: se inserta uno temporal y se reemplaza con el definitivo, que sale del id.
                     cmd.Parameters.AddWithValue("@nroTmp", "T" + Guid.NewGuid().ToString("N").Substring(0, 19));
                     cmd.Parameters.AddWithValue("@fecha", v.Fecha);
                     cmd.Parameters.AddWithValue("@idCliente", (object?)v.Cliente?.IdCliente ?? DBNull.Value);
@@ -99,10 +97,12 @@ namespace DAL.RFN1
                                                                 OR EXISTS (SELECT 1 FROM Reclamo r WHERE r.idVenta = v.idVenta AND r.estado = 'aprobado')
                                                               THEN 1 ELSE 0 END AS tieneLote,
                                                          c.idCliente, c.dni, c.nombre, c.apellido, c.email, c.telefono, c.fechaInscripcion, c.DVH,
-                                                         n.idNivel, n.nombre, n.puntosMinimos, n.multiplicador
+                                                         n.idNivel, n.nombre, n.puntosMinimos, n.multiplicador,
+                                                         u.Nombre, u.Apellido, u.UserName
                                                   FROM Venta v
                                                   LEFT JOIN Cliente c ON c.idCliente = v.idCliente
                                                   LEFT JOIN Nivel n ON n.idNivel = c.idNivel
+                                                  LEFT JOIN Usuario u ON u.DNI = v.dniVendedor
                                                   WHERE v.nroComprobante = @nro", _sqlserver))
                 {
                     cmd.Parameters.AddWithValue("@nro", nro);
@@ -115,7 +115,13 @@ namespace DAL.RFN1
                                 IdVenta = r.GetInt32(0),
                                 NroComprobante = r.GetString(1),
                                 Fecha = r.GetDateTime(2),
-                                Vendedor = new Usuario { DNI = r.GetString(3) },
+                                Vendedor = new Usuario
+                                {
+                                    DNI = r.GetString(3),
+                                    Nombre = r.IsDBNull(20) ? "" : r.GetString(20),
+                                    Apellido = r.IsDBNull(21) ? "" : r.GetString(21),
+                                    Username = r.IsDBNull(22) ? "" : r.GetString(22)
+                                },
                                 Total = r.GetDecimal(4),
                                 PuntosAcreditados = r.GetInt32(5),
                                 DVH = r.GetString(6),
@@ -202,7 +208,6 @@ namespace DAL.RFN1
             return lista;
         }
 
-        // ---- Dígito verificador ----
         public List<Venta> ListarParaDV()
         {
             var lista = new List<Venta>();

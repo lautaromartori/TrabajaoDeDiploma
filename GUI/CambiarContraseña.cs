@@ -25,7 +25,7 @@ namespace GUI
             {
                 ValidarCamposVacios();
                 UsuarioBLL usuarioBLL = new UsuarioBLL();
-                
+
                 switch (usuarioBLL.CambiarClave(txtUsuario.Text, txtContraseña.Text, txtNuevaContraseña.Text))
                 {
                     case LoginResultado.Valido:
@@ -34,7 +34,7 @@ namespace GUI
                         {
                             usuarioBLL.Desloguear();
                         }
-                        
+
                         this.Close();
                         Login login = new Login();
                         login.Show();
@@ -57,7 +57,6 @@ namespace GUI
             {
                 MessageBox.Show(ex.Message, LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
         }
 
         private void ValidarCamposVacios()
@@ -89,7 +88,6 @@ namespace GUI
 
         private void linkVolver_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // Antes comparaba el método UsuarioActual con null (siempre true) y abría el menú sin sesión.
             if (SessionManager.Instance.Logueado())
             {
                 Navegacion.VolverAlMenu(this);
@@ -100,7 +98,6 @@ namespace GUI
                 Login login = new Login();
                 login.Show();
             }
-                
         }
 
         private void pbMostrarClave_Click(object sender, EventArgs e)
@@ -111,7 +108,6 @@ namespace GUI
                 MostrarClave(false);
                 txtContraseña.UseSystemPasswordChar = false;
                 txtNuevaContraseña.UseSystemPasswordChar = false;
-
             }
             else
             {

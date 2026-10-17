@@ -7,14 +7,11 @@ using System.Windows.Forms;
 
 namespace GUI.RFN1
 {
-    // CU-N01-001 Registrar cliente.
-    // Se abre desde el menú o, por «extend», desde Registrar venta / Registrar reclamo (con el DNI ya cargado).
     public partial class frmRegistrarCliente : Form, IObserver
     {
         private readonly ClienteBLL _clienteBLL = new ClienteBLL();
         private readonly bool _desdeOtroCU;
 
-        // Cliente inscripto (o el ya existente que se eligió usar). Lo leen frmVenta y frmReclamo.
         public Cliente? ClienteRegistrado { get; private set; }
 
         public frmRegistrarCliente()
@@ -22,7 +19,6 @@ namespace GUI.RFN1
             InitializeComponent();
         }
 
-        // Punto de extensión: el cliente no está inscripto.
         public frmRegistrarCliente(string dni) : this()
         {
             _desdeOtroCU = true;
@@ -52,7 +48,6 @@ namespace GUI.RFN1
             {
                 if (!_clienteBLL.ValidarDatos(cliente))
                 {
-                    // Flujo 3.1: se indican los campos a corregir.
                     lblErrores.Text = string.Join(Environment.NewLine, _clienteBLL.ErroresValidacion);
                     return;
                 }
@@ -75,7 +70,6 @@ namespace GUI.RFN1
             }
             catch (ClienteExistenteException ex)
             {
-                // Flujo 4.1: el DNI ya está registrado; se muestra el cliente y no se graba.
                 string datos = $"{ex.Cliente.NombreCompleto}{Environment.NewLine}DNI {ex.Cliente.Dni} - {ex.Cliente.Email}{Environment.NewLine}{T("RFN1_Nivel")}: {ex.Cliente.Nivel.Nombre}";
                 if (_desdeOtroCU)
                 {
@@ -99,7 +93,6 @@ namespace GUI.RFN1
             }
         }
 
-        // Flujo 2.1: Cancelar, no se graba nada.
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             if (_desdeOtroCU) DialogResult = DialogResult.Cancel;

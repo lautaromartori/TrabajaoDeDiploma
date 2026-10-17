@@ -63,7 +63,7 @@
             // pnlTitulo
             // 
             this.pnlTitulo.Controls.Add(this.lblTitulo);
-            this.pnlTitulo.BackColor = System.Drawing.Color.Maroon;
+            this.pnlTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.pnlTitulo.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTitulo.Location = new System.Drawing.Point(0, 0);
             this.pnlTitulo.Name = "pnlTitulo";
@@ -87,7 +87,7 @@
             this.grpCliente.Controls.Add(this.btnBuscarCliente);
             this.grpCliente.Controls.Add(this.lblCliente);
             this.grpCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.grpCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
             this.grpCliente.Location = new System.Drawing.Point(20, 60);
             this.grpCliente.Name = "grpCliente";
             this.grpCliente.Size = new System.Drawing.Size(780, 70);
@@ -143,7 +143,7 @@
             this.grpProducto.Controls.Add(this.btnAgregar);
             this.grpProducto.Controls.Add(this.dgvProductos);
             this.grpProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.grpProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
             this.grpProducto.Location = new System.Drawing.Point(20, 140);
             this.grpProducto.Name = "grpProducto";
             this.grpProducto.Size = new System.Drawing.Size(780, 230);
@@ -212,9 +212,12 @@
             // 
             this.btnAgregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAgregar.UseVisualStyleBackColor = false;
-            this.btnAgregar.BackColor = System.Drawing.Color.Maroon;
+            this.btnAgregar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnAgregar.ForeColor = System.Drawing.Color.White;
             this.btnAgregar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAgregar.FlatAppearance.BorderSize = 0;
+            this.btnAgregar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.btnAgregar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAgregar.Location = new System.Drawing.Point(725, 23);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(45, 30);
@@ -232,6 +235,9 @@
             this.dgvProductos.MultiSelect = false;
             this.dgvProductos.RowHeadersVisible = false;
             this.dgvProductos.BackgroundColor = System.Drawing.Color.White;
+            this.dgvProductos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dgvProductos.EnableHeadersVisualStyles = false;
+            this.dgvProductos.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(201)))));
             this.dgvProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProductos.Location = new System.Drawing.Point(15, 60);
             this.dgvProductos.Name = "dgvProductos";
@@ -250,6 +256,9 @@
             this.dgvItems.MultiSelect = false;
             this.dgvItems.RowHeadersVisible = false;
             this.dgvItems.BackgroundColor = System.Drawing.Color.White;
+            this.dgvItems.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dgvItems.EnableHeadersVisualStyles = false;
+            this.dgvItems.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(201)))));
             this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvItems.Location = new System.Drawing.Point(20, 380);
             this.dgvItems.Name = "dgvItems";
@@ -307,9 +316,12 @@
             // 
             this.btnCerrarVenta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCerrarVenta.UseVisualStyleBackColor = false;
-            this.btnCerrarVenta.BackColor = System.Drawing.Color.Maroon;
+            this.btnCerrarVenta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnCerrarVenta.ForeColor = System.Drawing.Color.White;
             this.btnCerrarVenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCerrarVenta.FlatAppearance.BorderSize = 0;
+            this.btnCerrarVenta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.btnCerrarVenta.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCerrarVenta.Location = new System.Drawing.Point(560, 700);
             this.btnCerrarVenta.Name = "btnCerrarVenta";
             this.btnCerrarVenta.Size = new System.Drawing.Size(120, 30);
@@ -332,7 +344,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(820, 750);
             this.Controls.Add(this.pnlTitulo);
             this.Controls.Add(this.grpCliente);

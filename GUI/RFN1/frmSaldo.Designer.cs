@@ -50,7 +50,7 @@
             // pnlTitulo
             // 
             this.pnlTitulo.Controls.Add(this.lblTitulo);
-            this.pnlTitulo.BackColor = System.Drawing.Color.Maroon;
+            this.pnlTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.pnlTitulo.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTitulo.Location = new System.Drawing.Point(0, 0);
             this.pnlTitulo.Name = "pnlTitulo";
@@ -89,9 +89,12 @@
             // 
             this.btnBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuscar.UseVisualStyleBackColor = false;
-            this.btnBuscar.BackColor = System.Drawing.Color.Maroon;
+            this.btnBuscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnBuscar.ForeColor = System.Drawing.Color.White;
             this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBuscar.FlatAppearance.BorderSize = 0;
+            this.btnBuscar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.btnBuscar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBuscar.Location = new System.Drawing.Point(290, 64);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(110, 30);
@@ -107,7 +110,7 @@
             this.grpCliente.Controls.Add(this.lblSaldoTitulo);
             this.grpCliente.Controls.Add(this.lblSaldo);
             this.grpCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.grpCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
             this.grpCliente.Location = new System.Drawing.Point(30, 110);
             this.grpCliente.Name = "grpCliente";
             this.grpCliente.Size = new System.Drawing.Size(580, 95);
@@ -178,6 +181,9 @@
             this.dgvLotes.MultiSelect = false;
             this.dgvLotes.RowHeadersVisible = false;
             this.dgvLotes.BackgroundColor = System.Drawing.Color.White;
+            this.dgvLotes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dgvLotes.EnableHeadersVisualStyles = false;
+            this.dgvLotes.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(201)))));
             this.dgvLotes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLotes.Location = new System.Drawing.Point(30, 240);
             this.dgvLotes.Name = "dgvLotes";
@@ -199,7 +205,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(640, 520);
             this.Controls.Add(this.pnlTitulo);
             this.Controls.Add(this.lblDni);

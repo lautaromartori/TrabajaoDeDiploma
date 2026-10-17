@@ -95,7 +95,7 @@ namespace DAL
                 )
                 BEGIN
                     UPDATE Idioma
-                    SET 
+                    SET
                         CodigoIdioma = @CodigoIdioma,
                         DVH = @dvh
                     WHERE UserName = @UserName
@@ -157,7 +157,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw;
             }
             finally

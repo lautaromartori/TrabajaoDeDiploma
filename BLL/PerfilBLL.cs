@@ -1,5 +1,4 @@
-﻿
-using DAL;
+﻿using DAL;
 using Servicios;
 using System;
 using System.Collections.Generic;
@@ -14,8 +13,6 @@ namespace BLL
         private readonly BitacoraBLL _bitacoraBLL;
         private readonly DigitoVerificadorBLL _digitoVerificadorBLL = new DigitoVerificadorBLL();
         private const string MODULO_BITACORA = "Perfiles";
-
-
 
         public PerfilBLL()
         {
@@ -37,17 +34,13 @@ namespace BLL
 
         public List<PermisoSimple> ObtenerPermisosDisponibles(Familia componentePadre)
         {
-
             var todosLosPermisos = _dal.ObtenerPermisos();
             if (componentePadre == null) return todosLosPermisos;
-
 
             var permisosYaIncluidos = new HashSet<string>();
             var familiasYaIncluidas = new HashSet<string>();
 
-
             ObtenerEstructuraPlana(componentePadre, permisosYaIncluidos, familiasYaIncluidas);
-
 
             return todosLosPermisos.Where(p => !permisosYaIncluidos.Contains(p.Nombre)).ToList();
         }
@@ -65,7 +58,6 @@ namespace BLL
 
             return todasLasFamilias.Where(f => f.Nombre != nombrePadre && !familiasAsignadas.Contains(f.Nombre)).ToList();
         }
-
 
         public void RecargarPermisosUsuarioEnSesion()
         {
@@ -254,7 +246,6 @@ namespace BLL
 
                 if (esPermisoSimple)
                 {
-                    // Control de redundancia directa
                     if (permisosActualesPadre.Contains(nombreHijo))
                     {
                         resultado.Estado = EstadoAsignacion.ConflictoPermisos;
@@ -263,7 +254,6 @@ namespace BLL
                         return resultado;
                     }
 
-                    // Control de redundancia horizontal
                     string mensajeConflictoHorizontal = VerificarConflictoHorizontal(todosLosComponentes, componentePadre, nombreHijo);
                     if (!string.IsNullOrEmpty(mensajeConflictoHorizontal))
                     {
@@ -390,7 +380,6 @@ namespace BLL
             }
             return null;
         }
-
 
         private bool ContieneHijoRecursivo(Familia padre, string nombreHijoBuscar)
         {

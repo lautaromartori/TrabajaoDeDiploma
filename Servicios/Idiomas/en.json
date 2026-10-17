@@ -1,5 +1,4 @@
 {
-  //Form Menu
   "btnAdmin": "ADMIN",
   "btnUsuarios": "Users",
   "btnPerfiles": "Profiles",
@@ -19,7 +18,6 @@
   "menumsj1": "Confirm Logout?",
   "menumsj2": "Logout",
 
-  //Form Usuario
   "lblTextoTabla": "Active Users",
   "DNI": "DNI",
   "lblApe": "Last Name",
@@ -67,7 +65,6 @@
   "UserMsj2": "Your profile has been modified and you no longer have access to this section.",
   "UserMsj3": "Access revoked",
 
-  //Form Cambiar contraserña
   "lblUsuarioFCC": "User",
   "lblContraseñaActual": "Current password",
   "lblContraseñaFCC": "Password",
@@ -83,7 +80,6 @@
   "CamMsj7": "Please enter your Password!",
   "CamMsj8": "Please enter a new Password!",
 
-  //Form Bitacora
   "lblBitacora": "Logs",
   "lblNombreB": "First Name",
   "lblApellidoB": "Last Name",
@@ -116,7 +112,6 @@
   "BitMsj17": "You do not have permissions to access the Logs.",
   "BitMsj18": "Access Denied",
 
-  //Form Cambiar Idioma
   "lblCambiarIdioma": "Change Language",
   "btnCambiarCI": "Change",
   "MsjCambiarIdioma": "Language changed",
@@ -127,7 +122,6 @@
   "Ingles": "English",
   "Japones": "Japanese",
 
-  //FormGestionPerfiles
   "RbPermisos": "Permissions",
   "RbFamilias": "Families",
   "RbPerfiles": "Profiles",
@@ -245,24 +239,18 @@
   "text33": "Your permissions have been modified. You no longer have access to this screen.",
   "text34": "Permissions updated",
 
-  //Sesion manager
   "UserLogueado": "A user is already logged in.",
   "UserNoLogueado": "No user is currently logged in.",
-  //PermisoSimple
   "PerSimText1": "Cannot add components to a simple permission.",
   "PerSimText2": "Cannot remove components from a simple permission.",
-  //UsuarioDAL
   "UserDalText1": "User with DNI not found",
-  //Perfil Dal
   "PerfilDalText1": "A permission with this name already exists in the system.",
   "PerfilDalText2": "The",
   "PerfilDalText3": "with this name already exists in the system.",
-  //BitacoraDal
   "BitText1": "Error registering the event in the logs.",
   "BitText2": "Error filtering events.",
   "BitText3": "Error retrieving logins.",
   "BitText4": "Error retrieving user.",
-  //UserBLL
   "UserBLLText1": "A user is already logged into the system.",
   "UserBLLText2": "Could not connect to the database.",
   "UserBLLText3": "User already exists",
@@ -272,21 +260,18 @@
   "UserBLLText7": "A User With This DNI Already Exists",
   "UserBLLText8": "The username is already in use",
   "UserBLLText9": "User Is Not Blocked",
-  //PerfillBLL
   "PerBLLText1": "Operational error while purging redundant components:",
   "PerBLLText2": "Error removing specific permission from container:",
   "PerfilBLLmsj1": "Cannot delete the profile",
   "PerfilBLLmsj2": "because it is assigned to the following users:",
   "PerfilBllMsj3": "Change the profile of those users first.",
   "PerfilBllMsj4": "Root node not found",
-  //BitBLL
   "BitBlltext1": "Could not register the event in the logs.",
   "BitBlltext2": "The start date cannot be greater than the end date.",
   "BitBlltext3": "Could not filter events.",
   "BitBlltext4": "Could not retrieve users.",
   "BitBlltext5": "Could not retrieve user.",
 
-  //FormDigitoVerificador
   "lblErrorDV": "Inconsistencies Detected",
   "lblModuloReparacion": "Repair Module",
   "lblForzar": "Force new verification digits",
@@ -295,7 +280,6 @@
   "btnRestaurar": "Restore",
   "btnCancelardv": "Cancel",
 
-  //Text DV
   "TextDV1": "The verification digits of all tables will be recalculated, are you sure?",
   "TextDV2": "Recalculate Verification Digits",
   "TextDV3": "Verification digits were recalculated successfully",
@@ -318,7 +302,6 @@
   "TextDV20": "The file is not a valid database backup.",
   "TextDV21": "An error occurred while restoring the database.",
 
-  //FormBackUp
   "lblTitulo": "Backup",
   "lblPath": "Path",
   "btnExaminar": "Browse",
@@ -330,12 +313,10 @@
   "TextBP4": "Operation Successful",
   "TextBP5": "Could not generate the backup.",
    
-  //restore
   "lblTituloRes": "Restore",
   "btnEjecutar": "Execute",
 
-  //RFN1 - Programa de puntos
-  "btnGestion": "Points program",
+  "btnGestion": "Customers & points",
   "RFN1_RegistrarCliente": "Register customer",
   "RFN1_ConsultarSaldo": "Check balance",
   "RFN1_RegistrarVenta": "Register sale",
@@ -393,5 +374,72 @@
   "RFN1_SeleccioneReclamo": "Select a claim.",
   "RFN1_MotivoRechazo": "A reason is required to reject the claim.",
   "RFN1_ElReclamoDe": "the claim of",
-  "RFN1_ReclamoResuelto": "Claim resolved."
+  "RFN1_ReclamoResuelto": "Claim resolved.",
+  "UserMsj4": "Select a user in the grid to modify.",
+  "btnPremios": "Rewards",
+  "CMP_Comprobantes": "Receipts",
+  "CMP_AbrirArchivo": "Open file (XML / JSON)",
+  "CMP_Deserializar": "Open serialized receipt",
+  "CMP_Serializar": "Save serialized receipt",
+  "CMP_Serializado": "The receipt was serialized to:",
+  "CMP_ExportarXml": "Export XML",
+  "CMP_ExportarJson": "Export JSON",
+  "CMP_GenerarPdf": "Generate PDF",
+  "CMP_Fecha": "Date",
+  "CMP_Vendedor": "Seller",
+  "CMP_OrigenBase": "Source: database",
+  "CMP_OrigenArchivo": "Source: deserialized file",
+  "CMP_PreguntaPdf": "Do you want to generate the receipt as a PDF to print?",
+  "RFN2_PremiosCanjeables": "Available rewards",
+  "RFN2_RegistrarCanje": "Register redemption",
+  "RFN2_AutorizarCanjes": "Authorize redemptions",
+  "RFN2_EntregarPremio": "Deliver reward",
+  "RFN2_AnularCanje": "Cancel redemption",
+  "RFN2_Comprometidos": "Committed",
+  "RFN2_Disponible": "Available",
+  "RFN2_PremiosQuePuede": "Rewards available (in stock and with enough points)",
+  "RFN2_SinPremios": "The customer does not have enough points for any reward in stock.",
+  "RFN2_InfoUmbral": "Rewards with a reference value above the threshold need supervisor approval. Threshold:",
+  "RFN2_RequiereSupervisor": "Needs supervisor",
+  "RFN2_Automatica": "Automatic",
+  "RFN2_SeleccionePremio": "Select a reward in the grid.",
+  "RFN2_ConfirmarCanje": "Register the redemption of",
+  "RFN2_CanjeRegistrado": "Redemption registered:",
+  "RFN2_CanjeAutorizado": "It was authorized automatically: the reward can be delivered.",
+  "RFN2_CanjePendiente": "It is waiting for supervisor approval.",
+  "RFN2_CanjesPendientes": "Redemptions waiting for approval",
+  "RFN2_Premio": "Reward",
+  "RFN2_ValorReferencia": "reference value",
+  "RFN2_SeleccioneCanje": "Select a redemption.",
+  "RFN2_MotivoRechazo": "A reason is required to reject the redemption.",
+  "RFN2_MotivoObligatorioRechazo": "Reason (required to reject)",
+  "RFN2_Autorizar": "Authorize",
+  "RFN2_ElCanje": "the redemption",
+  "RFN2_CanjeAutorizadoOk": "Redemption authorized.",
+  "RFN2_CanjeRechazadoOk": "Redemption rejected. No points were deducted.",
+  "RFN2_CanjesAutorizados": "Authorized redemptions to deliver",
+  "RFN2_VerTodos": "Show all",
+  "RFN2_ConfirmarEntrega": "Deliver",
+  "RFN2_ComprobanteCanje": "Redemption receipt",
+  "RFN2_PuntosDescontados": "Points deducted",
+  "RFN2_Vence": "expires",
+  "RFN2_SaldoRestante": "Remaining balance",
+  "RFN2_PreguntaPdf": "Do you want to generate the redemption receipt as a PDF?",
+  "RFN2_NroCanje": "Redemption no.",
+  "RFN2_Canje": "Redemption",
+  "RFN2_CanjeNoExiste": "There is no redemption with that number.",
+  "RFN2_FechaEntrega": "Delivered on",
+  "RFN2_FechaSolicitud": "Requested on",
+  "RFN2_Estado": "Status",
+  "RFN2_Estado_pendiente": "Waiting for approval",
+  "RFN2_Estado_autorizado": "Authorized (not delivered)",
+  "RFN2_Estado_rechazado": "Rejected",
+  "RFN2_Estado_entregado": "Delivered",
+  "RFN2_Estado_anulado": "Cancelled",
+  "RFN2_FueraDePlazo": "past the cancellation period",
+  "RFN2_PuntosPorVencimiento": "Points deducted by expiration date",
+  "RFN2_MotivoDeAnulacion": "Cancellation reason",
+  "RFN2_MotivoAnulacion": "Enter the cancellation reason.",
+  "RFN2_ConfirmarAnulacion": "Cancel the redemption",
+  "RFN2_CanjeAnulado": "Redemption cancelled. Points returned:"
 }

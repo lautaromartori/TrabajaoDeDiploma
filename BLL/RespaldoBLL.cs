@@ -21,7 +21,7 @@ namespace BLL
         public string GenerarNombreArchivo()
         {
             string fechaHora = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-            return $"Alejandria_DB_{fechaHora}.bak";
+            return $"LeMarchant_DB_{fechaHora}.bak";
         }
 
         public List<string> ObtenerListaBackups()

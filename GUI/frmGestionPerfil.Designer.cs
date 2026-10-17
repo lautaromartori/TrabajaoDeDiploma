@@ -380,7 +380,7 @@
             // 
             // panelPermisos
             // 
-            this.panelPermisos.BackColor = System.Drawing.Color.Maroon;
+            this.panelPermisos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panelPermisos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelPermisos.Controls.Add(this.lblNombrePermisos);
             this.panelPermisos.Controls.Add(this.dgvPermisos);
@@ -405,7 +405,7 @@
             // 
             // panelFamilias
             // 
-            this.panelFamilias.BackColor = System.Drawing.Color.Maroon;
+            this.panelFamilias.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panelFamilias.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelFamilias.Controls.Add(this.label8);
             this.panelFamilias.Controls.Add(this.label7);
@@ -483,7 +483,7 @@
             // 
             // panelPerfiles
             // 
-            this.panelPerfiles.BackColor = System.Drawing.Color.Maroon;
+            this.panelPerfiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panelPerfiles.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelPerfiles.Controls.Add(this.btnDeshacerPermisoSimple);
             this.panelPerfiles.Controls.Add(this.lblAsignados);
@@ -612,7 +612,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Maroon;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel1.Controls.Add(this.btnCerrar);
             this.panel1.Controls.Add(this.btnMaximizar);
             this.panel1.Controls.Add(this.btnMinimizar);
@@ -666,7 +666,7 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.Maroon;
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.lstPerfiles);
             this.panel2.Controls.Add(this.btnEliminarPerfil);
@@ -680,7 +680,7 @@
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.Maroon;
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.lstFamilias);
             this.panel3.Controls.Add(this.txtNombreFamilia);
@@ -694,7 +694,7 @@
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.Color.Maroon;
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.lblArbol);
             this.panel4.Controls.Add(this.pnlOpciones);
@@ -718,7 +718,7 @@
             // 
             // pnlOpciones
             // 
-            this.pnlOpciones.BackColor = System.Drawing.Color.Maroon;
+            this.pnlOpciones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.pnlOpciones.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pnlOpciones.Controls.Add(this.RbPerfiles);
             this.pnlOpciones.Controls.Add(this.RbFamilias);
@@ -737,7 +737,7 @@
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.Color.Maroon;
+            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel6.Controls.Add(this.lblPerfiles);
             this.panel6.Location = new System.Drawing.Point(13, 11);
@@ -758,7 +758,7 @@
             // 
             // panel7
             // 
-            this.panel7.BackColor = System.Drawing.Color.Maroon;
+            this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel7.Controls.Add(this.label6);
             this.panel7.Location = new System.Drawing.Point(13, 11);
@@ -779,7 +779,7 @@
             // 
             // panel8
             // 
-            this.panel8.BackColor = System.Drawing.Color.Maroon;
+            this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel8.Controls.Add(this.label10);
             this.panel8.Location = new System.Drawing.Point(13, 11);
@@ -800,7 +800,7 @@
             // 
             // panel9
             // 
-            this.panel9.BackColor = System.Drawing.Color.Maroon;
+            this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel9.Controls.Add(this.lblGestionPerfiles);
             this.panel9.Location = new System.Drawing.Point(13, 238);
@@ -821,7 +821,7 @@
             // 
             // panel10
             // 
-            this.panel10.BackColor = System.Drawing.Color.Maroon;
+            this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel10.Controls.Add(this.label15);
             this.panel10.Location = new System.Drawing.Point(13, 238);
@@ -875,7 +875,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1381, 716);
             this.Controls.Add(this.pnlFamilias);
             this.Controls.Add(this.pnlPerfiles);

@@ -220,6 +220,8 @@
     <Compile Include="Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Comprobantes\GeneradorPDF.cs" />
+    <Compile Include="Estilo.cs" />
     <Compile Include="Navegacion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -253,6 +255,36 @@
     </Compile>
     <Compile Include="RFN1\frmResolverReclamos.Designer.cs">
       <DependentUpon>frmResolverReclamos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RFN1\frmComprobantes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN1\frmComprobantes.Designer.cs">
+      <DependentUpon>frmComprobantes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RFN2\frmPremios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN2\frmPremios.Designer.cs">
+      <DependentUpon>frmPremios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RFN2\frmAutorizarCanjes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN2\frmAutorizarCanjes.Designer.cs">
+      <DependentUpon>frmAutorizarCanjes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RFN2\frmEntregarPremio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN2\frmEntregarPremio.Designer.cs">
+      <DependentUpon>frmEntregarPremio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RFN2\frmAnularCanje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN2\frmAnularCanje.Designer.cs">
+      <DependentUpon>frmAnularCanje.cs</DependentUpon>
     </Compile>
     <Compile Include="Usuarios.cs">
       <SubType>Form</SubType>
@@ -322,7 +354,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Alejandria2.png" />
+    <None Include="Resources\LeMarchant.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE.csproj">

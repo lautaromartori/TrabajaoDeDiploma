@@ -15,7 +15,7 @@ namespace DAL
         {
             try
             {
-                _sqlcommand.CommandText = @"INSERT INTO Usuario 
+                _sqlcommand.CommandText = @"INSERT INTO Usuario
                     (DNI, Nombre, Apellido, UserName, Password, Email, Bloqueado, Activo, Rol, DVH, Intentos)
                     VALUES (@dni, @nombre, @apellido, @username, @password, @email, 0, 1, @rol, @dvh, 0);";
 
@@ -81,7 +81,7 @@ namespace DAL
         {
             try
             {
-                _sqlcommand.CommandText = @"SELECT DNI, Nombre, Apellido, UserName, Password, Email, 
+                _sqlcommand.CommandText = @"SELECT DNI, Nombre, Apellido, UserName, Password, Email,
                     Bloqueado, Activo, Rol FROM Usuario WHERE UserName = @username;";
                 _sqlcommand.Parameters.AddWithValue("@username", usuario);
                 _sqlserver.Open();
@@ -142,7 +142,7 @@ namespace DAL
         {
             try
             {
-                _sqlcommand.CommandText = @"SELECT DNI, Nombre, Apellido, UserName, Password, Email, 
+                _sqlcommand.CommandText = @"SELECT DNI, Nombre, Apellido, UserName, Password, Email,
                     Bloqueado, Activo, Rol FROM Usuario WHERE DNI = @dni;";
                 _sqlcommand.Parameters.AddWithValue("@dni", dNI);
                 _sqlserver.Open();
@@ -167,7 +167,7 @@ namespace DAL
         {
             try
             {
-                _sqlcommand.CommandText = @"SELECT DNI, Nombre, Apellido, UserName, Password, Email, 
+                _sqlcommand.CommandText = @"SELECT DNI, Nombre, Apellido, UserName, Password, Email,
                     Bloqueado, Activo, Rol FROM Usuario;";
                 _sqlserver.Open();
                 var reader = _sqlcommand.ExecuteReader();
@@ -190,7 +190,7 @@ namespace DAL
         {
             try
             {
-                _sqlcommand.CommandText = @"SELECT DNI, Nombre, Apellido, UserName, Password, Email, 
+                _sqlcommand.CommandText = @"SELECT DNI, Nombre, Apellido, UserName, Password, Email,
                     Bloqueado, Activo, Rol, Intentos, DVH FROM Usuario;";
                 _sqlserver.Open();
                 var reader = _sqlcommand.ExecuteReader();
@@ -232,7 +232,6 @@ namespace DAL
         {
             try
             {
-                // Calculamos el nuevo DVH con los datos actualizados
                 string cadenaDV =
                     UserNew.DNI +
                     UserNew.Nombre +
@@ -246,8 +245,8 @@ namespace DAL
 
                 string nuevoDVH = DigitoVerificador.CalcularDVH(cadenaDV);
 
-                _sqlcommand.CommandText = @"UPDATE Usuario 
-                    SET DNI = @dninuevo, Nombre = @nombre, Apellido = @apellido, 
+                _sqlcommand.CommandText = @"UPDATE Usuario
+                    SET DNI = @dninuevo, Nombre = @nombre, Apellido = @apellido,
                         UserName = @username, Email = @email, Rol = @rol, DVH = @dvh
                     WHERE DNI = @dni;";
 
@@ -275,8 +274,8 @@ namespace DAL
         {
             try
             {
-                _sqlcommand.CommandText = @"UPDATE Usuario 
-                    SET Bloqueado = 0, Password = @password, Intentos = 0 
+                _sqlcommand.CommandText = @"UPDATE Usuario
+                    SET Bloqueado = 0, Password = @password, Intentos = 0
                     WHERE DNI = @dni;";
                 _sqlcommand.Parameters.AddWithValue("@dni", dNI);
                 _sqlcommand.Parameters.AddWithValue("@password", nuevaClave);

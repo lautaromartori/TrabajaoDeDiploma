@@ -15,7 +15,6 @@
 
         public Bitacora()
         {
-            
         }
         public Bitacora(int idEvento, string login, DateTime fecha, string modulo, string evento, int criticidad, string dvh)
         {

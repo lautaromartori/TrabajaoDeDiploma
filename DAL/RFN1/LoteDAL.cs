@@ -34,7 +34,6 @@ namespace DAL.RFN1
             return lista;
         }
 
-        // Inserta un lote dentro de la transacción de la venta o del reclamo y graba su DVH.
         internal static void Insertar(LotePuntos l, SqlConnection cn, SqlTransaction tx)
         {
             using (var cmd = new SqlCommand(@"INSERT INTO LotePuntos (idCliente, idVenta, idReclamo, puntosOriginales, puntosDisponibles,
@@ -62,7 +61,21 @@ namespace DAL.RFN1
             }
         }
 
-        // ---- Dígito verificador ----
+        internal static void ActualizarDisponibles(LotePuntos l, int disponiblesAnteriores, SqlConnection cn, SqlTransaction tx)
+        {
+            l.DVH = DigitoVerificador.CalcularDVH(l.CadenaDVH());
+            using (var cmd = new SqlCommand(@"UPDATE LotePuntos SET puntosDisponibles = @disp, DVH = @dvh
+                                              WHERE idLote = @id AND puntosDisponibles = @anterior", cn, tx))
+            {
+                cmd.Parameters.AddWithValue("@disp", l.PuntosDisponibles);
+                cmd.Parameters.AddWithValue("@dvh", l.DVH);
+                cmd.Parameters.AddWithValue("@id", l.IdLote);
+                cmd.Parameters.AddWithValue("@anterior", disponiblesAnteriores);
+                if (cmd.ExecuteNonQuery() == 0)
+                    throw new Exception("Los puntos del cliente cambiaron mientras se procesaba la operación. Vuelva a intentarlo.");
+            }
+        }
+
         public List<LotePuntos> ListarParaDV()
         {
             var lista = new List<LotePuntos>();

@@ -1,5 +1,4 @@
 {
-  //Form Menu
   "btnAdmin": "ADMIN",
   "btnUsuarios": "Usuarios",
   "btnPerfiles": "Perfiles",
@@ -19,7 +18,6 @@
   "menumsj1": "Quiere cerrar sesion?",
   "menumsj2": "cerrar sesion",
 
-  //Form Usuario
   "lblTextoTabla": "Usuarios Activos",
   "DNI": "DNI",
   "lblApe": "Apellidos",
@@ -67,7 +65,6 @@
   "UserMsj2": "Tu perfil fue modificado y ya no tenés acceso a esta sección.",
   "UserMsj3": "Acceso revocado",
 
-  //Form Cambiar contraserña
   "lblUsuarioFCC": "Usuario",
   "lblContraseñaActual": "Contraseña actual",
   "lblContraseñaFCC": "Contraseña",
@@ -83,7 +80,6 @@
   "CamMsj7": "Ingrese su Contraseña!",
   "CamMsj8": "Ingrese una nueva Contraseña!",
 
-  //Form Bitacora
   "lblBitacora": "Bitacora",
   "lblNombreB": "Nombre",
   "lblApellidoB": "Apellido",
@@ -116,7 +112,6 @@
   "BitMsj17": "No tiene permisos para acceder a la Bitácora.",
   "BitMsj18": "Acceso Denegado",
 
-  //Form Cambiar Idioma
   "lblCambiarIdioma": "Cambiar Idioma",
   "btnCambiarCI": "Cambiar",
   "MsjCambiarIdioma": "Idioma cambiado",
@@ -128,7 +123,6 @@
   "Español": "Español",
   "Ingles": "Ingles",
   "Japones": "Japones",
-  //FormGestionPerfiles
   "RbPermisos": "Permisos",
   "RbFamilias": "Familias",
   "RbPerfiles": "Perfiles",
@@ -249,24 +243,18 @@
   "text33": "Sus permisos fueron modificados. Ya no posee acceso a esta pantalla.",
   "text34": "Permisos actualizados",
 
-  //Sesion manager
   "UserLogueado": "Ya hay un usuario logueado.",
   "UserNoLogueado": "No hay ningún usuario logueado.",
-  //PermisoSimple
   "PerSimText1": "No se pueden agregar componentes a un permiso simple.",
   "PerSimText2": "No se pueden quitar componentes de un permiso simple.",
-  //UsuarioDAL
   "UserDalText1": "No se encontró el usuario con DNI",
-  //Perfil Dal
   "PerfilDalText1": "El permiso con este nombre ya existe en el sistema.",
   "PerfilDalText2": "El",
   "PerfilDalText3": "con este nombre ya existe en el sistema.",
-  //BitacoraDal
   "BitText1": "Error al registrar el evento en la bitácora.",
   "BitText2": "Error al filtrar los eventos.",
   "BitText3": "Error al obtener los logins.",
   "BitText4": "Error al obtener el usuario.",
-  //UserBLL
   "UserBLLText1": "Ya hay un usuario logueado en el sistema.",
   "UserBLLText2": "No se pudo conectar a la base de datos.",
   "UserBLLText3": "El usuario ya existe",
@@ -276,21 +264,18 @@
   "UserBLLText7": "Ya Existe User Con Ese DNI",
   "UserBLLText8": "El nombre de usuario ya esta en uso",
   "UserBLLText9": "Usuario No Esta Bloqueado",
-  //PerfillBLL
   "PerBLLText1": "Error operativo al purgar los componentes redundantes:",
   "PerBLLText2": "Error al remover el permiso específico del contenedor:",
   "PerfilBLLmsj1": "No se puede eliminar el perfil",
   "PerfilBLLmsj2": "porque está asignado a los siguientes usuarios:",
   "PerfilBllMsj3": "Primero cambiá el perfil de esos usuarios.",
   "PerfilBllMsj4": "No se encontró el nodo raíz",
-  //BitBLL
   "BitBlltext1": "No se pudo registrar el evento en la bitácora.",
   "BitBlltext2": "La fecha de inicio no puede ser mayor a la fecha final.",
   "BitBlltext3": "No se pudieron filtrar los eventos.",
   "BitBlltext4": "No se pudieron obtener los usuarios.",
   "BitBlltext5": "No se pudo obtener el usuario.",
 
-  //FormDigitoVerificador
   "lblErrorDV": "Inconsistencias Detectadas",
   "lblModuloReparacion": "Modulo de reparacion",
   "lblForzar": "Forzar nuevos digitos verificadores",
@@ -299,7 +284,6 @@
   "btnRestaurar": "Restaurar",
   "btnCancelardv": "Cancelar",
 
-  //Text DV
   "TextDV1": "Se recalcularan los digitos verificadores de todas las tablas, esta seguro?",
   "TextDV2": "Recalculo de DV",
   "TextDV3": "Se recalcularon los digitos verificadores correctamente",
@@ -322,7 +306,6 @@
   "TextDV20": "El archivo no es un respaldo válido de la base de datos.",
   "TextDV21": "Ocurrió un error al restaurar la base de datos.",
 
-  //FormBackUp
   "lblTitulo": "Backup",
   "lblPath": "Path",
   "btnExaminar": "Examinar",
@@ -335,12 +318,10 @@
   "TextBP4": "Operación Exitosa",
   "TextBP5": "No se pudo generar el Backup.",
 
-  //restore
   "lblTituloRes": "Restore",
   "btnEjecutar": "Ejecutar",
 
-  //RFN1 - Programa de puntos
-  "btnGestion": "Programa de puntos",
+  "btnGestion": "Clientes y puntos",
   "RFN1_RegistrarCliente": "Registrar cliente",
   "RFN1_ConsultarSaldo": "Consultar saldo",
   "RFN1_RegistrarVenta": "Registrar venta",
@@ -398,5 +379,72 @@
   "RFN1_SeleccioneReclamo": "Seleccione un reclamo.",
   "RFN1_MotivoRechazo": "Para rechazar el reclamo el motivo es obligatorio.",
   "RFN1_ElReclamoDe": "el reclamo de",
-  "RFN1_ReclamoResuelto": "Reclamo resuelto."
+  "RFN1_ReclamoResuelto": "Reclamo resuelto.",
+  "UserMsj4": "Seleccione un usuario de la grilla para modificar.",
+  "btnPremios": "Premios y canjes",
+  "CMP_Comprobantes": "Comprobantes",
+  "CMP_AbrirArchivo": "Abrir archivo (XML / JSON)",
+  "CMP_Deserializar": "Abrir comprobante serializado",
+  "CMP_Serializar": "Guardar comprobante serializado",
+  "CMP_Serializado": "El comprobante se serializó correctamente en:",
+  "CMP_ExportarXml": "Exportar XML",
+  "CMP_ExportarJson": "Exportar JSON",
+  "CMP_GenerarPdf": "Generar PDF",
+  "CMP_Fecha": "Fecha",
+  "CMP_Vendedor": "Vendedor",
+  "CMP_OrigenBase": "Origen: base de datos",
+  "CMP_OrigenArchivo": "Origen: archivo deserializado",
+  "CMP_PreguntaPdf": "¿Desea generar el comprobante en PDF para imprimir?",
+  "RFN2_PremiosCanjeables": "Premios canjeables",
+  "RFN2_RegistrarCanje": "Registrar canje",
+  "RFN2_AutorizarCanjes": "Autorizar canjes",
+  "RFN2_EntregarPremio": "Entregar premio",
+  "RFN2_AnularCanje": "Anular canje",
+  "RFN2_Comprometidos": "Comprometidos",
+  "RFN2_Disponible": "Disponible",
+  "RFN2_PremiosQuePuede": "Premios que puede canjear (con stock y puntos suficientes)",
+  "RFN2_SinPremios": "El cliente no tiene puntos suficientes para ningún premio con stock.",
+  "RFN2_InfoUmbral": "Los premios con valor de referencia mayor al umbral requieren autorización del supervisor. Umbral:",
+  "RFN2_RequiereSupervisor": "Requiere supervisor",
+  "RFN2_Automatica": "Automática",
+  "RFN2_SeleccionePremio": "Seleccione un premio de la grilla.",
+  "RFN2_ConfirmarCanje": "¿Registrar el canje de",
+  "RFN2_CanjeRegistrado": "Canje registrado:",
+  "RFN2_CanjeAutorizado": "Quedó autorizado: ya se puede entregar el premio.",
+  "RFN2_CanjePendiente": "Quedó pendiente de autorización del supervisor.",
+  "RFN2_CanjesPendientes": "Canjes pendientes de autorización",
+  "RFN2_Premio": "Premio",
+  "RFN2_ValorReferencia": "valor de referencia",
+  "RFN2_SeleccioneCanje": "Seleccione un canje.",
+  "RFN2_MotivoRechazo": "Para rechazar el canje el motivo es obligatorio.",
+  "RFN2_MotivoObligatorioRechazo": "Motivo (obligatorio para rechazar)",
+  "RFN2_Autorizar": "Autorizar",
+  "RFN2_ElCanje": "el canje",
+  "RFN2_CanjeAutorizadoOk": "Canje autorizado.",
+  "RFN2_CanjeRechazadoOk": "Canje rechazado. No se descontaron puntos.",
+  "RFN2_CanjesAutorizados": "Canjes autorizados para entregar",
+  "RFN2_VerTodos": "Ver todos",
+  "RFN2_ConfirmarEntrega": "¿Entregar",
+  "RFN2_ComprobanteCanje": "Comprobante de canje",
+  "RFN2_PuntosDescontados": "Puntos descontados",
+  "RFN2_Vence": "vence",
+  "RFN2_SaldoRestante": "Saldo restante",
+  "RFN2_PreguntaPdf": "¿Desea generar el comprobante de canje en PDF?",
+  "RFN2_NroCanje": "Nro. de canje",
+  "RFN2_Canje": "Canje",
+  "RFN2_CanjeNoExiste": "No existe un canje con ese número.",
+  "RFN2_FechaEntrega": "Entregado el",
+  "RFN2_FechaSolicitud": "Solicitado el",
+  "RFN2_Estado": "Estado",
+  "RFN2_Estado_pendiente": "Pendiente de autorización",
+  "RFN2_Estado_autorizado": "Autorizado (sin entregar)",
+  "RFN2_Estado_rechazado": "Rechazado",
+  "RFN2_Estado_entregado": "Entregado",
+  "RFN2_Estado_anulado": "Anulado",
+  "RFN2_FueraDePlazo": "fuera del plazo de anulación",
+  "RFN2_PuntosPorVencimiento": "Puntos descontados por vencimiento",
+  "RFN2_MotivoDeAnulacion": "Motivo de la anulación",
+  "RFN2_MotivoAnulacion": "Ingrese el motivo de la anulación.",
+  "RFN2_ConfirmarAnulacion": "¿Anular el canje",
+  "RFN2_CanjeAnulado": "Canje anulado. Puntos reintegrados:"
 }

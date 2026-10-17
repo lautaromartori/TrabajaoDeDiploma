@@ -6,7 +6,6 @@ using System.Net;
 using System.Text;
 using System.Xml;
 
-
 namespace Servicios
 {
     public class LanguageManager : IObserved
@@ -38,20 +37,16 @@ namespace Servicios
         private LanguageManager()
         {
             _observers = new List<IObserver>();
-
-
         }
 
         public void AgregarObservador(IObserver observable)
         {
             _observers.Add(observable);
-
         }
 
         public void EliminarObservador(IObserver observable)
         {
             _observers.Remove(observable);
-
         }
 
         public void NotificarObservadores()
@@ -61,7 +56,6 @@ namespace Servicios
                 item.Actualizar(this);
             }
         }
-
 
         public CultureInfo GetCurrentLanguage()
         {
@@ -82,23 +76,7 @@ namespace Servicios
 
             return _jsonidioma[key];
         }
-        //    private string GetJsonRute(string name)
-        //    {
-        //        string directory = AppDomain.CurrentDomain.BaseDirectory;
-        //        string jsonruta = Path.GetFullPath(
-        //Path.Combine(
-        //    directory,
-        //    "..",
-        //    "..",
-        //    "..",
-        //    "Servicios",
-        //    "Idiomas",
-        //    $"{name}.json"));
 
-
-        //        return jsonruta;
-
-        //    }
         private string GetJsonRute(string name)
         {
             string directory = AppDomain.CurrentDomain.BaseDirectory;
@@ -118,7 +96,5 @@ namespace Servicios
 
             NotificarObservadores();
         }
-    
     }
 }
-    

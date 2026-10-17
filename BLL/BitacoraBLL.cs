@@ -19,7 +19,6 @@ namespace BLL
         {
             try
             {
-              
                 unEvento.Fecha = AhoraSinMilisegundos();
                 string cadenaDVH = DigitoVerificadorBLL.CadenaDVH_Bitacora(unEvento);
 
@@ -31,7 +30,6 @@ namespace BLL
                 throw new Exception(LanguageManager.Instance.GetTraduction("BitBlltext1"), ex);
             }
         }
-
 
         public static DateTime AhoraSinMilisegundos()
         {

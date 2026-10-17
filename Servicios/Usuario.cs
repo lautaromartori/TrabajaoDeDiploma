@@ -23,7 +23,7 @@ namespace Servicios
         public string DVH { get; set; }
 
         public Usuario() { }
-   
+
         public Usuario(string dNI, string nombre, string apellido, string nombreUsuario, string password, string email, bool bloqueado, bool activo, string nombre_rol)
         {
             DNI = dNI;
@@ -72,7 +72,6 @@ namespace Servicios
 
             foreach (var componente in Permisos)
             {
-              
                 if (componente.TienePermiso(nombrePermiso))
                     return true;
             }

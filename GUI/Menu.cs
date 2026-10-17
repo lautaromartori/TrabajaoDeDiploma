@@ -1,5 +1,6 @@
 ﻿using BLL;
 using GUI.RFN1;
+using GUI.RFN2;
 using Servicios;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace GUI
             panelAdminSubmenu.Visible = false;
             panelUsuarioSubmenu.Visible = false;
             panelGestionSubmenu.Visible = false;
-
+            panelPremiosSubmenu.Visible = false;
         }
         private void esconderSubmenu()
         {
@@ -35,8 +36,10 @@ namespace GUI
                 panelAdminSubmenu.Visible = false;
             if (panelUsuarioSubmenu.Visible == true)
                 panelUsuarioSubmenu.Visible = false;
-            if (panelGestionSubmenu.Visible == true) 
+            if (panelGestionSubmenu.Visible == true)
                 panelGestionSubmenu.Visible = false;
+            if (panelPremiosSubmenu.Visible == true)
+                panelPremiosSubmenu.Visible = false;
         }
         private void mostrarSubmenu(Panel submenu)
         {
@@ -61,12 +64,10 @@ namespace GUI
 
         private void button3_Click(object sender, EventArgs e)
         {
-
         }
 
         private void panelContenedor_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void Menu_Load(object sender, EventArgs e)
@@ -156,7 +157,6 @@ namespace GUI
             }
         }
 
-       
         private void btnLogout_Click(object sender, EventArgs e)
         {
             string Decision = MessageBox.Show(LanguageManager.Instance.GetTraduction("menumsj1"), LanguageManager.Instance.GetTraduction("menumsj2"), MessageBoxButtons.YesNo).ToString();
@@ -167,18 +167,14 @@ namespace GUI
                 string username = SessionManager.Instance.UsuarioActual().Username;
                 idiomaBLL.GuardarIdioma(username, LanguageManager.Instance.CodigoIdiomaActual);
 
-                // Por UsuarioBLL para que el logout quede en la bitácora.
                 new UsuarioBLL().Desloguear();
 
                 Login login = new Login();
                 login.Show();
-                // Se cierra (no solo se oculta) para que el próximo login no vuelva a este menú viejo.
                 LanguageManager.Instance.EliminarObservador(this);
                 this.Close();
             }
-            
         }
-        
 
         private void btnCambiarClave_Click(object sender, EventArgs e)
         {
@@ -189,12 +185,11 @@ namespace GUI
 
         private void btnPerfiles_Click(object sender, EventArgs e)
         {
-           
             if (!SessionManager.Instance.UsuarioActual().TienePermiso("Ver Perfiles"))
             {
                 MessageBox.Show("No tiene permisos para acceder a Gestión de Perfiles.",
                     "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return; 
+                return;
             }
             frmGestionPerfiles gestionPerfiles = new frmGestionPerfiles();
             this.Hide();
@@ -257,8 +252,6 @@ namespace GUI
             mostrarSubmenu(panelGestionSubmenu);
         }
 
-        // ---------------- RFN1: Programa de puntos ----------------
-        // Cada botón abre la pantalla de un CU. Si el usuario no tiene el permiso, no entra.
         private bool AbrirSiTienePermiso(string permiso, Func<Form> crear)
         {
             if (!SessionManager.Instance.UsuarioActual().TienePermiso(permiso))
@@ -287,6 +280,26 @@ namespace GUI
         private void btnResolverReclamos_Click(object sender, EventArgs e) =>
             AbrirSiTienePermiso("Resolver Reclamo", () => new frmResolverReclamos());
 
+        private void btnComprobantes_Click(object sender, EventArgs e) =>
+            AbrirSiTienePermiso("Emitir Comprobante", () => new frmComprobantes());
+
+        private void btnPremios_Click(object sender, EventArgs e)
+        {
+            mostrarSubmenu(panelPremiosSubmenu);
+        }
+
+        private void btnPremiosCanjeables_Click(object sender, EventArgs e) =>
+            AbrirSiTienePermiso("Consultar Premios", () => new frmPremios());
+
+        private void btnAutorizarCanjes_Click(object sender, EventArgs e) =>
+            AbrirSiTienePermiso("Autorizar Canje", () => new frmAutorizarCanjes());
+
+        private void btnEntregarPremio_Click(object sender, EventArgs e) =>
+            AbrirSiTienePermiso("Entregar Premio", () => new frmEntregarPremio());
+
+        private void btnAnularCanje_Click(object sender, EventArgs e) =>
+            AbrirSiTienePermiso("Anular Canje", () => new frmAnularCanje());
+
         public void Actualizar(LanguageManager lenguaje)
         {
             btnAdmin.Text = LanguageManager.Instance.GetTraduction("btnAdmin");
@@ -308,6 +321,13 @@ namespace GUI
             btnRegistrarVenta.Text = LanguageManager.Instance.GetTraduction("RFN1_RegistrarVenta");
             btnRegistrarReclamo.Text = LanguageManager.Instance.GetTraduction("RFN1_RegistrarReclamo");
             btnResolverReclamos.Text = LanguageManager.Instance.GetTraduction("RFN1_ResolverReclamos");
+            btnComprobantes.Text = LanguageManager.Instance.GetTraduction("CMP_Comprobantes");
+
+            btnPremios.Text = LanguageManager.Instance.GetTraduction("btnPremios");
+            btnPremiosCanjeables.Text = LanguageManager.Instance.GetTraduction("RFN2_PremiosCanjeables");
+            btnAutorizarCanjes.Text = LanguageManager.Instance.GetTraduction("RFN2_AutorizarCanjes");
+            btnEntregarPremio.Text = LanguageManager.Instance.GetTraduction("RFN2_EntregarPremio");
+            btnAnularCanje.Text = LanguageManager.Instance.GetTraduction("RFN2_AnularCanje");
         }
     }
 }

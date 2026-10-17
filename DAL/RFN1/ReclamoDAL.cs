@@ -128,7 +128,6 @@ namespace DAL.RFN1
             return lista;
         }
 
-        // Cierra el reclamo y, si fue aprobado, crea el lote y actualiza el nivel del cliente. Todo junto.
         public void Resolver(Reclamo r, LotePuntos? l)
         {
             _sqlserver.Open();
@@ -170,7 +169,6 @@ namespace DAL.RFN1
             }
         }
 
-        // ---- Dígito verificador ----
         public List<Reclamo> ListarParaDV()
         {
             var lista = new List<Reclamo>();

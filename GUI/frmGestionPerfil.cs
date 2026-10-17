@@ -29,11 +29,9 @@ namespace GUI
 
             ValidarPermisos();
 
-            //RbPermisos.CheckedChanged += RbPermisos_CheckedChanged;
             RbFamilias.CheckedChanged += RbFamilias_CheckedChanged_1;
             RbPerfiles.CheckedChanged += RbPerfiles_CheckedChanged;
 
-            //if (!this.Controls.Contains(pnlPermisos)) this.Controls.Add(pnlPermisos);
             if (!this.Controls.Contains(pnlFamilias)) this.Controls.Add(pnlFamilias);
             if (!this.Controls.Contains(pnlPerfiles)) this.Controls.Add(pnlPerfiles);
 
@@ -73,11 +71,9 @@ namespace GUI
         {
             Usuario usuarioActual = SessionManager.Instance.UsuarioActual();
 
-            // Sección PERMISOS
             btnCrearPermiso.Enabled = usuarioActual.TienePermiso("Crear Permiso");
             btnEliminarPermiso.Enabled = usuarioActual.TienePermiso("Eliminar Permiso");
 
-            // Sección FAMILIAS
             btnCrearFamilia.Enabled = usuarioActual.TienePermiso("Crear Familia");
             btnEliminarFamilia.Enabled = usuarioActual.TienePermiso("Eliminar Familia");
             btnAsignarPermisos.Enabled = usuarioActual.TienePermiso("Asignar Permiso Familia");
@@ -85,7 +81,6 @@ namespace GUI
             btnAsignarSubfamilia.Enabled = usuarioActual.TienePermiso("Asignar Subfamilia");
             btnQuitarSubfamilia.Enabled = usuarioActual.TienePermiso("Quitar Subfamilia");
 
-            // Sección PERFILES
             btnCrearPerfil.Enabled = usuarioActual.TienePermiso("Crear Perfil");
             btnEliminarPerfil.Enabled = usuarioActual.TienePermiso("Eliminar Perfil");
             btnAsignarFamiliaPerfil.Enabled = usuarioActual.TienePermiso("Asignar Familia Perfil");
@@ -856,7 +851,7 @@ namespace GUI
                 Location = new Point(170, 215),
                 Size = new Size(160, 32),
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                BackColor = Color.FromArgb(45, 120, 215),
+                BackColor = Color.FromArgb(46, 125, 50),
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat
             };

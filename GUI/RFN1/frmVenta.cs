@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using BE.RFN1;
 using BLL.RFN1;
+using GUI.Comprobantes;
 using Servicios;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,13 @@ using System.Windows.Forms;
 
 namespace GUI.RFN1
 {
-    // CU-N01-003 Registrar venta. Punto de extensión: cliente no inscripto -> «extend» CU-N01-001.
     public partial class frmVenta : Form, IObserver
     {
         private readonly VentaBLL _ventaBLL = new VentaBLL();
         private readonly ClienteBLL _clienteBLL = new ClienteBLL();
         private readonly ProductoBLL _productoBLL = new ProductoBLL();
         private readonly LoteBLL _loteBLL = new LoteBLL();
+        private readonly ComprobanteBLL _comprobanteBLL = new ComprobanteBLL();
 
         private Producto? _productoEncontrado;
         private List<Producto> _catalogo = new List<Producto>();
@@ -31,6 +32,7 @@ namespace GUI.RFN1
         private void frmVenta_Load(object sender, EventArgs e)
         {
             LanguageManager.Instance.AgregarObservador(this);
+            Estilo.Aplicar(this);
             Actualizar(LanguageManager.Instance);
             try
             {
@@ -49,7 +51,6 @@ namespace GUI.RFN1
             MostrarCatalogo();
         }
 
-        // Grilla de productos: muestra el catálogo y se filtra mientras se escribe el nombre.
         private void MostrarCatalogo()
         {
             string filtro = txtProducto.Text.Trim();
@@ -79,7 +80,6 @@ namespace GUI.RFN1
 
         private void txtProducto_TextChanged(object sender, EventArgs e)
         {
-            // Si el texto lo puso la selección de la grilla, no se vuelve a filtrar.
             if (_productoEncontrado != null && string.Equals(txtProducto.Text, _productoEncontrado.Nombre, StringComparison.Ordinal))
                 return;
             _productoEncontrado = null;
@@ -87,7 +87,6 @@ namespace GUI.RFN1
             MostrarCatalogo();
         }
 
-        // Elegir un producto en la grilla equivale a buscarlo (pasos 3-4).
         private void dgvProductos_SelectionChanged(object sender, EventArgs e)
         {
             if (_cargandoCatalogo) return;
@@ -98,7 +97,6 @@ namespace GUI.RFN1
             lblProductoDatos.Text = $"$ {p.Precio:N2} - {p.Categoria.Nombre}";
         }
 
-        // Doble clic en un producto: lo agrega con la cantidad indicada.
         private void dgvProductos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -119,7 +117,6 @@ namespace GUI.RFN1
             txtDni.Select();
         }
 
-        // Paso 2: buscar cliente. DNI vacío = el cliente no participa (flujo 2.1).
         private void btnBuscarCliente_Click(object sender, EventArgs e)
         {
             try
@@ -140,7 +137,6 @@ namespace GUI.RFN1
                 Cliente? cliente = _clienteBLL.Buscar(dni);
                 if (cliente == null)
                 {
-                    // Flujo 2.2 (punto de extensión): si acepta inscribirse se ejecuta CU-N01-001.
                     if (MessageBox.Show(T("RFN1_PreguntaInscribir"), T("RFN1_RegistrarVenta"),
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
@@ -169,7 +165,6 @@ namespace GUI.RFN1
                 : $"{c.NombreCompleto} - {T("RFN1_Nivel")} {c.Nivel.Nombre}";
         }
 
-        // Pasos 3-4
         private void btnBuscarProducto_Click(object sender, EventArgs e)
         {
             try
@@ -177,7 +172,6 @@ namespace GUI.RFN1
                 _productoEncontrado = _productoBLL.Buscar(txtProducto.Text);
                 if (_productoEncontrado == null)
                 {
-                    // Flujo 4.1
                     lblProductoDatos.Text = "-";
                     MessageBox.Show(T("RFN1_ProductoNoExiste"), T("RFN1_RegistrarVenta"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtProducto.SelectAll();
@@ -194,7 +188,6 @@ namespace GUI.RFN1
             }
         }
 
-        // Pasos 5-7
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             try
@@ -231,7 +224,6 @@ namespace GUI.RFN1
             }
         }
 
-        // Paso 8: los puntos se recalculan cada vez que cambian los ítems o el cliente.
         private void RefrescarItems()
         {
             Venta v = _ventaBLL.VentaActual;
@@ -259,13 +251,11 @@ namespace GUI.RFN1
             lblPuntos.Text = puntos.ToString("N0");
         }
 
-        // Pasos 9-12
         private void btnCerrarVenta_Click(object sender, EventArgs e)
         {
             Venta v = _ventaBLL.VentaActual;
             if (v.Detalle.Count == 0)
             {
-                // Flujo 9.1
                 MessageBox.Show(T("RFN1_VentaSinItems"), T("RFN1_RegistrarVenta"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -279,7 +269,6 @@ namespace GUI.RFN1
             }
             catch (Exception ex)
             {
-                // Flujo 10.1: se revirtió la transacción.
                 MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -295,16 +284,34 @@ namespace GUI.RFN1
                                $"{Environment.NewLine}{T("RFN1_SaldoVigente")}: {saldo:N0}" +
                                $"{Environment.NewLine}{T("RFN1_Nivel")}: {v.Cliente.Nivel.Nombre}";
             }
-            MessageBox.Show(comprobante, T("RFN1_Comprobante"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+            comprobante += $"{Environment.NewLine}{Environment.NewLine}{T("CMP_PreguntaPdf")}";
+            bool imprimir = MessageBox.Show(comprobante, T("RFN1_Comprobante"), MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+            if (imprimir) GenerarPdf(v);
 
             if (_ventaBLL.NivelAnterior != null && v.Cliente != null)
             {
-                // Flujo 10.3
                 MessageBox.Show($"{T("RFN1_CambioNivel")} {_ventaBLL.NivelAnterior.Nombre} -> {v.Cliente.Nivel.Nombre}",
                     T("RFN1_RegistrarVenta"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             NuevaVenta();
+        }
+
+        private void GenerarPdf(Venta v)
+        {
+            string? ruta = GeneradorPDF.ElegirRuta(this, "Comprobante_" + v.NroComprobante);
+            if (ruta == null) return;
+            try
+            {
+                ComprobanteVenta c = _comprobanteBLL.Armar(v);
+                GeneradorPDF.ComprobanteVenta(c, ruta);
+                _comprobanteBLL.RegistrarImpresion(v.NroComprobante, ruta);
+                GeneradorPDF.Abrir(ruta);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnVolver_Click(object sender, EventArgs e)

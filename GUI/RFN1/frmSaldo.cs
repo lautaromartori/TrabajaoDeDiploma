@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 namespace GUI.RFN1
 {
-    // CU-N01-002 Consultar saldo.
     public partial class frmSaldo : Form, IObserver
     {
         private readonly ClienteBLL _clienteBLL = new ClienteBLL();
@@ -24,6 +23,7 @@ namespace GUI.RFN1
         private void frmSaldo_Load(object sender, EventArgs e)
         {
             LanguageManager.Instance.AgregarObservador(this);
+            Estilo.Aplicar(this);
             Actualizar(LanguageManager.Instance);
             LimpiarCliente();
         }
@@ -36,7 +36,6 @@ namespace GUI.RFN1
                 string dni = txtDni.Text.Trim();
                 if (!Regex.IsMatch(dni, @"^\d{7,8}$"))
                 {
-                    // Flujo 2.1
                     MessageBox.Show(T("RFN1_DniInvalido"), T("RFN1_ConsultarSaldo"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -44,7 +43,6 @@ namespace GUI.RFN1
                 Cliente? cliente = _clienteBLL.Buscar(dni);
                 if (cliente == null)
                 {
-                    // Flujo 3.1
                     MessageBox.Show(T("RFN1_ClienteNoInscripto"), T("RFN1_ConsultarSaldo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
@@ -54,7 +52,6 @@ namespace GUI.RFN1
                 lblClienteDatos.Text = $"{cliente.NombreCompleto}   DNI {cliente.Dni}   {cliente.Email}";
                 lblNivel.Text = cliente.Nivel.Nombre;
                 lblSaldo.Text = saldo.ToString("N0");
-                // Flujo 4.1: sin puntos vigentes la grilla queda vacía y el saldo en cero.
                 dgvLotes.DataSource = lotes.Select(l => new
                 {
                     Origen = l.Origen.ToString(),

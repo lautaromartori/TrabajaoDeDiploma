@@ -7,7 +7,7 @@ namespace Servicios
     public enum EstadoAsignacion
     {
         Ok,
-        ConflictoPermisos  
+        ConflictoPermisos
     }
 
     public class ResultadoAsignacion

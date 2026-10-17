@@ -15,10 +15,8 @@ namespace BLL.RFN1
         private readonly BitacoraBLL _bitacoraBLL = new BitacoraBLL();
         private readonly DigitoVerificadorBLL _digitoVerificadorBLL = new DigitoVerificadorBLL();
 
-        // Venta que se está armando en frmVenta.
         public Venta VentaActual { get; private set; } = new Venta();
 
-      
         public Nivel? NivelAnterior { get; private set; }
 
         public void NuevaVenta(Cliente? cliente)
@@ -32,13 +30,12 @@ namespace BLL.RFN1
             VentaActual.Cliente = cliente;
         }
 
-        // agrega el ítem y recalcula subtotal y total.
         public void AgregarItem(DetalleVenta i)
         {
             if (i.Producto == null || i.Producto.IdProducto == 0)
                 throw new Exception("Busque un producto existente antes de agregarlo.");
             if (i.Cantidad <= 0)
-                throw new Exception("La cantidad debe ser mayor a cero."); // flujo 5.1
+                throw new Exception("La cantidad debe ser mayor a cero.");
 
             DetalleVenta? existente = VentaActual.Detalle.FirstOrDefault(d => d.Producto.IdProducto == i.Producto.IdProducto);
             if (existente != null)
@@ -66,8 +63,6 @@ namespace BLL.RFN1
             v.Total = v.Detalle.Sum(d => d.Subtotal);
         }
 
-        //  puntos de cada ítem = subtotal / montoPorPunto x multiplicador de categoría x multiplicador de nivel.
-        // El total se redondea hacia abajo. Sin cliente no hay puntos.
         public int CalcularPuntos(Venta v, Cliente? c)
         {
             if (c == null)
@@ -95,11 +90,10 @@ namespace BLL.RFN1
 
         public Nivel CalcularNivel(Cliente c) => _nivelBLL.CalcularNivel(c, 0);
 
-    
         public void RegistrarVenta(Venta v)
         {
             if (v.Detalle.Count == 0)
-                throw new Exception("La venta no tiene ítems."); 
+                throw new Exception("La venta no tiene ítems.");
 
             Usuario vendedor = SessionManager.Instance.UsuarioActual();
             v.Vendedor = vendedor;
@@ -112,7 +106,7 @@ namespace BLL.RFN1
             {
                 if (v.PuntosAcreditados > 0)
                 {
-                    v.Lote = ArmarLote(v); 
+                    v.Lote = ArmarLote(v);
                 }
 
                 Nivel nivelActual = v.Cliente.Nivel;
@@ -131,7 +125,6 @@ namespace BLL.RFN1
             }
             catch (Exception ex)
             {
-               
                 if (NivelAnterior != null && v.Cliente != null) v.Cliente.Nivel = NivelAnterior;
                 NivelAnterior = null;
                 RegistrarEvento("Error al grabar venta: " + Recortar(ex.Message, 60), 3);
@@ -164,7 +157,6 @@ namespace BLL.RFN1
             };
         }
 
-       
         public Venta? ObtenerPorNro(string nro)
         {
             nro = (nro ?? "").Trim().ToUpperInvariant();

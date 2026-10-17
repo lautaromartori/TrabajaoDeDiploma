@@ -96,7 +96,6 @@ namespace DAL
             {
                 if (_sqlserver.State != ConnectionState.Open) _sqlserver.Open();
 
-                // Usamos siempre new SqlCommand para consistencia
                 using (var cmd = new SqlCommand("SELECT Nombre FROM Familia", _sqlserver))
                 using (var reader = cmd.ExecuteReader())
                     while (reader.Read())
@@ -185,7 +184,6 @@ namespace DAL
             if (ExisteNombre(permiso.Nombre, "PermisoSimple"))
                 throw new ArgumentException(LanguageManager.Instance.GetTraduction("PerfilDalText2"));
 
-            // Calculamos el DVH antes de insertar
             string dvh = DigitoVerificador.CalcularDVH(permiso.Nombre);
 
             _sqlcommand.CommandText = "INSERT INTO PermisoSimple (Nombre, DVH) VALUES (@Nombre, @dvh)";
@@ -237,7 +235,6 @@ namespace DAL
                     $"{LanguageManager.Instance.GetTraduction("PerfilDalText2")} {tipo} {LanguageManager.Instance.GetTraduction("PerfilDalText3")}");
             }
 
-            // Calculamos el DVH antes de insertar
             string dvh = DigitoVerificador.CalcularDVH(familia.Nombre);
 
             _sqlcommand.CommandText = $"INSERT INTO {tabla} (Nombre, DVH) VALUES (@Nombre, @dvh)";

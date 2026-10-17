@@ -35,21 +35,18 @@ namespace Servicios
             return _hijos;
         }
 
- 
         public override bool TienePermiso(string nombrePermiso)
         {
-          
             if (this.Nombre != null && this.Nombre.Equals(nombrePermiso, StringComparison.OrdinalIgnoreCase))
                 return true;
 
-            // 2. Si no, recorro a todos mis hijos usando recursividad
             foreach (var hijo in _hijos)
             {
                 if (hijo.TienePermiso(nombrePermiso))
-                    return true; // Encontrado en las profundidades del árbol
+                    return true;
             }
 
-            return false; // No se encontró en esta rama
+            return false;
         }
     }
 }

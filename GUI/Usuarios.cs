@@ -99,8 +99,6 @@ namespace GUI
             cbRol.BackColor = color;
         }
 
-      
-
         private void btnAplicar_Click(object sender, EventArgs e)
         {
             try
@@ -132,14 +130,13 @@ namespace GUI
                         break;
 
                             case UserAction.Modify:
-                                // Sacamos el txtDni.ReadOnly = true de acá porque ya se pone en btnModificar_Click
                                 if (ValidarCamposVacios(txtNom, txtApe, txtDni, txtUsuario, txtEmail) && ValidarComboBox(cbRol) && ValidarEntradaUsuario())
                                 {
                                     string dniOriginal = (dataGridView1.SelectedRows[0].DataBoundItem as Usuario).DNI;
                                     string rolNuevo = cbRol.SelectedItem.ToString();
 
                                     usuarioBLL.Modificar(dniOriginal, new Usuario(
-                                        dniOriginal,        // forzamos el DNI original, ignoramos txtDni
+                                        dniOriginal,
                                         txtNom.Text, txtApe.Text, txtUsuario.Text,
                                         string.Empty, txtEmail.Text, default, default, rolNuevo));
 
@@ -190,13 +187,12 @@ namespace GUI
                         else
                         {
                             MostrarUsuarios(dataGridView1, usuarioBLL.ListarTodosUsuarios());
-
                         }
                         MostrarUsuarios(dataGridView1, rbActivos.Checked
                             ? usuarioBLL.ListarUsuariosActivos()
                             : usuarioBLL.ListarTodosUsuarios());
                         MessageBox.Show(LanguageManager.Instance.GetTraduction("UserActi"), LanguageManager.Instance.GetTraduction("Alerta"), MessageBoxButtons.OK, MessageBoxIcon.Information);
-                       
+
                         break;
 
                     case UserAction.Consult:
@@ -241,7 +237,7 @@ namespace GUI
             if (hayVacios)
             {
                 MessageBox.Show(mensaje.ToString(), LanguageManager.Instance.GetTraduction("FaltaCompl"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                primerInvalido?.Focus(); // Enfocar el primer campo con error
+                primerInvalido?.Focus();
             }
             return !hayVacios;
         }
@@ -266,20 +262,18 @@ namespace GUI
             if (!Regex.IsMatch(txtApe.Text.Trim(), @"^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$"))
                 errores.AppendLine(LanguageManager.Instance.GetTraduction("CampoApell"));
 
-            
             if (!Regex.IsMatch(txtDni.Text.Trim(), @"^\d{8}$"))
                 errores.AppendLine(LanguageManager.Instance.GetTraduction("CampoDni"));
 
             if (!(userAction == UserAction.Add))
             {
-                
                 if (string.IsNullOrWhiteSpace(txtUsuario.Text) || txtUsuario.Text.Length < 4)
                     errores.AppendLine(LanguageManager.Instance.GetTraduction("ElNombreUser"));
             }
-           
+
             if (!Regex.IsMatch(txtEmail.Text.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
                 errores.AppendLine(LanguageManager.Instance.GetTraduction("ElCorreoElec"));
-            
+
             if (errores.Length > 0)
             {
                 MessageBox.Show(errores.ToString(), LanguageManager.Instance.GetTraduction("ErrorEntradaDeDatos"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -302,26 +296,23 @@ namespace GUI
 
         private void SetModoEdicion(bool enEdicion)
         {
-            // Botones de acción: deshabilitados durante edición
             btnCrear.Enabled = !enEdicion;
             btnDesbloquear.Enabled = !enEdicion;
             btnModificar.Enabled = !enEdicion;
             btnActDes.Enabled = !enEdicion;
 
-            btnCrear.BackColor = !enEdicion ? Color.Green : Color.Maroon;
-            btnDesbloquear.BackColor = !enEdicion ? Color.Green : Color.Maroon;
-            btnModificar.BackColor = !enEdicion ? Color.Green : Color.Maroon;
-            btnActDes.BackColor = !enEdicion ? Color.Green : Color.Maroon;
+            btnCrear.BackColor = !enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            btnDesbloquear.BackColor = !enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            btnModificar.BackColor = !enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            btnActDes.BackColor = !enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
 
-            // Aplicar/Cancelar: solo activos durante edición
             btnAplicar.Enabled = enEdicion;
             btnCancelar.Enabled = enEdicion;
-            btnAplicar.BackColor = enEdicion ? Color.Green : Color.Maroon;
-            btnCancelar.BackColor = enEdicion ? Color.Green : Color.Maroon;
-            panel10.BackColor = enEdicion ? Color.Green : Color.Maroon;
-            panel11.BackColor = enEdicion ? Color.Green : Color.Maroon;
+            btnAplicar.BackColor = enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            btnCancelar.BackColor = enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            panel10.BackColor = enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            panel11.BackColor = enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
 
-            // Panel de filtrado y formulario
             pnFiltrado.Enabled = !enEdicion;
             panel3.Enabled = !enEdicion;
             panModificarUsuario.Enabled = enEdicion;
@@ -359,7 +350,7 @@ namespace GUI
                     if (user == null) return;
 
                     txtDni.Text = user.DNI;
-                    txtDni.ReadOnly = (userAction == UserAction.Modify); // mantiene el lock si estamos modificando
+                    txtDni.ReadOnly = (userAction == UserAction.Modify);
                     txtNom.Text = user.Nombre;
                     txtApe.Text = user.Apellido;
                     txtUsuario.Text = user.Username;
@@ -390,7 +381,7 @@ namespace GUI
                 userAction = UserAction.UnBlock;
                 txtBoxModo.Text = LanguageManager.Instance.GetTraduction("txtBoxModoDesbloquear");
                 SetModoEdicion(true);
-                panModificarUsuario.Enabled = false; // en desbloqueo no se editan campos
+                panModificarUsuario.Enabled = false;
             }
         }
 
@@ -398,7 +389,7 @@ namespace GUI
         {
             if (dataGridView1.SelectedRows.Count == 0 || dataGridView1.SelectedRows[0].Cells[0].Value == null)
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("UserMsj4")); // "Seleccione un usuario" o similar
+                MessageBox.Show(LanguageManager.Instance.GetTraduction("UserMsj4"));
                 return;
             }
 
@@ -407,7 +398,6 @@ namespace GUI
             CargarPerfiles();
             SetModoEdicion(true);
 
-            // Rellenamos los campos con los datos del usuario seleccionado
             Usuario user = usuarioBLL.BuscarUsuarioPorDNI(
                 dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
 

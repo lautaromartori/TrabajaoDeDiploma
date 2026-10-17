@@ -35,10 +35,8 @@ namespace Servicios
             }
             catch
             {
-                // Ignorar errores
             }
 
-            // Opciones comunes por si no encuentra ninguna
             AgregarSiNoExiste(lista, ".");
             AgregarSiNoExiste(lista, "(local)");
             AgregarSiNoExiste(lista, "localhost");

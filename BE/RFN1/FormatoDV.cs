@@ -3,7 +3,6 @@ using System.Globalization;
 
 namespace BE.RFN1
 {
-   
     public static class FormatoDV
     {
         public static string Fecha(DateTime f) => f.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);

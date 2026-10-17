@@ -12,8 +12,6 @@ namespace BLL.RFN1
 
         public Nivel ObtenerInicial() => _nivelDAL.ObtenerInicial();
 
-        // El nivel se recalcula con los puntos acreditados en los últimos 12 meses
-        // (lotes ya grabados + los puntos que se están por acreditar).
         internal Nivel CalcularNivel(Cliente c, int puntosNuevos)
         {
             DateTime desde = DateTime.Today.AddMonths(-12);

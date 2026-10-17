@@ -12,7 +12,6 @@ namespace Servicios
         public abstract void QuitarHijo(ComponentePermiso hijo);
         public abstract List<ComponentePermiso> ObtenerHijos();
 
-       
         public abstract bool TienePermiso(string nombrePermiso);
     }
 }

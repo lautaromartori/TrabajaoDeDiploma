@@ -49,7 +49,7 @@
             // pnlTitulo
             // 
             this.pnlTitulo.Controls.Add(this.lblTitulo);
-            this.pnlTitulo.BackColor = System.Drawing.Color.Maroon;
+            this.pnlTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.pnlTitulo.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTitulo.Location = new System.Drawing.Point(0, 0);
             this.pnlTitulo.Name = "pnlTitulo";
@@ -85,6 +85,9 @@
             this.dgvPendientes.MultiSelect = false;
             this.dgvPendientes.RowHeadersVisible = false;
             this.dgvPendientes.BackgroundColor = System.Drawing.Color.White;
+            this.dgvPendientes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dgvPendientes.EnableHeadersVisualStyles = false;
+            this.dgvPendientes.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(201)))));
             this.dgvPendientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPendientes.Location = new System.Drawing.Point(20, 85);
             this.dgvPendientes.Name = "dgvPendientes";
@@ -98,7 +101,7 @@
             this.grpDetalle.Controls.Add(this.lblClienteDatos);
             this.grpDetalle.Controls.Add(this.lblMotivoReclamo);
             this.grpDetalle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.grpDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
             this.grpDetalle.Location = new System.Drawing.Point(20, 315);
             this.grpDetalle.Name = "grpDetalle";
             this.grpDetalle.Size = new System.Drawing.Size(820, 130);
@@ -156,9 +159,12 @@
             // 
             this.btnAprobar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAprobar.UseVisualStyleBackColor = false;
-            this.btnAprobar.BackColor = System.Drawing.Color.Maroon;
+            this.btnAprobar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnAprobar.ForeColor = System.Drawing.Color.White;
             this.btnAprobar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAprobar.FlatAppearance.BorderSize = 0;
+            this.btnAprobar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.btnAprobar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAprobar.Location = new System.Drawing.Point(480, 585);
             this.btnAprobar.Name = "btnAprobar";
             this.btnAprobar.Size = new System.Drawing.Size(115, 30);
@@ -192,7 +198,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(860, 640);
             this.Controls.Add(this.pnlTitulo);
             this.Controls.Add(this.lblPendientes);

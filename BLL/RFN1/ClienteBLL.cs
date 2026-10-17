@@ -16,10 +16,8 @@ namespace BLL.RFN1
         private readonly BitacoraBLL _bitacoraBLL = new BitacoraBLL();
         private readonly DigitoVerificadorBLL _digitoVerificadorBLL = new DigitoVerificadorBLL();
 
-        // Mensajes del último ValidarDatos (campos a corregir, flujo 3.1).
         public List<string> ErroresValidacion { get; } = new List<string>();
 
-        // CU-N01-001 Registrar cliente
         public void Registrar(Cliente c)
         {
             if (!ValidarDatos(c))
@@ -60,7 +58,6 @@ namespace BLL.RFN1
             return ErroresValidacion.Count == 0;
         }
 
-        // null = el cliente no está inscripto.
         public Cliente? Buscar(string dni)
         {
             return _clienteDAL.Obtener((dni ?? "").Trim());

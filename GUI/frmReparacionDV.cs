@@ -21,12 +21,10 @@ namespace GUI
         public frmReparacionDV()
         {
             InitializeComponent();
-            
         }
 
         private void btnRecalcularDV_Click(object sender, EventArgs e)
         {
-            // Antes: Convert.ToBoolean(DialogResult) daba true también con "No" (Yes = 6, No = 7) y recalculaba igual.
             if (MessageBox.Show(LanguageManager.Instance.GetTraduction("TextDV1"), LanguageManager.Instance.GetTraduction("TextDV2"), MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
             {
                 try
@@ -44,7 +42,6 @@ namespace GUI
                 Login login = new Login();
                 login.Show();
             }
-            
         }
 
         private void btnRestaurar_Click(object sender, EventArgs e)
@@ -59,7 +56,6 @@ namespace GUI
                 backupBLL.RealizarRestore(backupBLL.ObtenerRutaBakcup(lstBackups.SelectedItem.ToString()));
                 MessageBox.Show(LanguageManager.Instance.GetTraduction("TextDV6"), LanguageManager.Instance.GetTraduction("TextDV7"), MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-
                 SessionManager.Instance.Desloguear();
                 this.Close();
                 Login login = new Login();
@@ -69,8 +65,6 @@ namespace GUI
             {
                 MessageBox.Show($"{LanguageManager.Instance.GetTraduction("TextDV8")} {ex.Message}", LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
-
         }
 
         private void frmReparacionDV_Load(object sender, EventArgs e)
@@ -91,7 +85,6 @@ namespace GUI
             {
                 lstInconsistencias.Items.Add(inconsistencia);
             }
-
         }
         private void listarBackups()
         {
@@ -173,6 +166,5 @@ namespace GUI
         {
             arrastrando = false;
         }
-
     }
 }

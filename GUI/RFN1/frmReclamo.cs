@@ -9,7 +9,6 @@ using System.Windows.Forms;
 
 namespace GUI.RFN1
 {
-    // CU-N01-004 Registrar reclamo. Punto de extensión: cliente no inscripto -> «extend» CU-N01-001.
     public partial class frmReclamo : Form, IObserver
     {
         private readonly ReclamoBLL _reclamoBLL = new ReclamoBLL();
@@ -28,6 +27,7 @@ namespace GUI.RFN1
         private void frmReclamo_Load(object sender, EventArgs e)
         {
             LanguageManager.Instance.AgregarObservador(this);
+            Estilo.Aplicar(this);
             Actualizar(LanguageManager.Instance);
             Limpiar();
         }
@@ -52,7 +52,6 @@ namespace GUI.RFN1
             dgvDetalle.DataSource = null;
         }
 
-        // Paso 2
         private void btnBuscarCliente_Click(object sender, EventArgs e)
         {
             try
@@ -67,7 +66,6 @@ namespace GUI.RFN1
                 Cliente? cliente = _clienteBLL.Buscar(dni);
                 if (cliente == null)
                 {
-                    // Flujo 2.1 (punto de extensión): se ejecuta CU-N01-001 y el reclamo sigue con el cliente nuevo.
                     MessageBox.Show(T("RFN1_ClienteNoInscriptoReclamo"), T("RFN1_RegistrarReclamo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                     using (var frm = new frmRegistrarCliente(dni))
                     {
@@ -87,7 +85,6 @@ namespace GUI.RFN1
             }
         }
 
-        // Pasos 3-6
         private void btnBuscarVenta_Click(object sender, EventArgs e)
         {
             try
@@ -102,7 +99,6 @@ namespace GUI.RFN1
                 _venta = _ventaBLL.ObtenerPorNro(txtNroComprobante.Text);
                 if (_venta == null)
                 {
-                    // Flujo 4.1
                     MessageBox.Show(T("RFN1_VentaNoExiste"), T("RFN1_RegistrarReclamo"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -127,7 +123,6 @@ namespace GUI.RFN1
                 Subtotal = d.Subtotal.ToString("N2")
             }).ToList();
 
-            // Paso 5: validaciones (flujos 5.1 a 5.3)
             _ventaValida = _reclamoBLL.Validar(_venta);
             if (!_ventaValida)
             {
@@ -136,13 +131,11 @@ namespace GUI.RFN1
                 return;
             }
 
-            // Paso 6
             int puntos = _reclamoBLL.CalcularPuntosReclamo(_venta, _cliente);
             lblPuntos.Text = puntos.ToString("N0");
             txtMotivo.Select();
         }
 
-        // Pasos 7-10
         private void btnRegistrarReclamo_Click(object sender, EventArgs e)
         {
             if (_cliente == null || _venta == null || !_ventaValida)
@@ -152,7 +145,6 @@ namespace GUI.RFN1
             }
             if (txtMotivo.Text.Trim().Length == 0)
             {
-                // Flujo 7.1
                 MessageBox.Show(T("RFN1_MotivoObligatorio"), T("RFN1_RegistrarReclamo"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtMotivo.Select();
                 return;

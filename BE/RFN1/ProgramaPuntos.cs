@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace BE.RFN1
 {
-    
     public class ProgramaPuntos
     {
         private int idPrograma;
@@ -12,6 +11,8 @@ namespace BE.RFN1
         private int mesesVencimiento;
         private int plazoReclamoDias;
         private DateTime vigenciaDesde;
+        private decimal umbralAutorizacion;
+        private int plazoAnulacionDias;
         private List<Nivel> niveles = new List<Nivel>();
 
         public int IdPrograma { get => idPrograma; set => idPrograma = value; }
@@ -20,6 +21,8 @@ namespace BE.RFN1
         public int MesesVencimiento { get => mesesVencimiento; set => mesesVencimiento = value; }
         public int PlazoReclamoDias { get => plazoReclamoDias; set => plazoReclamoDias = value; }
         public DateTime VigenciaDesde { get => vigenciaDesde; set => vigenciaDesde = value; }
+        public decimal UmbralAutorizacion { get => umbralAutorizacion; set => umbralAutorizacion = value; }
+        public int PlazoAnulacionDias { get => plazoAnulacionDias; set => plazoAnulacionDias = value; }
         public List<Nivel> Niveles { get => niveles; set => niveles = value; }
     }
 }

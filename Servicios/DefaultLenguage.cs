@@ -6,6 +6,6 @@ namespace Servicios
 {
     public class DefaultLenguage
     {
-        public string Idioma { get; set; }  
+        public string Idioma { get; set; }
     }
 }

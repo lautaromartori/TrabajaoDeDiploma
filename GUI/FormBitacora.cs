@@ -14,7 +14,7 @@ namespace GUI
     {
         int posX, posY;
         bool arrastrando = false;
-        BitacoraBLL bll; 
+        BitacoraBLL bll;
         public FormBitacora()
         {
             InitializeComponent();
@@ -41,7 +41,6 @@ namespace GUI
             }
 
             dtgvBitacora.SelectionChanged += DtgvBitacora_SelectionChanged;
-
         }
 
         private void MostrarPrimerRegistro()
@@ -93,7 +92,6 @@ namespace GUI
 
                 cmbModulo.Items.Clear();
                 cmbModulo.Items.Add("Todos");
-                // Módulos que realmente se graban en la bitácora (se quitaron Compras y Maestro del RFN1 viejo).
                 cmbModulo.Items.Add("Usuarios");
                 cmbModulo.Items.Add("Perfiles");
                 cmbModulo.Items.Add("Idioma");
@@ -139,7 +137,6 @@ namespace GUI
                 MostrarUsuario(b.Login);
         }
 
-       
          private void ConfigurarDtgv()
         {
             dtgvBitacora.ReadOnly = true;
@@ -164,14 +161,12 @@ namespace GUI
             if (dtgvBitacora.Columns["HoraSolo"] != null)
                 dtgvBitacora.Columns["HoraSolo"].HeaderText = "Hora";
 
-       
             dtgvBitacora.Columns["Login"].DisplayIndex = 0;
             dtgvBitacora.Columns["FechaSolo"].DisplayIndex = 1;
             dtgvBitacora.Columns["HoraSolo"].DisplayIndex = 2;
             dtgvBitacora.Columns["Modulo"].DisplayIndex = 3;
             dtgvBitacora.Columns["Evento"].DisplayIndex = 4;
             dtgvBitacora.Columns["Criticidad"].DisplayIndex = 5;
-        
         }
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
@@ -256,7 +251,6 @@ namespace GUI
             {
                 MessageBox.Show(LanguageManager.Instance.GetTraduction("BitMsj6"), LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private bool ValidarFiltros()
@@ -267,7 +261,6 @@ namespace GUI
                 dtpFechaInicio.Focus();
                 return false;
             }
-
 
             return true;
         }
@@ -336,7 +329,7 @@ namespace GUI
                 iText.Font fontFecha = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA, 9);
                 iText.Font fontHeader = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_BOLD, 9);
                 iText.Font fontCell = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA, 8);
-                iText.BaseColor colorHeader = new iText.BaseColor(70, 130, 180);
+                iText.BaseColor colorHeader = new iText.BaseColor(46, 125, 50);
 
                 doc.Add(new iText.Paragraph("Bitácora de Eventos", fontTitulo));
                 doc.Add(new iText.Paragraph("Generado el " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"), fontFecha));
@@ -405,7 +398,6 @@ namespace GUI
 
         private void ValidarPermisos()
         {
-   
             Usuario usuarioActual = SessionManager.Instance.UsuarioActual();
 
             if (!usuarioActual.TienePermiso("Ver Bitacora"))

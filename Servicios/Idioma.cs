@@ -13,7 +13,6 @@ namespace Servicios
 
         public Idioma()
         {
-            
         }
         public Idioma(string userName, string codIdioma, string dVH)
         {

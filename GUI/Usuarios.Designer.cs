@@ -92,7 +92,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Maroon;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel1.Controls.Add(this.btnCerrar);
             this.panel1.Controls.Add(this.btnMaximizar);
             this.panel1.Controls.Add(this.btnMinimizar);
@@ -308,7 +308,7 @@
             // 
             this.rbActivos.AutoSize = true;
             this.rbActivos.Checked = true;
-            this.rbActivos.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.rbActivos.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(199)))), ((int)(((byte)(132)))));
             this.rbActivos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbActivos.ForeColor = System.Drawing.SystemColors.Control;
             this.rbActivos.Location = new System.Drawing.Point(14, 13);
@@ -335,7 +335,7 @@
             // 
             // pnFiltrado
             // 
-            this.pnFiltrado.BackColor = System.Drawing.Color.Maroon;
+            this.pnFiltrado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.pnFiltrado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnFiltrado.Controls.Add(this.rbActivos);
             this.pnFiltrado.Controls.Add(this.rbTodos);
@@ -346,7 +346,7 @@
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.Maroon;
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel3.Controls.Add(this.lblTextoTabla);
             this.panel3.Controls.Add(this.dataGridView1);
             this.panel3.Location = new System.Drawing.Point(71, 161);
@@ -380,7 +380,7 @@
             // 
             this.btnCrear.BackColor = System.Drawing.Color.Transparent;
             this.btnCrear.FlatAppearance.BorderSize = 0;
-            this.btnCrear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
+            this.btnCrear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnCrear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCrear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCrear.ForeColor = System.Drawing.SystemColors.Control;
@@ -396,7 +396,7 @@
             // 
             this.btnDesbloquear.BackColor = System.Drawing.Color.Transparent;
             this.btnDesbloquear.FlatAppearance.BorderSize = 0;
-            this.btnDesbloquear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
+            this.btnDesbloquear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnDesbloquear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDesbloquear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDesbloquear.ForeColor = System.Drawing.SystemColors.Control;
@@ -412,7 +412,7 @@
             // 
             this.btnModificar.BackColor = System.Drawing.Color.Transparent;
             this.btnModificar.FlatAppearance.BorderSize = 0;
-            this.btnModificar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
+            this.btnModificar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnModificar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModificar.ForeColor = System.Drawing.SystemColors.Control;
@@ -428,7 +428,7 @@
             // 
             this.btnActDes.BackColor = System.Drawing.Color.Transparent;
             this.btnActDes.FlatAppearance.BorderSize = 0;
-            this.btnActDes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
+            this.btnActDes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnActDes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActDes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnActDes.ForeColor = System.Drawing.SystemColors.Control;
@@ -442,7 +442,7 @@
             // 
             // btnAplicar
             // 
-            this.btnAplicar.BackColor = System.Drawing.Color.Maroon;
+            this.btnAplicar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnAplicar.Enabled = false;
             this.btnAplicar.FlatAppearance.BorderSize = 0;
             this.btnAplicar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -458,7 +458,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.BackColor = System.Drawing.Color.Maroon;
+            this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnCancelar.Enabled = false;
             this.btnCancelar.FlatAppearance.BorderSize = 0;
             this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -474,7 +474,7 @@
             // 
             // panModificarUsuario
             // 
-            this.panModificarUsuario.BackColor = System.Drawing.Color.Maroon;
+            this.panModificarUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panModificarUsuario.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panModificarUsuario.Controls.Add(this.cbRol);
             this.panModificarUsuario.Controls.Add(this.lblUsuarioFU);
@@ -499,7 +499,7 @@
             // 
             this.btnSalir.BackColor = System.Drawing.Color.Transparent;
             this.btnSalir.FlatAppearance.BorderSize = 0;
-            this.btnSalir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
+            this.btnSalir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSalir.ForeColor = System.Drawing.SystemColors.Control;
@@ -513,7 +513,7 @@
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.Color.Maroon;
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.lblMsj);
             this.panel4.Controls.Add(this.txtBoxModo);
@@ -524,7 +524,7 @@
             // 
             // panel5
             // 
-            this.panel5.BackColor = System.Drawing.Color.Maroon;
+            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel5.Controls.Add(this.lblCantidadUsers);
             this.panel5.Location = new System.Drawing.Point(640, 94);
@@ -534,7 +534,7 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.panel12);
             this.panel2.Controls.Add(this.panel11);
@@ -559,7 +559,7 @@
             // 
             // panel12
             // 
-            this.panel12.BackColor = System.Drawing.Color.Maroon;
+            this.panel12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel12.Location = new System.Drawing.Point(154, 371);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(10, 41);
@@ -568,7 +568,7 @@
             // 
             // panel11
             // 
-            this.panel11.BackColor = System.Drawing.Color.Maroon;
+            this.panel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel11.Location = new System.Drawing.Point(154, 330);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(10, 41);
@@ -576,7 +576,7 @@
             // 
             // panel10
             // 
-            this.panel10.BackColor = System.Drawing.Color.Maroon;
+            this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel10.Location = new System.Drawing.Point(154, 289);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(10, 41);
@@ -584,7 +584,7 @@
             // 
             // panel9
             // 
-            this.panel9.BackColor = System.Drawing.Color.Maroon;
+            this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel9.Location = new System.Drawing.Point(154, 248);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(10, 41);
@@ -592,7 +592,7 @@
             // 
             // panel8
             // 
-            this.panel8.BackColor = System.Drawing.Color.Maroon;
+            this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel8.Location = new System.Drawing.Point(154, 207);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(10, 41);
@@ -600,7 +600,7 @@
             // 
             // panel7
             // 
-            this.panel7.BackColor = System.Drawing.Color.Maroon;
+            this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel7.Location = new System.Drawing.Point(154, 166);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(10, 41);
@@ -608,7 +608,7 @@
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.Color.Maroon;
+            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel6.Location = new System.Drawing.Point(154, 125);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(10, 41);
@@ -616,7 +616,7 @@
             // 
             // panel13
             // 
-            this.panel13.BackColor = System.Drawing.Color.Maroon;
+            this.panel13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.panel13.Controls.Add(this.lblOpciones);
             this.panel13.Location = new System.Drawing.Point(912, 122);
             this.panel13.Name = "panel13";
@@ -647,7 +647,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1075, 643);
             this.Controls.Add(this.panel13);
             this.Controls.Add(this.panel2);

@@ -8,7 +8,6 @@ namespace BLL.RFN1
     {
         private readonly ProductoDAL _productoDAL = new ProductoDAL();
 
-        // null = el producto no existe.
         public Producto? Buscar(string nombre)
         {
             nombre = (nombre ?? "").Trim();

@@ -39,13 +39,13 @@ namespace DAL
             {
                 _sqlcommand.CommandText = @"IF EXISTS (SELECT 1 FROM ControlDVV WHERE NombreTabla = @NomTabla AND ColumnaNombre = @NomColumn)
                                             BEGIN
-                                                UPDATE ControlDVV 
-                                                SET DVV = @dvv 
+                                                UPDATE ControlDVV
+                                                SET DVV = @dvv
                                                 WHERE NombreTabla = @NomTabla AND ColumnaNombre = @NomColumn
                                             END
                                             ELSE
                                             BEGIN
-                                                INSERT INTO ControlDVV (NombreTabla, ColumnaNombre, DVV) 
+                                                INSERT INTO ControlDVV (NombreTabla, ColumnaNombre, DVV)
                                                 VALUES (@NomTabla, @NomColumn, @dvv)
                                             END";
                 _sqlcommand.Parameters.Clear();
@@ -58,7 +58,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally

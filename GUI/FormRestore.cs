@@ -123,7 +123,6 @@ namespace GUI
             btnExaminar.Text = lenguaje.GetTraduction("btnExaminar");
             btnEjecutar.Text = lenguaje.GetTraduction("btnEjecutar");
             btnVolver.Text = lenguaje.GetTraduction("btnVolverDV");
-
         }
     }
 }

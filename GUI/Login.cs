@@ -41,7 +41,6 @@ namespace GUI
             }
         }
 
-
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -115,7 +114,6 @@ namespace GUI
 
                         if (Auditoria.Count > 0)
                         {
-                            // Solo quien tiene el permiso de DV (el administrador) puede entrar a reparar.
                             if (SessionManager.Instance.UsuarioActual().TienePermiso("Gestionar DigitoVerificadores"))
                             {
                                 this.Hide();
@@ -126,7 +124,6 @@ namespace GUI
 
                             string mensaje = "Se han detectado inconsistencias en la base de datos, por favor contacte al administrador.";
                             MessageBox.Show(mensaje, "Error de Integridad", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            // Antes se llamaba a Application.Exit() y el código seguía: registraba el login y abría el menú igual.
                             SessionManager.Instance.Desloguear();
                             Application.Exit();
                             return;
@@ -138,7 +135,6 @@ namespace GUI
                         bitacora.Evento = "Login exitoso";
                         bitacora.Criticidad = 1;
                         bitacoraBLL.RegistrarEvento(bitacora);
-
 
                         this.Hide();
                         Menu menu = new Menu();
@@ -156,7 +152,6 @@ namespace GUI
             }
             catch (Exception ex)
             {
-                //cambiar idioma
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -208,7 +203,6 @@ namespace GUI
         private void Login_Load(object sender, EventArgs e)
         {
         }
-
 
         public void Actualizar(LanguageManager lenguaje)
         {

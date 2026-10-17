@@ -16,10 +16,8 @@ namespace BLL.RFN1
         private readonly BitacoraBLL _bitacoraBLL = new BitacoraBLL();
         private readonly DigitoVerificadorBLL _digitoVerificadorBLL = new DigitoVerificadorBLL();
 
-       
         public string MensajeValidacion { get; private set; } = "";
 
-     
         public bool Validar(Venta v)
         {
             MensajeValidacion = "";
@@ -46,14 +44,13 @@ namespace BLL.RFN1
         public bool ValidarPlazo(Venta v) =>
             (DateTime.Today - v.Fecha.Date).TotalDays <= ProgramaPuntosBLL.Obtener().PlazoReclamoDias;
 
-  
         public int CalcularPuntosReclamo(Venta v, Cliente c) => _ventaBLL.CalcularPuntos(v, c);
 
         public void Registrar(Reclamo r)
         {
             r.Motivo = (r.Motivo ?? "").Trim();
             if (r.Motivo.Length == 0)
-                throw new Exception("Ingrese el motivo del reclamo."); 
+                throw new Exception("Ingrese el motivo del reclamo.");
             if (r.Motivo.Length > 200)
                 throw new Exception("El motivo no puede superar los 200 caracteres.");
             if (r.Venta.Cliente != null && r.Venta.Cliente.IdCliente != r.Cliente.IdCliente)
@@ -75,8 +72,6 @@ namespace BLL.RFN1
             RegistrarEvento($"Registrar reclamo {r.IdReclamo} venta {r.Venta.NroComprobante} cliente {r.Cliente.Dni}", 1);
         }
 
- 
-
         public List<Reclamo> ListarPendientes() => _reclamoDAL.ListarPendientes();
 
         public void Resolver(Reclamo r)
@@ -86,7 +81,7 @@ namespace BLL.RFN1
             if (r.Estado == EstadoReclamo.pendiente)
                 throw new Exception("Elija aprobar o rechazar el reclamo.");
             if (r.Estado == EstadoReclamo.rechazado && r.MotivoResolucion == null)
-                throw new Exception("Para rechazar el reclamo el motivo es obligatorio."); 
+                throw new Exception("Para rechazar el reclamo el motivo es obligatorio.");
             if (r.MotivoResolucion != null && r.MotivoResolucion.Length > 200)
                 throw new Exception("El motivo no puede superar los 200 caracteres.");
 

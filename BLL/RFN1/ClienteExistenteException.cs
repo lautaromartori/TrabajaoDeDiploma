@@ -3,7 +3,6 @@ using System;
 
 namespace BLL.RFN1
 {
-    
     public class ClienteExistenteException : Exception
     {
         public Cliente Cliente { get; }

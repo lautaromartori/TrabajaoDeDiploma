@@ -56,7 +56,7 @@
             // pnlTitulo
             // 
             this.pnlTitulo.Controls.Add(this.lblTitulo);
-            this.pnlTitulo.BackColor = System.Drawing.Color.Maroon;
+            this.pnlTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.pnlTitulo.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTitulo.Location = new System.Drawing.Point(0, 0);
             this.pnlTitulo.Name = "pnlTitulo";
@@ -80,7 +80,7 @@
             this.grpCliente.Controls.Add(this.btnBuscarCliente);
             this.grpCliente.Controls.Add(this.lblCliente);
             this.grpCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.grpCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
             this.grpCliente.Location = new System.Drawing.Point(20, 60);
             this.grpCliente.Name = "grpCliente";
             this.grpCliente.Size = new System.Drawing.Size(680, 70);
@@ -135,7 +135,7 @@
             this.grpVenta.Controls.Add(this.lblPuntosTitulo);
             this.grpVenta.Controls.Add(this.lblPuntos);
             this.grpVenta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpVenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.grpVenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
             this.grpVenta.Location = new System.Drawing.Point(20, 140);
             this.grpVenta.Name = "grpVenta";
             this.grpVenta.Size = new System.Drawing.Size(680, 260);
@@ -190,6 +190,9 @@
             this.dgvDetalle.MultiSelect = false;
             this.dgvDetalle.RowHeadersVisible = false;
             this.dgvDetalle.BackgroundColor = System.Drawing.Color.White;
+            this.dgvDetalle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dgvDetalle.EnableHeadersVisualStyles = false;
+            this.dgvDetalle.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(201)))));
             this.dgvDetalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDetalle.Location = new System.Drawing.Point(15, 60);
             this.dgvDetalle.Name = "dgvDetalle";
@@ -238,9 +241,12 @@
             // 
             this.btnRegistrarReclamo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRegistrarReclamo.UseVisualStyleBackColor = false;
-            this.btnRegistrarReclamo.BackColor = System.Drawing.Color.Maroon;
+            this.btnRegistrarReclamo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnRegistrarReclamo.ForeColor = System.Drawing.Color.White;
             this.btnRegistrarReclamo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegistrarReclamo.FlatAppearance.BorderSize = 0;
+            this.btnRegistrarReclamo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.btnRegistrarReclamo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRegistrarReclamo.Location = new System.Drawing.Point(430, 585);
             this.btnRegistrarReclamo.Name = "btnRegistrarReclamo";
             this.btnRegistrarReclamo.Size = new System.Drawing.Size(150, 30);
@@ -263,7 +269,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(720, 640);
             this.Controls.Add(this.pnlTitulo);
             this.Controls.Add(this.grpCliente);

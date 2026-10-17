@@ -31,7 +31,6 @@ namespace DAL.RFN1
             }
         }
 
-        // Inserta el cliente y graba su DVH en la misma transacción (el DVH incluye el id generado).
         public void Insertar(Cliente c)
         {
             _sqlserver.Open();
@@ -89,7 +88,6 @@ namespace DAL.RFN1
             }
         }
 
-        // ---- Dígito verificador ----
         public List<Cliente> ListarParaDV()
         {
             var lista = new List<Cliente>();
@@ -123,7 +121,6 @@ namespace DAL.RFN1
             }
         }
 
-        // Usado también desde VentaDAL y ReclamoDAL dentro de su transacción.
         internal static void ActualizarNivel(Cliente c, SqlConnection cn, SqlTransaction tx)
         {
             using (var cmd = new SqlCommand("UPDATE Cliente SET idNivel = @idNivel, DVH = @dvh WHERE idCliente = @id", cn, tx))

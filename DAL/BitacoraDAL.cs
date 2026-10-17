@@ -13,7 +13,7 @@ namespace DAL
         {
             try
             {
-                _sqlcommand.CommandText = @"INSERT INTO Bitacora (Login, Fecha, Modulo, Evento, Criticidad, DVH) 
+                _sqlcommand.CommandText = @"INSERT INTO Bitacora (Login, Fecha, Modulo, Evento, Criticidad, DVH)
                            VALUES (@Login, @Fecha, @Modulo, @Evento, @Criticidad, @dvh)";
                 _sqlcommand.Parameters.Clear();
                 _sqlcommand.Parameters.AddWithValue("@Login", unEvento.Login);
@@ -36,15 +36,14 @@ namespace DAL
             }
         }
 
-
         public List<Bitacora> FiltrarEventos(string nombre, string apellido, string login, string modulo, string evento, DateTime desde, DateTime hasta, int? criticidad)
         {
             List<Bitacora> lista = new List<Bitacora>();
             try
             {
-                string query = @"SELECT b.Id_Evento, b.Login, b.Fecha, b.Modulo, 
+                string query = @"SELECT b.Id_Evento, b.Login, b.Fecha, b.Modulo,
                                  b.Evento, b.Criticidad
-                                 FROM Bitacora b 
+                                 FROM Bitacora b
                                  LEFT JOIN Usuario u ON b.Login = u.UserName
                                  WHERE 1=1";
 
@@ -146,8 +145,8 @@ namespace DAL
             Usuario usuario = null;
             try
             {
-                _sqlcommand.CommandText = @"SELECT DNI, Nombre, Apellido, UserName 
-                                            FROM Usuario 
+                _sqlcommand.CommandText = @"SELECT DNI, Nombre, Apellido, UserName
+                                            FROM Usuario
                                             WHERE UserName = @Login";
                 _sqlcommand.Parameters.Clear();
                 _sqlcommand.Parameters.AddWithValue("@Login", login);
@@ -192,7 +191,6 @@ namespace DAL
                            reader.GetInt32(5), reader.GetString(6)));
                 }
                 return Bitacoralst;
-
             }
             catch (Exception ex)
             {
@@ -218,7 +216,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally

@@ -40,6 +40,14 @@
             this.btnRegistrarVenta = new System.Windows.Forms.Button();
             this.btnRegistrarReclamo = new System.Windows.Forms.Button();
             this.btnResolverReclamos = new System.Windows.Forms.Button();
+            this.btnComprobantes = new System.Windows.Forms.Button();
+            this.panelPremiosSubmenu = new System.Windows.Forms.Panel();
+            this.btnPremiosCanjeables = new System.Windows.Forms.Button();
+            this.btnAutorizarCanjes = new System.Windows.Forms.Button();
+            this.btnEntregarPremio = new System.Windows.Forms.Button();
+            this.btnAnularCanje = new System.Windows.Forms.Button();
+            this.btnPremios = new System.Windows.Forms.Button();
+            this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
             this.panelUsuarioSubmenu = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.btnCambiarIdioma = new System.Windows.Forms.Button();
@@ -73,6 +81,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.btnMinimizar)).BeginInit();
             this.MenuVertical.SuspendLayout();
             this.panelGestionSubmenu.SuspendLayout();
+            this.panelPremiosSubmenu.SuspendLayout();
+            this.panelContenedor.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.panelUsuarioSubmenu.SuspendLayout();
             this.panelAdminSubmenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -80,7 +91,7 @@
             // 
             // BarraTitulo
             // 
-            this.BarraTitulo.BackColor = System.Drawing.Color.Maroon;
+            this.BarraTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.BarraTitulo.Controls.Add(this.btnCerrar);
             this.BarraTitulo.Controls.Add(this.btnMaximizar);
             this.BarraTitulo.Controls.Add(this.btnMinimizar);
@@ -134,9 +145,11 @@
             // 
             // MenuVertical
             // 
-            this.MenuVertical.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.MenuVertical.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
             this.MenuVertical.Controls.Add(this.panelUsuarioSubmenu);
             this.MenuVertical.Controls.Add(this.btnUsuario);
+            this.MenuVertical.Controls.Add(this.panelPremiosSubmenu);
+            this.MenuVertical.Controls.Add(this.btnPremios);
             this.MenuVertical.Controls.Add(this.panelGestionSubmenu);
             this.MenuVertical.Controls.Add(this.btnGestion);
             this.MenuVertical.Controls.Add(this.panelAdminSubmenu);
@@ -150,16 +163,17 @@
             // 
             // panelGestionSubmenu
             // 
+            this.panelGestionSubmenu.Controls.Add(this.btnComprobantes);
             this.panelGestionSubmenu.Controls.Add(this.btnResolverReclamos);
             this.panelGestionSubmenu.Controls.Add(this.btnRegistrarReclamo);
             this.panelGestionSubmenu.Controls.Add(this.btnRegistrarVenta);
             this.panelGestionSubmenu.Controls.Add(this.btnConsultarSaldo);
             this.panelGestionSubmenu.Controls.Add(this.btnRegistrarCliente);
-            this.panelGestionSubmenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.panelGestionSubmenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(110)))), ((int)(((byte)(42)))));
             this.panelGestionSubmenu.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelGestionSubmenu.Location = new System.Drawing.Point(0, 367);
             this.panelGestionSubmenu.Name = "panelGestionSubmenu";
-            this.panelGestionSubmenu.Size = new System.Drawing.Size(200, 175);
+            this.panelGestionSubmenu.Size = new System.Drawing.Size(200, 210);
             this.panelGestionSubmenu.TabIndex = 4;
             this.panelGestionSubmenu.Visible = false;
             // 
@@ -167,7 +181,7 @@
             // 
             this.btnRegistrarCliente.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnRegistrarCliente.FlatAppearance.BorderSize = 0;
-            this.btnRegistrarCliente.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnRegistrarCliente.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnRegistrarCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegistrarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRegistrarCliente.ForeColor = System.Drawing.Color.White;
@@ -183,7 +197,7 @@
             // 
             this.btnConsultarSaldo.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnConsultarSaldo.FlatAppearance.BorderSize = 0;
-            this.btnConsultarSaldo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnConsultarSaldo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnConsultarSaldo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnConsultarSaldo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConsultarSaldo.ForeColor = System.Drawing.Color.White;
@@ -199,7 +213,7 @@
             // 
             this.btnRegistrarVenta.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnRegistrarVenta.FlatAppearance.BorderSize = 0;
-            this.btnRegistrarVenta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnRegistrarVenta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnRegistrarVenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegistrarVenta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRegistrarVenta.ForeColor = System.Drawing.Color.White;
@@ -215,7 +229,7 @@
             // 
             this.btnRegistrarReclamo.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnRegistrarReclamo.FlatAppearance.BorderSize = 0;
-            this.btnRegistrarReclamo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnRegistrarReclamo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnRegistrarReclamo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegistrarReclamo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRegistrarReclamo.ForeColor = System.Drawing.Color.White;
@@ -231,7 +245,7 @@
             // 
             this.btnResolverReclamos.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnResolverReclamos.FlatAppearance.BorderSize = 0;
-            this.btnResolverReclamos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnResolverReclamos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnResolverReclamos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnResolverReclamos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnResolverReclamos.ForeColor = System.Drawing.Color.White;
@@ -243,9 +257,119 @@
             this.btnResolverReclamos.UseVisualStyleBackColor = true;
             this.btnResolverReclamos.Click += new System.EventHandler(this.btnResolverReclamos_Click);
             // 
+            // btnComprobantes
+            // 
+            this.btnComprobantes.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnComprobantes.FlatAppearance.BorderSize = 0;
+            this.btnComprobantes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
+            this.btnComprobantes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnComprobantes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnComprobantes.ForeColor = System.Drawing.Color.White;
+            this.btnComprobantes.Location = new System.Drawing.Point(0, 175);
+            this.btnComprobantes.Name = "btnComprobantes";
+            this.btnComprobantes.Size = new System.Drawing.Size(200, 35);
+            this.btnComprobantes.TabIndex = 5;
+            this.btnComprobantes.Text = "Comprobantes";
+            this.btnComprobantes.UseVisualStyleBackColor = true;
+            this.btnComprobantes.Click += new System.EventHandler(this.btnComprobantes_Click);
+            // 
+            // btnPremios
+            // 
+            this.btnPremios.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnPremios.FlatAppearance.BorderSize = 0;
+            this.btnPremios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.btnPremios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPremios.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPremios.ForeColor = System.Drawing.Color.White;
+            this.btnPremios.Location = new System.Drawing.Point(0, 577);
+            this.btnPremios.Name = "btnPremios";
+            this.btnPremios.Size = new System.Drawing.Size(200, 35);
+            this.btnPremios.TabIndex = 5;
+            this.btnPremios.Text = "Premios y canjes";
+            this.btnPremios.UseVisualStyleBackColor = true;
+            this.btnPremios.Click += new System.EventHandler(this.btnPremios_Click);
+            // 
+            // panelPremiosSubmenu
+            // 
+            this.panelPremiosSubmenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(110)))), ((int)(((byte)(42)))));
+            this.panelPremiosSubmenu.Controls.Add(this.btnAnularCanje);
+            this.panelPremiosSubmenu.Controls.Add(this.btnEntregarPremio);
+            this.panelPremiosSubmenu.Controls.Add(this.btnAutorizarCanjes);
+            this.panelPremiosSubmenu.Controls.Add(this.btnPremiosCanjeables);
+            this.panelPremiosSubmenu.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelPremiosSubmenu.Location = new System.Drawing.Point(0, 612);
+            this.panelPremiosSubmenu.Name = "panelPremiosSubmenu";
+            this.panelPremiosSubmenu.Size = new System.Drawing.Size(200, 140);
+            this.panelPremiosSubmenu.TabIndex = 6;
+            this.panelPremiosSubmenu.Visible = false;
+            // 
+            // btnPremiosCanjeables
+            // 
+            this.btnPremiosCanjeables.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnPremiosCanjeables.FlatAppearance.BorderSize = 0;
+            this.btnPremiosCanjeables.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
+            this.btnPremiosCanjeables.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPremiosCanjeables.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPremiosCanjeables.ForeColor = System.Drawing.Color.White;
+            this.btnPremiosCanjeables.Location = new System.Drawing.Point(0, 0);
+            this.btnPremiosCanjeables.Name = "btnPremiosCanjeables";
+            this.btnPremiosCanjeables.Size = new System.Drawing.Size(200, 35);
+            this.btnPremiosCanjeables.TabIndex = 0;
+            this.btnPremiosCanjeables.Text = "Premios canjeables";
+            this.btnPremiosCanjeables.UseVisualStyleBackColor = true;
+            this.btnPremiosCanjeables.Click += new System.EventHandler(this.btnPremiosCanjeables_Click);
+            // 
+            // btnAutorizarCanjes
+            // 
+            this.btnAutorizarCanjes.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnAutorizarCanjes.FlatAppearance.BorderSize = 0;
+            this.btnAutorizarCanjes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
+            this.btnAutorizarCanjes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAutorizarCanjes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAutorizarCanjes.ForeColor = System.Drawing.Color.White;
+            this.btnAutorizarCanjes.Location = new System.Drawing.Point(0, 35);
+            this.btnAutorizarCanjes.Name = "btnAutorizarCanjes";
+            this.btnAutorizarCanjes.Size = new System.Drawing.Size(200, 35);
+            this.btnAutorizarCanjes.TabIndex = 1;
+            this.btnAutorizarCanjes.Text = "Autorizar canjes";
+            this.btnAutorizarCanjes.UseVisualStyleBackColor = true;
+            this.btnAutorizarCanjes.Click += new System.EventHandler(this.btnAutorizarCanjes_Click);
+            // 
+            // btnEntregarPremio
+            // 
+            this.btnEntregarPremio.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnEntregarPremio.FlatAppearance.BorderSize = 0;
+            this.btnEntregarPremio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
+            this.btnEntregarPremio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEntregarPremio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEntregarPremio.ForeColor = System.Drawing.Color.White;
+            this.btnEntregarPremio.Location = new System.Drawing.Point(0, 70);
+            this.btnEntregarPremio.Name = "btnEntregarPremio";
+            this.btnEntregarPremio.Size = new System.Drawing.Size(200, 35);
+            this.btnEntregarPremio.TabIndex = 2;
+            this.btnEntregarPremio.Text = "Entregar premio";
+            this.btnEntregarPremio.UseVisualStyleBackColor = true;
+            this.btnEntregarPremio.Click += new System.EventHandler(this.btnEntregarPremio_Click);
+            // 
+            // btnAnularCanje
+            // 
+            this.btnAnularCanje.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnAnularCanje.FlatAppearance.BorderSize = 0;
+            this.btnAnularCanje.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
+            this.btnAnularCanje.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAnularCanje.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAnularCanje.ForeColor = System.Drawing.Color.White;
+            this.btnAnularCanje.Location = new System.Drawing.Point(0, 105);
+            this.btnAnularCanje.Name = "btnAnularCanje";
+            this.btnAnularCanje.Size = new System.Drawing.Size(200, 35);
+            this.btnAnularCanje.TabIndex = 3;
+            this.btnAnularCanje.Text = "Anular canje";
+            this.btnAnularCanje.UseVisualStyleBackColor = true;
+            this.btnAnularCanje.Click += new System.EventHandler(this.btnAnularCanje_Click);
+            // 
             // panelUsuarioSubmenu
             // 
-            this.panelUsuarioSubmenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.panelUsuarioSubmenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(110)))), ((int)(((byte)(42)))));
             this.panelUsuarioSubmenu.Controls.Add(this.panel10);
             this.panelUsuarioSubmenu.Controls.Add(this.btnCambiarIdioma);
             this.panelUsuarioSubmenu.Controls.Add(this.panel3);
@@ -263,7 +387,7 @@
             // 
             // panel10
             // 
-            this.panel10.BackColor = System.Drawing.Color.Maroon;
+            this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(199)))), ((int)(((byte)(132)))));
             this.panel10.Location = new System.Drawing.Point(12, 105);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(5, 35);
@@ -273,7 +397,7 @@
             // 
             this.btnCambiarIdioma.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnCambiarIdioma.FlatAppearance.BorderSize = 0;
-            this.btnCambiarIdioma.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnCambiarIdioma.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnCambiarIdioma.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCambiarIdioma.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCambiarIdioma.ForeColor = System.Drawing.Color.White;
@@ -288,7 +412,7 @@
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.Maroon;
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(199)))), ((int)(((byte)(132)))));
             this.panel3.Location = new System.Drawing.Point(12, 0);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(5, 35);
@@ -296,7 +420,7 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.Maroon;
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(199)))), ((int)(((byte)(132)))));
             this.panel2.Location = new System.Drawing.Point(12, 70);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(5, 35);
@@ -304,7 +428,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Maroon;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(199)))), ((int)(((byte)(132)))));
             this.panel1.Location = new System.Drawing.Point(12, 35);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(5, 35);
@@ -314,7 +438,7 @@
             // 
             this.btnLogout.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnLogout.FlatAppearance.BorderSize = 0;
-            this.btnLogout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnLogout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogout.ForeColor = System.Drawing.Color.White;
@@ -330,7 +454,7 @@
             // 
             this.btnCambiarClave.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnCambiarClave.FlatAppearance.BorderSize = 0;
-            this.btnCambiarClave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnCambiarClave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnCambiarClave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCambiarClave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCambiarClave.ForeColor = System.Drawing.Color.White;
@@ -346,7 +470,7 @@
             // 
             this.btnReLogin.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnReLogin.FlatAppearance.BorderSize = 0;
-            this.btnReLogin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnReLogin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnReLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReLogin.ForeColor = System.Drawing.Color.White;
@@ -362,7 +486,7 @@
             // 
             this.btnUsuario.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnUsuario.FlatAppearance.BorderSize = 0;
-            this.btnUsuario.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
+            this.btnUsuario.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnUsuario.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUsuario.ForeColor = System.Drawing.Color.White;
@@ -378,7 +502,7 @@
             // 
             this.btnGestion.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnGestion.FlatAppearance.BorderSize = 0;
-            this.btnGestion.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
+            this.btnGestion.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnGestion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGestion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGestion.ForeColor = System.Drawing.Color.White;
@@ -386,13 +510,13 @@
             this.btnGestion.Name = "btnGestion";
             this.btnGestion.Size = new System.Drawing.Size(200, 35);
             this.btnGestion.TabIndex = 3;
-            this.btnGestion.Text = "Programa de puntos";
+            this.btnGestion.Text = "Clientes y puntos";
             this.btnGestion.UseVisualStyleBackColor = true;
             this.btnGestion.Click += new System.EventHandler(this.btnGestion_Click);
             // 
             // panelAdminSubmenu
             // 
-            this.panelAdminSubmenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.panelAdminSubmenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(110)))), ((int)(((byte)(42)))));
             this.panelAdminSubmenu.Controls.Add(this.panel9);
             this.panelAdminSubmenu.Controls.Add(this.panel8);
             this.panelAdminSubmenu.Controls.Add(this.panel7);
@@ -414,7 +538,7 @@
             // 
             // panel9
             // 
-            this.panel9.BackColor = System.Drawing.Color.Maroon;
+            this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(199)))), ((int)(((byte)(132)))));
             this.panel9.Location = new System.Drawing.Point(12, 70);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(5, 35);
@@ -422,7 +546,7 @@
             // 
             // panel8
             // 
-            this.panel8.BackColor = System.Drawing.Color.Maroon;
+            this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(199)))), ((int)(((byte)(132)))));
             this.panel8.Location = new System.Drawing.Point(12, 105);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(5, 35);
@@ -430,7 +554,7 @@
             // 
             // panel7
             // 
-            this.panel7.BackColor = System.Drawing.Color.Maroon;
+            this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(199)))), ((int)(((byte)(132)))));
             this.panel7.Location = new System.Drawing.Point(12, 140);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(5, 35);
@@ -438,7 +562,7 @@
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.Color.Maroon;
+            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(199)))), ((int)(((byte)(132)))));
             this.panel6.Location = new System.Drawing.Point(12, 175);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(5, 35);
@@ -446,7 +570,7 @@
             // 
             // panel5
             // 
-            this.panel5.BackColor = System.Drawing.Color.Maroon;
+            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(199)))), ((int)(((byte)(132)))));
             this.panel5.Location = new System.Drawing.Point(12, 35);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(5, 35);
@@ -454,7 +578,7 @@
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.Color.Maroon;
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(129)))), ((int)(((byte)(199)))), ((int)(((byte)(132)))));
             this.panel4.Location = new System.Drawing.Point(12, 0);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(5, 35);
@@ -464,7 +588,7 @@
             // 
             this.btnDigitoVerificador.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnDigitoVerificador.FlatAppearance.BorderSize = 0;
-            this.btnDigitoVerificador.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnDigitoVerificador.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnDigitoVerificador.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDigitoVerificador.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDigitoVerificador.ForeColor = System.Drawing.Color.White;
@@ -480,7 +604,7 @@
             // 
             this.btnBitacora.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnBitacora.FlatAppearance.BorderSize = 0;
-            this.btnBitacora.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnBitacora.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnBitacora.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBitacora.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBitacora.ForeColor = System.Drawing.Color.White;
@@ -496,7 +620,7 @@
             // 
             this.btnRestore.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnRestore.FlatAppearance.BorderSize = 0;
-            this.btnRestore.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnRestore.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnRestore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRestore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRestore.ForeColor = System.Drawing.Color.White;
@@ -512,7 +636,7 @@
             // 
             this.btnBackUp.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnBackUp.FlatAppearance.BorderSize = 0;
-            this.btnBackUp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnBackUp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnBackUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBackUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBackUp.ForeColor = System.Drawing.Color.White;
@@ -528,7 +652,7 @@
             // 
             this.btnPerfiles.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnPerfiles.FlatAppearance.BorderSize = 0;
-            this.btnPerfiles.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnPerfiles.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnPerfiles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPerfiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPerfiles.ForeColor = System.Drawing.Color.White;
@@ -544,7 +668,7 @@
             // 
             this.btnUsuarios.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnUsuarios.FlatAppearance.BorderSize = 0;
-            this.btnUsuarios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnUsuarios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(160)))), ((int)(((byte)(71)))));
             this.btnUsuarios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUsuarios.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUsuarios.ForeColor = System.Drawing.Color.White;
@@ -560,7 +684,7 @@
             // 
             this.btnAdmin.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnAdmin.FlatAppearance.BorderSize = 0;
-            this.btnAdmin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
+            this.btnAdmin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnAdmin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdmin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdmin.ForeColor = System.Drawing.Color.White;
@@ -585,7 +709,8 @@
             // 
             // panelContenedor
             // 
-            this.panelContenedor.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.panelContenedor.BackColor = System.Drawing.Color.White;
+            this.panelContenedor.Controls.Add(this.pictureBoxLogo);
             this.panelContenedor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContenedor.Location = new System.Drawing.Point(200, 43);
             this.panelContenedor.Name = "panelContenedor";
@@ -593,11 +718,24 @@
             this.panelContenedor.TabIndex = 2;
             this.panelContenedor.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContenedor_Paint);
             // 
+            // pictureBoxLogo
+            // 
+            this.pictureBoxLogo.BackColor = System.Drawing.Color.White;
+            this.pictureBoxLogo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBoxLogo.Image = global::GUI.Properties.Resources.LeMarchant;
+            this.pictureBoxLogo.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxLogo.Name = "pictureBoxLogo";
+            this.pictureBoxLogo.Padding = new System.Windows.Forms.Padding(120);
+            this.pictureBoxLogo.Size = new System.Drawing.Size(837, 615);
+            this.pictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxLogo.TabIndex = 0;
+            this.pictureBoxLogo.TabStop = false;
+            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Maroon;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(1037, 658);
             this.Controls.Add(this.panelContenedor);
             this.Controls.Add(this.MenuVertical);
@@ -612,6 +750,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.btnMinimizar)).EndInit();
             this.MenuVertical.ResumeLayout(false);
             this.panelGestionSubmenu.ResumeLayout(false);
+            this.panelPremiosSubmenu.ResumeLayout(false);
+            this.panelContenedor.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
             this.panelUsuarioSubmenu.ResumeLayout(false);
             this.panelAdminSubmenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -659,6 +800,14 @@
         private System.Windows.Forms.Button btnRegistrarVenta;
         private System.Windows.Forms.Button btnRegistrarReclamo;
         private System.Windows.Forms.Button btnResolverReclamos;
+        private System.Windows.Forms.Button btnComprobantes;
+        private System.Windows.Forms.Button btnPremios;
+        private System.Windows.Forms.Panel panelPremiosSubmenu;
+        private System.Windows.Forms.Button btnPremiosCanjeables;
+        private System.Windows.Forms.Button btnAutorizarCanjes;
+        private System.Windows.Forms.Button btnEntregarPremio;
+        private System.Windows.Forms.Button btnAnularCanje;
+        private System.Windows.Forms.PictureBox pictureBoxLogo;
     }
 }
 

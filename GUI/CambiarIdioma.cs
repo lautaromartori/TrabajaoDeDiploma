@@ -71,7 +71,6 @@ namespace GUI
                 btnCambiarCI.Text = lenguaje.GetTraduction("btnCambiarCI");
                 lblCambiarIdioma.Text = lenguaje.GetTraduction("lblCambiarIdioma");
                 button1.Text = LanguageManager.Instance.GetTraduction("Salir");
-
             }
             catch (Exception ex)
             {
@@ -84,7 +83,6 @@ namespace GUI
             LanguageManager.Instance.AgregarObservador(this);
             LanguageManager.Instance.NotificarObservadores();
             IniciarListaDeIdiomas();
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -113,4 +111,3 @@ namespace GUI
         }
     }
 }
-

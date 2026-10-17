@@ -13,5 +13,4 @@ namespace Servicios
         UnBlock,
         Consult,
     }
-    
 }

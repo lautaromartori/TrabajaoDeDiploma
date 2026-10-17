@@ -1,6 +1,8 @@
 ﻿using BE.RFN1;
+using BE.RFN2;
 using DAL;
 using DAL.RFN1;
+using DAL.RFN2;
 using Servicios;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,6 @@ using System.Linq;
 
 namespace BLL
 {
- 
     public class DigitoVerificadorBLL
     {
         private readonly DigitoVerificadorDAL _controlDVDal = new DigitoVerificadorDAL();
@@ -20,12 +21,13 @@ namespace BLL
         private readonly VentaDAL _ventaDal = new VentaDAL();
         private readonly LoteDAL _loteDal = new LoteDAL();
         private readonly ReclamoDAL _reclamoDal = new ReclamoDAL();
+        private readonly CanjeDAL _canjeDal = new CanjeDAL();
 
-        // Orden fijo de las tablas para el DVV global de la base. Si se agrega una tabla, va al final.
         private static readonly string[] TablasDelSistema =
         {
             "Perfil", "Usuario", "Bitacora", "Idioma", "PermisoSimple", "Familia",
-            "Cliente", "Venta", "DetalleVenta", "Reclamo", "LotePuntos"
+            "Cliente", "Venta", "DetalleVenta", "Reclamo", "LotePuntos",
+            "Canje", "DetalleCanje"
         };
 
         private readonly Dictionary<string, ITablaDV> _tablas;
@@ -35,9 +37,6 @@ namespace BLL
             _tablas = ArmarTablas().ToDictionary(t => t.Nombre, StringComparer.OrdinalIgnoreCase);
         }
 
-        // ---------------------------------------------------------------------------------
-        // Cadenas de DVH (públicas porque las usan los BLL al insertar/modificar)
-        // ---------------------------------------------------------------------------------
         public static string CadenaDVH_Usuario(Usuario u) =>
             u.DNI + u.Nombre + u.Apellido + u.Username + u.Password + u.Email + u.Bloqueado + u.Activo + u.Rol + u.Intentos;
 
@@ -46,9 +45,6 @@ namespace BLL
 
         public static string CadenaDVH_Idioma(Idioma i) => i.UserName + i.CodigoIdioma;
 
-        // ---------------------------------------------------------------------------------
-        // Definición de tablas
-        // ---------------------------------------------------------------------------------
         private IEnumerable<ITablaDV> ArmarTablas()
         {
             yield return new TablaDV<Familia>("Perfil", "Nombre", _controlDVDal,
@@ -95,7 +91,6 @@ namespace BLL
                 (x, dvh) => _perfilDal.ActualizarDVH(x.Nombre, dvh),
                 Col<Familia>("Nombre", x => x.Nombre));
 
-            // ----- RFN1 -----
             yield return new TablaDV<Cliente>("Cliente", "idCliente", _controlDVDal,
                 () => _clienteDal.ListarParaDV(), x => x.IdCliente.ToString("D10"), x => x.DVH, x => x.CadenaDVH(),
                 (x, dvh) => _clienteDal.ActualizarDVH(x.IdCliente, dvh),
@@ -157,16 +152,39 @@ namespace BLL
                 Col<LotePuntos>("fechaAcreditacion", x => FormatoDV.Fecha(x.FechaAcreditacion)),
                 Col<LotePuntos>("fechaVencimiento", x => FormatoDV.Fecha(x.FechaVencimiento)),
                 Col<LotePuntos>("origen", x => x.Origen.ToString()));
+
+            yield return new TablaDV<Canje>("Canje", "idCanje", _controlDVDal,
+                () => _canjeDal.ListarParaDV(), x => x.IdCanje.ToString("D10"), x => x.DVH, x => x.CadenaDVH(),
+                (x, dvh) => _canjeDal.ActualizarDVH(x.IdCanje, dvh),
+                Col<Canje>("idCanje", x => FormatoDV.Entero(x.IdCanje)),
+                Col<Canje>("nroCanje", x => x.NroCanje),
+                Col<Canje>("idCliente", x => FormatoDV.Entero(x.Cliente.IdCliente)),
+                Col<Canje>("idPremio", x => FormatoDV.Entero(x.Premio.IdPremio)),
+                Col<Canje>("puntosRequeridos", x => FormatoDV.Entero(x.PuntosRequeridos)),
+                Col<Canje>("valorReferencia", x => FormatoDV.Importe(x.ValorReferencia)),
+                Col<Canje>("fechaSolicitud", x => FormatoDV.FechaHora(x.FechaSolicitud)),
+                Col<Canje>("estado", x => x.Estado.ToString()),
+                Col<Canje>("dniVendedor", x => FormatoDV.Texto(x.Vendedor?.DNI)),
+                Col<Canje>("dniSupervisor", x => FormatoDV.Texto(x.Supervisor?.DNI)),
+                Col<Canje>("motivoResolucion", x => FormatoDV.Texto(x.MotivoResolucion)),
+                Col<Canje>("fechaResolucion", x => FormatoDV.FechaHora(x.FechaResolucion)),
+                Col<Canje>("fechaEntrega", x => FormatoDV.FechaHora(x.FechaEntrega)),
+                Col<Canje>("dniAnulacion", x => FormatoDV.Texto(x.SupervisorAnulacion?.DNI)),
+                Col<Canje>("motivoAnulacion", x => FormatoDV.Texto(x.MotivoAnulacion)),
+                Col<Canje>("fechaAnulacion", x => FormatoDV.FechaHora(x.FechaAnulacion)));
+
+            yield return new TablaDV<DetalleCanje>("DetalleCanje", "idDetalleCanje", _controlDVDal,
+                () => _canjeDal.ListarDetalleParaDV(), x => x.IdDetalleCanje.ToString("D10"), x => x.DVH, x => x.CadenaDVH(),
+                (x, dvh) => _canjeDal.ActualizarDVHDetalle(x.IdDetalleCanje, dvh),
+                Col<DetalleCanje>("idDetalleCanje", x => FormatoDV.Entero(x.IdDetalleCanje)),
+                Col<DetalleCanje>("idCanje", x => FormatoDV.Entero(x.IdCanje)),
+                Col<DetalleCanje>("idLote", x => FormatoDV.Entero(x.Lote.IdLote)),
+                Col<DetalleCanje>("puntosDescontados", x => FormatoDV.Entero(x.PuntosDescontados)));
         }
 
         private static KeyValuePair<string, Func<T, string>> Col<T>(string nombre, Func<T, string> valor)
             => new KeyValuePair<string, Func<T, string>>(nombre, valor);
 
-        // ---------------------------------------------------------------------------------
-        // DVH por fila (lo que usan los BLL después de modificar UNA fila).
-        // Recalcular el DVH de toda la tabla en cada operación "lavaba" cualquier fila adulterada,
-        // por eso ahora solo se recalcula la fila que cambió el sistema.
-        // ---------------------------------------------------------------------------------
         public void RecalcularDVH_Usuario(string dni)
         {
             Usuario? u = _usuarioDal.ListarTodosLosUsuariosDVH().FirstOrDefault(x => x.DNI == dni);
@@ -174,7 +192,6 @@ namespace BLL
                 _usuarioDal.ActualizarDVH(u.DNI, DigitoVerificador.CalcularDVH(CadenaDVH_Usuario(u)));
         }
 
-        // Recalculo completo de DVH (solo se usa desde la reparación de DV).
         public void RecalcularDVH_Usuario() => _tablas["Usuario"].RecalcularDVH();
         public void RecalcularDVH_Bitacora() => _tablas["Bitacora"].RecalcularDVH();
         public void RecalcularDVH_Idioma() => _tablas["Idioma"].RecalcularDVH();
@@ -182,9 +199,6 @@ namespace BLL
         public void RecalcularDVH_PermisoSimple() => _tablas["PermisoSimple"].RecalcularDVH();
         public void RecalcularDVH_Familia() => _tablas["Familia"].RecalcularDVH();
 
-        // ---------------------------------------------------------------------------------
-        // DVV
-        // ---------------------------------------------------------------------------------
         public void RecalcularDVV_Perfil() => RecalcularDVV("Perfil");
         public void RecalcularDVV_Usuario() => RecalcularDVV("Usuario");
         public void RecalcularDVV_Bitacora() => RecalcularDVV("Bitacora");
@@ -196,6 +210,8 @@ namespace BLL
         public void RecalcularDVV_DetalleVenta() => RecalcularDVV("DetalleVenta");
         public void RecalcularDVV_Reclamo() => RecalcularDVV("Reclamo");
         public void RecalcularDVV_LotePuntos() => RecalcularDVV("LotePuntos");
+        public void RecalcularDVV_Canje() => RecalcularDVV("Canje");
+        public void RecalcularDVV_DetalleCanje() => RecalcularDVV("DetalleCanje");
 
         private void RecalcularDVV(string tabla)
         {
@@ -219,7 +235,6 @@ namespace BLL
                     _tablas[tabla].RecalcularDVV();
                 }
 
-                // La bitácora va al final para que el evento del recálculo también quede cubierto.
                 RegistrarEvento("Recalculo de DVV y DVH realizado correctamente", 1);
                 _tablas["Bitacora"].RecalcularDVH();
                 _tablas["Bitacora"].RecalcularDVV();
@@ -233,9 +248,6 @@ namespace BLL
             }
         }
 
-        // ---------------------------------------------------------------------------------
-        // Auditoría
-        // ---------------------------------------------------------------------------------
         public List<string> EjecutarAuditoriaDetalladaCompleta()
         {
             var reporte = new List<string>();
@@ -264,9 +276,6 @@ namespace BLL
             catch { }
         }
 
-        // =================================================================================
-        // Infraestructura genérica
-        // =================================================================================
         private interface ITablaDV
         {
             string Nombre { get; }
@@ -281,7 +290,7 @@ namespace BLL
             private readonly string _columnaPK;
             private readonly DigitoVerificadorDAL _dal;
             private readonly Func<List<T>> _listar;
-            private readonly Func<T, string> _clave;          // clave de orden (PK; los enteros van con ceros a la izquierda)
+            private readonly Func<T, string> _clave;
             private readonly Func<T, string> _dvhGuardado;
             private readonly Func<T, string> _cadenaDVH;
             private readonly Action<T, string> _actualizarDVH;
@@ -302,10 +311,8 @@ namespace BLL
                 _columnas = columnas;
             }
 
-            // Orden ordinal en memoria: no depende de la collation de SQL Server.
             private List<T> Filas() => _listar().OrderBy(_clave, StringComparer.Ordinal).ToList();
 
-            // Para mostrar en el reporte: los ids enteros sin los ceros de relleno.
             private string PK(T fila)
             {
                 string k = _clave(fila);
@@ -346,7 +353,6 @@ namespace BLL
                 var colsErroneas = _columnas.Where(c => DVV(filas, c.Value) != guardados[c.Key]).ToList();
                 var filasMal = filas.Where(f => DVHCalculado(f) != _dvhGuardado(f)).ToList();
 
-                // ¿Sacando esta fila los DVV de las columnas con error vuelven a coincidir? => la fila fue insertada por fuera del sistema.
                 bool FilaInsertada(T fila) =>
                     colsErroneas.Count > 0 &&
                     colsErroneas.All(c => DVV(filas.Where(x => !ReferenceEquals(x, fila)), c.Value) == guardados[c.Key]);

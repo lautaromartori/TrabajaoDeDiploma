@@ -7,7 +7,6 @@ namespace DAL.RFN1
 {
     public class NivelDAL : AbstractDAL<Nivel>
     {
-        // El nivel inicial es el de menor puntaje mínimo (Bronce).
         public Nivel ObtenerInicial()
         {
             try

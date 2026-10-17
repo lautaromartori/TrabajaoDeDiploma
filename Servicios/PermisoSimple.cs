@@ -8,7 +8,6 @@ namespace Servicios
     {
         public override void AgregarHijo(ComponentePermiso hijo)
         {
-            // Un permiso simple es una hoja, no puede tener hijos.
             throw new NotImplementedException(LanguageManager.Instance.GetTraduction("PerSimText1"));
         }
 
@@ -19,7 +18,7 @@ namespace Servicios
 
         public override List<ComponentePermiso> ObtenerHijos()
         {
-            return new List<ComponentePermiso>(); // Devuelve lista vacía siempre
+            return new List<ComponentePermiso>();
         }
         public override bool TienePermiso(string nombrePermiso)
         {

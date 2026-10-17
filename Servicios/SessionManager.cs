@@ -4,7 +4,6 @@
     {
         private static SessionManager _instance;
 
-       
         private Usuario _usuarioLogueado;
 
         private SessionManager()
@@ -24,7 +23,6 @@
             }
         }
 
-       
         public void Loguear(Usuario usuario)
         {
             if (Logueado())

@@ -22,7 +22,6 @@ namespace BLL
         public string ObtenerIdioma(string userName)
         {
             return _idiomaDAL.ObtenerIdioma(userName);
-
         }
 
         public void GuardarIdioma(string userName, string idioma)
