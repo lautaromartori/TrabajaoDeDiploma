@@ -1,81 +1,63 @@
-﻿using BE.RFN1;
-using DAL.RFN1;
-using Servicios;
+﻿using LM830BE.LM830RFN1;
+using LM830DAL.LM830RFN1;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace BLL.RFN1
+namespace LM830BLL.LM830RFN1
 {
-    public class ClienteBLL
+    public class LM830ClienteBLL
     {
-        private const string MODULO = "Clientes";
+        private const string LM830MODULO = "Clientes";
 
-        private readonly ClienteDAL _clienteDAL = new ClienteDAL();
-        private readonly NivelBLL _nivelBLL = new NivelBLL();
-        private readonly BitacoraBLL _bitacoraBLL = new BitacoraBLL();
-        private readonly DigitoVerificadorBLL _digitoVerificadorBLL = new DigitoVerificadorBLL();
+        private readonly LM830ClienteDAL LM830_clienteDAL = new LM830ClienteDAL();
+        private readonly LM830NivelBLL LM830_nivelBLL = new LM830NivelBLL();
+        private readonly LM830DigitoVerificadorBLL LM830_digitoVerificadorBLL = new LM830DigitoVerificadorBLL();
 
-        public List<string> ErroresValidacion { get; } = new List<string>();
+        public List<string> LM830ErroresValidacion { get; } = new List<string>();
 
-        public void Registrar(Cliente c)
+        public void LM830Registrar(LM830Cliente LM830c)
         {
-            if (!ValidarDatos(c))
-                throw new Exception(string.Join(Environment.NewLine, ErroresValidacion));
+            if (!LM830ValidarDatos(LM830c))
+                throw new Exception(string.Join(Environment.NewLine, LM830ErroresValidacion));
 
-            if (_clienteDAL.ExisteDni(c.Dni))
-                throw new ClienteExistenteException(_clienteDAL.Obtener(c.Dni)!);
+            if (LM830_clienteDAL.LM830ExisteDni(LM830c.LM830Dni))
+                throw new LM830ClienteExistenteException(LM830_clienteDAL.LM830Obtener(LM830c.LM830Dni)!);
 
-            c.Nivel = _nivelBLL.ObtenerInicial();
-            c.FechaInscripcion = DateTime.Today;
+            LM830c.LM830Nivel = LM830_nivelBLL.LM830ObtenerInicial();
+            LM830c.LM830FechaInscripcion = DateTime.Today;
 
-            _clienteDAL.Insertar(c);
-            _digitoVerificadorBLL.RecalcularDVV_Cliente();
-
-            RegistrarEvento($"Registrar cliente DNI {c.Dni}", 1);
+            LM830_clienteDAL.LM830Insertar(LM830c);
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_Cliente();
         }
 
-        public bool ValidarDatos(Cliente c)
+        public bool LM830ValidarDatos(LM830Cliente LM830c)
         {
-            ErroresValidacion.Clear();
-            c.Dni = (c.Dni ?? "").Trim();
-            c.Nombre = (c.Nombre ?? "").Trim();
-            c.Apellido = (c.Apellido ?? "").Trim();
-            c.Email = (c.Email ?? "").Trim();
-            c.Telefono = (c.Telefono ?? "").Trim();
+            LM830ErroresValidacion.Clear();
+            LM830c.LM830Dni = (LM830c.LM830Dni ?? "").Trim();
+            LM830c.LM830Nombre = (LM830c.LM830Nombre ?? "").Trim();
+            LM830c.LM830Apellido = (LM830c.LM830Apellido ?? "").Trim();
+            LM830c.LM830Email = (LM830c.LM830Email ?? "").Trim();
+            LM830c.LM830Telefono = (LM830c.LM830Telefono ?? "").Trim();
 
-            if (!Regex.IsMatch(c.Dni, @"^\d{7,8}$"))
-                ErroresValidacion.Add("DNI: debe tener 7 u 8 números, sin puntos.");
-            if (!Regex.IsMatch(c.Nombre, @"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' ]{2,50}$"))
-                ErroresValidacion.Add("Nombre: obligatorio, solo letras (2 a 50).");
-            if (!Regex.IsMatch(c.Apellido, @"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' ]{2,50}$"))
-                ErroresValidacion.Add("Apellido: obligatorio, solo letras (2 a 50).");
-            if (c.Email.Length > 100 || !Regex.IsMatch(c.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-                ErroresValidacion.Add("Email: obligatorio, con formato nombre@dominio.com.");
-            if (c.Telefono.Length > 0 && !Regex.IsMatch(c.Telefono, @"^[0-9+\- ]{6,20}$"))
-                ErroresValidacion.Add("Teléfono: solo números, espacios, + o - (6 a 20).");
+            if (!Regex.IsMatch(LM830c.LM830Dni, @"^\d{7,8}$"))
+                LM830ErroresValidacion.Add("DNI: debe tener 7 u 8 números, sin puntos.");
+            if (!Regex.IsMatch(LM830c.LM830Nombre, @"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' ]{2,50}$"))
+                LM830ErroresValidacion.Add("Nombre: obligatorio, solo letras (2 a 50).");
+            if (!Regex.IsMatch(LM830c.LM830Apellido, @"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' ]{2,50}$"))
+                LM830ErroresValidacion.Add("Apellido: obligatorio, solo letras (2 a 50).");
+            if (LM830c.LM830Email.Length > 100 || !Regex.IsMatch(LM830c.LM830Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                LM830ErroresValidacion.Add("Email: obligatorio, con formato nombre@dominio.com.");
+            if (LM830c.LM830Telefono.Length > 0 && !Regex.IsMatch(LM830c.LM830Telefono, @"^[0-9+\- ]{6,20}$"))
+                LM830ErroresValidacion.Add("Teléfono: solo números, espacios, + o - (6 a 20).");
 
-            return ErroresValidacion.Count == 0;
+            return LM830ErroresValidacion.Count == 0;
         }
 
-        public Cliente? Buscar(string dni)
+        public LM830Cliente? LM830Buscar(string LM830dni)
         {
-            return _clienteDAL.Obtener((dni ?? "").Trim());
-        }
-
-        private void RegistrarEvento(string evento, int criticidad)
-        {
-            try
-            {
-                _bitacoraBLL.RegistrarEvento(new Bitacora
-                {
-                    Login = SessionManager.Instance.UsuarioActual().Username,
-                    Modulo = MODULO,
-                    Evento = evento,
-                    Criticidad = criticidad
-                });
-            }
-            catch { }
+            return LM830_clienteDAL.LM830Obtener((LM830dni ?? "").Trim());
         }
     }
 }

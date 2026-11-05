@@ -1,23 +1,23 @@
-﻿using BE.RFN1;
+﻿using LM830BE.LM830RFN1;
 
-namespace BE.RFN2
+namespace LM830BE.LM830RFN2
 {
-    public class DetalleCanje
+    public class LM830DetalleCanje
     {
-        private int idDetalleCanje;
-        private int idCanje;
-        private LotePuntos lote = new LotePuntos();
-        private int puntosDescontados;
-        private string dvh = "";
+        private int LM830idDetalleCanje;
+        private int LM830idCanje;
+        private LM830LotePuntos LM830lote = new LM830LotePuntos();
+        private int LM830puntosDescontados;
+        private string LM830dvh = "";
 
-        public int IdDetalleCanje { get => idDetalleCanje; set => idDetalleCanje = value; }
-        public int IdCanje { get => idCanje; set => idCanje = value; }
-        public LotePuntos Lote { get => lote; set => lote = value; }
-        public int PuntosDescontados { get => puntosDescontados; set => puntosDescontados = value; }
-        public string DVH { get => dvh; set => dvh = value; }
+        public int LM830IdDetalleCanje { get => LM830idDetalleCanje; set => LM830idDetalleCanje = value; }
+        public int LM830IdCanje { get => LM830idCanje; set => LM830idCanje = value; }
+        public LM830LotePuntos LM830Lote { get => LM830lote; set => LM830lote = value; }
+        public int LM830PuntosDescontados { get => LM830puntosDescontados; set => LM830puntosDescontados = value; }
+        public string LM830DVH { get => LM830dvh; set => LM830dvh = value; }
 
-        public string CadenaDVH() =>
-            FormatoDV.Entero(IdDetalleCanje) + FormatoDV.Entero(IdCanje) +
-            FormatoDV.Entero(Lote.IdLote) + FormatoDV.Entero(PuntosDescontados);
+        public string LM830CadenaDVH() =>
+            LM830FormatoDV.LM830Entero(LM830IdDetalleCanje) + LM830FormatoDV.LM830Entero(LM830IdCanje) +
+            LM830FormatoDV.LM830Entero(LM830Lote.LM830IdLote) + LM830FormatoDV.LM830Entero(LM830PuntosDescontados);
     }
 }

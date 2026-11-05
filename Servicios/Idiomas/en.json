@@ -12,12 +12,10 @@
   "btnCambiarClave": "ChangePassword",
   "btnLogout": "Log Out",
   "btnCambiarIdioma": "Change Language",
-
   "YaHaySesionActiva": "A session is already active. Please log out before trying to start a new one.",
   "Informacion": "Information",
   "menumsj1": "Confirm Logout?",
   "menumsj2": "Logout",
-
   "lblTextoTabla": "Active Users",
   "DNI": "DNI",
   "lblApe": "Last Name",
@@ -64,13 +62,11 @@
   "UserMsj1": "You must select a profile.",
   "UserMsj2": "Your profile has been modified and you no longer have access to this section.",
   "UserMsj3": "Access revoked",
-
   "lblUsuarioFCC": "User",
   "lblContraseñaActual": "Current password",
   "lblContraseñaFCC": "Password",
   "btnGuardarContra": "Save password",
   "linkVolver": "Back to Login",
-
   "CamClaMsj1": "Password changed successfully!",
   "CamClaMsj2": "The new password cannot be the same as the previous one!",
   "CamClaMsj3": "There is an error in User!",
@@ -79,7 +75,6 @@
   "CamMsj6": "Please enter your User!",
   "CamMsj7": "Please enter your Password!",
   "CamMsj8": "Please enter a new Password!",
-
   "lblBitacora": "Logs",
   "lblNombreB": "First Name",
   "lblApellidoB": "Last Name",
@@ -92,7 +87,6 @@
   "btnLimpiarB": "Clear",
   "btnAplicarB": "Apply",
   "btnImprimirB": "Print",
-
   "Bitmsj1": "Could not connect to the database. Please check your connection.",
   "Bitmsj2": "Connection error",
   "BitMsj3": "Could not load filters. Please check your connection.",
@@ -111,17 +105,14 @@
   "BitMsj16": "Could not generate PDF. Please try again.",
   "BitMsj17": "You do not have permissions to access the Logs.",
   "BitMsj18": "Access Denied",
-
   "lblCambiarIdioma": "Change Language",
   "btnCambiarCI": "Change",
   "MsjCambiarIdioma": "Language changed",
   "MsjConfirmacion": "Confirmed",
   "Salir": "Exit",
-
   "Español": "Spanish",
   "Ingles": "English",
   "Japones": "Japanese",
-
   "RbPermisos": "Permissions",
   "RbFamilias": "Families",
   "RbPerfiles": "Profiles",
@@ -156,7 +147,6 @@
   "btnAsignarPermisos": "Assign",
   "label8": "Assigned Permissions:",
   "btnQuitarPermisos": "Remove",
-
   "VerPerfiles": "View Profiles",
   "NoTienePermisosParaAcceder": "You do not have permissions to access User and Profile Management.",
   "AccesoDenegado": "Access Denied",
@@ -238,7 +228,6 @@
   "text32": "Cancel operation (Do not perform modifications)",
   "text33": "Your permissions have been modified. You no longer have access to this screen.",
   "text34": "Permissions updated",
-
   "UserLogueado": "A user is already logged in.",
   "UserNoLogueado": "No user is currently logged in.",
   "PerSimText1": "Cannot add components to a simple permission.",
@@ -271,7 +260,6 @@
   "BitBlltext3": "Could not filter events.",
   "BitBlltext4": "Could not retrieve users.",
   "BitBlltext5": "Could not retrieve user.",
-
   "lblErrorDV": "Inconsistencies Detected",
   "lblModuloReparacion": "Repair Module",
   "lblForzar": "Force new verification digits",
@@ -279,7 +267,6 @@
   "lblSelecVers": "Select a version:",
   "btnRestaurar": "Restore",
   "btnCancelardv": "Cancel",
-
   "TextDV1": "The verification digits of all tables will be recalculated, are you sure?",
   "TextDV2": "Recalculate Verification Digits",
   "TextDV3": "Verification digits were recalculated successfully",
@@ -301,7 +288,6 @@
   "TextDV19": "The file does not have a valid extension (.bak).",
   "TextDV20": "The file is not a valid database backup.",
   "TextDV21": "An error occurred while restoring the database.",
-
   "lblTitulo": "Backup",
   "lblPath": "Path",
   "btnExaminar": "Browse",
@@ -312,10 +298,8 @@
   "TextBP3": "Backup successfully generated at",
   "TextBP4": "Operation Successful",
   "TextBP5": "Could not generate the backup.",
-   
   "lblTituloRes": "Restore",
   "btnEjecutar": "Execute",
-
   "btnGestion": "Customers & points",
   "RFN1_RegistrarCliente": "Register customer",
   "RFN1_ConsultarSaldo": "Check balance",
@@ -332,6 +316,33 @@
   "RFN1_Buscar": "Search",
   "RFN1_BuscarCliente": "Find customer",
   "RFN1_Volver": "Back",
+  "RFN1_GestionProductos": "Products",
+  "RFN1_Datos": "Details",
+  "RFN1_Precio": "Price",
+  "RFN1_Categoria": "Category",
+  "RFN1_Agregar": "Add",
+  "RFN1_Modificar": "Edit",
+  "RFN1_Eliminar": "Delete",
+  "RFN1_Limpiar": "Clear",
+  "RFN1_SeleccioneRegistro": "Select a row in the grid.",
+  "RFN1_ConfirmarEliminar": "Delete {0}?",
+  "RFN1_CambiosGuardados": "Changes saved.",
+  "RFN1_PH_NombreProducto": "E.g.: Pan de campo",
+  "RFN2_GestionPremios": "Manage rewards",
+  "RFN2_Descripcion": "Description",
+  "RFN2_PuntosRequeridos": "Points required",
+  "RFN2_Stock": "Stock",
+  "RFN2_ValorDeReferencia": "Reference value",
+  "RFN2_PH_NombrePremio": "E.g.: Taza Le Marchant",
+  "RFN2_PH_Descripcion": "Optional. E.g.: Ceramic mug 350 ml",
+  "RFN2_PH_NroCanje": "E.g.: C-00000001 (printed on the redemption receipt)",
+  "RFN1_PH_Dni": "E.g.: 30111222 (7 or 8 digits, no dots)",
+  "RFN1_PH_Nombre": "E.g.: Ana (letters only)",
+  "RFN1_PH_Apellido": "E.g.: Gómez (letters only)",
+  "RFN1_PH_Email": "E.g.: ana.gomez@mail.com",
+  "RFN1_PH_Telefono": "Optional. E.g.: 11 4555-1234",
+  "RFN1_PH_NroComprobante": "E.g.: V-00000001 (printed on the receipt)",
+  "RFN1_PH_Producto": "E.g.: Pan de campo (part of the name is enough)",
   "RFN1_Cliente": "Customer",
   "RFN1_Nivel": "Level",
   "RFN1_SaldoVigente": "Current balance",
@@ -441,5 +452,15 @@
   "RFN2_MotivoDeAnulacion": "Cancellation reason",
   "RFN2_MotivoAnulacion": "Enter the cancellation reason.",
   "RFN2_ConfirmarAnulacion": "Cancel the redemption",
-  "RFN2_CanjeAnulado": "Redemption cancelled. Points returned:"
+  "RFN2_CanjeAnulado": "Redemption cancelled. Points returned:",
+  "btnBitacoraCambios": "Change log",
+  "BC_Titulo": "Change log",
+  "BC_FiltroDni": "Customer ID",
+  "BC_Desde": "From",
+  "BC_Hasta": "To",
+  "BC_Restaurar": "Restore version",
+  "BC_SeleccioneVersion": "Select a version in the grid.",
+  "BC_YaVigente": "The selected version is already the current one.",
+  "BC_ConfirmarRestaurar": "Restore this version?",
+  "BC_Restaurado": "Version restored. It is now the active version."
 }

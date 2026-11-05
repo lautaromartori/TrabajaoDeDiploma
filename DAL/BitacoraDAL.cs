@@ -1,227 +1,227 @@
 ﻿using Microsoft.Data.SqlClient;
-using Servicios;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 
-namespace DAL
+namespace LM830DAL
 {
-    public class BitacoraDAL : AbstractDAL<Bitacora>
+    public class LM830BitacoraDAL : LM830AbstractDAL<LM830Bitacora>
     {
-        public BitacoraDAL() { }
+        public LM830BitacoraDAL() { }
 
-        public void RegistrarEvento(Bitacora unEvento, string DVH)
+        public void LM830RegistrarEvento(LM830Bitacora LM830unEvento, string LM830DVH)
         {
             try
             {
-                _sqlcommand.CommandText = @"INSERT INTO Bitacora (Login, Fecha, Modulo, Evento, Criticidad, DVH)
+                LM830_sqlcommand.CommandText = @"INSERT INTO Bitacora (Login, Fecha, Modulo, Evento, Criticidad, DVH)
                            VALUES (@Login, @Fecha, @Modulo, @Evento, @Criticidad, @dvh)";
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.Parameters.AddWithValue("@Login", unEvento.Login);
-                _sqlcommand.Parameters.AddWithValue("@Fecha", unEvento.Fecha);
-                _sqlcommand.Parameters.AddWithValue("@Modulo", unEvento.Modulo);
-                _sqlcommand.Parameters.AddWithValue("@Evento", unEvento.Evento);
-                _sqlcommand.Parameters.AddWithValue("@Criticidad", unEvento.Criticidad);
-                _sqlcommand.Parameters.AddWithValue("@dvh", DVH);
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.AddWithValue("@Login", LM830unEvento.LM830Login);
+                LM830_sqlcommand.Parameters.AddWithValue("@Fecha", LM830unEvento.LM830Fecha);
+                LM830_sqlcommand.Parameters.AddWithValue("@Modulo", LM830unEvento.LM830Modulo);
+                LM830_sqlcommand.Parameters.AddWithValue("@Evento", LM830unEvento.LM830Evento);
+                LM830_sqlcommand.Parameters.AddWithValue("@Criticidad", LM830unEvento.LM830Criticidad);
+                LM830_sqlcommand.Parameters.AddWithValue("@dvh", LM830DVH);
 
-                _sqlserver.Open();
-                _sqlcommand.ExecuteNonQuery();
+                LM830_sqlserver.Open();
+                LM830_sqlcommand.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw new Exception(LanguageManager.Instance.GetTraduction("BitText1"), ex);
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitText1"), LM830ex);
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
         }
 
-        public List<Bitacora> FiltrarEventos(string nombre, string apellido, string login, string modulo, string evento, DateTime desde, DateTime hasta, int? criticidad)
+        public List<LM830Bitacora> LM830FiltrarEventos(string LM830nombre, string LM830apellido, string LM830login, string LM830modulo, string LM830evento, DateTime LM830desde, DateTime LM830hasta, int? LM830criticidad)
         {
-            List<Bitacora> lista = new List<Bitacora>();
+            List<LM830Bitacora> LM830lista = new List<LM830Bitacora>();
             try
             {
-                string query = @"SELECT b.Id_Evento, b.Login, b.Fecha, b.Modulo,
+                string LM830query = @"SELECT b.Id_Evento, b.Login, b.Fecha, b.Modulo,
                                  b.Evento, b.Criticidad
                                  FROM Bitacora b
                                  LEFT JOIN Usuario u ON b.Login = u.UserName
                                  WHERE 1=1";
 
-                _sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.Clear();
 
-                if (!string.IsNullOrEmpty(nombre))
+                if (!string.IsNullOrEmpty(LM830nombre))
                 {
-                    query += " AND u.Nombre LIKE @Nombre";
-                    _sqlcommand.Parameters.AddWithValue("@Nombre", "%" + nombre + "%");
+                    LM830query += " AND u.Nombre LIKE @Nombre";
+                    LM830_sqlcommand.Parameters.AddWithValue("@Nombre", "%" + LM830nombre + "%");
                 }
-                if (!string.IsNullOrEmpty(apellido))
+                if (!string.IsNullOrEmpty(LM830apellido))
                 {
-                    query += " AND u.Apellido LIKE @Apellido";
-                    _sqlcommand.Parameters.AddWithValue("@Apellido", "%" + apellido + "%");
+                    LM830query += " AND u.Apellido LIKE @Apellido";
+                    LM830_sqlcommand.Parameters.AddWithValue("@Apellido", "%" + LM830apellido + "%");
                 }
-                if (!string.IsNullOrEmpty(login))
+                if (!string.IsNullOrEmpty(LM830login))
                 {
-                    query += " AND b.Login = @Login";
-                    _sqlcommand.Parameters.AddWithValue("@Login", login);
+                    LM830query += " AND b.Login = @Login";
+                    LM830_sqlcommand.Parameters.AddWithValue("@Login", LM830login);
                 }
-                if (!string.IsNullOrEmpty(modulo))
+                if (!string.IsNullOrEmpty(LM830modulo))
                 {
-                    query += " AND b.Modulo = @Modulo";
-                    _sqlcommand.Parameters.AddWithValue("@Modulo", modulo);
+                    LM830query += " AND b.Modulo = @Modulo";
+                    LM830_sqlcommand.Parameters.AddWithValue("@Modulo", LM830modulo);
                 }
-                if (!string.IsNullOrEmpty(evento))
+                if (!string.IsNullOrEmpty(LM830evento))
                 {
-                    query += " AND b.Evento LIKE @Evento";
-                    _sqlcommand.Parameters.AddWithValue("@Evento", "%" + evento + "%");
+                    LM830query += " AND b.Evento LIKE @Evento";
+                    LM830_sqlcommand.Parameters.AddWithValue("@Evento", "%" + LM830evento + "%");
                 }
-                if (criticidad.HasValue)
+                if (LM830criticidad.HasValue)
                 {
-                    query += " AND b.Criticidad = @Criticidad";
-                    _sqlcommand.Parameters.AddWithValue("@Criticidad", criticidad.Value);
+                    LM830query += " AND b.Criticidad = @Criticidad";
+                    LM830_sqlcommand.Parameters.AddWithValue("@Criticidad", LM830criticidad.Value);
                 }
 
-                query += " AND b.Fecha BETWEEN @Desde AND @Hasta";
-                _sqlcommand.Parameters.AddWithValue("@Desde", desde.Date);
-                _sqlcommand.Parameters.AddWithValue("@Hasta", hasta.Date.AddDays(1).AddTicks(-1));
+                LM830query += " AND b.Fecha BETWEEN @Desde AND @Hasta";
+                LM830_sqlcommand.Parameters.AddWithValue("@Desde", LM830desde.Date);
+                LM830_sqlcommand.Parameters.AddWithValue("@Hasta", LM830hasta.Date.AddDays(1).AddTicks(-1));
 
-                query += " ORDER BY b.Fecha DESC, b.Id_Evento DESC";
+                LM830query += " ORDER BY b.Fecha DESC, b.Id_Evento DESC";
 
-                _sqlcommand.CommandText = query;
-                _sqlserver.Open();
+                LM830_sqlcommand.CommandText = LM830query;
+                LM830_sqlserver.Open();
 
-                using (SqlDataReader reader = _sqlcommand.ExecuteReader())
+                using (SqlDataReader LM830reader = LM830_sqlcommand.ExecuteReader())
                 {
-                    while (reader.Read())
+                    while (LM830reader.Read())
                     {
-                        lista.Add(new Bitacora
+                        LM830lista.Add(new LM830Bitacora
                         {
-                            Id_Evento = reader.GetInt32(0),
-                            Login = reader.GetString(1),
-                            Fecha = reader.GetDateTime(2),
-                            Modulo = reader.GetString(3),
-                            Evento = reader.GetString(4),
-                            Criticidad = reader.GetInt32(5)
+                            LM830Id_Evento = LM830reader.GetInt32(0),
+                            LM830Login = LM830reader.GetString(1),
+                            LM830Fecha = LM830reader.GetDateTime(2),
+                            LM830Modulo = LM830reader.GetString(3),
+                            LM830Evento = LM830reader.GetString(4),
+                            LM830Criticidad = LM830reader.GetInt32(5)
                         });
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw new Exception(LanguageManager.Instance.GetTraduction("BitText2"), ex);
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitText2"), LM830ex);
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
-            return lista;
+            return LM830lista;
         }
 
-        public List<string> ObtenerLogins()
+        public List<string> LM830ObtenerLogins()
         {
-            List<string> logins = new List<string>();
+            List<string> LM830logins = new List<string>();
             try
             {
-                _sqlcommand.CommandText = "SELECT DISTINCT UserName FROM Usuario ORDER BY UserName";
-                _sqlcommand.Parameters.Clear();
-                _sqlserver.Open();
+                LM830_sqlcommand.CommandText = "SELECT DISTINCT UserName FROM Usuario ORDER BY UserName";
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlserver.Open();
 
-                using (SqlDataReader reader = _sqlcommand.ExecuteReader())
-                    while (reader.Read())
-                        logins.Add(reader.GetString(0));
+                using (SqlDataReader LM830reader = LM830_sqlcommand.ExecuteReader())
+                    while (LM830reader.Read())
+                        LM830logins.Add(LM830reader.GetString(0));
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw new Exception(LanguageManager.Instance.GetTraduction("BitText3"), ex);
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitText3"), LM830ex);
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
-            return logins;
+            return LM830logins;
         }
 
-        public Usuario ObtenerUsuarioPorLogin(string login)
+        public LM830Usuario LM830ObtenerUsuarioPorLogin(string LM830login)
         {
-            Usuario usuario = null;
+            LM830Usuario LM830usuario = null;
             try
             {
-                _sqlcommand.CommandText = @"SELECT DNI, Nombre, Apellido, UserName
+                LM830_sqlcommand.CommandText = @"SELECT DNI, Nombre, Apellido, UserName
                                             FROM Usuario
                                             WHERE UserName = @Login";
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.Parameters.AddWithValue("@Login", login);
-                _sqlserver.Open();
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.AddWithValue("@Login", LM830login);
+                LM830_sqlserver.Open();
 
-                using (SqlDataReader reader = _sqlcommand.ExecuteReader())
+                using (SqlDataReader LM830reader = LM830_sqlcommand.ExecuteReader())
                 {
-                    if (reader.Read())
+                    if (LM830reader.Read())
                     {
-                        usuario = new Usuario
+                        LM830usuario = new LM830Usuario
                         {
-                            DNI = reader.GetString(0),
-                            Nombre = reader.GetString(1),
-                            Apellido = reader.GetString(2),
-                            Username = reader.GetString(3)
+                            LM830DNI = LM830reader.GetString(0),
+                            LM830Nombre = LM830reader.GetString(1),
+                            LM830Apellido = LM830reader.GetString(2),
+                            LM830Username = LM830reader.GetString(3)
                         };
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw new Exception(LanguageManager.Instance.GetTraduction("BitText4"), ex);
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitText4"), LM830ex);
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
-            return usuario;
+            return LM830usuario;
         }
 
-        public List<Bitacora> listarTodosLosEventos()
+        public List<LM830Bitacora> LM830listarTodosLosEventos()
         {
             try
             {
-                _sqlcommand.CommandText = @"SELECT Id_Evento, Login, Fecha, Modulo, Evento, Criticidad, DVH FROM Bitacora";
-                _sqlserver.Open();
-                var reader = _sqlcommand.ExecuteReader();
-                var Bitacoralst = new List<Bitacora>();
-                while (reader.Read())
+                LM830_sqlcommand.CommandText = @"SELECT Id_Evento, Login, Fecha, Modulo, Evento, Criticidad, DVH FROM Bitacora";
+                LM830_sqlserver.Open();
+                var LM830reader = LM830_sqlcommand.ExecuteReader();
+                var LM830Bitacoralst = new List<LM830Bitacora>();
+                while (LM830reader.Read())
                 {
-                    Bitacoralst.Add(new Bitacora(reader.GetInt32(0), reader.GetString(1), reader.GetDateTime(2), reader.GetString(3), reader.GetString(4),
-                           reader.GetInt32(5), reader.GetString(6)));
+                    LM830Bitacoralst.Add(new LM830Bitacora(LM830reader.GetInt32(0), LM830reader.GetString(1), LM830reader.GetDateTime(2), LM830reader.GetString(3), LM830reader.GetString(4),
+                           LM830reader.GetInt32(5), LM830reader.GetString(6)));
                 }
-                return Bitacoralst;
+                return LM830Bitacoralst;
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw ex;
+                throw LM830ex;
             }
             finally
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlserver.Close();
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlserver.Close();
             }
         }
 
-        public void ActualizarDVH(string v, string dvhCalculado)
+        public void LM830ActualizarDVH(string LM830v, string LM830dvhCalculado)
         {
             try
             {
-                _sqlcommand.CommandText = @"UPDATE Bitacora SET DVH = @DVH WHERE Id_Evento = @IdEvento";
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.Parameters.AddWithValue("@DVH", dvhCalculado);
-                _sqlcommand.Parameters.AddWithValue("@IdEvento", v);
-                _sqlserver.Open();
-                _sqlcommand.ExecuteNonQuery();
+                LM830_sqlcommand.CommandText = @"UPDATE Bitacora SET DVH = @DVH WHERE Id_Evento = @IdEvento";
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.AddWithValue("@DVH", LM830dvhCalculado);
+                LM830_sqlcommand.Parameters.AddWithValue("@IdEvento", LM830v);
+                LM830_sqlserver.Open();
+                LM830_sqlcommand.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw ex;
+                throw LM830ex;
             }
             finally
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlserver.Close();
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlserver.Close();
             }
         }
     }

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public abstract class ComponentePermiso
+    public abstract class LM830ComponentePermiso
     {
-        public string Nombre { get; set; }
-        public string DVH { get; set; }
+        public string LM830Nombre { get; set; }
+        public string LM830DVH { get; set; }
 
-        public abstract void AgregarHijo(ComponentePermiso hijo);
-        public abstract void QuitarHijo(ComponentePermiso hijo);
-        public abstract List<ComponentePermiso> ObtenerHijos();
+        public abstract void LM830AgregarHijo(LM830ComponentePermiso LM830hijo);
+        public abstract void LM830QuitarHijo(LM830ComponentePermiso LM830hijo);
+        public abstract List<LM830ComponentePermiso> LM830ObtenerHijos();
 
-        public abstract bool TienePermiso(string nombrePermiso);
+        public abstract bool LM830TienePermiso(string LM830nombrePermiso);
     }
 }

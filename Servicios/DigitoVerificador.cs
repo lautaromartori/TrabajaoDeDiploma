@@ -2,37 +2,37 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public class DigitoVerificador
+    public class LM830DigitoVerificador
     {
-        public static string GetHexa(string texto)
+        public static string LM830GetHexa(string LM830texto)
         {
-            string hex = string.Concat(texto.Select(c => ((int)c).ToString("X2")));
-            return hex;
+            string LM830hex = string.Concat(LM830texto.Select(LM830c => ((int)LM830c).ToString("X2")));
+            return LM830hex;
         }
-        public static void RecalcularDV()
+        public static void LM830RecalcularDV()
         {
         }
 
-        private bool CompararDV(string DVCalculado, string DVOriginal)
+        private bool LM830CompararDV(string LM830DVCalculado, string LM830DVOriginal)
         {
             throw new NotImplementedException();
         }
 
-        public static string CalcularDVH(string cadena)
+        public static string LM830CalcularDVH(string LM830cadena)
         {
-           return cadena = Encriptador.GetHash256(GetHexa(cadena));
+           return LM830cadena = LM830Encriptador.LM830GetHash256(LM830GetHexa(LM830cadena));
         }
 
-        public static string CalcularDVV(List<string> cadena)
+        public static string LM830CalcularDVV(List<string> LM830cadena)
         {
-            string DVVcolumna = "";
-            foreach (var item in cadena)
+            string LM830DVVcolumna = "";
+            foreach (var LM830item in LM830cadena)
             {
-                DVVcolumna += GetHexa(item);
+                LM830DVVcolumna += LM830GetHexa(LM830item);
             }
-            return Encriptador.GetHash256(DVVcolumna);
+            return LM830Encriptador.LM830GetHash256(LM830DVVcolumna);
         }
     }
 }

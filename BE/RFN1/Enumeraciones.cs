@@ -1,15 +1,15 @@
-﻿namespace BE.RFN1
+﻿namespace LM830BE.LM830RFN1
 {
-    public enum OrigenPuntos
+    public enum LM830OrigenPuntos
     {
-        venta,
-        reclamo
+        LM830venta,
+        LM830reclamo
     }
 
-    public enum EstadoReclamo
+    public enum LM830EstadoReclamo
     {
-        pendiente,
-        aprobado,
-        rechazado
+        LM830pendiente,
+        LM830aprobado,
+        LM830rechazado
     }
 }

@@ -1,48 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public class Familia : ComponentePermiso
+    public class LM830Familia : LM830ComponentePermiso
     {
-        public bool EsRol { get; set; }
-        private List<ComponentePermiso> _hijos = new List<ComponentePermiso>();
+        public bool LM830EsRol { get; set; }
+        private List<LM830ComponentePermiso> LM830_hijos = new List<LM830ComponentePermiso>();
 
-        public List<ComponentePermiso> ListaHijos
+        public List<LM830ComponentePermiso> LM830ListaHijos
         {
-            get { return _hijos; }
-            set { _hijos = value; }
+            get { return LM830_hijos; }
+            set { LM830_hijos = value; }
         }
 
-        public override void AgregarHijo(ComponentePermiso hijo)
+        public override void LM830AgregarHijo(LM830ComponentePermiso LM830hijo)
         {
-            if (hijo != null && !_hijos.Contains(hijo))
+            if (LM830hijo != null && !LM830_hijos.Contains(LM830hijo))
             {
-                _hijos.Add(hijo);
+                LM830_hijos.Add(LM830hijo);
             }
         }
 
-        public override void QuitarHijo(ComponentePermiso hijo)
+        public override void LM830QuitarHijo(LM830ComponentePermiso LM830hijo)
         {
-            if (hijo != null && _hijos.Contains(hijo))
+            if (LM830hijo != null && LM830_hijos.Contains(LM830hijo))
             {
-                _hijos.Remove(hijo);
+                LM830_hijos.Remove(LM830hijo);
             }
         }
 
-        public override List<ComponentePermiso> ObtenerHijos()
+        public override List<LM830ComponentePermiso> LM830ObtenerHijos()
         {
-            return _hijos;
+            return LM830_hijos;
         }
 
-        public override bool TienePermiso(string nombrePermiso)
+        public override bool LM830TienePermiso(string LM830nombrePermiso)
         {
-            if (this.Nombre != null && this.Nombre.Equals(nombrePermiso, StringComparison.OrdinalIgnoreCase))
+            if (this.LM830Nombre != null && this.LM830Nombre.Equals(LM830nombrePermiso, StringComparison.OrdinalIgnoreCase))
                 return true;
 
-            foreach (var hijo in _hijos)
+            foreach (var LM830hijo in LM830_hijos)
             {
-                if (hijo.TienePermiso(nombrePermiso))
+                if (LM830hijo.LM830TienePermiso(LM830nombrePermiso))
                     return true;
             }
 

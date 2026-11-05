@@ -1,53 +1,53 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public class Encriptador
+    public class LM830Encriptador
     {
-        public static string GetHash256(string texto)
+        public static string LM830GetHash256(string LM830texto)
         {
-            using (SHA256 sha256 = SHA256.Create())
+            using (SHA256 LM830sha256 = SHA256.Create())
             {
-                byte[] bytesTexto = Encoding.UTF8.GetBytes(texto);
-                byte[] hash = sha256.ComputeHash(bytesTexto);
+                byte[] LM830bytesTexto = Encoding.UTF8.GetBytes(LM830texto);
+                byte[] LM830hash = LM830sha256.ComputeHash(LM830bytesTexto);
 
-                StringBuilder sb = new StringBuilder();
-                foreach (byte b in hash)
+                StringBuilder LM830sb = new StringBuilder();
+                foreach (byte LM830b in LM830hash)
                 {
-                    sb.Append(b.ToString("x2"));
+                    LM830sb.Append(LM830b.ToString("x2"));
                 }
 
-                return sb.ToString();
+                return LM830sb.ToString();
             }
         }
 
-        private static readonly string Key = "12345678910111213141516171819202";
-        private static readonly string IV = "1234567891011121";
+        private static readonly string LM830Key = "12345678910111213141516171819202";
+        private static readonly string LM830IV = "1234567891011121";
 
-        public static string EncriptarAES(string texto)
+        public static string LM830EncriptarAES(string LM830texto)
         {
-            using (Aes aes = Aes.Create())
+            using (Aes LM830aes = Aes.Create())
             {
-                aes.Key = Encoding.UTF8.GetBytes(Key);
-                aes.IV = Encoding.UTF8.GetBytes(IV);
-                ICryptoTransform encriptador = aes.CreateEncryptor();
-                byte[] bytesTexto = Encoding.UTF8.GetBytes(texto);
-                byte[] bytesEncriptados = encriptador.TransformFinalBlock(bytesTexto, 0, bytesTexto.Length);
-                return Convert.ToBase64String(bytesEncriptados);
+                LM830aes.Key = Encoding.UTF8.GetBytes(LM830Key);
+                LM830aes.IV = Encoding.UTF8.GetBytes(LM830IV);
+                ICryptoTransform LM830encriptador = LM830aes.CreateEncryptor();
+                byte[] LM830bytesTexto = Encoding.UTF8.GetBytes(LM830texto);
+                byte[] LM830bytesEncriptados = LM830encriptador.TransformFinalBlock(LM830bytesTexto, 0, LM830bytesTexto.Length);
+                return Convert.ToBase64String(LM830bytesEncriptados);
             }
         }
 
-        public static string DesencriptarAES(string textoEncriptado)
+        public static string LM830DesencriptarAES(string LM830textoEncriptado)
         {
-            using (Aes aes = Aes.Create())
+            using (Aes LM830aes = Aes.Create())
             {
-                aes.Key = Encoding.UTF8.GetBytes(Key);
-                aes.IV = Encoding.UTF8.GetBytes(IV);
-                ICryptoTransform desencriptador = aes.CreateDecryptor();
-                byte[] bytesEncriptados = Convert.FromBase64String(textoEncriptado);
-                byte[] bytesTexto = desencriptador.TransformFinalBlock(bytesEncriptados, 0, bytesEncriptados.Length);
-                return Encoding.UTF8.GetString(bytesTexto);
+                LM830aes.Key = Encoding.UTF8.GetBytes(LM830Key);
+                LM830aes.IV = Encoding.UTF8.GetBytes(LM830IV);
+                ICryptoTransform LM830desencriptador = LM830aes.CreateDecryptor();
+                byte[] LM830bytesEncriptados = Convert.FromBase64String(LM830textoEncriptado);
+                byte[] LM830bytesTexto = LM830desencriptador.TransformFinalBlock(LM830bytesEncriptados, 0, LM830bytesEncriptados.Length);
+                return Encoding.UTF8.GetString(LM830bytesTexto);
             }
         }
     }

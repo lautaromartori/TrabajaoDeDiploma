@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public enum UserAction
+    public enum LM830UserAction
     {
-        Add,
-        Delete,
-        Activate,
-        Modify,
-        UnBlock,
-        Consult,
+        LM830Add,
+        LM830Delete,
+        LM830Activate,
+        LM830Modify,
+        LM830UnBlock,
+        LM830Consult,
     }
 }

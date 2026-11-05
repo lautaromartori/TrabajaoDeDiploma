@@ -1,35 +1,35 @@
 ﻿using System;
 
-namespace BE.RFN1
+namespace LM830BE.LM830RFN1
 {
-    public class Cliente
+    public class LM830Cliente
     {
-        private int idCliente;
-        private string dni = "";
-        private string nombre = "";
-        private string apellido = "";
-        private string email = "";
-        private string telefono = "";
-        private DateTime fechaInscripcion;
-        private Nivel nivel = new Nivel();
-        private string dvh = "";
+        private int LM830idCliente;
+        private string LM830dni = "";
+        private string LM830nombre = "";
+        private string LM830apellido = "";
+        private string LM830email = "";
+        private string LM830telefono = "";
+        private DateTime LM830fechaInscripcion;
+        private LM830Nivel LM830nivel = new LM830Nivel();
+        private string LM830dvh = "";
 
-        public int IdCliente { get => idCliente; set => idCliente = value; }
-        public string Dni { get => dni; set => dni = value; }
-        public string Nombre { get => nombre; set => nombre = value; }
-        public string Apellido { get => apellido; set => apellido = value; }
-        public string Email { get => email; set => email = value; }
-        public string Telefono { get => telefono; set => telefono = value; }
-        public DateTime FechaInscripcion { get => fechaInscripcion; set => fechaInscripcion = value; }
-        public Nivel Nivel { get => nivel; set => nivel = value; }
-        public string DVH { get => dvh; set => dvh = value; }
+        public int LM830IdCliente { get => LM830idCliente; set => LM830idCliente = value; }
+        public string LM830Dni { get => LM830dni; set => LM830dni = value; }
+        public string LM830Nombre { get => LM830nombre; set => LM830nombre = value; }
+        public string LM830Apellido { get => LM830apellido; set => LM830apellido = value; }
+        public string LM830Email { get => LM830email; set => LM830email = value; }
+        public string LM830Telefono { get => LM830telefono; set => LM830telefono = value; }
+        public DateTime LM830FechaInscripcion { get => LM830fechaInscripcion; set => LM830fechaInscripcion = value; }
+        public LM830Nivel LM830Nivel { get => LM830nivel; set => LM830nivel = value; }
+        public string LM830DVH { get => LM830dvh; set => LM830dvh = value; }
 
-        public string NombreCompleto => $"{Apellido}, {Nombre}";
+        public string LM830NombreCompleto => $"{LM830Apellido}, {LM830Nombre}";
 
-        public string CadenaDVH() =>
-            FormatoDV.Entero(IdCliente) + Dni + Nombre + Apellido + Email + Telefono +
-            FormatoDV.Fecha(FechaInscripcion) + FormatoDV.Entero(Nivel.IdNivel);
+        public string LM830CadenaDVH() =>
+            LM830FormatoDV.LM830Entero(LM830IdCliente) + LM830Dni + LM830Nombre + LM830Apellido + LM830Email + LM830Telefono +
+            LM830FormatoDV.LM830Fecha(LM830FechaInscripcion) + LM830FormatoDV.LM830Entero(LM830Nivel.LM830IdNivel);
 
-        public override string ToString() => $"{Dni} - {NombreCompleto}";
+        public override string ToString() => $"{LM830Dni} - {LM830NombreCompleto}";
     }
 }

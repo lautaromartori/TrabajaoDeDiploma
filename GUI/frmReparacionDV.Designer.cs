@@ -1,23 +1,23 @@
-﻿namespace GUI
+﻿namespace LM830GUI
 {
-    partial class frmReparacionDV
+    partial class LM830frmReparacionDV
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer LM830components = null;
 
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(bool LM830disposing)
         {
-            if (disposing && (components != null))
+            if (LM830disposing && (LM830components != null))
             {
-                components.Dispose();
+                LM830components.Dispose();
             }
-            base.Dispose(disposing);
+            base.Dispose(LM830disposing);
         }
 
         #region Windows Form Designer generated code
@@ -28,193 +28,193 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReparacionDV));
-            this.lstInconsistencias = new System.Windows.Forms.ListBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.lblErrorDV = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnCancelardv = new System.Windows.Forms.Button();
-            this.lblForzar = new System.Windows.Forms.Label();
-            this.lblSelecVers = new System.Windows.Forms.Label();
-            this.btnRestaurar = new System.Windows.Forms.Button();
-            this.lstBackups = new System.Windows.Forms.ListBox();
-            this.btnRecalcularDV = new System.Windows.Forms.Button();
-            this.lblModuloReparacion = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnMaximizar = new System.Windows.Forms.PictureBox();
-            this.btnMinimizar = new System.Windows.Forms.PictureBox();
-            this.panel1.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnMaximizar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnMinimizar)).BeginInit();
+            System.ComponentModel.ComponentResourceManager LM830resources = new System.ComponentModel.ComponentResourceManager(typeof(LM830frmReparacionDV));
+            this.LM830lstInconsistencias = new System.Windows.Forms.ListBox();
+            this.LM830panel1 = new System.Windows.Forms.Panel();
+            this.LM830lblErrorDV = new System.Windows.Forms.Label();
+            this.LM830panel3 = new System.Windows.Forms.Panel();
+            this.LM830groupBox1 = new System.Windows.Forms.GroupBox();
+            this.LM830btnCancelardv = new System.Windows.Forms.Button();
+            this.LM830lblForzar = new System.Windows.Forms.Label();
+            this.LM830lblSelecVers = new System.Windows.Forms.Label();
+            this.LM830btnRestaurar = new System.Windows.Forms.Button();
+            this.LM830lstBackups = new System.Windows.Forms.ListBox();
+            this.LM830btnRecalcularDV = new System.Windows.Forms.Button();
+            this.LM830lblModuloReparacion = new System.Windows.Forms.Label();
+            this.LM830panel2 = new System.Windows.Forms.Panel();
+            this.LM830btnMaximizar = new System.Windows.Forms.PictureBox();
+            this.LM830btnMinimizar = new System.Windows.Forms.PictureBox();
+            this.LM830panel1.SuspendLayout();
+            this.LM830panel3.SuspendLayout();
+            this.LM830groupBox1.SuspendLayout();
+            this.LM830panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LM830btnMaximizar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LM830btnMinimizar)).BeginInit();
             this.SuspendLayout();
             // 
             // lstInconsistencias
             // 
-            this.lstInconsistencias.FormattingEnabled = true;
-            this.lstInconsistencias.Location = new System.Drawing.Point(16, 38);
-            this.lstInconsistencias.Name = "lstInconsistencias";
-            this.lstInconsistencias.Size = new System.Drawing.Size(668, 95);
-            this.lstInconsistencias.TabIndex = 1;
+            this.LM830lstInconsistencias.FormattingEnabled = true;
+            this.LM830lstInconsistencias.Location = new System.Drawing.Point(16, 38);
+            this.LM830lstInconsistencias.Name = "LM830lstInconsistencias";
+            this.LM830lstInconsistencias.Size = new System.Drawing.Size(668, 95);
+            this.LM830lstInconsistencias.TabIndex = 1;
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.panel1.Controls.Add(this.lblErrorDV);
-            this.panel1.Controls.Add(this.lstInconsistencias);
-            this.panel1.Location = new System.Drawing.Point(30, 77);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(700, 148);
-            this.panel1.TabIndex = 2;
+            this.LM830panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.LM830panel1.Controls.Add(this.LM830lblErrorDV);
+            this.LM830panel1.Controls.Add(this.LM830lstInconsistencias);
+            this.LM830panel1.Location = new System.Drawing.Point(30, 77);
+            this.LM830panel1.Name = "LM830panel1";
+            this.LM830panel1.Size = new System.Drawing.Size(700, 148);
+            this.LM830panel1.TabIndex = 2;
             // 
             // lblErrorDV
             // 
-            this.lblErrorDV.AutoSize = true;
-            this.lblErrorDV.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblErrorDV.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblErrorDV.Location = new System.Drawing.Point(216, 7);
-            this.lblErrorDV.Name = "lblErrorDV";
-            this.lblErrorDV.Size = new System.Drawing.Size(262, 24);
-            this.lblErrorDV.TabIndex = 2;
-            this.lblErrorDV.Text = "Inconsistencias Detectadas";
+            this.LM830lblErrorDV.AutoSize = true;
+            this.LM830lblErrorDV.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblErrorDV.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.LM830lblErrorDV.Location = new System.Drawing.Point(216, 7);
+            this.LM830lblErrorDV.Name = "LM830lblErrorDV";
+            this.LM830lblErrorDV.Size = new System.Drawing.Size(262, 24);
+            this.LM830lblErrorDV.TabIndex = 2;
+            this.LM830lblErrorDV.Text = "Inconsistencias Detectadas";
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.panel3.Controls.Add(this.groupBox1);
-            this.panel3.Controls.Add(this.lblModuloReparacion);
-            this.panel3.Location = new System.Drawing.Point(30, 249);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(700, 388);
-            this.panel3.TabIndex = 9;
+            this.LM830panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.LM830panel3.Controls.Add(this.LM830groupBox1);
+            this.LM830panel3.Controls.Add(this.LM830lblModuloReparacion);
+            this.LM830panel3.Location = new System.Drawing.Point(30, 249);
+            this.LM830panel3.Name = "LM830panel3";
+            this.LM830panel3.Size = new System.Drawing.Size(700, 388);
+            this.LM830panel3.TabIndex = 9;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnCancelardv);
-            this.groupBox1.Controls.Add(this.lblForzar);
-            this.groupBox1.Controls.Add(this.lblSelecVers);
-            this.groupBox1.Controls.Add(this.btnRestaurar);
-            this.groupBox1.Controls.Add(this.lstBackups);
-            this.groupBox1.Controls.Add(this.btnRecalcularDV);
-            this.groupBox1.Location = new System.Drawing.Point(29, 43);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(641, 321);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
+            this.LM830groupBox1.Controls.Add(this.LM830btnCancelardv);
+            this.LM830groupBox1.Controls.Add(this.LM830lblForzar);
+            this.LM830groupBox1.Controls.Add(this.LM830lblSelecVers);
+            this.LM830groupBox1.Controls.Add(this.LM830btnRestaurar);
+            this.LM830groupBox1.Controls.Add(this.LM830lstBackups);
+            this.LM830groupBox1.Controls.Add(this.LM830btnRecalcularDV);
+            this.LM830groupBox1.Location = new System.Drawing.Point(29, 43);
+            this.LM830groupBox1.Name = "LM830groupBox1";
+            this.LM830groupBox1.Size = new System.Drawing.Size(641, 321);
+            this.LM830groupBox1.TabIndex = 4;
+            this.LM830groupBox1.TabStop = false;
             // 
             // btnCancelardv
             // 
-            this.btnCancelardv.Location = new System.Drawing.Point(348, 261);
-            this.btnCancelardv.Name = "btnCancelardv";
-            this.btnCancelardv.Size = new System.Drawing.Size(254, 42);
-            this.btnCancelardv.TabIndex = 7;
-            this.btnCancelardv.Text = "Cancelar";
-            this.btnCancelardv.UseVisualStyleBackColor = true;
-            this.btnCancelardv.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.LM830btnCancelardv.Location = new System.Drawing.Point(348, 261);
+            this.LM830btnCancelardv.Name = "LM830btnCancelardv";
+            this.LM830btnCancelardv.Size = new System.Drawing.Size(254, 42);
+            this.LM830btnCancelardv.TabIndex = 7;
+            this.LM830btnCancelardv.Text = "Cancelar";
+            this.LM830btnCancelardv.UseVisualStyleBackColor = true;
+            this.LM830btnCancelardv.Click += new System.EventHandler(this.LM830btnCancelar_Click);
             // 
             // lblForzar
             // 
-            this.lblForzar.AutoSize = true;
-            this.lblForzar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblForzar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblForzar.Location = new System.Drawing.Point(48, 37);
-            this.lblForzar.Name = "lblForzar";
-            this.lblForzar.Size = new System.Drawing.Size(251, 16);
-            this.lblForzar.TabIndex = 6;
-            this.lblForzar.Text = "Forzar nuevos digitos verificadores";
+            this.LM830lblForzar.AutoSize = true;
+            this.LM830lblForzar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblForzar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.LM830lblForzar.Location = new System.Drawing.Point(48, 37);
+            this.LM830lblForzar.Name = "LM830lblForzar";
+            this.LM830lblForzar.Size = new System.Drawing.Size(251, 16);
+            this.LM830lblForzar.TabIndex = 6;
+            this.LM830lblForzar.Text = "Forzar nuevos digitos verificadores";
             // 
             // lblSelecVers
             // 
-            this.lblSelecVers.AutoSize = true;
-            this.lblSelecVers.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSelecVers.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblSelecVers.Location = new System.Drawing.Point(48, 116);
-            this.lblSelecVers.Name = "lblSelecVers";
-            this.lblSelecVers.Size = new System.Drawing.Size(173, 16);
-            this.lblSelecVers.TabIndex = 5;
-            this.lblSelecVers.Text = "Seleccione una version:";
+            this.LM830lblSelecVers.AutoSize = true;
+            this.LM830lblSelecVers.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblSelecVers.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.LM830lblSelecVers.Location = new System.Drawing.Point(48, 116);
+            this.LM830lblSelecVers.Name = "LM830lblSelecVers";
+            this.LM830lblSelecVers.Size = new System.Drawing.Size(173, 16);
+            this.LM830lblSelecVers.TabIndex = 5;
+            this.LM830lblSelecVers.Text = "Seleccione una version:";
             // 
             // btnRestaurar
             // 
-            this.btnRestaurar.Location = new System.Drawing.Point(348, 135);
-            this.btnRestaurar.Name = "btnRestaurar";
-            this.btnRestaurar.Size = new System.Drawing.Size(254, 42);
-            this.btnRestaurar.TabIndex = 4;
-            this.btnRestaurar.Text = "Restaurar Version Anterior";
-            this.btnRestaurar.UseVisualStyleBackColor = true;
-            this.btnRestaurar.Click += new System.EventHandler(this.btnRestaurar_Click);
+            this.LM830btnRestaurar.Location = new System.Drawing.Point(348, 135);
+            this.LM830btnRestaurar.Name = "LM830btnRestaurar";
+            this.LM830btnRestaurar.Size = new System.Drawing.Size(254, 42);
+            this.LM830btnRestaurar.TabIndex = 4;
+            this.LM830btnRestaurar.Text = "Restaurar Version Anterior";
+            this.LM830btnRestaurar.UseVisualStyleBackColor = true;
+            this.LM830btnRestaurar.Click += new System.EventHandler(this.LM830btnRestaurar_Click);
             // 
             // lstBackups
             // 
-            this.lstBackups.FormattingEnabled = true;
-            this.lstBackups.Location = new System.Drawing.Point(51, 135);
-            this.lstBackups.Name = "lstBackups";
-            this.lstBackups.Size = new System.Drawing.Size(281, 108);
-            this.lstBackups.TabIndex = 3;
+            this.LM830lstBackups.FormattingEnabled = true;
+            this.LM830lstBackups.Location = new System.Drawing.Point(51, 135);
+            this.LM830lstBackups.Name = "LM830lstBackups";
+            this.LM830lstBackups.Size = new System.Drawing.Size(281, 108);
+            this.LM830lstBackups.TabIndex = 3;
             // 
             // btnRecalcularDV
             // 
-            this.btnRecalcularDV.Location = new System.Drawing.Point(51, 56);
-            this.btnRecalcularDV.Name = "btnRecalcularDV";
-            this.btnRecalcularDV.Size = new System.Drawing.Size(551, 44);
-            this.btnRecalcularDV.TabIndex = 0;
-            this.btnRecalcularDV.Text = "Recalcular Digito Verificadores";
-            this.btnRecalcularDV.UseVisualStyleBackColor = true;
-            this.btnRecalcularDV.Click += new System.EventHandler(this.btnRecalcularDV_Click);
+            this.LM830btnRecalcularDV.Location = new System.Drawing.Point(51, 56);
+            this.LM830btnRecalcularDV.Name = "LM830btnRecalcularDV";
+            this.LM830btnRecalcularDV.Size = new System.Drawing.Size(551, 44);
+            this.LM830btnRecalcularDV.TabIndex = 0;
+            this.LM830btnRecalcularDV.Text = "Recalcular Digito Verificadores";
+            this.LM830btnRecalcularDV.UseVisualStyleBackColor = true;
+            this.LM830btnRecalcularDV.Click += new System.EventHandler(this.LM830btnRecalcularDV_Click);
             // 
             // lblModuloReparacion
             // 
-            this.lblModuloReparacion.AutoSize = true;
-            this.lblModuloReparacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblModuloReparacion.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblModuloReparacion.Location = new System.Drawing.Point(237, 10);
-            this.lblModuloReparacion.Name = "lblModuloReparacion";
-            this.lblModuloReparacion.Size = new System.Drawing.Size(216, 24);
-            this.lblModuloReparacion.TabIndex = 3;
-            this.lblModuloReparacion.Text = "Modulo de reparacion";
+            this.LM830lblModuloReparacion.AutoSize = true;
+            this.LM830lblModuloReparacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblModuloReparacion.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.LM830lblModuloReparacion.Location = new System.Drawing.Point(237, 10);
+            this.LM830lblModuloReparacion.Name = "LM830lblModuloReparacion";
+            this.LM830lblModuloReparacion.Size = new System.Drawing.Size(216, 24);
+            this.LM830lblModuloReparacion.TabIndex = 3;
+            this.LM830lblModuloReparacion.Text = "Modulo de reparacion";
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.panel2.Controls.Add(this.btnMaximizar);
-            this.panel2.Controls.Add(this.btnMinimizar);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(763, 41);
-            this.panel2.TabIndex = 33;
-            this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BarraTitulo_MouseDown);
-            this.panel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BarraTitulo_MouseMove);
-            this.panel2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BarraTitulo_MouseUp);
+            this.LM830panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.LM830panel2.Controls.Add(this.LM830btnMaximizar);
+            this.LM830panel2.Controls.Add(this.LM830btnMinimizar);
+            this.LM830panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LM830panel2.Location = new System.Drawing.Point(0, 0);
+            this.LM830panel2.Name = "LM830panel2";
+            this.LM830panel2.Size = new System.Drawing.Size(763, 41);
+            this.LM830panel2.TabIndex = 33;
+            this.LM830panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LM830BarraTitulo_MouseDown);
+            this.LM830panel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.LM830BarraTitulo_MouseMove);
+            this.LM830panel2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LM830BarraTitulo_MouseUp);
             // 
             // btnMaximizar
             // 
-            this.btnMaximizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMaximizar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnMaximizar.Image = ((System.Drawing.Image)(resources.GetObject("btnMaximizar.Image")));
-            this.btnMaximizar.Location = new System.Drawing.Point(726, 3);
-            this.btnMaximizar.Name = "btnMaximizar";
-            this.btnMaximizar.Size = new System.Drawing.Size(25, 35);
-            this.btnMaximizar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnMaximizar.TabIndex = 7;
-            this.btnMaximizar.TabStop = false;
-            this.btnMaximizar.Click += new System.EventHandler(this.btnMaximizar_Click);
+            this.LM830btnMaximizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.LM830btnMaximizar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LM830btnMaximizar.Image = ((System.Drawing.Image)(LM830resources.GetObject("btnMaximizar.Image")));
+            this.LM830btnMaximizar.Location = new System.Drawing.Point(726, 3);
+            this.LM830btnMaximizar.Name = "LM830btnMaximizar";
+            this.LM830btnMaximizar.Size = new System.Drawing.Size(25, 35);
+            this.LM830btnMaximizar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.LM830btnMaximizar.TabIndex = 7;
+            this.LM830btnMaximizar.TabStop = false;
+            this.LM830btnMaximizar.Click += new System.EventHandler(this.LM830btnMaximizar_Click);
             // 
             // btnMinimizar
             // 
-            this.btnMinimizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMinimizar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnMinimizar.Image = ((System.Drawing.Image)(resources.GetObject("btnMinimizar.Image")));
-            this.btnMinimizar.Location = new System.Drawing.Point(695, 3);
-            this.btnMinimizar.Name = "btnMinimizar";
-            this.btnMinimizar.Size = new System.Drawing.Size(25, 35);
-            this.btnMinimizar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnMinimizar.TabIndex = 6;
-            this.btnMinimizar.TabStop = false;
-            this.btnMinimizar.Click += new System.EventHandler(this.btnMinimizar_Click);
+            this.LM830btnMinimizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.LM830btnMinimizar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LM830btnMinimizar.Image = ((System.Drawing.Image)(LM830resources.GetObject("btnMinimizar.Image")));
+            this.LM830btnMinimizar.Location = new System.Drawing.Point(695, 3);
+            this.LM830btnMinimizar.Name = "LM830btnMinimizar";
+            this.LM830btnMinimizar.Size = new System.Drawing.Size(25, 35);
+            this.LM830btnMinimizar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.LM830btnMinimizar.TabIndex = 6;
+            this.LM830btnMinimizar.TabStop = false;
+            this.LM830btnMinimizar.Click += new System.EventHandler(this.LM830btnMinimizar_Click);
             // 
             // frmReparacionDV
             // 
@@ -222,42 +222,42 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(763, 654);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.LM830panel2);
+            this.Controls.Add(this.LM830panel3);
+            this.Controls.Add(this.LM830panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "frmReparacionDV";
+            this.Name = "LM830frmReparacionDV";
             this.Text = "   ";
-            this.Load += new System.EventHandler(this.frmReparacionDV_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.btnMaximizar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnMinimizar)).EndInit();
+            this.Load += new System.EventHandler(this.LM830frmReparacionDV_Load);
+            this.LM830panel1.ResumeLayout(false);
+            this.LM830panel1.PerformLayout();
+            this.LM830panel3.ResumeLayout(false);
+            this.LM830panel3.PerformLayout();
+            this.LM830groupBox1.ResumeLayout(false);
+            this.LM830groupBox1.PerformLayout();
+            this.LM830panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.LM830btnMaximizar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LM830btnMinimizar)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ListBox lstInconsistencias;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label lblErrorDV;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListBox lstBackups;
-        private System.Windows.Forms.Button btnRecalcularDV;
-        private System.Windows.Forms.Label lblModuloReparacion;
-        private System.Windows.Forms.Label lblSelecVers;
-        private System.Windows.Forms.Button btnRestaurar;
-        private System.Windows.Forms.Label lblForzar;
-        private System.Windows.Forms.Button btnCancelardv;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.PictureBox btnMaximizar;
-        private System.Windows.Forms.PictureBox btnMinimizar;
+        private System.Windows.Forms.ListBox LM830lstInconsistencias;
+        private System.Windows.Forms.Panel LM830panel1;
+        private System.Windows.Forms.Label LM830lblErrorDV;
+        private System.Windows.Forms.Panel LM830panel3;
+        private System.Windows.Forms.GroupBox LM830groupBox1;
+        private System.Windows.Forms.ListBox LM830lstBackups;
+        private System.Windows.Forms.Button LM830btnRecalcularDV;
+        private System.Windows.Forms.Label LM830lblModuloReparacion;
+        private System.Windows.Forms.Label LM830lblSelecVers;
+        private System.Windows.Forms.Button LM830btnRestaurar;
+        private System.Windows.Forms.Label LM830lblForzar;
+        private System.Windows.Forms.Button LM830btnCancelardv;
+        private System.Windows.Forms.Panel LM830panel2;
+        private System.Windows.Forms.PictureBox LM830btnMaximizar;
+        private System.Windows.Forms.PictureBox LM830btnMinimizar;
     }
 }

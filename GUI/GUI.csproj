@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EED9AA14-5C51-4FAC-9116-34FEB092AB96}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>GUI</RootNamespace>
+    <RootNamespace>LM830GUI</RootNamespace>
     <AssemblyName>GUI</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -225,6 +225,7 @@
     <Compile Include="Navegacion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="RFN1\frmRegistrarCliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -261,6 +262,18 @@
     <Compile Include="RFN1\frmComprobantes.Designer.cs">
       <DependentUpon>frmComprobantes.cs</DependentUpon>
     </Compile>
+    <Compile Include="RFN1\frmGestionProductos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN1\frmGestionProductos.Designer.cs">
+      <DependentUpon>frmGestionProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RFN2\frmGestionPremios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RFN2\frmGestionPremios.Designer.cs">
+      <DependentUpon>frmGestionPremios.cs</DependentUpon>
+    </Compile>
     <Compile Include="RFN2\frmPremios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -278,6 +291,12 @@
     </Compile>
     <Compile Include="RFN2\frmEntregarPremio.Designer.cs">
       <DependentUpon>frmEntregarPremio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BitacoraCambios\frmBitacoraCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BitacoraCambios\frmBitacoraCambios.Designer.cs">
+      <DependentUpon>frmBitacoraCambios.cs</DependentUpon>
     </Compile>
     <Compile Include="RFN2\frmAnularCanje.cs">
       <SubType>Form</SubType>

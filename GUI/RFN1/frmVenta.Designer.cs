@@ -1,23 +1,23 @@
-﻿namespace GUI.RFN1
+﻿namespace LM830GUI.LM830RFN1
 {
-    partial class frmVenta
+    partial class LM830frmVenta
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer LM830components = null;
 
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(bool LM830disposing)
         {
-            if (disposing && (components != null))
+            if (LM830disposing && (LM830components != null))
             {
-                components.Dispose();
+                LM830components.Dispose();
             }
-            base.Dispose(disposing);
+            base.Dispose(LM830disposing);
         }
 
         #region Windows Form Designer generated code
@@ -28,317 +28,317 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pnlTitulo = new System.Windows.Forms.Panel();
-            this.lblTitulo = new System.Windows.Forms.Label();
-            this.grpCliente = new System.Windows.Forms.GroupBox();
-            this.lblDni = new System.Windows.Forms.Label();
-            this.txtDni = new System.Windows.Forms.TextBox();
-            this.btnBuscarCliente = new System.Windows.Forms.Button();
-            this.lblCliente = new System.Windows.Forms.Label();
-            this.grpProducto = new System.Windows.Forms.GroupBox();
-            this.lblProducto = new System.Windows.Forms.Label();
-            this.txtProducto = new System.Windows.Forms.TextBox();
-            this.btnBuscarProducto = new System.Windows.Forms.Button();
-            this.lblProductoDatos = new System.Windows.Forms.Label();
-            this.lblCantidad = new System.Windows.Forms.Label();
-            this.nudCantidad = new System.Windows.Forms.NumericUpDown();
-            this.btnAgregar = new System.Windows.Forms.Button();
-            this.dgvProductos = new System.Windows.Forms.DataGridView();
-            this.dgvItems = new System.Windows.Forms.DataGridView();
-            this.btnQuitar = new System.Windows.Forms.Button();
-            this.lblTotalTitulo = new System.Windows.Forms.Label();
-            this.lblTotal = new System.Windows.Forms.Label();
-            this.lblPuntosTitulo = new System.Windows.Forms.Label();
-            this.lblPuntos = new System.Windows.Forms.Label();
-            this.btnCerrarVenta = new System.Windows.Forms.Button();
-            this.btnVolver = new System.Windows.Forms.Button();
-            this.pnlTitulo.SuspendLayout();
-            this.grpCliente.SuspendLayout();
-            this.grpProducto.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCantidad)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
+            this.LM830pnlTitulo = new System.Windows.Forms.Panel();
+            this.LM830lblTitulo = new System.Windows.Forms.Label();
+            this.LM830grpCliente = new System.Windows.Forms.GroupBox();
+            this.LM830lblDni = new System.Windows.Forms.Label();
+            this.LM830txtDni = new System.Windows.Forms.TextBox();
+            this.LM830btnBuscarCliente = new System.Windows.Forms.Button();
+            this.LM830lblCliente = new System.Windows.Forms.Label();
+            this.LM830grpProducto = new System.Windows.Forms.GroupBox();
+            this.LM830lblProducto = new System.Windows.Forms.Label();
+            this.LM830txtProducto = new System.Windows.Forms.TextBox();
+            this.LM830btnBuscarProducto = new System.Windows.Forms.Button();
+            this.LM830lblProductoDatos = new System.Windows.Forms.Label();
+            this.LM830lblCantidad = new System.Windows.Forms.Label();
+            this.LM830nudCantidad = new System.Windows.Forms.NumericUpDown();
+            this.LM830btnAgregar = new System.Windows.Forms.Button();
+            this.LM830dgvProductos = new System.Windows.Forms.DataGridView();
+            this.LM830dgvItems = new System.Windows.Forms.DataGridView();
+            this.LM830btnQuitar = new System.Windows.Forms.Button();
+            this.LM830lblTotalTitulo = new System.Windows.Forms.Label();
+            this.LM830lblTotal = new System.Windows.Forms.Label();
+            this.LM830lblPuntosTitulo = new System.Windows.Forms.Label();
+            this.LM830lblPuntos = new System.Windows.Forms.Label();
+            this.LM830btnCerrarVenta = new System.Windows.Forms.Button();
+            this.LM830btnVolver = new System.Windows.Forms.Button();
+            this.LM830pnlTitulo.SuspendLayout();
+            this.LM830grpCliente.SuspendLayout();
+            this.LM830grpProducto.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LM830nudCantidad)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LM830dgvProductos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LM830dgvItems)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlTitulo
             // 
-            this.pnlTitulo.Controls.Add(this.lblTitulo);
-            this.pnlTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.pnlTitulo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTitulo.Location = new System.Drawing.Point(0, 0);
-            this.pnlTitulo.Name = "pnlTitulo";
-            this.pnlTitulo.Size = new System.Drawing.Size(820, 45);
-            this.pnlTitulo.TabIndex = 0;
+            this.LM830pnlTitulo.Controls.Add(this.LM830lblTitulo);
+            this.LM830pnlTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.LM830pnlTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LM830pnlTitulo.Location = new System.Drawing.Point(0, 0);
+            this.LM830pnlTitulo.Name = "LM830pnlTitulo";
+            this.LM830pnlTitulo.Size = new System.Drawing.Size(820, 45);
+            this.LM830pnlTitulo.TabIndex = 0;
             // 
             // lblTitulo
             // 
-            this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitulo.ForeColor = System.Drawing.Color.White;
-            this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Location = new System.Drawing.Point(15, 10);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.TabIndex = 1;
-            this.lblTitulo.Text = "Registrar venta";
+            this.LM830lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblTitulo.ForeColor = System.Drawing.Color.White;
+            this.LM830lblTitulo.AutoSize = true;
+            this.LM830lblTitulo.Location = new System.Drawing.Point(15, 10);
+            this.LM830lblTitulo.Name = "LM830lblTitulo";
+            this.LM830lblTitulo.TabIndex = 1;
+            this.LM830lblTitulo.Text = "Registrar venta";
             // 
             // grpCliente
             // 
-            this.grpCliente.Controls.Add(this.lblDni);
-            this.grpCliente.Controls.Add(this.txtDni);
-            this.grpCliente.Controls.Add(this.btnBuscarCliente);
-            this.grpCliente.Controls.Add(this.lblCliente);
-            this.grpCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
-            this.grpCliente.Location = new System.Drawing.Point(20, 60);
-            this.grpCliente.Name = "grpCliente";
-            this.grpCliente.Size = new System.Drawing.Size(780, 70);
-            this.grpCliente.TabIndex = 2;
-            this.grpCliente.Text = "Cliente";
+            this.LM830grpCliente.Controls.Add(this.LM830lblDni);
+            this.LM830grpCliente.Controls.Add(this.LM830txtDni);
+            this.LM830grpCliente.Controls.Add(this.LM830btnBuscarCliente);
+            this.LM830grpCliente.Controls.Add(this.LM830lblCliente);
+            this.LM830grpCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830grpCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.LM830grpCliente.Location = new System.Drawing.Point(20, 60);
+            this.LM830grpCliente.Name = "LM830grpCliente";
+            this.LM830grpCliente.Size = new System.Drawing.Size(780, 70);
+            this.LM830grpCliente.TabIndex = 2;
+            this.LM830grpCliente.Text = "Cliente";
             // 
             // lblDni
             // 
-            this.lblDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDni.Location = new System.Drawing.Point(15, 30);
-            this.lblDni.Name = "lblDni";
-            this.lblDni.Size = new System.Drawing.Size(40, 20);
-            this.lblDni.TabIndex = 3;
-            this.lblDni.Text = "DNI";
+            this.LM830lblDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblDni.Location = new System.Drawing.Point(15, 30);
+            this.LM830lblDni.Name = "LM830lblDni";
+            this.LM830lblDni.Size = new System.Drawing.Size(40, 20);
+            this.LM830lblDni.TabIndex = 3;
+            this.LM830lblDni.Text = "DNI";
             // 
             // txtDni
             // 
-            this.txtDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDni.MaxLength = 8;
-            this.txtDni.Location = new System.Drawing.Point(60, 27);
-            this.txtDni.Name = "txtDni";
-            this.txtDni.Size = new System.Drawing.Size(130, 22);
-            this.txtDni.TabIndex = 4;
+            this.LM830txtDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830txtDni.MaxLength = 8;
+            this.LM830txtDni.Location = new System.Drawing.Point(60, 27);
+            this.LM830txtDni.Name = "LM830txtDni";
+            this.LM830txtDni.Size = new System.Drawing.Size(130, 22);
+            this.LM830txtDni.TabIndex = 4;
             // 
             // btnBuscarCliente
             // 
-            this.btnBuscarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuscarCliente.UseVisualStyleBackColor = true;
-            this.btnBuscarCliente.Location = new System.Drawing.Point(200, 23);
-            this.btnBuscarCliente.Name = "btnBuscarCliente";
-            this.btnBuscarCliente.Size = new System.Drawing.Size(120, 30);
-            this.btnBuscarCliente.TabIndex = 5;
-            this.btnBuscarCliente.Text = "Buscar cliente";
-            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
+            this.LM830btnBuscarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830btnBuscarCliente.UseVisualStyleBackColor = true;
+            this.LM830btnBuscarCliente.Location = new System.Drawing.Point(200, 23);
+            this.LM830btnBuscarCliente.Name = "LM830btnBuscarCliente";
+            this.LM830btnBuscarCliente.Size = new System.Drawing.Size(120, 30);
+            this.LM830btnBuscarCliente.TabIndex = 5;
+            this.LM830btnBuscarCliente.Text = "Buscar cliente";
+            this.LM830btnBuscarCliente.Click += new System.EventHandler(this.LM830btnBuscarCliente_Click);
             // 
             // lblCliente
             // 
-            this.lblCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCliente.Location = new System.Drawing.Point(335, 30);
-            this.lblCliente.Name = "lblCliente";
-            this.lblCliente.Size = new System.Drawing.Size(430, 20);
-            this.lblCliente.TabIndex = 6;
-            this.lblCliente.Text = "Venta sin cliente identificado";
+            this.LM830lblCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblCliente.Location = new System.Drawing.Point(335, 30);
+            this.LM830lblCliente.Name = "LM830lblCliente";
+            this.LM830lblCliente.Size = new System.Drawing.Size(430, 20);
+            this.LM830lblCliente.TabIndex = 6;
+            this.LM830lblCliente.Text = "Venta sin cliente identificado";
             // 
             // grpProducto
             // 
-            this.grpProducto.Controls.Add(this.lblProducto);
-            this.grpProducto.Controls.Add(this.txtProducto);
-            this.grpProducto.Controls.Add(this.btnBuscarProducto);
-            this.grpProducto.Controls.Add(this.lblProductoDatos);
-            this.grpProducto.Controls.Add(this.lblCantidad);
-            this.grpProducto.Controls.Add(this.nudCantidad);
-            this.grpProducto.Controls.Add(this.btnAgregar);
-            this.grpProducto.Controls.Add(this.dgvProductos);
-            this.grpProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
-            this.grpProducto.Location = new System.Drawing.Point(20, 140);
-            this.grpProducto.Name = "grpProducto";
-            this.grpProducto.Size = new System.Drawing.Size(780, 230);
-            this.grpProducto.TabIndex = 7;
-            this.grpProducto.Text = "Producto";
+            this.LM830grpProducto.Controls.Add(this.LM830lblProducto);
+            this.LM830grpProducto.Controls.Add(this.LM830txtProducto);
+            this.LM830grpProducto.Controls.Add(this.LM830btnBuscarProducto);
+            this.LM830grpProducto.Controls.Add(this.LM830lblProductoDatos);
+            this.LM830grpProducto.Controls.Add(this.LM830lblCantidad);
+            this.LM830grpProducto.Controls.Add(this.LM830nudCantidad);
+            this.LM830grpProducto.Controls.Add(this.LM830btnAgregar);
+            this.LM830grpProducto.Controls.Add(this.LM830dgvProductos);
+            this.LM830grpProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830grpProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.LM830grpProducto.Location = new System.Drawing.Point(20, 140);
+            this.LM830grpProducto.Name = "LM830grpProducto";
+            this.LM830grpProducto.Size = new System.Drawing.Size(780, 230);
+            this.LM830grpProducto.TabIndex = 7;
+            this.LM830grpProducto.Text = "Producto";
             // 
             // lblProducto
             // 
-            this.lblProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProducto.Location = new System.Drawing.Point(15, 30);
-            this.lblProducto.Name = "lblProducto";
-            this.lblProducto.Size = new System.Drawing.Size(70, 20);
-            this.lblProducto.TabIndex = 8;
-            this.lblProducto.Text = "Producto";
+            this.LM830lblProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblProducto.Location = new System.Drawing.Point(15, 30);
+            this.LM830lblProducto.Name = "LM830lblProducto";
+            this.LM830lblProducto.Size = new System.Drawing.Size(70, 20);
+            this.LM830lblProducto.TabIndex = 8;
+            this.LM830lblProducto.Text = "Producto";
             // 
             // txtProducto
             // 
-            this.txtProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProducto.Location = new System.Drawing.Point(90, 27);
-            this.txtProducto.Name = "txtProducto";
-            this.txtProducto.Size = new System.Drawing.Size(230, 22);
-            this.txtProducto.TabIndex = 9;
-            this.txtProducto.TextChanged += new System.EventHandler(this.txtProducto_TextChanged);
+            this.LM830txtProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830txtProducto.Location = new System.Drawing.Point(90, 27);
+            this.LM830txtProducto.Name = "LM830txtProducto";
+            this.LM830txtProducto.Size = new System.Drawing.Size(230, 22);
+            this.LM830txtProducto.TabIndex = 9;
+            this.LM830txtProducto.TextChanged += new System.EventHandler(this.LM830txtProducto_TextChanged);
             // 
             // btnBuscarProducto
             // 
-            this.btnBuscarProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuscarProducto.UseVisualStyleBackColor = true;
-            this.btnBuscarProducto.Location = new System.Drawing.Point(330, 23);
-            this.btnBuscarProducto.Name = "btnBuscarProducto";
-            this.btnBuscarProducto.Size = new System.Drawing.Size(80, 30);
-            this.btnBuscarProducto.TabIndex = 10;
-            this.btnBuscarProducto.Text = "Buscar";
-            this.btnBuscarProducto.Click += new System.EventHandler(this.btnBuscarProducto_Click);
+            this.LM830btnBuscarProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830btnBuscarProducto.UseVisualStyleBackColor = true;
+            this.LM830btnBuscarProducto.Location = new System.Drawing.Point(330, 23);
+            this.LM830btnBuscarProducto.Name = "LM830btnBuscarProducto";
+            this.LM830btnBuscarProducto.Size = new System.Drawing.Size(80, 30);
+            this.LM830btnBuscarProducto.TabIndex = 10;
+            this.LM830btnBuscarProducto.Text = "Buscar";
+            this.LM830btnBuscarProducto.Click += new System.EventHandler(this.LM830btnBuscarProducto_Click);
             // 
             // lblProductoDatos
             // 
-            this.lblProductoDatos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProductoDatos.Location = new System.Drawing.Point(420, 30);
-            this.lblProductoDatos.Name = "lblProductoDatos";
-            this.lblProductoDatos.Size = new System.Drawing.Size(200, 20);
-            this.lblProductoDatos.TabIndex = 11;
-            this.lblProductoDatos.Text = "-";
+            this.LM830lblProductoDatos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblProductoDatos.Location = new System.Drawing.Point(420, 30);
+            this.LM830lblProductoDatos.Name = "LM830lblProductoDatos";
+            this.LM830lblProductoDatos.Size = new System.Drawing.Size(200, 20);
+            this.LM830lblProductoDatos.TabIndex = 11;
+            this.LM830lblProductoDatos.Text = "-";
             // 
             // lblCantidad
             // 
-            this.lblCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCantidad.Location = new System.Drawing.Point(625, 30);
-            this.lblCantidad.Name = "lblCantidad";
-            this.lblCantidad.Size = new System.Drawing.Size(35, 20);
-            this.lblCantidad.TabIndex = 12;
-            this.lblCantidad.Text = "Cant.";
+            this.LM830lblCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblCantidad.Location = new System.Drawing.Point(625, 30);
+            this.LM830lblCantidad.Name = "LM830lblCantidad";
+            this.LM830lblCantidad.Size = new System.Drawing.Size(35, 20);
+            this.LM830lblCantidad.TabIndex = 12;
+            this.LM830lblCantidad.Text = "Cant.";
             // 
             // nudCantidad
             // 
-            this.nudCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudCantidad.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            this.nudCantidad.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-            this.nudCantidad.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            this.nudCantidad.Location = new System.Drawing.Point(665, 27);
-            this.nudCantidad.Name = "nudCantidad";
-            this.nudCantidad.Size = new System.Drawing.Size(55, 22);
-            this.nudCantidad.TabIndex = 13;
+            this.LM830nudCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830nudCantidad.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            this.LM830nudCantidad.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            this.LM830nudCantidad.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            this.LM830nudCantidad.Location = new System.Drawing.Point(665, 27);
+            this.LM830nudCantidad.Name = "LM830nudCantidad";
+            this.LM830nudCantidad.Size = new System.Drawing.Size(55, 22);
+            this.LM830nudCantidad.TabIndex = 13;
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAgregar.UseVisualStyleBackColor = false;
-            this.btnAgregar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.btnAgregar.ForeColor = System.Drawing.Color.White;
-            this.btnAgregar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAgregar.FlatAppearance.BorderSize = 0;
-            this.btnAgregar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
-            this.btnAgregar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAgregar.Location = new System.Drawing.Point(725, 23);
-            this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(45, 30);
-            this.btnAgregar.TabIndex = 14;
-            this.btnAgregar.Text = "+";
-            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
+            this.LM830btnAgregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830btnAgregar.UseVisualStyleBackColor = false;
+            this.LM830btnAgregar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.LM830btnAgregar.ForeColor = System.Drawing.Color.White;
+            this.LM830btnAgregar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LM830btnAgregar.FlatAppearance.BorderSize = 0;
+            this.LM830btnAgregar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.LM830btnAgregar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LM830btnAgregar.Location = new System.Drawing.Point(725, 23);
+            this.LM830btnAgregar.Name = "LM830btnAgregar";
+            this.LM830btnAgregar.Size = new System.Drawing.Size(45, 30);
+            this.LM830btnAgregar.TabIndex = 14;
+            this.LM830btnAgregar.Text = "+";
+            this.LM830btnAgregar.Click += new System.EventHandler(this.LM830btnAgregar_Click);
             // 
             // dgvProductos
             // 
-            this.dgvProductos.AllowUserToAddRows = false;
-            this.dgvProductos.AllowUserToDeleteRows = false;
-            this.dgvProductos.ReadOnly = true;
-            this.dgvProductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvProductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvProductos.MultiSelect = false;
-            this.dgvProductos.RowHeadersVisible = false;
-            this.dgvProductos.BackgroundColor = System.Drawing.Color.White;
-            this.dgvProductos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dgvProductos.EnableHeadersVisualStyles = false;
-            this.dgvProductos.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(201)))));
-            this.dgvProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvProductos.Location = new System.Drawing.Point(15, 60);
-            this.dgvProductos.Name = "dgvProductos";
-            this.dgvProductos.Size = new System.Drawing.Size(750, 160);
-            this.dgvProductos.TabIndex = 15;
-            this.dgvProductos.SelectionChanged += new System.EventHandler(this.dgvProductos_SelectionChanged);
-            this.dgvProductos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProductos_CellDoubleClick);
+            this.LM830dgvProductos.AllowUserToAddRows = false;
+            this.LM830dgvProductos.AllowUserToDeleteRows = false;
+            this.LM830dgvProductos.ReadOnly = true;
+            this.LM830dgvProductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.LM830dgvProductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.LM830dgvProductos.MultiSelect = false;
+            this.LM830dgvProductos.RowHeadersVisible = false;
+            this.LM830dgvProductos.BackgroundColor = System.Drawing.Color.White;
+            this.LM830dgvProductos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LM830dgvProductos.EnableHeadersVisualStyles = false;
+            this.LM830dgvProductos.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(201)))));
+            this.LM830dgvProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.LM830dgvProductos.Location = new System.Drawing.Point(15, 60);
+            this.LM830dgvProductos.Name = "LM830dgvProductos";
+            this.LM830dgvProductos.Size = new System.Drawing.Size(750, 160);
+            this.LM830dgvProductos.TabIndex = 15;
+            this.LM830dgvProductos.SelectionChanged += new System.EventHandler(this.LM830dgvProductos_SelectionChanged);
+            this.LM830dgvProductos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.LM830dgvProductos_CellDoubleClick);
             // 
             // dgvItems
             // 
-            this.dgvItems.AllowUserToAddRows = false;
-            this.dgvItems.AllowUserToDeleteRows = false;
-            this.dgvItems.ReadOnly = true;
-            this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvItems.MultiSelect = false;
-            this.dgvItems.RowHeadersVisible = false;
-            this.dgvItems.BackgroundColor = System.Drawing.Color.White;
-            this.dgvItems.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dgvItems.EnableHeadersVisualStyles = false;
-            this.dgvItems.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(201)))));
-            this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvItems.Location = new System.Drawing.Point(20, 380);
-            this.dgvItems.Name = "dgvItems";
-            this.dgvItems.Size = new System.Drawing.Size(780, 220);
-            this.dgvItems.TabIndex = 16;
+            this.LM830dgvItems.AllowUserToAddRows = false;
+            this.LM830dgvItems.AllowUserToDeleteRows = false;
+            this.LM830dgvItems.ReadOnly = true;
+            this.LM830dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.LM830dgvItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.LM830dgvItems.MultiSelect = false;
+            this.LM830dgvItems.RowHeadersVisible = false;
+            this.LM830dgvItems.BackgroundColor = System.Drawing.Color.White;
+            this.LM830dgvItems.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LM830dgvItems.EnableHeadersVisualStyles = false;
+            this.LM830dgvItems.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(201)))));
+            this.LM830dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.LM830dgvItems.Location = new System.Drawing.Point(20, 380);
+            this.LM830dgvItems.Name = "LM830dgvItems";
+            this.LM830dgvItems.Size = new System.Drawing.Size(780, 220);
+            this.LM830dgvItems.TabIndex = 16;
             // 
             // btnQuitar
             // 
-            this.btnQuitar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnQuitar.UseVisualStyleBackColor = true;
-            this.btnQuitar.Location = new System.Drawing.Point(20, 607);
-            this.btnQuitar.Name = "btnQuitar";
-            this.btnQuitar.Size = new System.Drawing.Size(120, 30);
-            this.btnQuitar.TabIndex = 17;
-            this.btnQuitar.Text = "Quitar ítem";
-            this.btnQuitar.Click += new System.EventHandler(this.btnQuitar_Click);
+            this.LM830btnQuitar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830btnQuitar.UseVisualStyleBackColor = true;
+            this.LM830btnQuitar.Location = new System.Drawing.Point(20, 607);
+            this.LM830btnQuitar.Name = "LM830btnQuitar";
+            this.LM830btnQuitar.Size = new System.Drawing.Size(120, 30);
+            this.LM830btnQuitar.TabIndex = 17;
+            this.LM830btnQuitar.Text = "Quitar ítem";
+            this.LM830btnQuitar.Click += new System.EventHandler(this.LM830btnQuitar_Click);
             // 
             // lblTotalTitulo
             // 
-            this.lblTotalTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalTitulo.Location = new System.Drawing.Point(470, 610);
-            this.lblTotalTitulo.Name = "lblTotalTitulo";
-            this.lblTotalTitulo.Size = new System.Drawing.Size(60, 20);
-            this.lblTotalTitulo.TabIndex = 18;
-            this.lblTotalTitulo.Text = "Total:";
+            this.LM830lblTotalTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblTotalTitulo.Location = new System.Drawing.Point(470, 610);
+            this.LM830lblTotalTitulo.Name = "LM830lblTotalTitulo";
+            this.LM830lblTotalTitulo.Size = new System.Drawing.Size(60, 20);
+            this.LM830lblTotalTitulo.TabIndex = 18;
+            this.LM830lblTotalTitulo.Text = "Total:";
             // 
             // lblTotal
             // 
-            this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotal.Location = new System.Drawing.Point(530, 610);
-            this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(120, 20);
-            this.lblTotal.TabIndex = 19;
-            this.lblTotal.Text = "$ 0,00";
+            this.LM830lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblTotal.Location = new System.Drawing.Point(530, 610);
+            this.LM830lblTotal.Name = "LM830lblTotal";
+            this.LM830lblTotal.Size = new System.Drawing.Size(120, 20);
+            this.LM830lblTotal.TabIndex = 19;
+            this.LM830lblTotal.Text = "$ 0,00";
             // 
             // lblPuntosTitulo
             // 
-            this.lblPuntosTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPuntosTitulo.Location = new System.Drawing.Point(650, 610);
-            this.lblPuntosTitulo.Name = "lblPuntosTitulo";
-            this.lblPuntosTitulo.Size = new System.Drawing.Size(55, 20);
-            this.lblPuntosTitulo.TabIndex = 20;
-            this.lblPuntosTitulo.Text = "Puntos:";
+            this.LM830lblPuntosTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblPuntosTitulo.Location = new System.Drawing.Point(650, 610);
+            this.LM830lblPuntosTitulo.Name = "LM830lblPuntosTitulo";
+            this.LM830lblPuntosTitulo.Size = new System.Drawing.Size(55, 20);
+            this.LM830lblPuntosTitulo.TabIndex = 20;
+            this.LM830lblPuntosTitulo.Text = "Puntos:";
             // 
             // lblPuntos
             // 
-            this.lblPuntos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPuntos.Location = new System.Drawing.Point(710, 610);
-            this.lblPuntos.Name = "lblPuntos";
-            this.lblPuntos.Size = new System.Drawing.Size(90, 20);
-            this.lblPuntos.TabIndex = 21;
-            this.lblPuntos.Text = "0";
+            this.LM830lblPuntos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830lblPuntos.Location = new System.Drawing.Point(710, 610);
+            this.LM830lblPuntos.Name = "LM830lblPuntos";
+            this.LM830lblPuntos.Size = new System.Drawing.Size(90, 20);
+            this.LM830lblPuntos.TabIndex = 21;
+            this.LM830lblPuntos.Text = "0";
             // 
             // btnCerrarVenta
             // 
-            this.btnCerrarVenta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCerrarVenta.UseVisualStyleBackColor = false;
-            this.btnCerrarVenta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.btnCerrarVenta.ForeColor = System.Drawing.Color.White;
-            this.btnCerrarVenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCerrarVenta.FlatAppearance.BorderSize = 0;
-            this.btnCerrarVenta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
-            this.btnCerrarVenta.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCerrarVenta.Location = new System.Drawing.Point(560, 700);
-            this.btnCerrarVenta.Name = "btnCerrarVenta";
-            this.btnCerrarVenta.Size = new System.Drawing.Size(120, 30);
-            this.btnCerrarVenta.TabIndex = 22;
-            this.btnCerrarVenta.Text = "Cerrar venta";
-            this.btnCerrarVenta.Click += new System.EventHandler(this.btnCerrarVenta_Click);
+            this.LM830btnCerrarVenta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830btnCerrarVenta.UseVisualStyleBackColor = false;
+            this.LM830btnCerrarVenta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.LM830btnCerrarVenta.ForeColor = System.Drawing.Color.White;
+            this.LM830btnCerrarVenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LM830btnCerrarVenta.FlatAppearance.BorderSize = 0;
+            this.LM830btnCerrarVenta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.LM830btnCerrarVenta.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LM830btnCerrarVenta.Location = new System.Drawing.Point(560, 700);
+            this.LM830btnCerrarVenta.Name = "LM830btnCerrarVenta";
+            this.LM830btnCerrarVenta.Size = new System.Drawing.Size(120, 30);
+            this.LM830btnCerrarVenta.TabIndex = 22;
+            this.LM830btnCerrarVenta.Text = "Cerrar venta";
+            this.LM830btnCerrarVenta.Click += new System.EventHandler(this.LM830btnCerrarVenta_Click);
             // 
             // btnVolver
             // 
-            this.btnVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Location = new System.Drawing.Point(690, 700);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(110, 30);
-            this.btnVolver.TabIndex = 23;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
+            this.LM830btnVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LM830btnVolver.UseVisualStyleBackColor = true;
+            this.LM830btnVolver.Location = new System.Drawing.Point(690, 700);
+            this.LM830btnVolver.Name = "LM830btnVolver";
+            this.LM830btnVolver.Size = new System.Drawing.Size(110, 30);
+            this.LM830btnVolver.TabIndex = 23;
+            this.LM830btnVolver.Text = "Volver";
+            this.LM830btnVolver.Click += new System.EventHandler(this.LM830btnVolver_Click);
             // 
             // frmVenta
             // 
@@ -346,62 +346,62 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(820, 750);
-            this.Controls.Add(this.pnlTitulo);
-            this.Controls.Add(this.grpCliente);
-            this.Controls.Add(this.grpProducto);
-            this.Controls.Add(this.dgvItems);
-            this.Controls.Add(this.btnQuitar);
-            this.Controls.Add(this.lblTotalTitulo);
-            this.Controls.Add(this.lblTotal);
-            this.Controls.Add(this.lblPuntosTitulo);
-            this.Controls.Add(this.lblPuntos);
-            this.Controls.Add(this.btnCerrarVenta);
-            this.Controls.Add(this.btnVolver);
+            this.Controls.Add(this.LM830pnlTitulo);
+            this.Controls.Add(this.LM830grpCliente);
+            this.Controls.Add(this.LM830grpProducto);
+            this.Controls.Add(this.LM830dgvItems);
+            this.Controls.Add(this.LM830btnQuitar);
+            this.Controls.Add(this.LM830lblTotalTitulo);
+            this.Controls.Add(this.LM830lblTotal);
+            this.Controls.Add(this.LM830lblPuntosTitulo);
+            this.Controls.Add(this.LM830lblPuntos);
+            this.Controls.Add(this.LM830btnCerrarVenta);
+            this.Controls.Add(this.LM830btnVolver);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "frmVenta";
+            this.Name = "LM830frmVenta";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registrar venta";
-            this.Load += new System.EventHandler(this.frmVenta_Load);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmVenta_FormClosed);
-            ((System.ComponentModel.ISupportInitialize)(this.nudCantidad)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
-            this.pnlTitulo.ResumeLayout(false);
-            this.pnlTitulo.PerformLayout();
-            this.grpCliente.ResumeLayout(false);
-            this.grpCliente.PerformLayout();
-            this.grpProducto.ResumeLayout(false);
-            this.grpProducto.PerformLayout();
+            this.Load += new System.EventHandler(this.LM830frmVenta_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LM830frmVenta_FormClosed);
+            ((System.ComponentModel.ISupportInitialize)(this.LM830nudCantidad)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LM830dgvProductos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LM830dgvItems)).EndInit();
+            this.LM830pnlTitulo.ResumeLayout(false);
+            this.LM830pnlTitulo.PerformLayout();
+            this.LM830grpCliente.ResumeLayout(false);
+            this.LM830grpCliente.PerformLayout();
+            this.LM830grpProducto.ResumeLayout(false);
+            this.LM830grpProducto.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlTitulo;
-        private System.Windows.Forms.Label lblTitulo;
-        private System.Windows.Forms.GroupBox grpCliente;
-        private System.Windows.Forms.Label lblDni;
-        private System.Windows.Forms.TextBox txtDni;
-        private System.Windows.Forms.Button btnBuscarCliente;
-        private System.Windows.Forms.Label lblCliente;
-        private System.Windows.Forms.GroupBox grpProducto;
-        private System.Windows.Forms.Label lblProducto;
-        private System.Windows.Forms.TextBox txtProducto;
-        private System.Windows.Forms.Button btnBuscarProducto;
-        private System.Windows.Forms.Label lblProductoDatos;
-        private System.Windows.Forms.Label lblCantidad;
-        private System.Windows.Forms.NumericUpDown nudCantidad;
-        private System.Windows.Forms.Button btnAgregar;
-        private System.Windows.Forms.DataGridView dgvProductos;
-        private System.Windows.Forms.DataGridView dgvItems;
-        private System.Windows.Forms.Button btnQuitar;
-        private System.Windows.Forms.Label lblTotalTitulo;
-        private System.Windows.Forms.Label lblTotal;
-        private System.Windows.Forms.Label lblPuntosTitulo;
-        private System.Windows.Forms.Label lblPuntos;
-        private System.Windows.Forms.Button btnCerrarVenta;
-        private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.Panel LM830pnlTitulo;
+        private System.Windows.Forms.Label LM830lblTitulo;
+        private System.Windows.Forms.GroupBox LM830grpCliente;
+        private System.Windows.Forms.Label LM830lblDni;
+        private System.Windows.Forms.TextBox LM830txtDni;
+        private System.Windows.Forms.Button LM830btnBuscarCliente;
+        private System.Windows.Forms.Label LM830lblCliente;
+        private System.Windows.Forms.GroupBox LM830grpProducto;
+        private System.Windows.Forms.Label LM830lblProducto;
+        private System.Windows.Forms.TextBox LM830txtProducto;
+        private System.Windows.Forms.Button LM830btnBuscarProducto;
+        private System.Windows.Forms.Label LM830lblProductoDatos;
+        private System.Windows.Forms.Label LM830lblCantidad;
+        private System.Windows.Forms.NumericUpDown LM830nudCantidad;
+        private System.Windows.Forms.Button LM830btnAgregar;
+        private System.Windows.Forms.DataGridView LM830dgvProductos;
+        private System.Windows.Forms.DataGridView LM830dgvItems;
+        private System.Windows.Forms.Button LM830btnQuitar;
+        private System.Windows.Forms.Label LM830lblTotalTitulo;
+        private System.Windows.Forms.Label LM830lblTotal;
+        private System.Windows.Forms.Label LM830lblPuntosTitulo;
+        private System.Windows.Forms.Label LM830lblPuntos;
+        private System.Windows.Forms.Button LM830btnCerrarVenta;
+        private System.Windows.Forms.Button LM830btnVolver;
     }
 }

@@ -1,22 +1,22 @@
 ﻿using System.Windows.Forms;
 
-namespace GUI
+namespace LM830GUI
 {
-    internal static class Navegacion
+    internal static class LM830Navegacion
     {
-        public static void VolverAlMenu(Form actual)
+        public static void LM830VolverAlMenu(Form LM830actual)
         {
-            MostrarMenu();
-            actual.Close();
+            LM830MostrarMenu();
+            LM830actual.Close();
         }
 
-        public static void MostrarMenu()
+        public static void LM830MostrarMenu()
         {
-            Form menu = Application.OpenForms["Menu"];
-            if (menu != null)
-                menu.Show();
+            Form LM830menu = Application.OpenForms["LM830Menu"];
+            if (LM830menu != null)
+                LM830menu.Show();
             else
-                new Menu().Show();
+                new LM830Menu().Show();
         }
     }
 }

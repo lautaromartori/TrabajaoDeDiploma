@@ -7,204 +7,204 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BLL;
-using Servicios;
+using LM830BLL;
+using LM830Servicios;
 
-namespace GUI
+namespace LM830GUI
 {
-    public partial class Login : Form, IObserver
+    public partial class LM830Login : Form, LM830IObserver
     {
-        BitacoraBLL bitacoraBLL = new BitacoraBLL();
-        int posX, posY;
-        bool arrastrando = false;
-        public Login()
+        LM830BitacoraBLL LM830bitacoraBLL = new LM830BitacoraBLL();
+        int LM830posX, LM830posY;
+        bool LM830arrastrando = false;
+        public LM830Login()
         {
             InitializeComponent();
-            IniciarControles();
+            LM830IniciarControles();
         }
 
-        private void IniciarControles()
+        private void LM830IniciarControles()
         {
-            txtContraseña.UseSystemPasswordChar = false;
-            MostrarClave(false);
+            LM830txtContraseña.UseSystemPasswordChar = false;
+            LM830MostrarClave(false);
         }
 
-        private void MostrarClave(bool mostrar)
+        private void LM830MostrarClave(bool LM830mostrar)
         {
-            if (mostrar)
+            if (LM830mostrar)
             {
-                pbMostrarClave.Image = Properties.Resources.OjoAbierto;
+                LM830pbMostrarClave.Image = Properties.Resources.OjoAbierto;
             }
             else
             {
-                pbMostrarClave.Image = Properties.Resources.OjoCerrado;
+                LM830pbMostrarClave.Image = Properties.Resources.OjoCerrado;
             }
         }
 
-        private void btnCerrar_Click(object sender, EventArgs e)
+        private void LM830btnCerrar_Click(object LM830sender, EventArgs LM830e)
         {
             Application.Exit();
         }
 
-        private void btnMinimizar_Click(object sender, EventArgs e)
+        private void LM830btnMinimizar_Click(object LM830sender, EventArgs LM830e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        private void LM830panel1_MouseUp(object LM830sender, MouseEventArgs LM830e)
         {
-            arrastrando = false;
+            LM830arrastrando = false;
         }
 
-        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        private void LM830panel1_MouseMove(object LM830sender, MouseEventArgs LM830e)
         {
-            if (arrastrando)
+            if (LM830arrastrando)
             {
-                this.Location = new Point(this.Location.X + (e.X - posX), this.Location.Y + (e.Y - posY));
+                this.Location = new Point(this.Location.X + (LM830e.X - LM830posX), this.Location.Y + (LM830e.Y - LM830posY));
             }
         }
 
-        private void pbMostrarClave_Click(object sender, EventArgs e)
+        private void LM830pbMostrarClave_Click(object LM830sender, EventArgs LM830e)
         {
-            bool mostrar = txtContraseña.UseSystemPasswordChar;
-            if (mostrar)
+            bool LM830mostrar = LM830txtContraseña.UseSystemPasswordChar;
+            if (LM830mostrar)
             {
-                MostrarClave(false);
-                txtContraseña.UseSystemPasswordChar = false;
+                LM830MostrarClave(false);
+                LM830txtContraseña.UseSystemPasswordChar = false;
             }
             else
             {
-                MostrarClave(true);
-                txtContraseña.UseSystemPasswordChar = true;
+                LM830MostrarClave(true);
+                LM830txtContraseña.UseSystemPasswordChar = true;
             }
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void LM830btnLogin_Click(object LM830sender, EventArgs LM830e)
         {
             try
             {
-                ValidarCamposVacios();
-                UsuarioBLL usuarioBLL = new UsuarioBLL();
+                LM830ValidarCamposVacios();
+                LM830UsuarioBLL LM830usuarioBLL = new LM830UsuarioBLL();
 
-                if (usuarioBLL.ValidarNuevoUsuario(txtUsuario.Text, txtContraseña.Text))
+                if (LM830usuarioBLL.LM830ValidarNuevoUsuario(LM830txtUsuario.Text, LM830txtContraseña.Text))
                 {
                     MessageBox.Show("Debes crear una nueva contrasenia", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Hide();
-                    CambiarContraseña cambioContraseña = new CambiarContraseña();
-                    cambioContraseña.ShowDialog();
+                    LM830CambiarContraseña LM830cambioContraseña = new LM830CambiarContraseña();
+                    LM830cambioContraseña.ShowDialog();
                     return;
                 }
 
-                switch (usuarioBLL.Login(txtUsuario.Text, txtContraseña.Text))
+                switch (LM830usuarioBLL.LM830Login(LM830txtUsuario.Text, LM830txtContraseña.Text))
                 {
-                    case LoginResultado.ContraseñaIncorrecta:
+                    case LM830LoginResultado.LM830ContraseñaIncorrecta:
                         throw new Exception("Contraseña Incorrecta, vuelva a intentar.");
 
-                    case LoginResultado.UsuarioNoEncontrado:
+                    case LM830LoginResultado.LM830UsuarioNoEncontrado:
                         throw new Exception("Usuario Incorrecto, vuelva a intentar.");
-                    case LoginResultado.Valido:
-                        IdiomaBLL idiomaBLL = new IdiomaBLL();
-                        DigitoVerificadorBLL digitoVerificadorBLL = new DigitoVerificadorBLL();
+                    case LM830LoginResultado.LM830Valido:
+                        LM830IdiomaBLL LM830idiomaBLL = new LM830IdiomaBLL();
+                        LM830DigitoVerificadorBLL LM830digitoVerificadorBLL = new LM830DigitoVerificadorBLL();
 
-                        string username = SessionManager.Instance.UsuarioActual().Username;
-                        string idioma = idiomaBLL.ObtenerIdioma(username);
-                        var Auditoria = digitoVerificadorBLL.EjecutarAuditoriaDetalladaCompleta();
+                        string LM830username = LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username;
+                        string LM830idioma = LM830idiomaBLL.LM830ObtenerIdioma(LM830username);
+                        var LM830Auditoria = LM830digitoVerificadorBLL.LM830EjecutarAuditoriaDetalladaCompleta();
 
-                        LanguageManager.Instance.CargarIdioma(idioma);
+                        LM830LanguageManager.LM830Instance.LM830CargarIdioma(LM830idioma);
 
-                        if (Auditoria.Count > 0)
+                        if (LM830Auditoria.Count > 0)
                         {
-                            if (SessionManager.Instance.UsuarioActual().TienePermiso("Gestionar DigitoVerificadores"))
+                            if (LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830TienePermiso("Gestionar DigitoVerificadores"))
                             {
                                 this.Hide();
-                                frmReparacionDV frmRep = new frmReparacionDV();
-                                frmRep.Show();
+                                LM830frmReparacionDV LM830frmRep = new LM830frmReparacionDV();
+                                LM830frmRep.Show();
                                 break;
                             }
 
-                            string mensaje = "Se han detectado inconsistencias en la base de datos, por favor contacte al administrador.";
-                            MessageBox.Show(mensaje, "Error de Integridad", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            SessionManager.Instance.Desloguear();
+                            string LM830mensaje = "Se han detectado inconsistencias en la base de datos, por favor contacte al administrador.";
+                            MessageBox.Show(LM830mensaje, "Error de Integridad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            LM830SessionManager.LM830Instance.LM830Desloguear();
                             Application.Exit();
                             return;
                         }
 
-                        Bitacora bitacora = new Bitacora();
-                        bitacora.Login = SessionManager.Instance.UsuarioActual().Username;
-                        bitacora.Modulo = "Usuarios";
-                        bitacora.Evento = "Login exitoso";
-                        bitacora.Criticidad = 1;
-                        bitacoraBLL.RegistrarEvento(bitacora);
+                        LM830Bitacora LM830bitacora = new LM830Bitacora();
+                        LM830bitacora.LM830Login = LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username;
+                        LM830bitacora.LM830Modulo = "Usuarios";
+                        LM830bitacora.LM830Evento = "Login exitoso";
+                        LM830bitacora.LM830Criticidad = 1;
+                        LM830bitacoraBLL.LM830RegistrarEvento(LM830bitacora);
 
                         this.Hide();
-                        Menu menu = new Menu();
-                        menu.ShowDialog();
+                        LM830Menu LM830menu = new LM830Menu();
+                        LM830menu.ShowDialog();
                         break;
-                    case LoginResultado.Inactivo:
+                    case LM830LoginResultado.LM830Inactivo:
                         throw new Exception("El usuario está dado de baja. Pedile a un administrador que lo active desde Usuarios.");
-                    case LoginResultado.Bloqueado:
+                    case LM830LoginResultado.LM830Bloqueado:
                         throw new Exception("Usuario Bloqueado, contacte al administrador.");
-                    case LoginResultado.Error:
+                    case LM830LoginResultado.LM830Error:
                         throw new Exception("Error al intentar iniciar sesión, vuelva a intentar.");
                     default:
                         throw new Exception("Error desconocido, vuelva a intentar.");
                 }
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void ValidarCamposVacios()
+        private void LM830ValidarCamposVacios()
         {
-            if (txtUsuario.Text == "")
+            if (LM830txtUsuario.Text == "")
             {
                 throw new Exception("Ingrese un Usuario!");
             }
-            if (txtContraseña.Text == "")
+            if (LM830txtContraseña.Text == "")
             {
                 throw new Exception("Ingrese una Contraseña!");
             }
         }
 
-        private void linkCambioContraseña_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LM830linkCambioContraseña_LinkClicked(object LM830sender, LinkLabelLinkClickedEventArgs LM830e)
         {
             this.Hide();
-            CambiarContraseña cambioContraseña = new CambiarContraseña();
-            cambioContraseña.ShowDialog();
+            LM830CambiarContraseña LM830cambioContraseña = new LM830CambiarContraseña();
+            LM830cambioContraseña.ShowDialog();
         }
 
-        private void txtUsuario_KeyPress(object sender, KeyPressEventArgs e)
+        private void LM830txtUsuario_KeyPress(object LM830sender, KeyPressEventArgs LM830e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (LM830e.KeyChar == (char)Keys.Enter)
             {
-                e.Handled = true;
+                LM830e.Handled = true;
             }
         }
 
-        private void txtContraseña_KeyPress(object sender, KeyPressEventArgs e)
+        private void LM830txtContraseña_KeyPress(object LM830sender, KeyPressEventArgs LM830e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (LM830e.KeyChar == (char)Keys.Enter)
             {
-                e.Handled = true;
+                LM830e.Handled = true;
             }
         }
-        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        private void LM830panel1_MouseDown(object LM830sender, MouseEventArgs LM830e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (LM830e.Button == MouseButtons.Left)
             {
-                arrastrando = true;
-                posX = e.X;
-                posY = e.Y;
+                LM830arrastrando = true;
+                LM830posX = LM830e.X;
+                LM830posY = LM830e.Y;
             }
         }
 
-        private void Login_Load(object sender, EventArgs e)
+        private void LM830Login_Load(object LM830sender, EventArgs LM830e)
         {
         }
 
-        public void Actualizar(LanguageManager lenguaje)
+        public void LM830Actualizar(LM830LanguageManager LM830lenguaje)
         {
             throw new NotImplementedException();
         }

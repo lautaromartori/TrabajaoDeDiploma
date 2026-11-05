@@ -1,228 +1,207 @@
-﻿using BE.RFN1;
-using BE.RFN2;
-using BLL.RFN1;
-using DAL.RFN2;
-using Servicios;
+﻿using LM830BE.LM830RFN1;
+using LM830BE.LM830RFN2;
+using LM830BLL.LM830RFN1;
+using LM830DAL.LM830RFN2;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BLL.RFN2
+namespace LM830BLL.LM830RFN2
 {
-    public class CanjeBLL
+    public class LM830CanjeBLL
     {
-        private const string MODULO = "Canjes";
+        private const string LM830MODULO = "Canjes";
 
-        private readonly CanjeDAL _canjeDAL = new CanjeDAL();
-        private readonly PremioDAL _premioDAL = new PremioDAL();
-        private readonly LoteBLL _loteBLL = new LoteBLL();
-        private readonly BitacoraBLL _bitacoraBLL = new BitacoraBLL();
-        private readonly DigitoVerificadorBLL _digitoVerificadorBLL = new DigitoVerificadorBLL();
+        private readonly LM830CanjeDAL LM830_canjeDAL = new LM830CanjeDAL();
+        private readonly LM830PremioDAL LM830_premioDAL = new LM830PremioDAL();
+        private readonly LM830LoteBLL LM830_loteBLL = new LM830LoteBLL();
+        private readonly LM830DigitoVerificadorBLL LM830_digitoVerificadorBLL = new LM830DigitoVerificadorBLL();
 
-        public int SaldoVigente(Cliente c) => _loteBLL.ConsultarSaldo(c);
+        public int LM830SaldoVigente(LM830Cliente LM830c) => LM830_loteBLL.LM830ConsultarSaldo(LM830c);
 
-        public int PuntosComprometidos(Cliente c) => _canjeDAL.PuntosComprometidos(c.IdCliente);
+        public int LM830PuntosComprometidos(LM830Cliente LM830c) => LM830_canjeDAL.LM830PuntosComprometidos(LM830c.LM830IdCliente);
 
-        public int SaldoDisponible(Cliente c) => Math.Max(0, SaldoVigente(c) - PuntosComprometidos(c));
+        public int LM830SaldoDisponible(LM830Cliente LM830c) => Math.Max(0, LM830SaldoVigente(LM830c) - LM830PuntosComprometidos(LM830c));
 
-        public Canje RegistrarSolicitud(Cliente c, Premio p)
+        public LM830Canje LM830RegistrarSolicitud(LM830Cliente LM830c, LM830Premio LM830p)
         {
-            if (c == null || c.IdCliente == 0)
+            if (LM830c == null || LM830c.LM830IdCliente == 0)
                 throw new Exception("Busque un cliente inscripto antes de registrar el canje.");
-            if (p == null || p.IdPremio == 0)
+            if (LM830p == null || LM830p.LM830IdPremio == 0)
                 throw new Exception("Seleccione un premio.");
 
-            Premio? actual = _premioDAL.Obtener(p.IdPremio);
-            if (actual == null)
+            LM830Premio? LM830actual = LM830_premioDAL.LM830Obtener(LM830p.LM830IdPremio);
+            if (LM830actual == null)
                 throw new Exception("El premio ya no existe.");
-            if (actual.Stock <= 0)
-                throw new Exception("No hay stock del premio " + actual.Nombre + ".");
+            if (LM830actual.LM830Stock <= 0)
+                throw new Exception("No hay stock del premio " + LM830actual.LM830Nombre + ".");
 
-            int disponible = SaldoDisponible(c);
-            if (actual.PuntosRequeridos > disponible)
-                throw new Exception($"El cliente no tiene saldo suficiente. Disponible: {disponible:N0} pts, requiere: {actual.PuntosRequeridos:N0} pts.");
+            int LM830disponible = LM830SaldoDisponible(LM830c);
+            if (LM830actual.LM830PuntosRequeridos > LM830disponible)
+                throw new Exception($"El cliente no tiene saldo suficiente. Disponible: {LM830disponible:N0} pts, requiere: {LM830actual.LM830PuntosRequeridos:N0} pts.");
 
-            bool requiereAutorizacion = actual.ValorReferencia > ProgramaPuntosBLL.Obtener().UmbralAutorizacion;
-            var canje = new Canje
+            bool LM830requiereAutorizacion = LM830actual.LM830ValorReferencia > LM830ProgramaPuntosBLL.LM830Obtener().LM830UmbralAutorizacion;
+            var LM830canje = new LM830Canje
             {
-                Cliente = c,
-                Premio = actual,
-                PuntosRequeridos = actual.PuntosRequeridos,
-                ValorReferencia = actual.ValorReferencia,
-                FechaSolicitud = BitacoraBLL.AhoraSinMilisegundos(),
-                Estado = requiereAutorizacion ? EstadoCanje.pendiente : EstadoCanje.autorizado,
-                Vendedor = SessionManager.Instance.UsuarioActual()
+                LM830Cliente = LM830c,
+                LM830Premio = LM830actual,
+                LM830PuntosRequeridos = LM830actual.LM830PuntosRequeridos,
+                LM830ValorReferencia = LM830actual.LM830ValorReferencia,
+                LM830FechaSolicitud = LM830BitacoraBLL.LM830AhoraSinMilisegundos(),
+                LM830Estado = LM830requiereAutorizacion ? LM830EstadoCanje.LM830pendiente : LM830EstadoCanje.LM830autorizado,
+                LM830Vendedor = LM830SessionManager.LM830Instance.LM830UsuarioActual()
             };
 
-            _canjeDAL.Insertar(canje);
-            _digitoVerificadorBLL.RecalcularDVV_Canje();
+            LM830_canjeDAL.LM830Insertar(LM830canje);
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_Canje();
 
-            RegistrarEvento($"Solicitud de canje {canje.NroCanje} cliente {c.Dni} premio {actual.Nombre} ({canje.Estado})", 1);
-            return canje;
+            return LM830canje;
         }
 
-        public List<Canje> ListarPendientes() => _canjeDAL.ListarPorEstado(EstadoCanje.pendiente, null);
+        public List<LM830Canje> LM830ListarPendientes() => LM830_canjeDAL.LM830ListarPorEstado(LM830EstadoCanje.LM830pendiente, null);
 
-        public void Resolver(Canje k, bool aprobar, string? motivo)
+        public void LM830Resolver(LM830Canje LM830k, bool LM830aprobar, string? LM830motivo)
         {
-            motivo = string.IsNullOrWhiteSpace(motivo) ? null : motivo!.Trim();
-            if (k.Estado != EstadoCanje.pendiente)
+            LM830motivo = string.IsNullOrWhiteSpace(LM830motivo) ? null : LM830motivo!.Trim();
+            if (LM830k.LM830Estado != LM830EstadoCanje.LM830pendiente)
                 throw new Exception("El canje no está pendiente de autorización.");
-            if (!aprobar && motivo == null)
+            if (!LM830aprobar && LM830motivo == null)
                 throw new Exception("Para rechazar el canje el motivo es obligatorio.");
-            if (motivo != null && motivo.Length > 200)
+            if (LM830motivo != null && LM830motivo.Length > 200)
                 throw new Exception("El motivo no puede superar los 200 caracteres.");
 
-            k.Estado = aprobar ? EstadoCanje.autorizado : EstadoCanje.rechazado;
-            k.MotivoResolucion = motivo;
-            k.Supervisor = SessionManager.Instance.UsuarioActual();
-            k.FechaResolucion = BitacoraBLL.AhoraSinMilisegundos();
+            LM830k.LM830Estado = LM830aprobar ? LM830EstadoCanje.LM830autorizado : LM830EstadoCanje.LM830rechazado;
+            LM830k.LM830MotivoResolucion = LM830motivo;
+            LM830k.LM830Supervisor = LM830SessionManager.LM830Instance.LM830UsuarioActual();
+            LM830k.LM830FechaResolucion = LM830BitacoraBLL.LM830AhoraSinMilisegundos();
 
             try
             {
-                _canjeDAL.Resolver(k);
+                LM830_canjeDAL.LM830Resolver(LM830k);
             }
             catch
             {
-                k.Estado = EstadoCanje.pendiente;
-                k.Supervisor = null;
-                k.MotivoResolucion = null;
-                k.FechaResolucion = null;
+                LM830k.LM830Estado = LM830EstadoCanje.LM830pendiente;
+                LM830k.LM830Supervisor = null;
+                LM830k.LM830MotivoResolucion = null;
+                LM830k.LM830FechaResolucion = null;
                 throw;
             }
-            _digitoVerificadorBLL.RecalcularDVV_Canje();
-
-            RegistrarEvento($"{(aprobar ? "Autorizar" : "Rechazar")} canje {k.NroCanje} ({k.PuntosRequeridos} pts)", aprobar ? 2 : 1);
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_Canje();
         }
 
-        public List<Canje> ListarAutorizados(string? dniCliente)
+        public List<LM830Canje> LM830ListarAutorizados(string? LM830dniCliente)
         {
-            dniCliente = string.IsNullOrWhiteSpace(dniCliente) ? null : dniCliente!.Trim();
-            return _canjeDAL.ListarPorEstado(EstadoCanje.autorizado, dniCliente);
+            LM830dniCliente = string.IsNullOrWhiteSpace(LM830dniCliente) ? null : LM830dniCliente!.Trim();
+            return LM830_canjeDAL.LM830ListarPorEstado(LM830EstadoCanje.LM830autorizado, LM830dniCliente);
         }
 
-        public int Entregar(Canje k)
+        public int LM830Entregar(LM830Canje LM830k)
         {
-            if (k.Estado != EstadoCanje.autorizado)
+            if (LM830k.LM830Estado != LM830EstadoCanje.LM830autorizado)
                 throw new Exception("Solo se pueden entregar canjes autorizados.");
 
-            List<LotePuntos> vigentes;
-            int saldo = _loteBLL.ConsultarSaldo(k.Cliente, out vigentes);
-            if (saldo < k.PuntosRequeridos)
-                throw new Exception($"El cliente ya no tiene saldo suficiente. Saldo vigente: {saldo:N0} pts, requiere: {k.PuntosRequeridos:N0} pts.");
+            List<LM830LotePuntos> LM830vigentes;
+            int LM830saldo = LM830_loteBLL.LM830ConsultarSaldo(LM830k.LM830Cliente, out LM830vigentes);
+            if (LM830saldo < LM830k.LM830PuntosRequeridos)
+                throw new Exception($"El cliente ya no tiene saldo suficiente. Saldo vigente: {LM830saldo:N0} pts, requiere: {LM830k.LM830PuntosRequeridos:N0} pts.");
 
-            var lotes = new List<(LotePuntos Lote, int Anterior)>();
-            var detalle = new List<DetalleCanje>();
-            int resta = k.PuntosRequeridos;
-            foreach (LotePuntos lote in vigentes.OrderBy(l => l.FechaVencimiento).ThenBy(l => l.IdLote))
+            var LM830lotes = new List<(LM830LotePuntos LM830Lote, int LM830Anterior)>();
+            var LM830detalle = new List<LM830DetalleCanje>();
+            int LM830resta = LM830k.LM830PuntosRequeridos;
+            foreach (LM830LotePuntos LM830lote in LM830vigentes.OrderBy(LM830l => LM830l.LM830FechaVencimiento).ThenBy(LM830l => LM830l.LM830IdLote))
             {
-                if (resta == 0) break;
-                int descuento = Math.Min(resta, lote.PuntosDisponibles);
-                if (descuento <= 0) continue;
-                lotes.Add((lote, lote.PuntosDisponibles));
-                lote.PuntosDisponibles -= descuento;
-                detalle.Add(new DetalleCanje { Lote = lote, PuntosDescontados = descuento });
-                resta -= descuento;
+                if (LM830resta == 0) break;
+                int LM830descuento = Math.Min(LM830resta, LM830lote.LM830PuntosDisponibles);
+                if (LM830descuento <= 0) continue;
+                LM830lotes.Add((LM830lote, LM830lote.LM830PuntosDisponibles));
+                LM830lote.LM830PuntosDisponibles -= LM830descuento;
+                LM830detalle.Add(new LM830DetalleCanje { LM830Lote = LM830lote, LM830PuntosDescontados = LM830descuento });
+                LM830resta -= LM830descuento;
             }
 
-            k.Detalle = detalle;
-            k.Estado = EstadoCanje.entregado;
-            k.FechaEntrega = BitacoraBLL.AhoraSinMilisegundos();
+            LM830k.LM830Detalle = LM830detalle;
+            LM830k.LM830Estado = LM830EstadoCanje.LM830entregado;
+            LM830k.LM830FechaEntrega = LM830BitacoraBLL.LM830AhoraSinMilisegundos();
 
             try
             {
-                _canjeDAL.Entregar(k, lotes);
+                LM830_canjeDAL.LM830Entregar(LM830k, LM830lotes);
             }
             catch
             {
-                foreach (var item in lotes) item.Lote.PuntosDisponibles = item.Anterior;
-                k.Detalle = new List<DetalleCanje>();
-                k.Estado = EstadoCanje.autorizado;
-                k.FechaEntrega = null;
+                foreach (var LM830item in LM830lotes) LM830item.LM830Lote.LM830PuntosDisponibles = LM830item.LM830Anterior;
+                LM830k.LM830Detalle = new List<LM830DetalleCanje>();
+                LM830k.LM830Estado = LM830EstadoCanje.LM830autorizado;
+                LM830k.LM830FechaEntrega = null;
                 throw;
             }
 
-            _digitoVerificadorBLL.RecalcularDVV_LotePuntos();
-            _digitoVerificadorBLL.RecalcularDVV_DetalleCanje();
-            _digitoVerificadorBLL.RecalcularDVV_Canje();
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_LotePuntos();
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_DetalleCanje();
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_Canje();
 
-            RegistrarEvento($"Entregar premio canje {k.NroCanje} cliente {k.Cliente.Dni} ({k.PuntosRequeridos} pts)", 2);
-            return saldo - k.PuntosRequeridos;
+            return LM830saldo - LM830k.LM830PuntosRequeridos;
         }
 
-        public Canje? ObtenerPorNro(string nro)
+        public LM830Canje? LM830ObtenerPorNro(string LM830nro)
         {
-            nro = (nro ?? "").Trim().ToUpperInvariant();
-            if (nro.Length == 0) return null;
-            return _canjeDAL.ObtenerPorNro(nro);
+            LM830nro = (LM830nro ?? "").Trim().ToUpperInvariant();
+            if (LM830nro.Length == 0) return null;
+            return LM830_canjeDAL.LM830ObtenerPorNro(LM830nro);
         }
 
-        public bool DentroDelPlazoDeAnulacion(Canje k) =>
-            k.FechaEntrega.HasValue &&
-            (DateTime.Today - k.FechaEntrega.Value.Date).TotalDays <= ProgramaPuntosBLL.Obtener().PlazoAnulacionDias;
+        public bool LM830DentroDelPlazoDeAnulacion(LM830Canje LM830k) =>
+            LM830k.LM830FechaEntrega.HasValue &&
+            (DateTime.Today - LM830k.LM830FechaEntrega.Value.Date).TotalDays <= LM830ProgramaPuntosBLL.LM830Obtener().LM830PlazoAnulacionDias;
 
-        public int Anular(Canje k, string? motivo)
+        public int LM830Anular(LM830Canje LM830k, string? LM830motivo)
         {
-            motivo = string.IsNullOrWhiteSpace(motivo) ? null : motivo!.Trim();
-            if (k.Estado != EstadoCanje.entregado)
+            LM830motivo = string.IsNullOrWhiteSpace(LM830motivo) ? null : LM830motivo!.Trim();
+            if (LM830k.LM830Estado != LM830EstadoCanje.LM830entregado)
                 throw new Exception("Solo se pueden anular canjes entregados.");
-            if (!DentroDelPlazoDeAnulacion(k))
-                throw new Exception($"El canje está fuera del plazo de anulación ({ProgramaPuntosBLL.Obtener().PlazoAnulacionDias} días).");
-            if (motivo == null)
+            if (!LM830DentroDelPlazoDeAnulacion(LM830k))
+                throw new Exception($"El canje está fuera del plazo de anulación ({LM830ProgramaPuntosBLL.LM830Obtener().LM830PlazoAnulacionDias} días).");
+            if (LM830motivo == null)
                 throw new Exception("Ingrese el motivo de la anulación.");
-            if (motivo.Length > 200)
+            if (LM830motivo.Length > 200)
                 throw new Exception("El motivo no puede superar los 200 caracteres.");
 
-            var lotes = new List<(LotePuntos Lote, int Anterior)>();
-            int reintegrados = 0;
-            foreach (DetalleCanje d in k.Detalle)
+            var LM830lotes = new List<(LM830LotePuntos LM830Lote, int LM830Anterior)>();
+            int LM830reintegrados = 0;
+            foreach (LM830DetalleCanje LM830d in LM830k.LM830Detalle)
             {
-                LotePuntos lote = d.Lote;
-                int anterior = lote.PuntosDisponibles;
-                lote.PuntosDisponibles = Math.Min(lote.PuntosOriginales, lote.PuntosDisponibles + d.PuntosDescontados);
-                lotes.Add((lote, anterior));
-                reintegrados += lote.PuntosDisponibles - anterior;
+                LM830LotePuntos LM830lote = LM830d.LM830Lote;
+                int LM830anterior = LM830lote.LM830PuntosDisponibles;
+                LM830lote.LM830PuntosDisponibles = Math.Min(LM830lote.LM830PuntosOriginales, LM830lote.LM830PuntosDisponibles + LM830d.LM830PuntosDescontados);
+                LM830lotes.Add((LM830lote, LM830anterior));
+                LM830reintegrados += LM830lote.LM830PuntosDisponibles - LM830anterior;
             }
 
-            k.Estado = EstadoCanje.anulado;
-            k.SupervisorAnulacion = SessionManager.Instance.UsuarioActual();
-            k.MotivoAnulacion = motivo;
-            k.FechaAnulacion = BitacoraBLL.AhoraSinMilisegundos();
+            LM830k.LM830Estado = LM830EstadoCanje.LM830anulado;
+            LM830k.LM830SupervisorAnulacion = LM830SessionManager.LM830Instance.LM830UsuarioActual();
+            LM830k.LM830MotivoAnulacion = LM830motivo;
+            LM830k.LM830FechaAnulacion = LM830BitacoraBLL.LM830AhoraSinMilisegundos();
 
             try
             {
-                _canjeDAL.Anular(k, lotes);
+                LM830_canjeDAL.LM830Anular(LM830k, LM830lotes);
             }
             catch
             {
-                foreach (var item in lotes) item.Lote.PuntosDisponibles = item.Anterior;
-                k.Estado = EstadoCanje.entregado;
-                k.SupervisorAnulacion = null;
-                k.MotivoAnulacion = null;
-                k.FechaAnulacion = null;
+                foreach (var LM830item in LM830lotes) LM830item.LM830Lote.LM830PuntosDisponibles = LM830item.LM830Anterior;
+                LM830k.LM830Estado = LM830EstadoCanje.LM830entregado;
+                LM830k.LM830SupervisorAnulacion = null;
+                LM830k.LM830MotivoAnulacion = null;
+                LM830k.LM830FechaAnulacion = null;
                 throw;
             }
 
-            _digitoVerificadorBLL.RecalcularDVV_LotePuntos();
-            _digitoVerificadorBLL.RecalcularDVV_Canje();
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_LotePuntos();
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_Canje();
 
-            RegistrarEvento($"Anular canje {k.NroCanje} cliente {k.Cliente.Dni} ({reintegrados} pts reintegrados)", 2);
-            return reintegrados;
-        }
-
-        private void RegistrarEvento(string evento, int criticidad)
-        {
-            try
-            {
-                _bitacoraBLL.RegistrarEvento(new Bitacora
-                {
-                    Login = SessionManager.Instance.UsuarioActual().Username,
-                    Modulo = MODULO,
-                    Evento = VentaBLL.Recortar(evento, 100),
-                    Criticidad = criticidad
-                });
-            }
-            catch { }
+            return LM830reintegrados;
         }
     }
 }

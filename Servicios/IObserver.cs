@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public interface IObserver
+    public interface LM830IObserver
     {
-        void Actualizar(LanguageManager lenguaje);
+        void LM830Actualizar(LM830LanguageManager LM830lenguaje);
     }
 }

@@ -1,352 +1,360 @@
 ﻿#nullable enable
-using BE.RFN1;
-using BLL.RFN1;
-using GUI.Comprobantes;
-using Servicios;
+using LM830BE.LM830RFN1;
+using LM830BLL.LM830RFN1;
+using LM830GUI.LM830Comprobantes;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace GUI.RFN1
+namespace LM830GUI.LM830RFN1
 {
-    public partial class frmVenta : Form, IObserver
+    public partial class LM830frmVenta : Form, LM830IObserver
     {
-        private readonly VentaBLL _ventaBLL = new VentaBLL();
-        private readonly ClienteBLL _clienteBLL = new ClienteBLL();
-        private readonly ProductoBLL _productoBLL = new ProductoBLL();
-        private readonly LoteBLL _loteBLL = new LoteBLL();
-        private readonly ComprobanteBLL _comprobanteBLL = new ComprobanteBLL();
+        private const int LM830EM_SETCUEBANNER = 0x1501;
 
-        private Producto? _productoEncontrado;
-        private List<Producto> _catalogo = new List<Producto>();
-        private List<Producto> _filtrados = new List<Producto>();
-        private bool _cargandoCatalogo;
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, string lParam);
 
-        public frmVenta()
+        private readonly LM830VentaBLL LM830_ventaBLL = new LM830VentaBLL();
+        private readonly LM830ClienteBLL LM830_clienteBLL = new LM830ClienteBLL();
+        private readonly LM830ProductoBLL LM830_productoBLL = new LM830ProductoBLL();
+        private readonly LM830LoteBLL LM830_loteBLL = new LM830LoteBLL();
+        private readonly LM830ComprobanteBLL LM830_comprobanteBLL = new LM830ComprobanteBLL();
+
+        private LM830Producto? LM830_productoEncontrado;
+        private List<LM830Producto> LM830_catalogo = new List<LM830Producto>();
+        private List<LM830Producto> LM830_filtrados = new List<LM830Producto>();
+        private bool LM830_cargandoCatalogo;
+
+        public LM830frmVenta()
         {
             InitializeComponent();
         }
 
-        private void frmVenta_Load(object sender, EventArgs e)
+        private void LM830frmVenta_Load(object LM830sender, EventArgs LM830e)
         {
-            LanguageManager.Instance.AgregarObservador(this);
-            Estilo.Aplicar(this);
-            Actualizar(LanguageManager.Instance);
+            LM830LanguageManager.LM830Instance.LM830AgregarObservador(this);
+            LM830Estilo.LM830Aplicar(this);
+            LM830Actualizar(LM830LanguageManager.LM830Instance);
             try
             {
-                _catalogo = _productoBLL.Listar();
-                var nombres = new AutoCompleteStringCollection();
-                nombres.AddRange(_catalogo.Select(p => p.Nombre).ToArray());
-                txtProducto.AutoCompleteCustomSource = nombres;
-                txtProducto.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                txtProducto.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                LM830_catalogo = LM830_productoBLL.LM830Listar();
+                var LM830nombres = new AutoCompleteStringCollection();
+                LM830nombres.AddRange(LM830_catalogo.Select(LM830p => LM830p.LM830Nombre).ToArray());
+                LM830txtProducto.AutoCompleteCustomSource = LM830nombres;
+                LM830txtProducto.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                LM830txtProducto.AutoCompleteSource = AutoCompleteSource.CustomSource;
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830ex.Message, LM830T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            NuevaVenta();
-            MostrarCatalogo();
+            LM830NuevaVenta();
+            LM830MostrarCatalogo();
         }
 
-        private void MostrarCatalogo()
+        private void LM830MostrarCatalogo()
         {
-            string filtro = txtProducto.Text.Trim();
-            List<Producto> lista = filtro.Length == 0
-                ? _catalogo
-                : _catalogo.Where(p => p.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            string LM830filtro = LM830txtProducto.Text.Trim();
+            List<LM830Producto> LM830lista = LM830filtro.Length == 0
+                ? LM830_catalogo
+                : LM830_catalogo.Where(LM830p => LM830p.LM830Nombre.IndexOf(LM830filtro, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
 
-            _cargandoCatalogo = true;
-            _filtrados = lista;
-            dgvProductos.DataSource = lista.Select(p => new
+            LM830_cargandoCatalogo = true;
+            LM830_filtrados = LM830lista;
+            LM830dgvProductos.DataSource = LM830lista.Select(LM830p => new
             {
-                Producto = p.Nombre,
-                Categoria = p.Categoria.Nombre,
-                Precio = p.Precio.ToString("N2"),
-                Multiplicador = p.Categoria.Multiplicador.ToString("0.00")
+                Producto = LM830p.LM830Nombre,
+                Categoria = LM830p.LM830Categoria.LM830Nombre,
+                Precio = LM830p.LM830Precio.ToString("N2"),
+                Multiplicador = LM830p.LM830Categoria.LM830Multiplicador.ToString("0.00")
             }).ToList();
-            dgvProductos.ClearSelection();
-            _cargandoCatalogo = false;
+            LM830dgvProductos.ClearSelection();
+            LM830_cargandoCatalogo = false;
         }
 
-        private Producto? ProductoSeleccionado()
+        private LM830Producto? LM830ProductoSeleccionado()
         {
-            if (dgvProductos.CurrentRow == null || !dgvProductos.CurrentRow.Selected) return null;
-            int i = dgvProductos.CurrentRow.Index;
-            return i >= 0 && i < _filtrados.Count ? _filtrados[i] : null;
+            if (LM830dgvProductos.CurrentRow == null || !LM830dgvProductos.CurrentRow.Selected) return null;
+            int LM830i = LM830dgvProductos.CurrentRow.Index;
+            return LM830i >= 0 && LM830i < LM830_filtrados.Count ? LM830_filtrados[LM830i] : null;
         }
 
-        private void txtProducto_TextChanged(object sender, EventArgs e)
+        private void LM830txtProducto_TextChanged(object LM830sender, EventArgs LM830e)
         {
-            if (_productoEncontrado != null && string.Equals(txtProducto.Text, _productoEncontrado.Nombre, StringComparison.Ordinal))
+            if (LM830_productoEncontrado != null && string.Equals(LM830txtProducto.Text, LM830_productoEncontrado.LM830Nombre, StringComparison.Ordinal))
                 return;
-            _productoEncontrado = null;
-            lblProductoDatos.Text = "-";
-            MostrarCatalogo();
+            LM830_productoEncontrado = null;
+            LM830lblProductoDatos.Text = "-";
+            LM830MostrarCatalogo();
         }
 
-        private void dgvProductos_SelectionChanged(object sender, EventArgs e)
+        private void LM830dgvProductos_SelectionChanged(object LM830sender, EventArgs LM830e)
         {
-            if (_cargandoCatalogo) return;
-            Producto? p = ProductoSeleccionado();
-            if (p == null) return;
-            _productoEncontrado = p;
-            txtProducto.Text = p.Nombre;
-            lblProductoDatos.Text = $"$ {p.Precio:N2} - {p.Categoria.Nombre}";
+            if (LM830_cargandoCatalogo) return;
+            LM830Producto? LM830p = LM830ProductoSeleccionado();
+            if (LM830p == null) return;
+            LM830_productoEncontrado = LM830p;
+            LM830txtProducto.Text = LM830p.LM830Nombre;
+            LM830lblProductoDatos.Text = $"$ {LM830p.LM830Precio:N2} - {LM830p.LM830Categoria.LM830Nombre}";
         }
 
-        private void dgvProductos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void LM830dgvProductos_CellDoubleClick(object LM830sender, DataGridViewCellEventArgs LM830e)
         {
-            if (e.RowIndex < 0) return;
-            dgvProductos_SelectionChanged(sender, EventArgs.Empty);
-            btnAgregar_Click(sender, EventArgs.Empty);
+            if (LM830e.RowIndex < 0) return;
+            LM830dgvProductos_SelectionChanged(LM830sender, EventArgs.Empty);
+            LM830btnAgregar_Click(LM830sender, EventArgs.Empty);
         }
 
-        private void NuevaVenta()
+        private void LM830NuevaVenta()
         {
-            _ventaBLL.NuevaVenta(null);
-            _productoEncontrado = null;
-            txtDni.Clear();
-            txtProducto.Clear();
-            nudCantidad.Value = 1;
-            lblProductoDatos.Text = "-";
-            MostrarCliente();
-            RefrescarItems();
-            txtDni.Select();
+            LM830_ventaBLL.LM830NuevaVenta(null);
+            LM830_productoEncontrado = null;
+            LM830txtDni.Clear();
+            LM830txtProducto.Clear();
+            LM830nudCantidad.Value = 1;
+            LM830lblProductoDatos.Text = "-";
+            LM830MostrarCliente();
+            LM830RefrescarItems();
+            LM830txtDni.Select();
         }
 
-        private void btnBuscarCliente_Click(object sender, EventArgs e)
+        private void LM830btnBuscarCliente_Click(object LM830sender, EventArgs LM830e)
         {
             try
             {
-                string dni = txtDni.Text.Trim();
-                if (dni.Length == 0)
+                string LM830dni = LM830txtDni.Text.Trim();
+                if (LM830dni.Length == 0)
                 {
-                    _ventaBLL.AsignarCliente(null);
-                    MostrarCliente();
+                    LM830_ventaBLL.LM830AsignarCliente(null);
+                    LM830MostrarCliente();
                     return;
                 }
-                if (!Regex.IsMatch(dni, @"^\d{7,8}$"))
+                if (!Regex.IsMatch(LM830dni, @"^\d{7,8}$"))
                 {
-                    MessageBox.Show(T("RFN1_DniInvalido"), T("RFN1_RegistrarVenta"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(LM830T("RFN1_DniInvalido"), LM830T("RFN1_RegistrarVenta"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                Cliente? cliente = _clienteBLL.Buscar(dni);
-                if (cliente == null)
+                LM830Cliente? LM830cliente = LM830_clienteBLL.LM830Buscar(LM830dni);
+                if (LM830cliente == null)
                 {
-                    if (MessageBox.Show(T("RFN1_PreguntaInscribir"), T("RFN1_RegistrarVenta"),
+                    if (MessageBox.Show(LM830T("RFN1_PreguntaInscribir"), LM830T("RFN1_RegistrarVenta"),
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        using (var frm = new frmRegistrarCliente(dni))
+                        using (var LM830frm = new LM830frmRegistrarCliente(LM830dni))
                         {
-                            if (frm.ShowDialog(this) == DialogResult.OK) cliente = frm.ClienteRegistrado;
+                            if (LM830frm.ShowDialog(this) == DialogResult.OK) LM830cliente = LM830frm.LM830ClienteRegistrado;
                         }
                     }
                 }
 
-                _ventaBLL.AsignarCliente(cliente);
-                MostrarCliente();
-                RefrescarItems();
+                LM830_ventaBLL.LM830AsignarCliente(LM830cliente);
+                LM830MostrarCliente();
+                LM830RefrescarItems();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830ex.Message, LM830T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void MostrarCliente()
+        private void LM830MostrarCliente()
         {
-            Cliente? c = _ventaBLL.VentaActual.Cliente;
-            lblCliente.Text = c == null
-                ? T("RFN1_VentaSinCliente")
-                : $"{c.NombreCompleto} - {T("RFN1_Nivel")} {c.Nivel.Nombre}";
+            LM830Cliente? LM830c = LM830_ventaBLL.LM830VentaActual.LM830Cliente;
+            LM830lblCliente.Text = LM830c == null
+                ? LM830T("RFN1_VentaSinCliente")
+                : $"{LM830c.LM830NombreCompleto} - {LM830T("RFN1_Nivel")} {LM830c.LM830Nivel.LM830Nombre}";
         }
 
-        private void btnBuscarProducto_Click(object sender, EventArgs e)
+        private void LM830btnBuscarProducto_Click(object LM830sender, EventArgs LM830e)
         {
             try
             {
-                _productoEncontrado = _productoBLL.Buscar(txtProducto.Text);
-                if (_productoEncontrado == null)
+                LM830_productoEncontrado = LM830_productoBLL.LM830Buscar(LM830txtProducto.Text);
+                if (LM830_productoEncontrado == null)
                 {
-                    lblProductoDatos.Text = "-";
-                    MessageBox.Show(T("RFN1_ProductoNoExiste"), T("RFN1_RegistrarVenta"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtProducto.SelectAll();
-                    txtProducto.Select();
+                    LM830lblProductoDatos.Text = "-";
+                    MessageBox.Show(LM830T("RFN1_ProductoNoExiste"), LM830T("RFN1_RegistrarVenta"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    LM830txtProducto.SelectAll();
+                    LM830txtProducto.Select();
                     return;
                 }
-                txtProducto.Text = _productoEncontrado.Nombre;
-                lblProductoDatos.Text = $"$ {_productoEncontrado.Precio:N2} - {_productoEncontrado.Categoria.Nombre}";
-                nudCantidad.Select();
+                LM830txtProducto.Text = LM830_productoEncontrado.LM830Nombre;
+                LM830lblProductoDatos.Text = $"$ {LM830_productoEncontrado.LM830Precio:N2} - {LM830_productoEncontrado.LM830Categoria.LM830Nombre}";
+                LM830nudCantidad.Select();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830ex.Message, LM830T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnAgregar_Click(object sender, EventArgs e)
+        private void LM830btnAgregar_Click(object LM830sender, EventArgs LM830e)
         {
             try
             {
-                if (_productoEncontrado == null || !string.Equals(txtProducto.Text.Trim(), _productoEncontrado.Nombre, StringComparison.OrdinalIgnoreCase))
+                if (LM830_productoEncontrado == null || !string.Equals(LM830txtProducto.Text.Trim(), LM830_productoEncontrado.LM830Nombre, StringComparison.OrdinalIgnoreCase))
                 {
-                    btnBuscarProducto_Click(sender, e);
-                    if (_productoEncontrado == null) return;
+                    LM830btnBuscarProducto_Click(LM830sender, LM830e);
+                    if (LM830_productoEncontrado == null) return;
                 }
 
-                _ventaBLL.AgregarItem(new DetalleVenta { Producto = _productoEncontrado, Cantidad = (int)nudCantidad.Value });
-                RefrescarItems();
+                LM830_ventaBLL.LM830AgregarItem(new LM830DetalleVenta { LM830Producto = LM830_productoEncontrado, LM830Cantidad = (int)LM830nudCantidad.Value });
+                LM830RefrescarItems();
 
-                _productoEncontrado = null;
-                txtProducto.Clear();
-                lblProductoDatos.Text = "-";
-                nudCantidad.Value = 1;
-                txtProducto.Select();
+                LM830_productoEncontrado = null;
+                LM830txtProducto.Clear();
+                LM830lblProductoDatos.Text = "-";
+                LM830nudCantidad.Value = 1;
+                LM830txtProducto.Select();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, T("RFN1_RegistrarVenta"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(LM830ex.Message, LM830T("RFN1_RegistrarVenta"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
-        private void btnQuitar_Click(object sender, EventArgs e)
+        private void LM830btnQuitar_Click(object LM830sender, EventArgs LM830e)
         {
-            if (dgvItems.CurrentRow == null) return;
-            int indice = dgvItems.CurrentRow.Index;
-            if (indice >= 0 && indice < _ventaBLL.VentaActual.Detalle.Count)
+            if (LM830dgvItems.CurrentRow == null) return;
+            int LM830indice = LM830dgvItems.CurrentRow.Index;
+            if (LM830indice >= 0 && LM830indice < LM830_ventaBLL.LM830VentaActual.LM830Detalle.Count)
             {
-                _ventaBLL.QuitarItem(_ventaBLL.VentaActual.Detalle[indice]);
-                RefrescarItems();
+                LM830_ventaBLL.LM830QuitarItem(LM830_ventaBLL.LM830VentaActual.LM830Detalle[LM830indice]);
+                LM830RefrescarItems();
             }
         }
 
-        private void RefrescarItems()
+        private void LM830RefrescarItems()
         {
-            Venta v = _ventaBLL.VentaActual;
-            int puntos = 0;
+            LM830Venta LM830v = LM830_ventaBLL.LM830VentaActual;
+            int LM830puntos = 0;
             try
             {
-                puntos = _ventaBLL.CalcularPuntos(v, v.Cliente);
+                LM830puntos = LM830_ventaBLL.LM830CalcularPuntos(LM830v, LM830v.LM830Cliente);
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830ex.Message, LM830T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            dgvItems.DataSource = v.Detalle.Select(d => new
+            LM830dgvItems.DataSource = LM830v.LM830Detalle.Select(LM830d => new
             {
-                Producto = d.Producto.Nombre,
-                Categoria = d.Producto.Categoria.Nombre,
-                Cantidad = d.Cantidad,
-                Precio = d.PrecioUnitario.ToString("N2"),
-                Subtotal = d.Subtotal.ToString("N2"),
-                Puntos = d.PuntosCalculados
+                Producto = LM830d.LM830Producto.LM830Nombre,
+                Categoria = LM830d.LM830Producto.LM830Categoria.LM830Nombre,
+                Cantidad = LM830d.LM830Cantidad,
+                Precio = LM830d.LM830PrecioUnitario.ToString("N2"),
+                Subtotal = LM830d.LM830Subtotal.ToString("N2"),
+                Puntos = LM830d.LM830PuntosCalculados
             }).ToList();
 
-            lblTotal.Text = "$ " + v.Total.ToString("N2");
-            lblPuntos.Text = puntos.ToString("N0");
+            LM830lblTotal.Text = "$ " + LM830v.LM830Total.ToString("N2");
+            LM830lblPuntos.Text = LM830puntos.ToString("N0");
         }
 
-        private void btnCerrarVenta_Click(object sender, EventArgs e)
+        private void LM830btnCerrarVenta_Click(object LM830sender, EventArgs LM830e)
         {
-            Venta v = _ventaBLL.VentaActual;
-            if (v.Detalle.Count == 0)
+            LM830Venta LM830v = LM830_ventaBLL.LM830VentaActual;
+            if (LM830v.LM830Detalle.Count == 0)
             {
-                MessageBox.Show(T("RFN1_VentaSinItems"), T("RFN1_RegistrarVenta"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(LM830T("RFN1_VentaSinItems"), LM830T("RFN1_RegistrarVenta"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (MessageBox.Show($"{T("RFN1_ConfirmarPago")} $ {v.Total:N2}?", T("RFN1_RegistrarVenta"),
+            if (MessageBox.Show($"{LM830T("RFN1_ConfirmarPago")} $ {LM830v.LM830Total:N2}?", LM830T("RFN1_RegistrarVenta"),
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
             try
             {
-                _ventaBLL.RegistrarVenta(v);
+                LM830_ventaBLL.LM830RegistrarVenta(LM830v);
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830ex.Message, LM830T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            string comprobante = $"{T("RFN1_Comprobante")}: {v.NroComprobante}{Environment.NewLine}" +
-                                 $"{T("RFN1_Total")}: $ {v.Total:N2}";
-            if (v.Cliente != null)
+            string LM830comprobante = $"{LM830T("RFN1_Comprobante")}: {LM830v.LM830NroComprobante}{Environment.NewLine}" +
+                                 $"{LM830T("RFN1_Total")}: $ {LM830v.LM830Total:N2}";
+            if (LM830v.LM830Cliente != null)
             {
-                int saldo = 0;
-                try { saldo = _loteBLL.ConsultarSaldo(v.Cliente); } catch { }
-                comprobante += $"{Environment.NewLine}{T("RFN1_Cliente")}: {v.Cliente.NombreCompleto}" +
-                               $"{Environment.NewLine}{T("RFN1_PuntosAcreditados")}: {v.PuntosAcreditados:N0}" +
-                               $"{Environment.NewLine}{T("RFN1_SaldoVigente")}: {saldo:N0}" +
-                               $"{Environment.NewLine}{T("RFN1_Nivel")}: {v.Cliente.Nivel.Nombre}";
+                int LM830saldo = 0;
+                try { LM830saldo = LM830_loteBLL.LM830ConsultarSaldo(LM830v.LM830Cliente); } catch { }
+                LM830comprobante += $"{Environment.NewLine}{LM830T("RFN1_Cliente")}: {LM830v.LM830Cliente.LM830NombreCompleto}" +
+                               $"{Environment.NewLine}{LM830T("RFN1_PuntosAcreditados")}: {LM830v.LM830PuntosAcreditados:N0}" +
+                               $"{Environment.NewLine}{LM830T("RFN1_SaldoVigente")}: {LM830saldo:N0}" +
+                               $"{Environment.NewLine}{LM830T("RFN1_Nivel")}: {LM830v.LM830Cliente.LM830Nivel.LM830Nombre}";
             }
-            comprobante += $"{Environment.NewLine}{Environment.NewLine}{T("CMP_PreguntaPdf")}";
-            bool imprimir = MessageBox.Show(comprobante, T("RFN1_Comprobante"), MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
-            if (imprimir) GenerarPdf(v);
+            LM830comprobante += $"{Environment.NewLine}{Environment.NewLine}{LM830T("CMP_PreguntaPdf")}";
+            bool LM830imprimir = MessageBox.Show(LM830comprobante, LM830T("RFN1_Comprobante"), MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+            if (LM830imprimir) LM830GenerarPdf(LM830v);
 
-            if (_ventaBLL.NivelAnterior != null && v.Cliente != null)
+            if (LM830_ventaBLL.LM830NivelAnterior != null && LM830v.LM830Cliente != null)
             {
-                MessageBox.Show($"{T("RFN1_CambioNivel")} {_ventaBLL.NivelAnterior.Nombre} -> {v.Cliente.Nivel.Nombre}",
-                    T("RFN1_RegistrarVenta"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"{LM830T("RFN1_CambioNivel")} {LM830_ventaBLL.LM830NivelAnterior.LM830Nombre} -> {LM830v.LM830Cliente.LM830Nivel.LM830Nombre}",
+                    LM830T("RFN1_RegistrarVenta"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            NuevaVenta();
+            LM830NuevaVenta();
         }
 
-        private void GenerarPdf(Venta v)
+        private void LM830GenerarPdf(LM830Venta LM830v)
         {
-            string? ruta = GeneradorPDF.ElegirRuta(this, "Comprobante_" + v.NroComprobante);
-            if (ruta == null) return;
+            string? LM830ruta = LM830GeneradorPDF.LM830ElegirRuta(this, "Comprobante_" + LM830v.LM830NroComprobante);
+            if (LM830ruta == null) return;
             try
             {
-                ComprobanteVenta c = _comprobanteBLL.Armar(v);
-                GeneradorPDF.ComprobanteVenta(c, ruta);
-                _comprobanteBLL.RegistrarImpresion(v.NroComprobante, ruta);
-                GeneradorPDF.Abrir(ruta);
+                LM830ComprobanteVenta LM830c = LM830_comprobanteBLL.LM830Armar(LM830v);
+                LM830GeneradorPDF.LM830ComprobanteVenta(LM830c, LM830ruta);
+                LM830_comprobanteBLL.LM830RegistrarImpresion(LM830v.LM830NroComprobante, LM830ruta);
+                LM830GeneradorPDF.LM830Abrir(LM830ruta);
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830ex.Message, LM830T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnVolver_Click(object sender, EventArgs e)
+        private void LM830btnVolver_Click(object LM830sender, EventArgs LM830e)
         {
-            if (_ventaBLL.VentaActual.Detalle.Count > 0 &&
-                MessageBox.Show(T("RFN1_DescartarVenta"), T("RFN1_RegistrarVenta"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (LM830_ventaBLL.LM830VentaActual.LM830Detalle.Count > 0 &&
+                MessageBox.Show(LM830T("RFN1_DescartarVenta"), LM830T("RFN1_RegistrarVenta"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
             Close();
         }
 
-        private void frmVenta_FormClosed(object sender, FormClosedEventArgs e)
+        private void LM830frmVenta_FormClosed(object LM830sender, FormClosedEventArgs LM830e)
         {
-            LanguageManager.Instance.EliminarObservador(this);
-            Navegacion.MostrarMenu();
+            LM830LanguageManager.LM830Instance.LM830EliminarObservador(this);
+            LM830Navegacion.LM830MostrarMenu();
         }
 
-        private static string T(string clave) => LanguageManager.Instance.GetTraduction(clave);
+        private static string LM830T(string LM830clave) => LM830LanguageManager.LM830Instance.LM830GetTraduction(LM830clave);
 
-        public void Actualizar(LanguageManager lenguaje)
+        public void LM830Actualizar(LM830LanguageManager LM830lenguaje)
         {
-            Text = lenguaje.GetTraduction("RFN1_RegistrarVenta");
-            lblTitulo.Text = Text;
-            grpCliente.Text = lenguaje.GetTraduction("RFN1_Cliente");
-            lblDni.Text = lenguaje.GetTraduction("RFN1_Dni");
-            btnBuscarCliente.Text = lenguaje.GetTraduction("RFN1_BuscarCliente");
-            grpProducto.Text = lenguaje.GetTraduction("RFN1_Producto");
-            lblProducto.Text = lenguaje.GetTraduction("RFN1_Producto");
-            btnBuscarProducto.Text = lenguaje.GetTraduction("RFN1_Buscar");
-            lblCantidad.Text = lenguaje.GetTraduction("RFN1_Cant");
-            btnQuitar.Text = lenguaje.GetTraduction("RFN1_QuitarItem");
-            lblTotalTitulo.Text = lenguaje.GetTraduction("RFN1_Total") + ":";
-            lblPuntosTitulo.Text = lenguaje.GetTraduction("RFN1_Puntos") + ":";
-            btnCerrarVenta.Text = lenguaje.GetTraduction("RFN1_CerrarVenta");
-            btnVolver.Text = lenguaje.GetTraduction("RFN1_Volver");
-            MostrarCliente();
+            Text = LM830lenguaje.LM830GetTraduction("RFN1_RegistrarVenta");
+            LM830lblTitulo.Text = Text;
+            LM830grpCliente.Text = LM830lenguaje.LM830GetTraduction("RFN1_Cliente");
+            LM830lblDni.Text = LM830lenguaje.LM830GetTraduction("RFN1_Dni");
+            LM830btnBuscarCliente.Text = LM830lenguaje.LM830GetTraduction("RFN1_BuscarCliente");
+            LM830grpProducto.Text = LM830lenguaje.LM830GetTraduction("RFN1_Producto");
+            LM830lblProducto.Text = LM830lenguaje.LM830GetTraduction("RFN1_Producto");
+            LM830btnBuscarProducto.Text = LM830lenguaje.LM830GetTraduction("RFN1_Buscar");
+            LM830lblCantidad.Text = LM830lenguaje.LM830GetTraduction("RFN1_Cant");
+            LM830btnQuitar.Text = LM830lenguaje.LM830GetTraduction("RFN1_QuitarItem");
+            LM830lblTotalTitulo.Text = LM830lenguaje.LM830GetTraduction("RFN1_Total") + ":";
+            LM830lblPuntosTitulo.Text = LM830lenguaje.LM830GetTraduction("RFN1_Puntos") + ":";
+            LM830btnCerrarVenta.Text = LM830lenguaje.LM830GetTraduction("RFN1_CerrarVenta");
+            LM830btnVolver.Text = LM830lenguaje.LM830GetTraduction("RFN1_Volver");
+            LM830MostrarCliente();
+            SendMessage(LM830txtDni.Handle, LM830EM_SETCUEBANNER, (IntPtr)1, LM830lenguaje.LM830GetTraduction("RFN1_PH_Dni"));
+            SendMessage(LM830txtProducto.Handle, LM830EM_SETCUEBANNER, (IntPtr)1, LM830lenguaje.LM830GetTraduction("RFN1_PH_Producto"));
         }
     }
 }

@@ -1,28 +1,28 @@
-﻿using Servicios;
+﻿using LM830Servicios;
 using System;
 using System.Collections.Generic;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public class PermisoSimple : ComponentePermiso
+    public class LM830PermisoSimple : LM830ComponentePermiso
     {
-        public override void AgregarHijo(ComponentePermiso hijo)
+        public override void LM830AgregarHijo(LM830ComponentePermiso LM830hijo)
         {
-            throw new NotImplementedException(LanguageManager.Instance.GetTraduction("PerSimText1"));
+            throw new NotImplementedException(LM830LanguageManager.LM830Instance.LM830GetTraduction("PerSimText1"));
         }
 
-        public override void QuitarHijo(ComponentePermiso hijo)
+        public override void LM830QuitarHijo(LM830ComponentePermiso LM830hijo)
         {
-            throw new NotImplementedException(LanguageManager.Instance.GetTraduction("PerSimText2"));
+            throw new NotImplementedException(LM830LanguageManager.LM830Instance.LM830GetTraduction("PerSimText2"));
         }
 
-        public override List<ComponentePermiso> ObtenerHijos()
+        public override List<LM830ComponentePermiso> LM830ObtenerHijos()
         {
-            return new List<ComponentePermiso>();
+            return new List<LM830ComponentePermiso>();
         }
-        public override bool TienePermiso(string nombrePermiso)
+        public override bool LM830TienePermiso(string LM830nombrePermiso)
         {
-            return this.Nombre != null && this.Nombre.Equals(nombrePermiso, StringComparison.OrdinalIgnoreCase);
+            return this.LM830Nombre != null && this.LM830Nombre.Equals(LM830nombrePermiso, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

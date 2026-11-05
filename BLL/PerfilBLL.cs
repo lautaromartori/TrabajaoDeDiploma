@@ -1,492 +1,492 @@
-﻿using DAL;
-using Servicios;
+﻿using LM830DAL;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace BLL
+namespace LM830BLL
 {
-    public class PerfilBLL
+    public class LM830PerfilBLL
     {
-        private readonly PerfilDAL _dal;
-        private readonly BitacoraBLL _bitacoraBLL;
-        private readonly DigitoVerificadorBLL _digitoVerificadorBLL = new DigitoVerificadorBLL();
-        private const string MODULO_BITACORA = "Perfiles";
+        private readonly LM830PerfilDAL LM830_dal;
+        private readonly LM830BitacoraBLL LM830_bitacoraBLL;
+        private readonly LM830DigitoVerificadorBLL LM830_digitoVerificadorBLL = new LM830DigitoVerificadorBLL();
+        private const string LM830MODULO_BITACORA = "Perfiles";
 
-        public PerfilBLL()
+        public LM830PerfilBLL()
         {
-            _dal = new PerfilDAL();
-            _bitacoraBLL = new BitacoraBLL();
+            LM830_dal = new LM830PerfilDAL();
+            LM830_bitacoraBLL = new LM830BitacoraBLL();
         }
 
-        public List<PermisoSimple> ObtenerPermisos() => _dal.ObtenerPermisos();
+        public List<LM830PermisoSimple> LM830ObtenerPermisos() => LM830_dal.LM830ObtenerPermisos();
 
-        public List<Familia> ObtenerFamilias()
+        public List<LM830Familia> LM830ObtenerFamilias()
         {
-            return _dal.ObtenerFamiliasYPerfiles().Where(f => !f.EsRol).ToList();
+            return LM830_dal.LM830ObtenerFamiliasYPerfiles().Where(LM830f => !LM830f.LM830EsRol).ToList();
         }
 
-        public List<Familia> ObtenerPerfiles()
+        public List<LM830Familia> LM830ObtenerPerfiles()
         {
-            return _dal.ObtenerFamiliasYPerfiles().Where(f => f.EsRol).ToList();
+            return LM830_dal.LM830ObtenerFamiliasYPerfiles().Where(LM830f => LM830f.LM830EsRol).ToList();
         }
 
-        public List<PermisoSimple> ObtenerPermisosDisponibles(Familia componentePadre)
+        public List<LM830PermisoSimple> LM830ObtenerPermisosDisponibles(LM830Familia LM830componentePadre)
         {
-            var todosLosPermisos = _dal.ObtenerPermisos();
-            if (componentePadre == null) return todosLosPermisos;
+            var LM830todosLosPermisos = LM830_dal.LM830ObtenerPermisos();
+            if (LM830componentePadre == null) return LM830todosLosPermisos;
 
-            var permisosYaIncluidos = new HashSet<string>();
-            var familiasYaIncluidas = new HashSet<string>();
+            var LM830permisosYaIncluidos = new HashSet<string>();
+            var LM830familiasYaIncluidas = new HashSet<string>();
 
-            ObtenerEstructuraPlana(componentePadre, permisosYaIncluidos, familiasYaIncluidas);
+            LM830ObtenerEstructuraPlana(LM830componentePadre, LM830permisosYaIncluidos, LM830familiasYaIncluidas);
 
-            return todosLosPermisos.Where(p => !permisosYaIncluidos.Contains(p.Nombre)).ToList();
+            return LM830todosLosPermisos.Where(LM830p => !LM830permisosYaIncluidos.Contains(LM830p.LM830Nombre)).ToList();
         }
 
-        public List<Familia> ObtenerFamiliasDisponibles(string nombrePadre)
+        public List<LM830Familia> LM830ObtenerFamiliasDisponibles(string LM830nombrePadre)
         {
-            var todasLasFamilias = ObtenerFamilias();
-            var todosLosComponentes = _dal.ObtenerFamiliasYPerfiles();
-            var padre = todosLosComponentes.FirstOrDefault(f => f.Nombre == nombrePadre);
+            var LM830todasLasFamilias = LM830ObtenerFamilias();
+            var LM830todosLosComponentes = LM830_dal.LM830ObtenerFamiliasYPerfiles();
+            var LM830padre = LM830todosLosComponentes.FirstOrDefault(LM830f => LM830f.LM830Nombre == LM830nombrePadre);
 
-            if (padre == null) return todasLasFamilias;
+            if (LM830padre == null) return LM830todasLasFamilias;
 
-            var familiasAsignadas = new HashSet<string>();
-            ObtenerEstructuraPlana(padre, new HashSet<string>(), familiasAsignadas);
+            var LM830familiasAsignadas = new HashSet<string>();
+            LM830ObtenerEstructuraPlana(LM830padre, new HashSet<string>(), LM830familiasAsignadas);
 
-            return todasLasFamilias.Where(f => f.Nombre != nombrePadre && !familiasAsignadas.Contains(f.Nombre)).ToList();
+            return LM830todasLasFamilias.Where(LM830f => LM830f.LM830Nombre != LM830nombrePadre && !LM830familiasAsignadas.Contains(LM830f.LM830Nombre)).ToList();
         }
 
-        public void RecargarPermisosUsuarioEnSesion()
+        public void LM830RecargarPermisosUsuarioEnSesion()
         {
             try
             {
-                if (!SessionManager.Instance.Logueado()) return;
+                if (!LM830SessionManager.LM830Instance.LM830Logueado()) return;
 
-                Usuario usuarioActual = SessionManager.Instance.UsuarioActual();
-                var perfiles = ObtenerPerfiles();
-                var perfilUsuario = perfiles.FirstOrDefault(p => p.Nombre == usuarioActual.Rol);
+                LM830Usuario LM830usuarioActual = LM830SessionManager.LM830Instance.LM830UsuarioActual();
+                var LM830perfiles = LM830ObtenerPerfiles();
+                var LM830perfilUsuario = LM830perfiles.FirstOrDefault(LM830p => LM830p.LM830Nombre == LM830usuarioActual.LM830Rol);
 
-                if (perfilUsuario != null)
+                if (LM830perfilUsuario != null)
                 {
-                    usuarioActual.Permisos.Clear();
-                    usuarioActual.Permisos.Add(perfilUsuario);
+                    LM830usuarioActual.LM830Permisos.Clear();
+                    LM830usuarioActual.LM830Permisos.Add(LM830perfilUsuario);
                 }
             }
             catch { }
         }
 
-        public void CrearPermiso(string nombre)
+        public void LM830CrearPermiso(string LM830nombre)
         {
-            _dal.GuardarPermiso(new PermisoSimple { Nombre = nombre, DVH = DigitoVerificador.CalcularDVH(nombre) });
-            _digitoVerificadorBLL.RecalcularDVV_PermisoSimple();
-            RegistrarEnBitacora(SessionManager.Instance.UsuarioActual().Username, $"Crear permiso simple: {nombre}", 1);
+            LM830_dal.LM830GuardarPermiso(new LM830PermisoSimple { LM830Nombre = LM830nombre, LM830DVH = LM830DigitoVerificador.LM830CalcularDVH(LM830nombre) });
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_PermisoSimple();
+            LM830RegistrarEnBitacora(LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username, $"Crear permiso simple: {LM830nombre}", 1);
         }
 
-        public void EliminarPermiso(string nombre)
+        public void LM830EliminarPermiso(string LM830nombre)
         {
-            _dal.EliminarPermiso(nombre);
-            _digitoVerificadorBLL.RecalcularDVV_PermisoSimple();
-            RegistrarEnBitacora(SessionManager.Instance.UsuarioActual().Username, $"Eliminar permiso simple: {nombre}", 1);
-            RecargarPermisosUsuarioEnSesion();
+            LM830_dal.LM830EliminarPermiso(LM830nombre);
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_PermisoSimple();
+            LM830RegistrarEnBitacora(LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username, $"Eliminar permiso simple: {LM830nombre}", 1);
+            LM830RecargarPermisosUsuarioEnSesion();
         }
 
-        public void CrearFamilia(string nombre)
+        public void LM830CrearFamilia(string LM830nombre)
         {
-            _dal.GuardarFamilia(new Familia { Nombre = nombre, EsRol = false, DVH = DigitoVerificador.CalcularDVH(nombre) });
-            _digitoVerificadorBLL.RecalcularDVV_Familia();
-            RegistrarEnBitacora(SessionManager.Instance.UsuarioActual().Username, $"Crear familia: {nombre}", 1);
+            LM830_dal.LM830GuardarFamilia(new LM830Familia { LM830Nombre = LM830nombre, LM830EsRol = false, LM830DVH = LM830DigitoVerificador.LM830CalcularDVH(LM830nombre) });
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_Familia();
+            LM830RegistrarEnBitacora(LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username, $"Crear familia: {LM830nombre}", 1);
         }
 
-        public void CrearPerfil(string nombre)
+        public void LM830CrearPerfil(string LM830nombre)
         {
-            _dal.GuardarFamilia(new Familia { Nombre = nombre, EsRol = true, DVH = DigitoVerificador.CalcularDVH(nombre) });
-            _digitoVerificadorBLL.RecalcularDVV_Perfil();
-            RegistrarEnBitacora(SessionManager.Instance.UsuarioActual().Username, $"Crear perfil: {nombre}", 1);
+            LM830_dal.LM830GuardarFamilia(new LM830Familia { LM830Nombre = LM830nombre, LM830EsRol = true, LM830DVH = LM830DigitoVerificador.LM830CalcularDVH(LM830nombre) });
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_Perfil();
+            LM830RegistrarEnBitacora(LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username, $"Crear perfil: {LM830nombre}", 1);
         }
 
-        public void EliminarFamiliaOPerfil(string nombre)
+        public void LM830EliminarFamiliaOPerfil(string LM830nombre)
         {
-            var familia = _dal.ObtenerFamiliasYPerfiles().FirstOrDefault(f => f.Nombre == nombre);
-            if (familia == null) return;
+            var LM830familia = LM830_dal.LM830ObtenerFamiliasYPerfiles().FirstOrDefault(LM830f => LM830f.LM830Nombre == LM830nombre);
+            if (LM830familia == null) return;
 
-            if (familia.EsRol)
+            if (LM830familia.LM830EsRol)
             {
-                var usuariosConEstePerfil = new UsuarioBLL().ListarTodosUsuarios()
-                    .Where(u => u.Rol == nombre)
+                var LM830usuariosConEstePerfil = new LM830UsuarioBLL().LM830ListarTodosUsuarios()
+                    .Where(LM830u => LM830u.LM830Rol == LM830nombre)
                     .ToList();
 
-                if (usuariosConEstePerfil.Any())
+                if (LM830usuariosConEstePerfil.Any())
                 {
-                    string lista = string.Join(", ", usuariosConEstePerfil.Select(u => u.Username));
+                    string LM830lista = string.Join(", ", LM830usuariosConEstePerfil.Select(LM830u => LM830u.LM830Username));
                     throw new Exception(
-                        $"{LanguageManager.Instance.GetTraduction("PerfilBLLmsj1")} '{nombre}' {LanguageManager.Instance.GetTraduction("PerfilBLLmsj2")} {lista}.\n\n" +
-                        LanguageManager.Instance.GetTraduction("PerfilBllMsj3"));
+                        $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("PerfilBLLmsj1")} '{LM830nombre}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("PerfilBLLmsj2")} {LM830lista}.\n\n" +
+                        LM830LanguageManager.LM830Instance.LM830GetTraduction("PerfilBllMsj3"));
                 }
             }
 
-            _dal.EliminarFamilia(familia);
-            _digitoVerificadorBLL.RecalcularDVV_Familia();
-            _digitoVerificadorBLL.RecalcularDVV_Perfil();
-            RegistrarEnBitacora(SessionManager.Instance.UsuarioActual().Username, $"Eliminar contenedor jerárquico: {nombre}", 1);
-            RecargarPermisosUsuarioEnSesion();
+            LM830_dal.LM830EliminarFamilia(LM830familia);
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_Familia();
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_Perfil();
+            LM830RegistrarEnBitacora(LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username, $"Eliminar contenedor jerárquico: {LM830nombre}", 1);
+            LM830RecargarPermisosUsuarioEnSesion();
         }
 
-        public void QuitarHijos(string nombrePadre, List<string> hijos, bool esPermisoSimple)
+        public void LM830QuitarHijos(string LM830nombrePadre, List<string> LM830hijos, bool LM830esPermisoSimple)
         {
-            var padre = _dal.ObtenerFamiliasYPerfiles().FirstOrDefault(f => f.Nombre == nombrePadre);
-            if (padre == null) return;
+            var LM830padre = LM830_dal.LM830ObtenerFamiliasYPerfiles().FirstOrDefault(LM830f => LM830f.LM830Nombre == LM830nombrePadre);
+            if (LM830padre == null) return;
 
-            foreach (var nombreHijo in hijos)
+            foreach (var LM830nombreHijo in LM830hijos)
             {
-                var hijoAQuitar = padre.ListaHijos.FirstOrDefault(h => h.Nombre == nombreHijo);
-                if (hijoAQuitar != null)
+                var LM830hijoAQuitar = LM830padre.LM830ListaHijos.FirstOrDefault(LM830h => LM830h.LM830Nombre == LM830nombreHijo);
+                if (LM830hijoAQuitar != null)
                 {
-                    padre.QuitarHijo(hijoAQuitar);
+                    LM830padre.LM830QuitarHijo(LM830hijoAQuitar);
                 }
             }
 
-            _dal.GuardarRelaciones(padre);
+            LM830_dal.LM830GuardarRelaciones(LM830padre);
 
-            foreach (var hijo in hijos)
+            foreach (var LM830hijo in LM830hijos)
             {
-                string tipoNodo = esPermisoSimple ? "Permiso Simple" : "Subfamilia";
-                RegistrarEnBitacora(SessionManager.Instance.UsuarioActual().Username, $"Desvincular {tipoNodo} '{hijo}' del contenedor '{nombrePadre}'", 1);
+                string LM830tipoNodo = LM830esPermisoSimple ? "Permiso Simple" : "Subfamilia";
+                LM830RegistrarEnBitacora(LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username, $"Desvincular {LM830tipoNodo} '{LM830hijo}' del contenedor '{LM830nombrePadre}'", 1);
             }
 
-            RecargarPermisosUsuarioEnSesion();
+            LM830RecargarPermisosUsuarioEnSesion();
         }
 
-        public void EliminarPermisoRedundanteDeNodoContenedor(string nombreContenedorRaiz, List<string> permisosComponentes)
+        public void LM830EliminarPermisoRedundanteDeNodoContenedor(string LM830nombreContenedorRaiz, List<string> LM830permisosComponentes)
         {
             try
             {
-                var todosLosComponentes = _dal.ObtenerFamiliasYPerfiles();
-                var raiz = todosLosComponentes.FirstOrDefault(f => f.Nombre == nombreContenedorRaiz);
-                if (raiz == null) throw new Exception($"{LanguageManager.Instance.GetTraduction("PerfilBllMsj4")} '{nombreContenedorRaiz}'.");
+                var LM830todosLosComponentes = LM830_dal.LM830ObtenerFamiliasYPerfiles();
+                var LM830raiz = LM830todosLosComponentes.FirstOrDefault(LM830f => LM830f.LM830Nombre == LM830nombreContenedorRaiz);
+                if (LM830raiz == null) throw new Exception($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("PerfilBllMsj4")} '{LM830nombreContenedorRaiz}'.");
 
-                foreach (var permiso in permisosComponentes)
+                foreach (var LM830permiso in LM830permisosComponentes)
                 {
-                    string contenedorDirecto = BuscarContenedorDirectoDelPermiso(raiz, permiso);
-                    if (!string.IsNullOrEmpty(contenedorDirecto))
+                    string LM830contenedorDirecto = LM830BuscarContenedorDirectoDelPermiso(LM830raiz, LM830permiso);
+                    if (!string.IsNullOrEmpty(LM830contenedorDirecto))
                     {
-                        var contenedor = todosLosComponentes.FirstOrDefault(f => f.Nombre == contenedorDirecto);
-                        if (contenedor != null)
+                        var LM830contenedor = LM830todosLosComponentes.FirstOrDefault(LM830f => LM830f.LM830Nombre == LM830contenedorDirecto);
+                        if (LM830contenedor != null)
                         {
-                            var permisoAQuitar = contenedor.ListaHijos.FirstOrDefault(h => h.Nombre == permiso && h is PermisoSimple);
-                            if (permisoAQuitar != null)
+                            var LM830permisoAQuitar = LM830contenedor.LM830ListaHijos.FirstOrDefault(LM830h => LM830h.LM830Nombre == LM830permiso && LM830h is LM830PermisoSimple);
+                            if (LM830permisoAQuitar != null)
                             {
-                                contenedor.QuitarHijo(permisoAQuitar);
-                                _dal.GuardarRelaciones(contenedor);
+                                LM830contenedor.LM830QuitarHijo(LM830permisoAQuitar);
+                                LM830_dal.LM830GuardarRelaciones(LM830contenedor);
                             }
                         }
-                        RegistrarEnBitacora(SessionManager.Instance.UsuarioActual().Username, $"Mitigación de redundancia: Remoción del permiso '{permiso}' en subnodo '{contenedorDirecto}'", 2);
+                        LM830RegistrarEnBitacora(LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username, $"Mitigación de redundancia: Remoción del permiso '{LM830permiso}' en subnodo '{LM830contenedorDirecto}'", 2);
                     }
                 }
 
-                RecargarPermisosUsuarioEnSesion();
+                LM830RecargarPermisosUsuarioEnSesion();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                RegistrarEnBitacora(SessionManager.Instance.UsuarioActual().Username, $"ERROR en EliminarPermisoRedundante: {ex.Message}", 1);
-                throw new Exception(LanguageManager.Instance.GetTraduction("PerBLLText1") + ex.Message);
+                LM830RegistrarEnBitacora(LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username, $"ERROR en EliminarPermisoRedundante: {LM830ex.Message}", 1);
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("PerBLLText1") + LM830ex.Message);
             }
         }
 
-        public ResultadoAsignacion AsignarComponentesHijos(string nombrePadre, List<string> nombresHijos, bool esPermisoSimple)
+        public LM830ResultadoAsignacion LM830AsignarComponentesHijos(string LM830nombrePadre, List<string> LM830nombresHijos, bool LM830esPermisoSimple)
         {
-            var resultado = new ResultadoAsignacion { Estado = EstadoAsignacion.Ok };
-            if (!nombresHijos.Any()) return resultado;
+            var LM830resultado = new LM830ResultadoAsignacion { LM830Estado = LM830EstadoAsignacion.LM830Ok };
+            if (!LM830nombresHijos.Any()) return LM830resultado;
 
-            var todosLosComponentes = _dal.ObtenerFamiliasYPerfiles();
-            var componentePadre = todosLosComponentes.FirstOrDefault(f => f.Nombre == nombrePadre);
+            var LM830todosLosComponentes = LM830_dal.LM830ObtenerFamiliasYPerfiles();
+            var LM830componentePadre = LM830todosLosComponentes.FirstOrDefault(LM830f => LM830f.LM830Nombre == LM830nombrePadre);
 
-            if (componentePadre == null) return resultado;
+            if (LM830componentePadre == null) return LM830resultado;
 
-            foreach (var nombreHijo in nombresHijos)
+            foreach (var LM830nombreHijo in LM830nombresHijos)
             {
-                if (nombrePadre == nombreHijo)
+                if (LM830nombrePadre == LM830nombreHijo)
                 {
-                    resultado.Estado = EstadoAsignacion.ConflictoPermisos;
-                    resultado.PermisosConflictivos.Add(nombreHijo);
-                    resultado.OrigenConflicto[nombreHijo] = "Restricción: No es posible asignar un componente jerárquico a sí mismo.";
-                    return resultado;
+                    LM830resultado.LM830Estado = LM830EstadoAsignacion.LM830ConflictoPermisos;
+                    LM830resultado.LM830PermisosConflictivos.Add(LM830nombreHijo);
+                    LM830resultado.LM830OrigenConflicto[LM830nombreHijo] = "Restricción: No es posible asignar un componente jerárquico a sí mismo.";
+                    return LM830resultado;
                 }
 
-                if (!esPermisoSimple)
+                if (!LM830esPermisoSimple)
                 {
-                    var componenteHijo = todosLosComponentes.FirstOrDefault(f => f.Nombre == nombreHijo);
-                    if (componenteHijo != null && componenteHijo.EsRol && !componentePadre.EsRol)
+                    var LM830componenteHijo = LM830todosLosComponentes.FirstOrDefault(LM830f => LM830f.LM830Nombre == LM830nombreHijo);
+                    if (LM830componenteHijo != null && LM830componenteHijo.LM830EsRol && !LM830componentePadre.LM830EsRol)
                     {
-                        resultado.Estado = EstadoAsignacion.ConflictoPermisos;
-                        resultado.PermisosConflictivos.Add(nombreHijo);
-                        resultado.OrigenConflicto[nombreHijo] = $"Incompatibilidad de estructura: El perfil '{nombreHijo}' no puede ser subcomponente de la familia '{nombrePadre}'.";
-                        return resultado;
+                        LM830resultado.LM830Estado = LM830EstadoAsignacion.LM830ConflictoPermisos;
+                        LM830resultado.LM830PermisosConflictivos.Add(LM830nombreHijo);
+                        LM830resultado.LM830OrigenConflicto[LM830nombreHijo] = $"Incompatibilidad de estructura: El perfil '{LM830nombreHijo}' no puede ser subcomponente de la familia '{LM830nombrePadre}'.";
+                        return LM830resultado;
                     }
 
-                    if (ValidarCicloJerarquico(nombreHijo, nombrePadre, todosLosComponentes))
+                    if (LM830ValidarCicloJerarquico(LM830nombreHijo, LM830nombrePadre, LM830todosLosComponentes))
                     {
-                        resultado.Estado = EstadoAsignacion.ConflictoPermisos;
-                        resultado.PermisosConflictivos.Add(nombreHijo);
-                        resultado.OrigenConflicto[nombreHijo] = $"Referencia circular detectada: El componente '{nombreHijo}' ya contiene al componente '{nombrePadre}'.";
-                        return resultado;
+                        LM830resultado.LM830Estado = LM830EstadoAsignacion.LM830ConflictoPermisos;
+                        LM830resultado.LM830PermisosConflictivos.Add(LM830nombreHijo);
+                        LM830resultado.LM830OrigenConflicto[LM830nombreHijo] = $"Referencia circular detectada: El componente '{LM830nombreHijo}' ya contiene al componente '{LM830nombrePadre}'.";
+                        return LM830resultado;
                     }
                 }
 
-                var permisosActualesPadre = new HashSet<string>();
-                var familiasActualesPadre = new HashSet<string>();
-                ObtenerEstructuraPlana(componentePadre, permisosActualesPadre, familiasActualesPadre);
+                var LM830permisosActualesPadre = new HashSet<string>();
+                var LM830familiasActualesPadre = new HashSet<string>();
+                LM830ObtenerEstructuraPlana(LM830componentePadre, LM830permisosActualesPadre, LM830familiasActualesPadre);
 
-                foreach (var elemento in componentePadre.ListaHijos.OfType<PermisoSimple>())
+                foreach (var LM830elemento in LM830componentePadre.LM830ListaHijos.OfType<LM830PermisoSimple>())
                 {
-                    permisosActualesPadre.Add(elemento.Nombre);
+                    LM830permisosActualesPadre.Add(LM830elemento.LM830Nombre);
                 }
 
-                if (esPermisoSimple)
+                if (LM830esPermisoSimple)
                 {
-                    if (permisosActualesPadre.Contains(nombreHijo))
+                    if (LM830permisosActualesPadre.Contains(LM830nombreHijo))
                     {
-                        resultado.Estado = EstadoAsignacion.ConflictoPermisos;
-                        resultado.PermisosConflictivos.Add(nombreHijo);
-                        resultado.OrigenConflicto[nombreHijo] = $"Redundancia detectada: El permiso '{nombreHijo}' ya existe en '{nombrePadre}'.";
-                        return resultado;
+                        LM830resultado.LM830Estado = LM830EstadoAsignacion.LM830ConflictoPermisos;
+                        LM830resultado.LM830PermisosConflictivos.Add(LM830nombreHijo);
+                        LM830resultado.LM830OrigenConflicto[LM830nombreHijo] = $"Redundancia detectada: El permiso '{LM830nombreHijo}' ya existe en '{LM830nombrePadre}'.";
+                        return LM830resultado;
                     }
 
-                    string mensajeConflictoHorizontal = VerificarConflictoHorizontal(todosLosComponentes, componentePadre, nombreHijo);
-                    if (!string.IsNullOrEmpty(mensajeConflictoHorizontal))
+                    string LM830mensajeConflictoHorizontal = LM830VerificarConflictoHorizontal(LM830todosLosComponentes, LM830componentePadre, LM830nombreHijo);
+                    if (!string.IsNullOrEmpty(LM830mensajeConflictoHorizontal))
                     {
-                        resultado.Estado = EstadoAsignacion.ConflictoPermisos;
-                        resultado.PermisosConflictivos.Add(nombreHijo);
-                        resultado.OrigenConflicto[nombreHijo] = mensajeConflictoHorizontal;
-                        return resultado;
+                        LM830resultado.LM830Estado = LM830EstadoAsignacion.LM830ConflictoPermisos;
+                        LM830resultado.LM830PermisosConflictivos.Add(LM830nombreHijo);
+                        LM830resultado.LM830OrigenConflicto[LM830nombreHijo] = LM830mensajeConflictoHorizontal;
+                        return LM830resultado;
                     }
                 }
                 else
                 {
-                    var subFamiliaHijo = todosLosComponentes.FirstOrDefault(f => f.Nombre == nombreHijo);
-                    if (subFamiliaHijo != null)
+                    var LM830subFamiliaHijo = LM830todosLosComponentes.FirstOrDefault(LM830f => LM830f.LM830Nombre == LM830nombreHijo);
+                    if (LM830subFamiliaHijo != null)
                     {
-                        var permisosDelHijo = new HashSet<string>();
-                        var familiasDelHijo = new HashSet<string>();
-                        ObtenerEstructuraPlana(subFamiliaHijo, permisosDelHijo, familiasDelHijo);
+                        var LM830permisosDelHijo = new HashSet<string>();
+                        var LM830familiasDelHijo = new HashSet<string>();
+                        LM830ObtenerEstructuraPlana(LM830subFamiliaHijo, LM830permisosDelHijo, LM830familiasDelHijo);
 
-                        foreach (var elemento in subFamiliaHijo.ListaHijos.OfType<PermisoSimple>())
+                        foreach (var LM830elemento in LM830subFamiliaHijo.LM830ListaHijos.OfType<LM830PermisoSimple>())
                         {
-                            permisosDelHijo.Add(elemento.Nombre);
+                            LM830permisosDelHijo.Add(LM830elemento.LM830Nombre);
                         }
 
-                        if (familiasActualesPadre.Contains(nombreHijo))
+                        if (LM830familiasActualesPadre.Contains(LM830nombreHijo))
                         {
-                            resultado.Estado = EstadoAsignacion.ConflictoPermisos;
-                            resultado.PermisosConflictivos.Add(nombreHijo);
-                            resultado.OrigenConflicto[nombreHijo] = $"Redundancia estructural: La subfamilia '{nombreHijo}' ya forma parte de '{nombrePadre}'.";
-                            return resultado;
+                            LM830resultado.LM830Estado = LM830EstadoAsignacion.LM830ConflictoPermisos;
+                            LM830resultado.LM830PermisosConflictivos.Add(LM830nombreHijo);
+                            LM830resultado.LM830OrigenConflicto[LM830nombreHijo] = $"Redundancia estructural: La subfamilia '{LM830nombreHijo}' ya forma parte de '{LM830nombrePadre}'.";
+                            return LM830resultado;
                         }
 
-                        var colisionesPermisos = permisosActualesPadre.Intersect(permisosDelHijo).ToList();
-                        if (colisionesPermisos.Any())
+                        var LM830colisionesPermisos = LM830permisosActualesPadre.Intersect(LM830permisosDelHijo).ToList();
+                        if (LM830colisionesPermisos.Any())
                         {
-                            string permisoEjemplo = colisionesPermisos.First();
-                            string nodoResponsable = BuscarContenedorDirectoDelPermiso(componentePadre, permisoEjemplo) ?? componentePadre.Nombre;
+                            string LM830permisoEjemplo = LM830colisionesPermisos.First();
+                            string LM830nodoResponsable = LM830BuscarContenedorDirectoDelPermiso(LM830componentePadre, LM830permisoEjemplo) ?? LM830componentePadre.LM830Nombre;
 
-                            resultado.Estado = EstadoAsignacion.ConflictoPermisos;
-                            resultado.PermisosConflictivos.Add(nombreHijo);
-                            resultado.OrigenConflicto[nombreHijo] = $"CONFLICTO_REDUNDANCIA_HEREDADA|{string.Join(",", colisionesPermisos)}|{nombreHijo}|{nodoResponsable}";
-                            return resultado;
+                            LM830resultado.LM830Estado = LM830EstadoAsignacion.LM830ConflictoPermisos;
+                            LM830resultado.LM830PermisosConflictivos.Add(LM830nombreHijo);
+                            LM830resultado.LM830OrigenConflicto[LM830nombreHijo] = $"CONFLICTO_REDUNDANCIA_HEREDADA|{string.Join(",", LM830colisionesPermisos)}|{LM830nombreHijo}|{LM830nodoResponsable}";
+                            return LM830resultado;
                         }
                     }
                 }
             }
 
-            if (resultado.Estado == EstadoAsignacion.ConflictoPermisos) return resultado;
+            if (LM830resultado.LM830Estado == LM830EstadoAsignacion.LM830ConflictoPermisos) return LM830resultado;
 
-            foreach (var nombreHijo in nombresHijos)
+            foreach (var LM830nombreHijo in LM830nombresHijos)
             {
-                if (esPermisoSimple)
+                if (LM830esPermisoSimple)
                 {
-                    var permisoHijo = new PermisoSimple { Nombre = nombreHijo };
-                    componentePadre.AgregarHijo(permisoHijo);
+                    var LM830permisoHijo = new LM830PermisoSimple { LM830Nombre = LM830nombreHijo };
+                    LM830componentePadre.LM830AgregarHijo(LM830permisoHijo);
                 }
                 else
                 {
-                    var subFamilia = todosLosComponentes.FirstOrDefault(f => f.Nombre == nombreHijo);
-                    if (subFamilia != null)
+                    var LM830subFamilia = LM830todosLosComponentes.FirstOrDefault(LM830f => LM830f.LM830Nombre == LM830nombreHijo);
+                    if (LM830subFamilia != null)
                     {
-                        componentePadre.AgregarHijo(subFamilia);
+                        LM830componentePadre.LM830AgregarHijo(LM830subFamilia);
                     }
                 }
 
-                string tipoNodo = esPermisoSimple ? "Permiso Simple" : "Subfamilia";
-                RegistrarEnBitacora(SessionManager.Instance.UsuarioActual().Username, $"Asignación exitosa de {tipoNodo} '{nombreHijo}' a la raíz '{nombrePadre}'", 1);
+                string LM830tipoNodo = LM830esPermisoSimple ? "Permiso Simple" : "Subfamilia";
+                LM830RegistrarEnBitacora(LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username, $"Asignación exitosa de {LM830tipoNodo} '{LM830nombreHijo}' a la raíz '{LM830nombrePadre}'", 1);
             }
 
-            _dal.GuardarRelaciones(componentePadre);
-            RecargarPermisosUsuarioEnSesion();
+            LM830_dal.LM830GuardarRelaciones(LM830componentePadre);
+            LM830RecargarPermisosUsuarioEnSesion();
 
-            return resultado;
+            return LM830resultado;
         }
 
-        public void EliminarPermisoDeContenedorEspecifico(string nombreContenedor, string nombrePermiso)
+        public void LM830EliminarPermisoDeContenedorEspecifico(string LM830nombreContenedor, string LM830nombrePermiso)
         {
             try
             {
-                var todosLosComponentes = _dal.ObtenerFamiliasYPerfiles();
-                var contenedor = todosLosComponentes.FirstOrDefault(f => f.Nombre == nombreContenedor);
+                var LM830todosLosComponentes = LM830_dal.LM830ObtenerFamiliasYPerfiles();
+                var LM830contenedor = LM830todosLosComponentes.FirstOrDefault(LM830f => LM830f.LM830Nombre == LM830nombreContenedor);
 
-                if (contenedor != null)
+                if (LM830contenedor != null)
                 {
-                    var permisoAQuitar = contenedor.ListaHijos.FirstOrDefault(h => h.Nombre == nombrePermiso && h is PermisoSimple);
-                    if (permisoAQuitar != null)
+                    var LM830permisoAQuitar = LM830contenedor.LM830ListaHijos.FirstOrDefault(LM830h => LM830h.LM830Nombre == LM830nombrePermiso && LM830h is LM830PermisoSimple);
+                    if (LM830permisoAQuitar != null)
                     {
-                        contenedor.QuitarHijo(permisoAQuitar);
-                        _dal.GuardarRelaciones(contenedor);
-                        RegistrarEnBitacora(SessionManager.Instance.UsuarioActual().Username, $"Desvinculación forzada por redundancia: Permiso '{nombrePermiso}' removido de '{nombreContenedor}'", 2);
+                        LM830contenedor.LM830QuitarHijo(LM830permisoAQuitar);
+                        LM830_dal.LM830GuardarRelaciones(LM830contenedor);
+                        LM830RegistrarEnBitacora(LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username, $"Desvinculación forzada por redundancia: Permiso '{LM830nombrePermiso}' removido de '{LM830nombreContenedor}'", 2);
                     }
                 }
-                RecargarPermisosUsuarioEnSesion();
+                LM830RecargarPermisosUsuarioEnSesion();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw new Exception($"{LanguageManager.Instance.GetTraduction("PerBLLText2")} {ex.Message}", ex);
+                throw new Exception($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("PerBLLText2")} {LM830ex.Message}", LM830ex);
             }
         }
-        private string VerificarConflictoHorizontal(List<Familia> todosLosComponentes, Familia nodoDestino, string permisoBuscar)
+        private string LM830VerificarConflictoHorizontal(List<LM830Familia> LM830todosLosComponentes, LM830Familia LM830nodoDestino, string LM830permisoBuscar)
         {
-            var ancestrosRaiz = todosLosComponentes.Where(posiblePadre => ContieneHijoRecursivo(posiblePadre, nodoDestino.Nombre)).ToList();
+            var LM830ancestrosRaiz = LM830todosLosComponentes.Where(LM830posiblePadre => LM830ContieneHijoRecursivo(LM830posiblePadre, LM830nodoDestino.LM830Nombre)).ToList();
 
-            foreach (var ancestro in ancestrosRaiz)
+            foreach (var LM830ancestro in LM830ancestrosRaiz)
             {
-                foreach (var hijoFam in ancestro.ListaHijos.OfType<Familia>())
+                foreach (var LM830hijoFam in LM830ancestro.LM830ListaHijos.OfType<LM830Familia>())
                 {
-                    if (hijoFam.Nombre == nodoDestino.Nombre) continue;
+                    if (LM830hijoFam.LM830Nombre == LM830nodoDestino.LM830Nombre) continue;
 
-                    if (TienePermisoHeredado(hijoFam, permisoBuscar))
+                    if (LM830TienePermisoHeredado(LM830hijoFam, LM830permisoBuscar))
                     {
-                        string contenedorDirecto = BuscarContenedorDirectoDelPermiso(hijoFam, permisoBuscar) ?? hijoFam.Nombre;
+                        string LM830contenedorDirecto = LM830BuscarContenedorDirectoDelPermiso(LM830hijoFam, LM830permisoBuscar) ?? LM830hijoFam.LM830Nombre;
 
-                        return $"CONFLICTO_HORIZONTAL_DETALLADO|{permisoBuscar}|{nodoDestino.Nombre}|{ancestro.Nombre}|{hijoFam.Nombre}|{contenedorDirecto}";
+                        return $"CONFLICTO_HORIZONTAL_DETALLADO|{LM830permisoBuscar}|{LM830nodoDestino.LM830Nombre}|{LM830ancestro.LM830Nombre}|{LM830hijoFam.LM830Nombre}|{LM830contenedorDirecto}";
                     }
                 }
 
-                foreach (var hijoPermiso in ancestro.ListaHijos.OfType<PermisoSimple>())
+                foreach (var LM830hijoPermiso in LM830ancestro.LM830ListaHijos.OfType<LM830PermisoSimple>())
                 {
-                    if (hijoPermiso.Nombre == permisoBuscar)
+                    if (LM830hijoPermiso.LM830Nombre == LM830permisoBuscar)
                     {
-                        return $"CONFLICTO_HORIZONTAL_DETALLADO|{permisoBuscar}|{nodoDestino.Nombre}|{ancestro.Nombre}|{ancestro.Nombre}|{ancestro.Nombre}";
+                        return $"CONFLICTO_HORIZONTAL_DETALLADO|{LM830permisoBuscar}|{LM830nodoDestino.LM830Nombre}|{LM830ancestro.LM830Nombre}|{LM830ancestro.LM830Nombre}|{LM830ancestro.LM830Nombre}";
                     }
                 }
             }
             return null;
         }
 
-        private bool ContieneHijoRecursivo(Familia padre, string nombreHijoBuscar)
+        private bool LM830ContieneHijoRecursivo(LM830Familia LM830padre, string LM830nombreHijoBuscar)
         {
-            if (padre.ListaHijos.OfType<Familia>().Any(f => f.Nombre == nombreHijoBuscar || ContieneHijoRecursivo(f, nombreHijoBuscar)))
+            if (LM830padre.LM830ListaHijos.OfType<LM830Familia>().Any(LM830f => LM830f.LM830Nombre == LM830nombreHijoBuscar || LM830ContieneHijoRecursivo(LM830f, LM830nombreHijoBuscar)))
                 return true;
-            if (padre.ListaHijos.OfType<PermisoSimple>().Any(p => p.Nombre == nombreHijoBuscar))
+            if (LM830padre.LM830ListaHijos.OfType<LM830PermisoSimple>().Any(LM830p => LM830p.LM830Nombre == LM830nombreHijoBuscar))
                 return true;
             return false;
         }
 
-        private bool TienePermisoHeredado(Familia familia, string permisoBuscar)
+        private bool LM830TienePermisoHeredado(LM830Familia LM830familia, string LM830permisoBuscar)
         {
-            if (familia.Nombre == permisoBuscar) return true;
-            if (familia.ListaHijos.OfType<PermisoSimple>().Any(p => p.Nombre == permisoBuscar))
+            if (LM830familia.LM830Nombre == LM830permisoBuscar) return true;
+            if (LM830familia.LM830ListaHijos.OfType<LM830PermisoSimple>().Any(LM830p => LM830p.LM830Nombre == LM830permisoBuscar))
                 return true;
 
-            foreach (var subFam in familia.ListaHijos.OfType<Familia>())
+            foreach (var LM830subFam in LM830familia.LM830ListaHijos.OfType<LM830Familia>())
             {
-                if (TienePermisoHeredado(subFam, permisoBuscar)) return true;
+                if (LM830TienePermisoHeredado(LM830subFam, LM830permisoBuscar)) return true;
             }
             return false;
         }
 
-        private string BuscarContenedorDirectoDelPermiso(Familia nodoActual, string nombrePermiso)
+        private string LM830BuscarContenedorDirectoDelPermiso(LM830Familia LM830nodoActual, string LM830nombrePermiso)
         {
-            if (nodoActual.ListaHijos.OfType<PermisoSimple>().Any(p => p.Nombre == nombrePermiso))
-                return nodoActual.Nombre;
+            if (LM830nodoActual.LM830ListaHijos.OfType<LM830PermisoSimple>().Any(LM830p => LM830p.LM830Nombre == LM830nombrePermiso))
+                return LM830nodoActual.LM830Nombre;
 
-            foreach (var subFamilia in nodoActual.ListaHijos.OfType<Familia>())
+            foreach (var LM830subFamilia in LM830nodoActual.LM830ListaHijos.OfType<LM830Familia>())
             {
-                string encontrado = BuscarContenedorDirectoDelPermiso(subFamilia, nombrePermiso);
-                if (!string.IsNullOrEmpty(encontrado)) return encontrado;
+                string LM830encontrado = LM830BuscarContenedorDirectoDelPermiso(LM830subFamilia, LM830nombrePermiso);
+                if (!string.IsNullOrEmpty(LM830encontrado)) return LM830encontrado;
             }
 
             return null;
         }
 
-        private bool ValidarCicloJerarquico(string actual, string objetivo, List<Familia> componentes)
+        private bool LM830ValidarCicloJerarquico(string LM830actual, string LM830objetivo, List<LM830Familia> LM830componentes)
         {
-            var comp = componentes.FirstOrDefault(f => f.Nombre == actual);
-            if (comp == null) return false;
-            if (comp.ListaHijos.Any(h => h.Nombre == objetivo)) return true;
+            var LM830comp = LM830componentes.FirstOrDefault(LM830f => LM830f.LM830Nombre == LM830actual);
+            if (LM830comp == null) return false;
+            if (LM830comp.LM830ListaHijos.Any(LM830h => LM830h.LM830Nombre == LM830objetivo)) return true;
 
-            foreach (var sub in comp.ListaHijos.OfType<Familia>())
+            foreach (var LM830sub in LM830comp.LM830ListaHijos.OfType<LM830Familia>())
             {
-                if (ValidarCicloJerarquico(sub.Nombre, objetivo, componentes)) return true;
+                if (LM830ValidarCicloJerarquico(LM830sub.LM830Nombre, LM830objetivo, LM830componentes)) return true;
             }
             return false;
         }
 
-        private void ObtenerEstructuraPlana(Familia componente, HashSet<string> permisos, HashSet<string> familias)
+        private void LM830ObtenerEstructuraPlana(LM830Familia LM830componente, HashSet<string> LM830permisos, HashSet<string> LM830familias)
         {
-            foreach (var hijo in componente.ListaHijos)
+            foreach (var LM830hijo in LM830componente.LM830ListaHijos)
             {
-                if (hijo is PermisoSimple)
+                if (LM830hijo is LM830PermisoSimple)
                 {
-                    permisos.Add(hijo.Nombre);
+                    LM830permisos.Add(LM830hijo.LM830Nombre);
                 }
-                else if (hijo is Familia fam)
+                else if (LM830hijo is LM830Familia LM830fam)
                 {
-                    familias.Add(fam.Nombre);
-                    ObtenerEstructuraPlana(fam, permisos, familias);
+                    LM830familias.Add(LM830fam.LM830Nombre);
+                    LM830ObtenerEstructuraPlana(LM830fam, LM830permisos, LM830familias);
                 }
             }
         }
 
-        private void RegistrarEnBitacora(string usuario, string evento, int criticidad)
+        private void LM830RegistrarEnBitacora(string LM830usuario, string LM830evento, int LM830criticidad)
         {
             try
             {
-                var registro = new Bitacora
+                var LM830registro = new LM830Bitacora
                 {
-                    Login = !string.IsNullOrEmpty(usuario) ? usuario : "Sistema",
-                    Fecha = DateTime.Now,
-                    Modulo = MODULO_BITACORA,
-                    Evento = evento,
-                    Criticidad = criticidad
+                    LM830Login = !string.IsNullOrEmpty(LM830usuario) ? LM830usuario : "Sistema",
+                    LM830Fecha = DateTime.Now,
+                    LM830Modulo = LM830MODULO_BITACORA,
+                    LM830Evento = LM830evento,
+                    LM830Criticidad = LM830criticidad
                 };
-                _bitacoraBLL.RegistrarEvento(registro);
+                LM830_bitacoraBLL.LM830RegistrarEvento(LM830registro);
             }
             catch { }
         }
 
-        public void ArmarArbolEstructural(Familia nodoActual, TreeNodeCollection nodosUI)
+        public void LM830ArmarArbolEstructural(LM830Familia LM830nodoActual, TreeNodeCollection LM830nodosUI)
         {
-            var nuevoNodo = new TreeNode(nodoActual.Nombre)
+            var LM830nuevoNodo = new TreeNode(LM830nodoActual.LM830Nombre)
             {
-                Tag = nodoActual,
-                ImageIndex = nodoActual.EsRol ? 0 : 1
+                Tag = LM830nodoActual,
+                ImageIndex = LM830nodoActual.LM830EsRol ? 0 : 1
             };
 
-            nodosUI.Add(nuevoNodo);
+            LM830nodosUI.Add(LM830nuevoNodo);
 
-            foreach (var hijo in nodoActual.ListaHijos)
+            foreach (var LM830hijo in LM830nodoActual.LM830ListaHijos)
             {
-                if (hijo is Familia subFamilia)
+                if (LM830hijo is LM830Familia LM830subFamilia)
                 {
-                    ArmarArbolEstructural(subFamilia, nuevoNodo.Nodes);
+                    LM830ArmarArbolEstructural(LM830subFamilia, LM830nuevoNodo.Nodes);
                 }
-                else if (hijo is PermisoSimple permiso)
+                else if (LM830hijo is LM830PermisoSimple LM830permiso)
                 {
-                    var nodoHoja = new TreeNode(permiso.Nombre)
+                    var LM830nodoHoja = new TreeNode(LM830permiso.LM830Nombre)
                     {
-                        Tag = permiso,
+                        Tag = LM830permiso,
                         ImageIndex = 2
                     };
-                    nuevoNodo.Nodes.Add(nodoHoja);
+                    LM830nuevoNodo.Nodes.Add(LM830nodoHoja);
                 }
             }
         }

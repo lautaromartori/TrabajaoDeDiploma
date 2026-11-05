@@ -3,31 +3,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public static class SqlInstanceFinder
+    public static class LM830SqlInstanceFinder
     {
-        public static List<string> ObtenerInstancias()
+        public static List<string> LM830ObtenerInstancias()
         {
-            List<string> lista = new List<string>();
+            List<string> LM830lista = new List<string>();
 
             try
             {
-                using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL"))
+                using (RegistryKey LM830key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL"))
                 {
-                    if (key != null)
+                    if (LM830key != null)
                     {
-                        foreach (string instancia in key.GetValueNames())
+                        foreach (string LM830instancia in LM830key.GetValueNames())
                         {
-                            if (instancia.Equals("MSSQLSERVER",
+                            if (LM830instancia.Equals("MSSQLSERVER",
                                 StringComparison.OrdinalIgnoreCase))
                             {
-                                lista.Add(Environment.MachineName);
+                                LM830lista.Add(Environment.MachineName);
                             }
                             else
                             {
-                                lista.Add(
-                                    $"{Environment.MachineName}\\{instancia}");
+                                LM830lista.Add(
+                                    $"{Environment.MachineName}\\{LM830instancia}");
                             }
                         }
                     }
@@ -37,27 +37,27 @@ namespace Servicios
             {
             }
 
-            AgregarSiNoExiste(lista, ".");
-            AgregarSiNoExiste(lista, "(local)");
-            AgregarSiNoExiste(lista, "localhost");
-            AgregarSiNoExiste(lista, ".\\SQLEXPRESS");
-            AgregarSiNoExiste(lista, Environment.MachineName);
-            AgregarSiNoExiste(lista,
+            LM830AgregarSiNoExiste(LM830lista, ".");
+            LM830AgregarSiNoExiste(LM830lista, "(local)");
+            LM830AgregarSiNoExiste(LM830lista, "localhost");
+            LM830AgregarSiNoExiste(LM830lista, ".\\SQLEXPRESS");
+            LM830AgregarSiNoExiste(LM830lista, Environment.MachineName);
+            LM830AgregarSiNoExiste(LM830lista,
                 $"{Environment.MachineName}\\SQLEXPRESS");
 
-            return lista
+            return LM830lista
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToList();
         }
 
-        private static void AgregarSiNoExiste(
-            List<string> lista,
-            string valor)
+        private static void LM830AgregarSiNoExiste(
+            List<string> LM830lista,
+            string LM830valor)
         {
-            if (!lista.Contains(valor,
+            if (!LM830lista.Contains(LM830valor,
                 StringComparer.OrdinalIgnoreCase))
             {
-                lista.Add(valor);
+                LM830lista.Add(LM830valor);
             }
         }
     }

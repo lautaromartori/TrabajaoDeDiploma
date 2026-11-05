@@ -1,5 +1,5 @@
-﻿using BLL;
-using Servicios;
+﻿using LM830BLL;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,146 +10,146 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GUI
+namespace LM830GUI
 {
-    public partial class frmReparacionDV : Form,IObserver
+    public partial class LM830frmReparacionDV : Form,LM830IObserver
     {
-        int posX, posY;
-        bool arrastrando = false;
-        DigitoVerificadorBLL DVBLL;
-        RespaldoBLL backupBLL;
-        public frmReparacionDV()
+        int LM830posX, LM830posY;
+        bool LM830arrastrando = false;
+        LM830DigitoVerificadorBLL LM830DVBLL;
+        LM830RespaldoBLL LM830backupBLL;
+        public LM830frmReparacionDV()
         {
             InitializeComponent();
         }
 
-        private void btnRecalcularDV_Click(object sender, EventArgs e)
+        private void LM830btnRecalcularDV_Click(object LM830sender, EventArgs LM830e)
         {
-            if (MessageBox.Show(LanguageManager.Instance.GetTraduction("TextDV1"), LanguageManager.Instance.GetTraduction("TextDV2"), MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            if (MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV1"), LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV2"), MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
             {
                 try
                 {
-                    DVBLL.RecalcularDVV_General();
+                    LM830DVBLL.LM830RecalcularDVV_General();
                 }
-                catch (Exception ex)
+                catch (Exception LM830ex)
                 {
-                    MessageBox.Show(ex.Message, LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(LM830ex.Message, LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                SessionManager.Instance.Desloguear();
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("TextDV3"), LanguageManager.Instance.GetTraduction("TextDV2"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LM830SessionManager.LM830Instance.LM830Desloguear();
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV3"), LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV2"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
-                Login login = new Login();
-                login.Show();
+                LM830Login LM830login = new LM830Login();
+                LM830login.Show();
             }
         }
 
-        private void btnRestaurar_Click(object sender, EventArgs e)
+        private void LM830btnRestaurar_Click(object LM830sender, EventArgs LM830e)
         {
             try
             {
-                if (lstBackups.SelectedItem == null)
+                if (LM830lstBackups.SelectedItem == null)
                 {
-                    MessageBox.Show(LanguageManager.Instance.GetTraduction("TextDV4"), LanguageManager.Instance.GetTraduction("TextDV5"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV4"), LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV5"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                backupBLL.RealizarRestore(backupBLL.ObtenerRutaBakcup(lstBackups.SelectedItem.ToString()));
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("TextDV6"), LanguageManager.Instance.GetTraduction("TextDV7"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LM830backupBLL.LM830RealizarRestore(LM830backupBLL.LM830ObtenerRutaBakcup(LM830lstBackups.SelectedItem.ToString()));
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV6"), LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV7"), MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                SessionManager.Instance.Desloguear();
+                LM830SessionManager.LM830Instance.LM830Desloguear();
                 this.Close();
-                Login login = new Login();
-                login.Show();
+                LM830Login LM830login = new LM830Login();
+                LM830login.Show();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show($"{LanguageManager.Instance.GetTraduction("TextDV8")} {ex.Message}", LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV8")} {LM830ex.Message}", LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void frmReparacionDV_Load(object sender, EventArgs e)
+        private void LM830frmReparacionDV_Load(object LM830sender, EventArgs LM830e)
         {
-            DVBLL = new DigitoVerificadorBLL();
-            backupBLL = new RespaldoBLL();
-            listarIncocistencias();
-            listarBackups();
-            LanguageManager.Instance.AgregarObservador(this);
-            Actualizar(LanguageManager.Instance);
+            LM830DVBLL = new LM830DigitoVerificadorBLL();
+            LM830backupBLL = new LM830RespaldoBLL();
+            LM830listarIncocistencias();
+            LM830listarBackups();
+            LM830LanguageManager.LM830Instance.LM830AgregarObservador(this);
+            LM830Actualizar(LM830LanguageManager.LM830Instance);
         }
-        private void listarIncocistencias()
+        private void LM830listarIncocistencias()
         {
-            lstInconsistencias.Items.Clear();
-            List<string> auditoria = DVBLL.EjecutarAuditoriaDetalladaCompleta();
+            LM830lstInconsistencias.Items.Clear();
+            List<string> LM830auditoria = LM830DVBLL.LM830EjecutarAuditoriaDetalladaCompleta();
 
-            foreach (string inconsistencia in auditoria)
+            foreach (string LM830inconsistencia in LM830auditoria)
             {
-                lstInconsistencias.Items.Add(inconsistencia);
+                LM830lstInconsistencias.Items.Add(LM830inconsistencia);
             }
         }
-        private void listarBackups()
+        private void LM830listarBackups()
         {
             try
             {
-                lstBackups.Items.Clear();
+                LM830lstBackups.Items.Clear();
 
-                List<string> listaDeBackups = backupBLL.ObtenerListaBackups();
+                List<string> LM830listaDeBackups = LM830backupBLL.LM830ObtenerListaBackups();
 
-                if (listaDeBackups.Count == 0)
+                if (LM830listaDeBackups.Count == 0)
                 {
-                    MessageBox.Show(LanguageManager.Instance.GetTraduction("TextDV9"), LanguageManager.Instance.GetTraduction("Informacion"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV9"), LM830LanguageManager.LM830Instance.LM830GetTraduction("Informacion"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                foreach (string backup in listaDeBackups)
+                foreach (string LM830backup in LM830listaDeBackups)
                 {
-                    lstBackups.Items.Add(backup);
+                    LM830lstBackups.Items.Add(LM830backup);
                 }
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show($"{LanguageManager.Instance.GetTraduction("TextDV10")} {ex.Message}", LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV10")} {LM830ex.Message}", LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void btnCancelar_Click(object sender, EventArgs e)
+        private void LM830btnCancelar_Click(object LM830sender, EventArgs LM830e)
         {
-            if (MessageBox.Show(LanguageManager.Instance.GetTraduction("TextDV11"), LanguageManager.Instance.GetTraduction("TextDV12"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV11"), LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV12"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                SessionManager.Instance.Desloguear();
+                LM830SessionManager.LM830Instance.LM830Desloguear();
                 this.Close();
-                Login login = new Login();
-                login.Show();
+                LM830Login LM830login = new LM830Login();
+                LM830login.Show();
             }
         }
 
-        public void Actualizar(LanguageManager lenguaje)
+        public void LM830Actualizar(LM830LanguageManager LM830lenguaje)
         {
-            lblErrorDV.Text = lenguaje.GetTraduction("lblErrorDV");
-            lblModuloReparacion.Text = lenguaje.GetTraduction("lblModuloReparacion");
-            lblForzar.Text = lenguaje.GetTraduction("lblForzar");
-            btnRecalcularDV.Text = lenguaje.GetTraduction("btnRecalcularDV");
-            btnRestaurar.Text = lenguaje.GetTraduction("btnRestaurar");
-            lblSelecVers.Text = lenguaje.GetTraduction("lblSelecVers");
-            btnCancelardv.Text = lenguaje.GetTraduction("btnCancelardv");
+            LM830lblErrorDV.Text = LM830lenguaje.LM830GetTraduction("lblErrorDV");
+            LM830lblModuloReparacion.Text = LM830lenguaje.LM830GetTraduction("lblModuloReparacion");
+            LM830lblForzar.Text = LM830lenguaje.LM830GetTraduction("lblForzar");
+            LM830btnRecalcularDV.Text = LM830lenguaje.LM830GetTraduction("btnRecalcularDV");
+            LM830btnRestaurar.Text = LM830lenguaje.LM830GetTraduction("btnRestaurar");
+            LM830lblSelecVers.Text = LM830lenguaje.LM830GetTraduction("lblSelecVers");
+            LM830btnCancelardv.Text = LM830lenguaje.LM830GetTraduction("btnCancelardv");
         }
 
-        private void BarraTitulo_MouseDown(object sender, MouseEventArgs e)
+        private void LM830BarraTitulo_MouseDown(object LM830sender, MouseEventArgs LM830e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (LM830e.Button == MouseButtons.Left)
             {
-                arrastrando = true;
-                posX = e.X;
-                posY = e.Y;
+                LM830arrastrando = true;
+                LM830posX = LM830e.X;
+                LM830posY = LM830e.Y;
             }
         }
-        private void BarraTitulo_MouseMove(object sender, MouseEventArgs e)
+        private void LM830BarraTitulo_MouseMove(object LM830sender, MouseEventArgs LM830e)
         {
-            if (arrastrando)
+            if (LM830arrastrando)
             {
-                this.Location = new Point(this.Location.X + (e.X - posX), this.Location.Y + (e.Y - posY));
+                this.Location = new Point(this.Location.X + (LM830e.X - LM830posX), this.Location.Y + (LM830e.Y - LM830posY));
             }
         }
 
-        private void btnMaximizar_Click(object sender, EventArgs e)
+        private void LM830btnMaximizar_Click(object LM830sender, EventArgs LM830e)
         {
             if (this.WindowState == FormWindowState.Normal)
                 this.WindowState = FormWindowState.Maximized;
@@ -157,14 +157,14 @@ namespace GUI
                 this.WindowState = FormWindowState.Normal;
         }
 
-        private void btnMinimizar_Click(object sender, EventArgs e)
+        private void LM830btnMinimizar_Click(object LM830sender, EventArgs LM830e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void BarraTitulo_MouseUp(object sender, MouseEventArgs e)
+        private void LM830BarraTitulo_MouseUp(object LM830sender, MouseEventArgs LM830e)
         {
-            arrastrando = false;
+            LM830arrastrando = false;
         }
     }
 }

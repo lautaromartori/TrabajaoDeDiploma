@@ -1,5 +1,5 @@
-﻿using BLL;
-using Servicios;
+﻿using LM830BLL;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,196 +8,196 @@ using System.Windows.Forms;
 using iTextSharp.text.pdf;
 using iText = iTextSharp.text;
 
-namespace GUI
+namespace LM830GUI
 {
-    public partial class FormBitacora : Form,IObserver
+    public partial class LM830FormBitacora : Form,LM830IObserver
     {
-        int posX, posY;
-        bool arrastrando = false;
-        BitacoraBLL bll;
-        public FormBitacora()
+        int LM830posX, LM830posY;
+        bool LM830arrastrando = false;
+        LM830BitacoraBLL LM830bll;
+        public LM830FormBitacora()
         {
             InitializeComponent();
-            bll = new BitacoraBLL();
+            LM830bll = new LM830BitacoraBLL();
 
-            this.Load += FormBitacora_Load;
+            this.Load += LM830FormBitacora_Load;
 
-            dtpFechaFinal.Value = DateTime.Now;
-            dtpFechaInicio.Value = DateTime.Now.AddDays(-3);
+            LM830dtpFechaFinal.Value = DateTime.Now;
+            LM830dtpFechaInicio.Value = DateTime.Now.AddDays(-3);
 
-            CargarFiltros();
+            LM830CargarFiltros();
 
             try
             {
-                List<Bitacora> listaInicial = bll.FiltrarEventos(null, null, null, "Todos", null, dtpFechaInicio.Value, dtpFechaFinal.Value, null);
+                List<LM830Bitacora> LM830listaInicial = LM830bll.LM830FiltrarEventos(null, null, null, "Todos", null, LM830dtpFechaInicio.Value, LM830dtpFechaFinal.Value, null);
 
-                dtgvBitacora.DataSource = listaInicial;
-                ConfigurarDtgv();
-                MostrarPrimerRegistro();
+                LM830dtgvBitacora.DataSource = LM830listaInicial;
+                LM830ConfigurarDtgv();
+                LM830MostrarPrimerRegistro();
             }
             catch (Exception)
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("Bitmsj1"), LanguageManager.Instance.GetTraduction("Bitmsj2"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("Bitmsj1"), LM830LanguageManager.LM830Instance.LM830GetTraduction("Bitmsj2"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            dtgvBitacora.SelectionChanged += DtgvBitacora_SelectionChanged;
+            LM830dtgvBitacora.SelectionChanged += LM830DtgvBitacora_SelectionChanged;
         }
 
-        private void MostrarPrimerRegistro()
+        private void LM830MostrarPrimerRegistro()
         {
-            if (dtgvBitacora.Rows.Count > 0)
+            if (LM830dtgvBitacora.Rows.Count > 0)
             {
-                dtgvBitacora.Rows[0].Selected = true;
-                if (dtgvBitacora.Rows[0].DataBoundItem is Bitacora b)
-                    MostrarUsuario(b.Login);
+                LM830dtgvBitacora.Rows[0].Selected = true;
+                if (LM830dtgvBitacora.Rows[0].DataBoundItem is LM830Bitacora LM830b)
+                    LM830MostrarUsuario(LM830b.LM830Login);
             }
             else
             {
-                txtNombre.Text = string.Empty;
-                txtApellido.Text = string.Empty;
+                LM830txtNombre.Text = string.Empty;
+                LM830txtApellido.Text = string.Empty;
             }
         }
-        private void MostrarUsuario(string login)
+        private void LM830MostrarUsuario(string LM830login)
         {
             try
             {
-                Usuario u = bll.ObtenerUsuarioPorLogin(login);
-                if (u != null)
+                LM830Usuario LM830u = LM830bll.LM830ObtenerUsuarioPorLogin(LM830login);
+                if (LM830u != null)
                 {
-                    txtNombre.Text = u.Nombre;
-                    txtApellido.Text = u.Apellido;
+                    LM830txtNombre.Text = LM830u.LM830Nombre;
+                    LM830txtApellido.Text = LM830u.LM830Apellido;
                 }
                 else
                 {
-                    txtNombre.Text = string.Empty;
-                    txtApellido.Text = string.Empty;
+                    LM830txtNombre.Text = string.Empty;
+                    LM830txtApellido.Text = string.Empty;
                 }
             }
             catch (Exception)
             {
-                txtNombre.Text = string.Empty;
-                txtApellido.Text = string.Empty;
+                LM830txtNombre.Text = string.Empty;
+                LM830txtApellido.Text = string.Empty;
             }
         }
 
-        private void CargarFiltros()
+        private void LM830CargarFiltros()
         {
             try
             {
-                cmbLogin.SelectedIndexChanged -= cmbLogin_SelectedIndexChanged;
+                LM830cmbLogin.SelectedIndexChanged -= LM830cmbLogin_SelectedIndexChanged;
 
-                cmbLogin.Items.Clear();
-                foreach (var l in bll.ObtenerLogins())
-                    cmbLogin.Items.Add(l);
+                LM830cmbLogin.Items.Clear();
+                foreach (var LM830l in LM830bll.LM830ObtenerLogins())
+                    LM830cmbLogin.Items.Add(LM830l);
 
-                cmbModulo.Items.Clear();
-                cmbModulo.Items.Add("Todos");
-                cmbModulo.Items.Add("Usuarios");
-                cmbModulo.Items.Add("Perfiles");
-                cmbModulo.Items.Add("Idioma");
-                cmbModulo.Items.Add("DigitoVerificador");
-                cmbModulo.Items.Add("Clientes");
-                cmbModulo.Items.Add("Ventas");
-                cmbModulo.Items.Add("Reclamos");
-                cmbModulo.SelectedIndex = 0;
+                LM830cmbModulo.Items.Clear();
+                LM830cmbModulo.Items.Add("Todos");
+                LM830cmbModulo.Items.Add("Usuarios");
+                LM830cmbModulo.Items.Add("Perfiles");
+                LM830cmbModulo.Items.Add("Idioma");
+                LM830cmbModulo.Items.Add("DigitoVerificador");
+                LM830cmbModulo.Items.Add("Clientes");
+                LM830cmbModulo.Items.Add("Ventas");
+                LM830cmbModulo.Items.Add("Reclamos");
+                LM830cmbModulo.SelectedIndex = 0;
 
-                cmbEvento.Items.Clear();
-                cmbEvento.Items.Add("Login");
-                cmbEvento.Items.Add("Login fallido");
-                cmbEvento.Items.Add("Desloguear");
-                cmbEvento.Items.Add("Crear Usuario");
-                cmbEvento.Items.Add("Cambiar Clave");
-                cmbEvento.Items.Add("bloqueado");
-                cmbEvento.Items.Add("Registrar cliente");
-                cmbEvento.Items.Add("Registrar venta");
-                cmbEvento.Items.Add("Registrar reclamo");
-                cmbEvento.Items.Add("Aprobar reclamo");
-                cmbEvento.Items.Add("Rechazar reclamo");
-                cmbEvento.Items.Add("Recalculo");
+                LM830cmbEvento.Items.Clear();
+                LM830cmbEvento.Items.Add("Login");
+                LM830cmbEvento.Items.Add("Login fallido");
+                LM830cmbEvento.Items.Add("Desloguear");
+                LM830cmbEvento.Items.Add("Crear Usuario");
+                LM830cmbEvento.Items.Add("Cambiar Clave");
+                LM830cmbEvento.Items.Add("bloqueado");
+                LM830cmbEvento.Items.Add("Registrar cliente");
+                LM830cmbEvento.Items.Add("Registrar venta");
+                LM830cmbEvento.Items.Add("Registrar reclamo");
+                LM830cmbEvento.Items.Add("Aprobar reclamo");
+                LM830cmbEvento.Items.Add("Rechazar reclamo");
+                LM830cmbEvento.Items.Add("Recalculo");
 
-                cmbCriticidad.Items.Clear();
-                cmbCriticidad.Items.Add("Todos");
-                for (int i = 1; i <= 5; i++)
-                    cmbCriticidad.Items.Add(i.ToString());
-                cmbCriticidad.SelectedIndex = 0;
+                LM830cmbCriticidad.Items.Clear();
+                LM830cmbCriticidad.Items.Add("Todos");
+                for (int LM830i = 1; LM830i <= 5; LM830i++)
+                    LM830cmbCriticidad.Items.Add(LM830i.ToString());
+                LM830cmbCriticidad.SelectedIndex = 0;
             }
             catch (Exception)
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("BitMsj3"), LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMsj3"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {
-                cmbLogin.SelectedIndexChanged += cmbLogin_SelectedIndexChanged;
+                LM830cmbLogin.SelectedIndexChanged += LM830cmbLogin_SelectedIndexChanged;
             }
         }
 
-        private void DtgvBitacora_SelectionChanged(object sender, EventArgs e)
+        private void LM830DtgvBitacora_SelectionChanged(object LM830sender, EventArgs LM830e)
         {
-            if (dtgvBitacora.CurrentRow?.DataBoundItem is Bitacora b)
-                MostrarUsuario(b.Login);
+            if (LM830dtgvBitacora.CurrentRow?.DataBoundItem is LM830Bitacora LM830b)
+                LM830MostrarUsuario(LM830b.LM830Login);
         }
 
-         private void ConfigurarDtgv()
+         private void LM830ConfigurarDtgv()
         {
-            dtgvBitacora.ReadOnly = true;
-            dtgvBitacora.AllowUserToAddRows = false;
-            dtgvBitacora.AllowUserToDeleteRows = false;
-            dtgvBitacora.AllowUserToOrderColumns = false;
-            dtgvBitacora.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dtgvBitacora.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            LM830dtgvBitacora.ReadOnly = true;
+            LM830dtgvBitacora.AllowUserToAddRows = false;
+            LM830dtgvBitacora.AllowUserToDeleteRows = false;
+            LM830dtgvBitacora.AllowUserToOrderColumns = false;
+            LM830dtgvBitacora.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            LM830dtgvBitacora.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            if (dtgvBitacora.Columns["Id_Evento"] != null)
-                dtgvBitacora.Columns["Id_Evento"].Visible = false;
+            if (LM830dtgvBitacora.Columns["LM830Id_Evento"] != null)
+                LM830dtgvBitacora.Columns["LM830Id_Evento"].Visible = false;
 
-            if (dtgvBitacora.Columns["Fecha"] != null)
-                dtgvBitacora.Columns["Fecha"].Visible = false;
+            if (LM830dtgvBitacora.Columns["LM830Fecha"] != null)
+                LM830dtgvBitacora.Columns["LM830Fecha"].Visible = false;
 
-            if (dtgvBitacora.Columns["Evento"] != null)
-                dtgvBitacora.Columns["Evento"].HeaderText = "Evento";
+            if (LM830dtgvBitacora.Columns["LM830Evento"] != null)
+                LM830dtgvBitacora.Columns["LM830Evento"].HeaderText = "Evento";
 
-            if (dtgvBitacora.Columns["FechaSolo"] != null)
-                dtgvBitacora.Columns["FechaSolo"].HeaderText = "Fecha";
+            if (LM830dtgvBitacora.Columns["LM830FechaSolo"] != null)
+                LM830dtgvBitacora.Columns["LM830FechaSolo"].HeaderText = "Fecha";
 
-            if (dtgvBitacora.Columns["HoraSolo"] != null)
-                dtgvBitacora.Columns["HoraSolo"].HeaderText = "Hora";
+            if (LM830dtgvBitacora.Columns["LM830HoraSolo"] != null)
+                LM830dtgvBitacora.Columns["LM830HoraSolo"].HeaderText = "Hora";
 
-            dtgvBitacora.Columns["Login"].DisplayIndex = 0;
-            dtgvBitacora.Columns["FechaSolo"].DisplayIndex = 1;
-            dtgvBitacora.Columns["HoraSolo"].DisplayIndex = 2;
-            dtgvBitacora.Columns["Modulo"].DisplayIndex = 3;
-            dtgvBitacora.Columns["Evento"].DisplayIndex = 4;
-            dtgvBitacora.Columns["Criticidad"].DisplayIndex = 5;
+            LM830dtgvBitacora.Columns["LM830Login"].DisplayIndex = 0;
+            LM830dtgvBitacora.Columns["LM830FechaSolo"].DisplayIndex = 1;
+            LM830dtgvBitacora.Columns["LM830HoraSolo"].DisplayIndex = 2;
+            LM830dtgvBitacora.Columns["LM830Modulo"].DisplayIndex = 3;
+            LM830dtgvBitacora.Columns["LM830Evento"].DisplayIndex = 4;
+            LM830dtgvBitacora.Columns["LM830Criticidad"].DisplayIndex = 5;
         }
-        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        private void LM830panel1_MouseUp(object LM830sender, MouseEventArgs LM830e)
         {
-            arrastrando = false;
+            LM830arrastrando = false;
         }
 
-        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        private void LM830panel1_MouseDown(object LM830sender, MouseEventArgs LM830e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (LM830e.Button == MouseButtons.Left)
             {
-                arrastrando = true;
-                posX = e.X;
-                posY = e.Y;
+                LM830arrastrando = true;
+                LM830posX = LM830e.X;
+                LM830posY = LM830e.Y;
             }
         }
 
-        private void btnCerrar_Click(object sender, EventArgs e)
+        private void LM830btnCerrar_Click(object LM830sender, EventArgs LM830e)
         {
-            if (Application.OpenForms["Menu"] != null)
+            if (Application.OpenForms["LM830Menu"] != null)
             {
-                Application.OpenForms["Menu"].Show();
+                Application.OpenForms["LM830Menu"].Show();
             }
             else
             {
-                Menu menu = new Menu();
-                menu.Show();
+                LM830Menu LM830menu = new LM830Menu();
+                LM830menu.Show();
             }
             this.Close();
         }
 
-        private void btnMaximizar_Click(object sender, EventArgs e)
+        private void LM830btnMaximizar_Click(object LM830sender, EventArgs LM830e)
         {
             if (this.WindowState == FormWindowState.Normal)
                 this.WindowState = FormWindowState.Maximized;
@@ -205,213 +205,213 @@ namespace GUI
                 this.WindowState = FormWindowState.Normal;
         }
 
-        private void btnMinimizar_Click(object sender, EventArgs e)
+        private void LM830btnMinimizar_Click(object LM830sender, EventArgs LM830e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void btnAplicar_Click(object sender, EventArgs e)
+        private void LM830btnAplicar_Click(object LM830sender, EventArgs LM830e)
         {
-            if (!ValidarFiltros()) return;
+            if (!LM830ValidarFiltros()) return;
 
             try
             {
-                string nombre = string.IsNullOrWhiteSpace(txtNombre.Text) ? null : txtNombre.Text.Trim();
-                string apellido = string.IsNullOrWhiteSpace(txtApellido.Text) ? null : txtApellido.Text.Trim();
-                string login = string.IsNullOrWhiteSpace(cmbLogin.Text) ? null : cmbLogin.Text.Trim();
-                string modulo = cmbModulo.SelectedItem?.ToString();
-                string evento = string.IsNullOrWhiteSpace(cmbEvento.Text) ? null : cmbEvento.Text.Trim();
-                DateTime desde = dtpFechaInicio.Value;
-                DateTime hasta = dtpFechaFinal.Value;
+                string LM830nombre = string.IsNullOrWhiteSpace(LM830txtNombre.Text) ? null : LM830txtNombre.Text.Trim();
+                string LM830apellido = string.IsNullOrWhiteSpace(LM830txtApellido.Text) ? null : LM830txtApellido.Text.Trim();
+                string LM830login = string.IsNullOrWhiteSpace(LM830cmbLogin.Text) ? null : LM830cmbLogin.Text.Trim();
+                string LM830modulo = LM830cmbModulo.SelectedItem?.ToString();
+                string LM830evento = string.IsNullOrWhiteSpace(LM830cmbEvento.Text) ? null : LM830cmbEvento.Text.Trim();
+                DateTime LM830desde = LM830dtpFechaInicio.Value;
+                DateTime LM830hasta = LM830dtpFechaFinal.Value;
 
-                int? criticidad = null;
-                if (!string.IsNullOrEmpty(cmbCriticidad.Text) && cmbCriticidad.Text != "Todos")
-                    criticidad = Convert.ToInt32(cmbCriticidad.Text);
+                int? LM830criticidad = null;
+                if (!string.IsNullOrEmpty(LM830cmbCriticidad.Text) && LM830cmbCriticidad.Text != "Todos")
+                    LM830criticidad = Convert.ToInt32(LM830cmbCriticidad.Text);
 
-                List<Bitacora> listaFiltrada = bll.FiltrarEventos(nombre, apellido, login, modulo, evento, desde, hasta, criticidad);
+                List<LM830Bitacora> LM830listaFiltrada = LM830bll.LM830FiltrarEventos(LM830nombre, LM830apellido, LM830login, LM830modulo, LM830evento, LM830desde, LM830hasta, LM830criticidad);
 
-                dtgvBitacora.SelectionChanged -= DtgvBitacora_SelectionChanged;
-                dtgvBitacora.DataSource = null;
-                dtgvBitacora.DataSource = listaFiltrada;
-                ConfigurarDtgv();
-                dtgvBitacora.SelectionChanged += DtgvBitacora_SelectionChanged;
+                LM830dtgvBitacora.SelectionChanged -= LM830DtgvBitacora_SelectionChanged;
+                LM830dtgvBitacora.DataSource = null;
+                LM830dtgvBitacora.DataSource = LM830listaFiltrada;
+                LM830ConfigurarDtgv();
+                LM830dtgvBitacora.SelectionChanged += LM830DtgvBitacora_SelectionChanged;
 
-                if (listaFiltrada.Count == 0)
+                if (LM830listaFiltrada.Count == 0)
                 {
-                    txtNombre.Text = string.Empty;
-                    txtApellido.Text = string.Empty;
-                    MessageBox.Show(LanguageManager.Instance.GetTraduction("BitMsj4"), LanguageManager.Instance.GetTraduction("BitMsj5"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LM830txtNombre.Text = string.Empty;
+                    LM830txtApellido.Text = string.Empty;
+                    MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMsj4"), LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMsj5"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MostrarPrimerRegistro();
+                    LM830MostrarPrimerRegistro();
                 }
             }
             catch (Exception)
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("BitMsj6"), LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMsj6"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private bool ValidarFiltros()
+        private bool LM830ValidarFiltros()
         {
-            if (dtpFechaInicio.Value.Date > dtpFechaFinal.Value.Date)
+            if (LM830dtpFechaInicio.Value.Date > LM830dtpFechaFinal.Value.Date)
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("BitMsj7"), LanguageManager.Instance.GetTraduction("bitMsj8"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                dtpFechaInicio.Focus();
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMsj7"), LM830LanguageManager.LM830Instance.LM830GetTraduction("bitMsj8"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LM830dtpFechaInicio.Focus();
                 return false;
             }
 
             return true;
         }
 
-        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        private void LM830panel1_MouseMove(object LM830sender, MouseEventArgs LM830e)
         {
-            if (arrastrando)
+            if (LM830arrastrando)
             {
-                this.Location = new Point(this.Location.X + (e.X - posX), this.Location.Y + (e.Y - posY));
+                this.Location = new Point(this.Location.X + (LM830e.X - LM830posX), this.Location.Y + (LM830e.Y - LM830posY));
             }
         }
 
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        private void LM830btnLimpiar_Click(object LM830sender, EventArgs LM830e)
         {
-            cmbLogin.SelectedIndexChanged -= cmbLogin_SelectedIndexChanged;
-            dtgvBitacora.SelectionChanged -= DtgvBitacora_SelectionChanged;
+            LM830cmbLogin.SelectedIndexChanged -= LM830cmbLogin_SelectedIndexChanged;
+            LM830dtgvBitacora.SelectionChanged -= LM830DtgvBitacora_SelectionChanged;
 
-            txtNombre.Text = string.Empty;
-            txtApellido.Text = string.Empty;
-            cmbLogin.SelectedIndex = -1;
-            cmbModulo.SelectedIndex = 0;
-            cmbEvento.SelectedIndex = -1;
-            cmbCriticidad.SelectedIndex = 0;
+            LM830txtNombre.Text = string.Empty;
+            LM830txtApellido.Text = string.Empty;
+            LM830cmbLogin.SelectedIndex = -1;
+            LM830cmbModulo.SelectedIndex = 0;
+            LM830cmbEvento.SelectedIndex = -1;
+            LM830cmbCriticidad.SelectedIndex = 0;
 
-            dtpFechaInicio.Value = DateTime.Now.AddDays(-3);
-            dtpFechaFinal.Value = DateTime.Now;
+            LM830dtpFechaInicio.Value = DateTime.Now.AddDays(-3);
+            LM830dtpFechaFinal.Value = DateTime.Now;
 
             try
             {
-                dtgvBitacora.DataSource = null;
-                dtgvBitacora.DataSource = bll.FiltrarEventos(null, null, null, "Todos", null, dtpFechaInicio.Value, dtpFechaFinal.Value, null);
-                ConfigurarDtgv();
+                LM830dtgvBitacora.DataSource = null;
+                LM830dtgvBitacora.DataSource = LM830bll.LM830FiltrarEventos(null, null, null, "Todos", null, LM830dtpFechaInicio.Value, LM830dtpFechaFinal.Value, null);
+                LM830ConfigurarDtgv();
             }
             catch (Exception)
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("BitMjs9"), LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMjs9"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                cmbLogin.SelectedIndexChanged += cmbLogin_SelectedIndexChanged;
-                dtgvBitacora.SelectionChanged += DtgvBitacora_SelectionChanged;
+                LM830cmbLogin.SelectedIndexChanged += LM830cmbLogin_SelectedIndexChanged;
+                LM830dtgvBitacora.SelectionChanged += LM830DtgvBitacora_SelectionChanged;
             }
         }
 
-        private void btnImprimir_Click(object sender, EventArgs e)
+        private void LM830btnImprimir_Click(object LM830sender, EventArgs LM830e)
         {
-            if (dtgvBitacora.Rows.Count == 0)
+            if (LM830dtgvBitacora.Rows.Count == 0)
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("BitMjs10"), LanguageManager.Instance.GetTraduction("BitMsj11"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMjs10"), LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMsj11"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "PDF|*.pdf";
-            saveDialog.FileName = "Bitacora_" + DateTime.Now.ToString("yyyyMMdd_HHmm");
+            SaveFileDialog LM830saveDialog = new SaveFileDialog();
+            LM830saveDialog.Filter = "PDF|*.pdf";
+            LM830saveDialog.FileName = "Bitacora_" + DateTime.Now.ToString("yyyyMMdd_HHmm");
 
-            if (saveDialog.ShowDialog() != DialogResult.OK) return;
+            if (LM830saveDialog.ShowDialog() != DialogResult.OK) return;
 
             try
             {
-                iText.Document doc = new iText.Document(iText.PageSize.A4, 20f, 20f, 20f, 20f);
-                PdfWriter.GetInstance(doc, new FileStream(saveDialog.FileName, FileMode.Create));
-                doc.Open();
+                iText.Document LM830doc = new iText.Document(iText.PageSize.A4, 20f, 20f, 20f, 20f);
+                PdfWriter.GetInstance(LM830doc, new FileStream(LM830saveDialog.FileName, FileMode.Create));
+                LM830doc.Open();
 
-                iText.Font fontTitulo = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_BOLD, 14);
-                iText.Font fontFecha = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA, 9);
-                iText.Font fontHeader = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_BOLD, 9);
-                iText.Font fontCell = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA, 8);
-                iText.BaseColor colorHeader = new iText.BaseColor(46, 125, 50);
+                iText.Font LM830fontTitulo = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_BOLD, 14);
+                iText.Font LM830fontFecha = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA, 9);
+                iText.Font LM830fontHeader = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_BOLD, 9);
+                iText.Font LM830fontCell = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA, 8);
+                iText.BaseColor LM830colorHeader = new iText.BaseColor(46, 125, 50);
 
-                doc.Add(new iText.Paragraph("Bitácora de Eventos", fontTitulo));
-                doc.Add(new iText.Paragraph("Generado el " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"), fontFecha));
-                doc.Add(new iText.Paragraph(" "));
+                LM830doc.Add(new iText.Paragraph("Bitácora de Eventos", LM830fontTitulo));
+                LM830doc.Add(new iText.Paragraph("Generado el " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"), LM830fontFecha));
+                LM830doc.Add(new iText.Paragraph(" "));
 
-                PdfPTable tabla = new PdfPTable(6);
-                tabla.WidthPercentage = 100;
-                tabla.SetWidths(new float[] { 15f, 12f, 8f, 12f, 25f, 10f });
+                PdfPTable LM830tabla = new PdfPTable(6);
+                LM830tabla.WidthPercentage = 100;
+                LM830tabla.SetWidths(new float[] { 15f, 12f, 8f, 12f, 25f, 10f });
 
-                foreach (string col in new[] { "Login", "Fecha", "Hora", "Módulo", "Evento", "Criticidad" })
+                foreach (string LM830col in new[] { "Login", "Fecha", "Hora", "Módulo", "Evento", "Criticidad" })
                 {
-                    PdfPCell cell = new PdfPCell(new iText.Phrase(col, fontHeader));
-                    cell.BackgroundColor = colorHeader;
-                    cell.HorizontalAlignment = iText.Element.ALIGN_CENTER;
-                    cell.Padding = 5;
-                    tabla.AddCell(cell);
+                    PdfPCell LM830cell = new PdfPCell(new iText.Phrase(LM830col, LM830fontHeader));
+                    LM830cell.BackgroundColor = LM830colorHeader;
+                    LM830cell.HorizontalAlignment = iText.Element.ALIGN_CENTER;
+                    LM830cell.Padding = 5;
+                    LM830tabla.AddCell(LM830cell);
                 }
 
-                foreach (DataGridViewRow row in dtgvBitacora.Rows)
+                foreach (DataGridViewRow LM830row in LM830dtgvBitacora.Rows)
                 {
-                    if (row.DataBoundItem is Bitacora b)
+                    if (LM830row.DataBoundItem is LM830Bitacora LM830b)
                     {
-                        tabla.AddCell(new PdfPCell(new iText.Phrase(b.Login, fontCell)) { Padding = 4 });
-                        tabla.AddCell(new PdfPCell(new iText.Phrase(b.Fecha.ToString("dd/MM/yyyy"), fontCell)) { Padding = 4 });
-                        tabla.AddCell(new PdfPCell(new iText.Phrase(b.Fecha.ToString("HH:mm"), fontCell)) { Padding = 4 });
-                        tabla.AddCell(new PdfPCell(new iText.Phrase(b.Modulo, fontCell)) { Padding = 4 });
-                        tabla.AddCell(new PdfPCell(new iText.Phrase(b.Evento, fontCell)) { Padding = 4 });
-                        tabla.AddCell(new PdfPCell(new iText.Phrase(b.Criticidad.ToString(), fontCell)) { Padding = 4, HorizontalAlignment = iText.Element.ALIGN_CENTER });
+                        LM830tabla.AddCell(new PdfPCell(new iText.Phrase(LM830b.LM830Login, LM830fontCell)) { Padding = 4 });
+                        LM830tabla.AddCell(new PdfPCell(new iText.Phrase(LM830b.LM830Fecha.ToString("dd/MM/yyyy"), LM830fontCell)) { Padding = 4 });
+                        LM830tabla.AddCell(new PdfPCell(new iText.Phrase(LM830b.LM830Fecha.ToString("HH:mm"), LM830fontCell)) { Padding = 4 });
+                        LM830tabla.AddCell(new PdfPCell(new iText.Phrase(LM830b.LM830Modulo, LM830fontCell)) { Padding = 4 });
+                        LM830tabla.AddCell(new PdfPCell(new iText.Phrase(LM830b.LM830Evento, LM830fontCell)) { Padding = 4 });
+                        LM830tabla.AddCell(new PdfPCell(new iText.Phrase(LM830b.LM830Criticidad.ToString(), LM830fontCell)) { Padding = 4, HorizontalAlignment = iText.Element.ALIGN_CENTER });
                     }
                 }
 
-                doc.Add(tabla);
-                doc.Close();
+                LM830doc.Add(LM830tabla);
+                LM830doc.Close();
 
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("BitMsj12"), LanguageManager.Instance.GetTraduction("BitMsj13"), MessageBoxButtons.OK, MessageBoxIcon.Information);
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(saveDialog.FileName) { UseShellExecute = true });
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMsj12"), LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMsj13"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(LM830saveDialog.FileName) { UseShellExecute = true });
             }
             catch (IOException)
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("BitMsj14"), LanguageManager.Instance.GetTraduction("BitMsj15"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMsj14"), LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMsj15"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception)
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("BitMsj16"), LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMsj16"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void cmbLogin_SelectedIndexChanged(object sender, EventArgs e)
+        private void LM830cmbLogin_SelectedIndexChanged(object LM830sender, EventArgs LM830e)
         {
-            if (!string.IsNullOrEmpty(cmbLogin.Text))
-                MostrarUsuario(cmbLogin.Text);
+            if (!string.IsNullOrEmpty(LM830cmbLogin.Text))
+                LM830MostrarUsuario(LM830cmbLogin.Text);
             else
             {
-                txtNombre.Text = string.Empty;
-                txtApellido.Text = string.Empty;
+                LM830txtNombre.Text = string.Empty;
+                LM830txtApellido.Text = string.Empty;
             }
         }
 
-        private void FormBitacora_Load(object sender, EventArgs e)
+        private void LM830FormBitacora_Load(object LM830sender, EventArgs LM830e)
         {
-            LanguageManager.Instance.AgregarObservador(this);
-            Actualizar(LanguageManager.Instance);
+            LM830LanguageManager.LM830Instance.LM830AgregarObservador(this);
+            LM830Actualizar(LM830LanguageManager.LM830Instance);
 
-            ValidarPermisos();
+            LM830ValidarPermisos();
         }
 
-        private void ValidarPermisos()
+        private void LM830ValidarPermisos()
         {
-            Usuario usuarioActual = SessionManager.Instance.UsuarioActual();
+            LM830Usuario LM830usuarioActual = LM830SessionManager.LM830Instance.LM830UsuarioActual();
 
-            if (!usuarioActual.TienePermiso("Ver Bitacora"))
+            if (!LM830usuarioActual.LM830TienePermiso("Ver Bitacora"))
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("BitMsj17"), LanguageManager.Instance.GetTraduction("BitMsj18"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMsj17"), LM830LanguageManager.LM830Instance.LM830GetTraduction("BitMsj18"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
 
-                if (Application.OpenForms["Menu"] != null)
+                if (Application.OpenForms["LM830Menu"] != null)
                 {
-                    Application.OpenForms["Menu"].Show();
+                    Application.OpenForms["LM830Menu"].Show();
                 }
                 else
                 {
-                    Menu menu = new Menu();
-                    menu.Show();
+                    LM830Menu LM830menu = new LM830Menu();
+                    LM830menu.Show();
                 }
 
                 this.DialogResult = DialogResult.Cancel;
@@ -419,26 +419,26 @@ namespace GUI
                 return;
             }
 
-            btnAplicarB.Enabled = usuarioActual.TienePermiso("Filtrar Bitacora");
-            btnLimpiarB.Enabled = usuarioActual.TienePermiso("Limpiar Bitacora");
-            btnImprimirB.Enabled = usuarioActual.TienePermiso("Imprimir Bitacora");
+            LM830btnAplicarB.Enabled = LM830usuarioActual.LM830TienePermiso("Filtrar Bitacora");
+            LM830btnLimpiarB.Enabled = LM830usuarioActual.LM830TienePermiso("Limpiar Bitacora");
+            LM830btnImprimirB.Enabled = LM830usuarioActual.LM830TienePermiso("Imprimir Bitacora");
         }
 
-        public void Actualizar(LanguageManager lenguaje)
+        public void LM830Actualizar(LM830LanguageManager LM830lenguaje)
         {
-            lblBitacora.Text = lenguaje.GetTraduction("lblBitacora");
-            lblNombreB.Text = lenguaje.GetTraduction("lblNombreB");
-            lblApellidoB.Text = lenguaje.GetTraduction("lblApellidoB");
-            lblLoginB.Text = lenguaje.GetTraduction("lblLoginB");
-            lblFechaInicioB.Text = lenguaje.GetTraduction("lblFechaInicioB");
-            lblFechaFinalB.Text = lenguaje.GetTraduction("lblFechaFinalB");
-            lblModuloB.Text = lenguaje.GetTraduction("lblModuloB");
-            lblEventoB.Text = lenguaje.GetTraduction("lblEventoB");
-            lblCriticidadB.Text = lenguaje.GetTraduction("lblCriticidadB");
+            LM830lblBitacora.Text = LM830lenguaje.LM830GetTraduction("lblBitacora");
+            LM830lblNombreB.Text = LM830lenguaje.LM830GetTraduction("lblNombreB");
+            LM830lblApellidoB.Text = LM830lenguaje.LM830GetTraduction("lblApellidoB");
+            LM830lblLoginB.Text = LM830lenguaje.LM830GetTraduction("lblLoginB");
+            LM830lblFechaInicioB.Text = LM830lenguaje.LM830GetTraduction("lblFechaInicioB");
+            LM830lblFechaFinalB.Text = LM830lenguaje.LM830GetTraduction("lblFechaFinalB");
+            LM830lblModuloB.Text = LM830lenguaje.LM830GetTraduction("lblModuloB");
+            LM830lblEventoB.Text = LM830lenguaje.LM830GetTraduction("lblEventoB");
+            LM830lblCriticidadB.Text = LM830lenguaje.LM830GetTraduction("lblCriticidadB");
 
-            btnLimpiarB.Text = lenguaje.GetTraduction("btnLimpiarB");
-            btnAplicarB.Text = lenguaje.GetTraduction("btnAplicarB");
-            btnImprimirB.Text = lenguaje.GetTraduction("btnImprimirB");
+            LM830btnLimpiarB.Text = LM830lenguaje.LM830GetTraduction("btnLimpiarB");
+            LM830btnAplicarB.Text = LM830lenguaje.LM830GetTraduction("btnAplicarB");
+            LM830btnImprimirB.Text = LM830lenguaje.LM830GetTraduction("btnImprimirB");
         }
     }
 }

@@ -1,180 +1,187 @@
 ﻿#nullable enable
-using BE.RFN1;
-using BE.RFN2;
-using BLL.RFN1;
-using BLL.RFN2;
-using Servicios;
+using LM830BE.LM830RFN1;
+using LM830BE.LM830RFN2;
+using LM830BLL.LM830RFN1;
+using LM830BLL.LM830RFN2;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace GUI.RFN2
+namespace LM830GUI.LM830RFN2
 {
-    public partial class frmPremios : Form, IObserver
+    public partial class LM830frmPremios : Form, LM830IObserver
     {
-        private readonly ClienteBLL _clienteBLL = new ClienteBLL();
-        private readonly PremioBLL _premioBLL = new PremioBLL();
-        private readonly CanjeBLL _canjeBLL = new CanjeBLL();
+        private const int LM830EM_SETCUEBANNER = 0x1501;
 
-        private Cliente? _cliente;
-        private List<Premio> _premios = new List<Premio>();
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, string lParam);
 
-        public frmPremios()
+        private readonly LM830ClienteBLL LM830_clienteBLL = new LM830ClienteBLL();
+        private readonly LM830PremioBLL LM830_premioBLL = new LM830PremioBLL();
+        private readonly LM830CanjeBLL LM830_canjeBLL = new LM830CanjeBLL();
+
+        private LM830Cliente? LM830_cliente;
+        private List<LM830Premio> LM830_premios = new List<LM830Premio>();
+
+        public LM830frmPremios()
         {
             InitializeComponent();
         }
 
-        private void frmPremios_Load(object sender, EventArgs e)
+        private void LM830frmPremios_Load(object LM830sender, EventArgs LM830e)
         {
-            LanguageManager.Instance.AgregarObservador(this);
-            Estilo.Aplicar(this);
-            Actualizar(LanguageManager.Instance);
-            btnRegistrarCanje.Enabled = SessionManager.Instance.UsuarioActual().TienePermiso("Registrar Canje");
-            LimpiarCliente();
-            txtDni.Select();
+            LM830LanguageManager.LM830Instance.LM830AgregarObservador(this);
+            LM830Estilo.LM830Aplicar(this);
+            LM830Actualizar(LM830LanguageManager.LM830Instance);
+            LM830btnRegistrarCanje.Enabled = LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830TienePermiso("Registrar Canje");
+            LM830LimpiarCliente();
+            LM830txtDni.Select();
         }
 
-        private void btnBuscarCliente_Click(object sender, EventArgs e)
+        private void LM830btnBuscarCliente_Click(object LM830sender, EventArgs LM830e)
         {
-            string dni = txtDni.Text.Trim();
-            if (!Regex.IsMatch(dni, @"^\d{7,8}$"))
+            string LM830dni = LM830txtDni.Text.Trim();
+            if (!Regex.IsMatch(LM830dni, @"^\d{7,8}$"))
             {
-                MessageBox.Show(T("RFN1_DniInvalido"), T("RFN2_PremiosCanjeables"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtDni.Select();
+                MessageBox.Show(LM830T("RFN1_DniInvalido"), LM830T("RFN2_PremiosCanjeables"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LM830txtDni.Select();
                 return;
             }
 
             try
             {
-                _cliente = _clienteBLL.Buscar(dni);
-                if (_cliente == null)
+                LM830_cliente = LM830_clienteBLL.LM830Buscar(LM830dni);
+                if (LM830_cliente == null)
                 {
-                    LimpiarCliente();
-                    MessageBox.Show(T("RFN1_ClienteNoInscripto"), T("RFN2_PremiosCanjeables"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LM830LimpiarCliente();
+                    MessageBox.Show(LM830T("RFN1_ClienteNoInscripto"), LM830T("RFN2_PremiosCanjeables"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                CargarPremios();
+                LM830CargarPremios();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830ex.Message, LM830T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void CargarPremios()
+        private void LM830CargarPremios()
         {
-            if (_cliente == null) return;
+            if (LM830_cliente == null) return;
 
-            int saldo = _canjeBLL.SaldoVigente(_cliente);
-            int comprometidos = _canjeBLL.PuntosComprometidos(_cliente);
-            int disponible = Math.Max(0, saldo - comprometidos);
+            int LM830saldo = LM830_canjeBLL.LM830SaldoVigente(LM830_cliente);
+            int LM830comprometidos = LM830_canjeBLL.LM830PuntosComprometidos(LM830_cliente);
+            int LM830disponible = Math.Max(0, LM830saldo - LM830comprometidos);
 
-            lblCliente.Text = $"{_cliente.NombreCompleto} - {T("RFN1_Nivel")} {_cliente.Nivel.Nombre}";
-            lblSaldo.Text = saldo.ToString("N0") + " pts";
-            lblComprometidos.Text = comprometidos.ToString("N0") + " pts";
-            lblDisponible.Text = disponible.ToString("N0") + " pts";
+            LM830lblCliente.Text = $"{LM830_cliente.LM830NombreCompleto} - {LM830T("RFN1_Nivel")} {LM830_cliente.LM830Nivel.LM830Nombre}";
+            LM830lblSaldo.Text = LM830saldo.ToString("N0") + " pts";
+            LM830lblComprometidos.Text = LM830comprometidos.ToString("N0") + " pts";
+            LM830lblDisponible.Text = LM830disponible.ToString("N0") + " pts";
 
-            _premios = _premioBLL.ListarCanjeables(disponible);
-            dgvPremios.DataSource = _premios.Select(p => new
+            LM830_premios = LM830_premioBLL.LM830ListarCanjeables(LM830disponible);
+            LM830dgvPremios.DataSource = LM830_premios.Select(LM830p => new
             {
-                Premio = p.Nombre,
-                Descripción = p.Descripcion,
-                Puntos = p.PuntosRequeridos.ToString("N0"),
-                Stock = p.Stock,
-                Valor = "$ " + p.ValorReferencia.ToString("N2"),
-                Autorización = _premioBLL.RequiereAutorizacion(p) ? T("RFN2_RequiereSupervisor") : T("RFN2_Automatica")
+                Premio = LM830p.LM830Nombre,
+                Descripción = LM830p.LM830Descripcion,
+                Puntos = LM830p.LM830PuntosRequeridos.ToString("N0"),
+                Stock = LM830p.LM830Stock,
+                Valor = "$ " + LM830p.LM830ValorReferencia.ToString("N2"),
+                Autorización = LM830_premioBLL.LM830RequiereAutorizacion(LM830p) ? LM830T("RFN2_RequiereSupervisor") : LM830T("RFN2_Automatica")
             }).ToList();
 
-            if (_premios.Count == 0)
-                lblPremios.Text = T("RFN2_SinPremios");
+            if (LM830_premios.Count == 0)
+                LM830lblPremios.Text = LM830T("RFN2_SinPremios");
             else
-                lblPremios.Text = T("RFN2_PremiosQuePuede");
+                LM830lblPremios.Text = LM830T("RFN2_PremiosQuePuede");
         }
 
-        private void LimpiarCliente()
+        private void LM830LimpiarCliente()
         {
-            _cliente = null;
-            _premios = new List<Premio>();
-            dgvPremios.DataSource = null;
-            lblCliente.Text = "-";
-            lblSaldo.Text = "-";
-            lblComprometidos.Text = "-";
-            lblDisponible.Text = "-";
-            lblPremios.Text = T("RFN2_PremiosQuePuede");
+            LM830_cliente = null;
+            LM830_premios = new List<LM830Premio>();
+            LM830dgvPremios.DataSource = null;
+            LM830lblCliente.Text = "-";
+            LM830lblSaldo.Text = "-";
+            LM830lblComprometidos.Text = "-";
+            LM830lblDisponible.Text = "-";
+            LM830lblPremios.Text = LM830T("RFN2_PremiosQuePuede");
             try
             {
-                lblUmbral.Text = $"{T("RFN2_InfoUmbral")} $ {ProgramaPuntosBLL.Obtener().UmbralAutorizacion:N2}.";
+                LM830lblUmbral.Text = $"{LM830T("RFN2_InfoUmbral")} $ {LM830ProgramaPuntosBLL.LM830Obtener().LM830UmbralAutorizacion:N2}.";
             }
             catch
             {
-                lblUmbral.Text = "";
+                LM830lblUmbral.Text = "";
             }
         }
 
-        private Premio? Seleccionado()
+        private LM830Premio? LM830Seleccionado()
         {
-            if (dgvPremios.CurrentRow == null) return null;
-            int i = dgvPremios.CurrentRow.Index;
-            return i >= 0 && i < _premios.Count ? _premios[i] : null;
+            if (LM830dgvPremios.CurrentRow == null) return null;
+            int LM830i = LM830dgvPremios.CurrentRow.Index;
+            return LM830i >= 0 && LM830i < LM830_premios.Count ? LM830_premios[LM830i] : null;
         }
 
-        private void btnRegistrarCanje_Click(object sender, EventArgs e)
+        private void LM830btnRegistrarCanje_Click(object LM830sender, EventArgs LM830e)
         {
-            if (_cliente == null)
+            if (LM830_cliente == null)
             {
-                MessageBox.Show(T("RFN1_PrimeroCliente"), T("RFN2_RegistrarCanje"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(LM830T("RFN1_PrimeroCliente"), LM830T("RFN2_RegistrarCanje"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            Premio? premio = Seleccionado();
-            if (premio == null)
+            LM830Premio? LM830premio = LM830Seleccionado();
+            if (LM830premio == null)
             {
-                MessageBox.Show(T("RFN2_SeleccionePremio"), T("RFN2_RegistrarCanje"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(LM830T("RFN2_SeleccionePremio"), LM830T("RFN2_RegistrarCanje"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (MessageBox.Show($"{T("RFN2_ConfirmarCanje")} {premio.Nombre} ({premio.PuntosRequeridos:N0} pts) - {_cliente.NombreCompleto}?",
-                    T("RFN2_RegistrarCanje"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (MessageBox.Show($"{LM830T("RFN2_ConfirmarCanje")} {LM830premio.LM830Nombre} ({LM830premio.LM830PuntosRequeridos:N0} pts) - {LM830_cliente.LM830NombreCompleto}?",
+                    LM830T("RFN2_RegistrarCanje"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
             try
             {
-                Canje canje = _canjeBLL.RegistrarSolicitud(_cliente, premio);
-                string estado = canje.Estado == EstadoCanje.autorizado ? T("RFN2_CanjeAutorizado") : T("RFN2_CanjePendiente");
-                MessageBox.Show($"{T("RFN2_CanjeRegistrado")} {canje.NroCanje}.{Environment.NewLine}{estado}",
-                    T("RFN2_RegistrarCanje"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LM830Canje LM830canje = LM830_canjeBLL.LM830RegistrarSolicitud(LM830_cliente, LM830premio);
+                string LM830estado = LM830canje.LM830Estado == LM830EstadoCanje.LM830autorizado ? LM830T("RFN2_CanjeAutorizado") : LM830T("RFN2_CanjePendiente");
+                MessageBox.Show($"{LM830T("RFN2_CanjeRegistrado")} {LM830canje.LM830NroCanje}.{Environment.NewLine}{LM830estado}",
+                    LM830T("RFN2_RegistrarCanje"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, T("RFN2_RegistrarCanje"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(LM830ex.Message, LM830T("RFN2_RegistrarCanje"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            try { CargarPremios(); } catch { }
+            try { LM830CargarPremios(); } catch { }
         }
 
-        private void btnVolver_Click(object sender, EventArgs e) => Close();
+        private void LM830btnVolver_Click(object LM830sender, EventArgs LM830e) => Close();
 
-        private void frmPremios_FormClosed(object sender, FormClosedEventArgs e)
+        private void LM830frmPremios_FormClosed(object LM830sender, FormClosedEventArgs LM830e)
         {
-            LanguageManager.Instance.EliminarObservador(this);
-            Navegacion.MostrarMenu();
+            LM830LanguageManager.LM830Instance.LM830EliminarObservador(this);
+            LM830Navegacion.LM830MostrarMenu();
         }
 
-        private static string T(string clave) => LanguageManager.Instance.GetTraduction(clave);
+        private static string LM830T(string LM830clave) => LM830LanguageManager.LM830Instance.LM830GetTraduction(LM830clave);
 
-        public void Actualizar(LanguageManager lenguaje)
+        public void LM830Actualizar(LM830LanguageManager LM830lenguaje)
         {
-            Text = lenguaje.GetTraduction("RFN2_PremiosCanjeables");
-            lblTitulo.Text = Text;
-            grpCliente.Text = lenguaje.GetTraduction("RFN1_Cliente");
-            lblDni.Text = lenguaje.GetTraduction("RFN1_Dni");
-            btnBuscarCliente.Text = lenguaje.GetTraduction("RFN1_BuscarCliente");
-            lblSaldoTitulo.Text = lenguaje.GetTraduction("RFN1_SaldoVigente") + ":";
-            lblComprometidosTitulo.Text = lenguaje.GetTraduction("RFN2_Comprometidos") + ":";
-            lblDisponibleTitulo.Text = lenguaje.GetTraduction("RFN2_Disponible") + ":";
-            btnRegistrarCanje.Text = lenguaje.GetTraduction("RFN2_RegistrarCanje");
-            btnVolver.Text = lenguaje.GetTraduction("RFN1_Volver");
-            if (_cliente == null) lblPremios.Text = lenguaje.GetTraduction("RFN2_PremiosQuePuede");
+            Text = LM830lenguaje.LM830GetTraduction("RFN2_PremiosCanjeables");
+            LM830lblTitulo.Text = Text;
+            LM830grpCliente.Text = LM830lenguaje.LM830GetTraduction("RFN1_Cliente");
+            LM830lblDni.Text = LM830lenguaje.LM830GetTraduction("RFN1_Dni");
+            LM830btnBuscarCliente.Text = LM830lenguaje.LM830GetTraduction("RFN1_BuscarCliente");
+            LM830lblSaldoTitulo.Text = LM830lenguaje.LM830GetTraduction("RFN1_SaldoVigente") + ":";
+            LM830lblComprometidosTitulo.Text = LM830lenguaje.LM830GetTraduction("RFN2_Comprometidos") + ":";
+            LM830lblDisponibleTitulo.Text = LM830lenguaje.LM830GetTraduction("RFN2_Disponible") + ":";
+            LM830btnRegistrarCanje.Text = LM830lenguaje.LM830GetTraduction("RFN2_RegistrarCanje");
+            LM830btnVolver.Text = LM830lenguaje.LM830GetTraduction("RFN1_Volver");
+            SendMessage(LM830txtDni.Handle, LM830EM_SETCUEBANNER, (IntPtr)1, LM830lenguaje.LM830GetTraduction("RFN1_PH_Dni"));
+            if (LM830_cliente == null) LM830lblPremios.Text = LM830lenguaje.LM830GetTraduction("RFN2_PremiosQuePuede");
         }
     }
 }

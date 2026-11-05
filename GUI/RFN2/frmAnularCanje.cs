@@ -1,142 +1,149 @@
 ﻿#nullable enable
-using BE.RFN2;
-using BLL.RFN2;
-using Servicios;
+using LM830BE.LM830RFN2;
+using LM830BLL.LM830RFN2;
+using LM830Servicios;
 using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace GUI.RFN2
+namespace LM830GUI.LM830RFN2
 {
-    public partial class frmAnularCanje : Form, IObserver
+    public partial class LM830frmAnularCanje : Form, LM830IObserver
     {
-        private readonly CanjeBLL _canjeBLL = new CanjeBLL();
-        private Canje? _canje;
+        private const int LM830EM_SETCUEBANNER = 0x1501;
 
-        public frmAnularCanje()
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, string lParam);
+
+        private readonly LM830CanjeBLL LM830_canjeBLL = new LM830CanjeBLL();
+        private LM830Canje? LM830_canje;
+
+        public LM830frmAnularCanje()
         {
             InitializeComponent();
         }
 
-        private void frmAnularCanje_Load(object sender, EventArgs e)
+        private void LM830frmAnularCanje_Load(object LM830sender, EventArgs LM830e)
         {
-            LanguageManager.Instance.AgregarObservador(this);
-            Estilo.Aplicar(this);
-            Actualizar(LanguageManager.Instance);
-            Mostrar();
-            txtNroCanje.Select();
+            LM830LanguageManager.LM830Instance.LM830AgregarObservador(this);
+            LM830Estilo.LM830Aplicar(this);
+            LM830Actualizar(LM830LanguageManager.LM830Instance);
+            LM830Mostrar();
+            LM830txtNroCanje.Select();
         }
 
-        private void btnBuscar_Click(object sender, EventArgs e)
+        private void LM830btnBuscar_Click(object LM830sender, EventArgs LM830e)
         {
             try
             {
-                _canje = _canjeBLL.ObtenerPorNro(txtNroCanje.Text);
-                if (_canje == null)
+                LM830_canje = LM830_canjeBLL.LM830ObtenerPorNro(LM830txtNroCanje.Text);
+                if (LM830_canje == null)
                 {
-                    Mostrar();
-                    MessageBox.Show(T("RFN2_CanjeNoExiste"), T("RFN2_AnularCanje"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtNroCanje.SelectAll();
-                    txtNroCanje.Select();
+                    LM830Mostrar();
+                    MessageBox.Show(LM830T("RFN2_CanjeNoExiste"), LM830T("RFN2_AnularCanje"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    LM830txtNroCanje.SelectAll();
+                    LM830txtNroCanje.Select();
                     return;
                 }
-                txtNroCanje.Text = _canje.NroCanje;
-                Mostrar();
+                LM830txtNroCanje.Text = LM830_canje.LM830NroCanje;
+                LM830Mostrar();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830ex.Message, LM830T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void Mostrar()
+        private void LM830Mostrar()
         {
-            Canje? k = _canje;
-            if (k == null)
+            LM830Canje? LM830k = LM830_canje;
+            if (LM830k == null)
             {
-                lblClienteDatos.Text = "-";
-                lblPremioDatos.Text = "-";
-                lblEntregaDatos.Text = "-";
-                lblEstadoDatos.Text = "-";
-                dgvLotes.DataSource = null;
-                btnAnular.Enabled = false;
+                LM830lblClienteDatos.Text = "-";
+                LM830lblPremioDatos.Text = "-";
+                LM830lblEntregaDatos.Text = "-";
+                LM830lblEstadoDatos.Text = "-";
+                LM830dgvLotes.DataSource = null;
+                LM830btnAnular.Enabled = false;
                 return;
             }
 
-            lblClienteDatos.Text = $"{T("RFN1_Cliente")}: {k.Cliente.NombreCompleto} (DNI {k.Cliente.Dni})";
-            lblPremioDatos.Text = $"{T("RFN2_Premio")}: {k.Premio.Nombre} - {k.PuntosRequeridos:N0} pts";
-            lblEntregaDatos.Text = k.FechaEntrega.HasValue
-                ? $"{T("RFN2_FechaEntrega")}: {k.FechaEntrega.Value:dd/MM/yyyy HH:mm}"
-                : $"{T("RFN2_FechaSolicitud")}: {k.FechaSolicitud:dd/MM/yyyy HH:mm}";
+            LM830lblClienteDatos.Text = $"{LM830T("RFN1_Cliente")}: {LM830k.LM830Cliente.LM830NombreCompleto} (DNI {LM830k.LM830Cliente.LM830Dni})";
+            LM830lblPremioDatos.Text = $"{LM830T("RFN2_Premio")}: {LM830k.LM830Premio.LM830Nombre} - {LM830k.LM830PuntosRequeridos:N0} pts";
+            LM830lblEntregaDatos.Text = LM830k.LM830FechaEntrega.HasValue
+                ? $"{LM830T("RFN2_FechaEntrega")}: {LM830k.LM830FechaEntrega.Value:dd/MM/yyyy HH:mm}"
+                : $"{LM830T("RFN2_FechaSolicitud")}: {LM830k.LM830FechaSolicitud:dd/MM/yyyy HH:mm}";
 
-            string estado = $"{T("RFN2_Estado")}: {T("RFN2_Estado_" + k.Estado)}";
-            bool anulable = k.Estado == EstadoCanje.entregado && _canjeBLL.DentroDelPlazoDeAnulacion(k);
-            if (k.Estado == EstadoCanje.entregado && !anulable) estado += " - " + T("RFN2_FueraDePlazo");
-            if (k.Estado == EstadoCanje.anulado && k.MotivoAnulacion != null) estado += " - " + k.MotivoAnulacion;
-            lblEstadoDatos.Text = estado;
-            lblEstadoDatos.ForeColor = anulable ? Estilo.VerdeOscuro : System.Drawing.Color.Firebrick;
+            string LM830estado = $"{LM830T("RFN2_Estado")}: {LM830T("RFN2_Estado_" + LM830k.LM830Estado.LM830ATexto())}";
+            bool LM830anulable = LM830k.LM830Estado == LM830EstadoCanje.LM830entregado && LM830_canjeBLL.LM830DentroDelPlazoDeAnulacion(LM830k);
+            if (LM830k.LM830Estado == LM830EstadoCanje.LM830entregado && !LM830anulable) LM830estado += " - " + LM830T("RFN2_FueraDePlazo");
+            if (LM830k.LM830Estado == LM830EstadoCanje.LM830anulado && LM830k.LM830MotivoAnulacion != null) LM830estado += " - " + LM830k.LM830MotivoAnulacion;
+            LM830lblEstadoDatos.Text = LM830estado;
+            LM830lblEstadoDatos.ForeColor = LM830anulable ? LM830Estilo.LM830VerdeOscuro : System.Drawing.Color.Firebrick;
 
-            dgvLotes.DataSource = k.Detalle.Select(d => new
+            LM830dgvLotes.DataSource = LM830k.LM830Detalle.Select(LM830d => new
             {
-                Lote = d.Lote.IdLote,
-                Acreditado = d.Lote.FechaAcreditacion.ToString("dd/MM/yyyy"),
-                Vence = d.Lote.FechaVencimiento.ToString("dd/MM/yyyy"),
-                Descontados = d.PuntosDescontados.ToString("N0")
+                Lote = LM830d.LM830Lote.LM830IdLote,
+                Acreditado = LM830d.LM830Lote.LM830FechaAcreditacion.ToString("dd/MM/yyyy"),
+                Vence = LM830d.LM830Lote.LM830FechaVencimiento.ToString("dd/MM/yyyy"),
+                Descontados = LM830d.LM830PuntosDescontados.ToString("N0")
             }).ToList();
-            btnAnular.Enabled = anulable;
+            LM830btnAnular.Enabled = LM830anulable;
         }
 
-        private void btnAnular_Click(object sender, EventArgs e)
+        private void LM830btnAnular_Click(object LM830sender, EventArgs LM830e)
         {
-            if (_canje == null) return;
-            if (txtMotivo.Text.Trim().Length == 0)
+            if (LM830_canje == null) return;
+            if (LM830txtMotivo.Text.Trim().Length == 0)
             {
-                MessageBox.Show(T("RFN2_MotivoAnulacion"), T("RFN2_AnularCanje"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtMotivo.Select();
+                MessageBox.Show(LM830T("RFN2_MotivoAnulacion"), LM830T("RFN2_AnularCanje"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LM830txtMotivo.Select();
                 return;
             }
-            if (MessageBox.Show($"{T("RFN2_ConfirmarAnulacion")} {_canje.NroCanje}?", T("RFN2_AnularCanje"),
+            if (MessageBox.Show($"{LM830T("RFN2_ConfirmarAnulacion")} {LM830_canje.LM830NroCanje}?", LM830T("RFN2_AnularCanje"),
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
             try
             {
-                int reintegrados = _canjeBLL.Anular(_canje, txtMotivo.Text);
-                MessageBox.Show($"{T("RFN2_CanjeAnulado")} {reintegrados:N0} pts.", T("RFN2_AnularCanje"),
+                int LM830reintegrados = LM830_canjeBLL.LM830Anular(LM830_canje, LM830txtMotivo.Text);
+                MessageBox.Show($"{LM830T("RFN2_CanjeAnulado")} {LM830reintegrados:N0} pts.", LM830T("RFN2_AnularCanje"),
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txtMotivo.Clear();
+                LM830txtMotivo.Clear();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830ex.Message, LM830T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            try { _canje = _canjeBLL.ObtenerPorNro(_canje.NroCanje); } catch { }
-            Mostrar();
+            try { LM830_canje = LM830_canjeBLL.LM830ObtenerPorNro(LM830_canje.LM830NroCanje); } catch { }
+            LM830Mostrar();
         }
 
-        private void btnVolver_Click(object sender, EventArgs e) => Close();
+        private void LM830btnVolver_Click(object LM830sender, EventArgs LM830e) => Close();
 
-        private void frmAnularCanje_FormClosed(object sender, FormClosedEventArgs e)
+        private void LM830frmAnularCanje_FormClosed(object LM830sender, FormClosedEventArgs LM830e)
         {
-            LanguageManager.Instance.EliminarObservador(this);
-            Navegacion.MostrarMenu();
+            LM830LanguageManager.LM830Instance.LM830EliminarObservador(this);
+            LM830Navegacion.LM830MostrarMenu();
         }
 
-        private static string T(string clave) => LanguageManager.Instance.GetTraduction(clave);
+        private static string LM830T(string LM830clave) => LM830LanguageManager.LM830Instance.LM830GetTraduction(LM830clave);
 
-        public void Actualizar(LanguageManager lenguaje)
+        public void LM830Actualizar(LM830LanguageManager LM830lenguaje)
         {
-            Text = lenguaje.GetTraduction("RFN2_AnularCanje");
-            lblTitulo.Text = Text;
-            lblNro.Text = lenguaje.GetTraduction("RFN2_NroCanje");
-            btnBuscar.Text = lenguaje.GetTraduction("RFN1_Buscar");
-            grpCanje.Text = lenguaje.GetTraduction("RFN2_Canje");
-            lblLotes.Text = lenguaje.GetTraduction("RFN2_PuntosPorVencimiento");
-            lblMotivo.Text = lenguaje.GetTraduction("RFN2_MotivoDeAnulacion");
-            btnAnular.Text = lenguaje.GetTraduction("RFN2_AnularCanje");
-            btnVolver.Text = lenguaje.GetTraduction("RFN1_Volver");
-            Mostrar();
+            Text = LM830lenguaje.LM830GetTraduction("RFN2_AnularCanje");
+            LM830lblTitulo.Text = Text;
+            LM830lblNro.Text = LM830lenguaje.LM830GetTraduction("RFN2_NroCanje");
+            LM830btnBuscar.Text = LM830lenguaje.LM830GetTraduction("RFN1_Buscar");
+            LM830grpCanje.Text = LM830lenguaje.LM830GetTraduction("RFN2_Canje");
+            LM830lblLotes.Text = LM830lenguaje.LM830GetTraduction("RFN2_PuntosPorVencimiento");
+            LM830lblMotivo.Text = LM830lenguaje.LM830GetTraduction("RFN2_MotivoDeAnulacion");
+            LM830btnAnular.Text = LM830lenguaje.LM830GetTraduction("RFN2_AnularCanje");
+            LM830btnVolver.Text = LM830lenguaje.LM830GetTraduction("RFN1_Volver");
+            SendMessage(LM830txtNroCanje.Handle, LM830EM_SETCUEBANNER, (IntPtr)1, LM830lenguaje.LM830GetTraduction("RFN2_PH_NroCanje"));
+            LM830Mostrar();
         }
     }
 }

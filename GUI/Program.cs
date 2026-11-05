@@ -1,14 +1,14 @@
-﻿using GUI.RFN1;
-using Servicios;
+﻿using LM830GUI.LM830RFN1;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GUI
+namespace LM830GUI
 {
-    internal static class Program
+    internal static class LM830Program
     {
         [STAThread]
         static void Main()
@@ -16,18 +16,18 @@ namespace GUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (!ConexionConfig.ExisteConfiguracion())
+            if (!LM830ConexionConfig.LM830ExisteConfiguracion())
             {
-                FrmConexionInicial frmConfig = new FrmConexionInicial();
-                DialogResult resultado = frmConfig.ShowDialog();
+                LM830FrmConexionInicial LM830frmConfig = new LM830FrmConexionInicial();
+                DialogResult LM830resultado = LM830frmConfig.ShowDialog();
 
-                if (resultado != DialogResult.OK)
+                if (LM830resultado != DialogResult.OK)
                 {
                     return;
                 }
             }
 
-            Application.Run(new Login());
+            Application.Run(new LM830Login());
         }
     }
 }

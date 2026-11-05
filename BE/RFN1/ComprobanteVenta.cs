@@ -2,39 +2,39 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace BE.RFN1
+namespace LM830BE.LM830RFN1
 {
     [Serializable]
     [XmlRoot("ComprobanteVenta")]
-    public class ComprobanteVenta
+    public class LM830ComprobanteVenta
     {
-        public string Comercio { get; set; } = "";
-        public string NroComprobante { get; set; } = "";
-        public DateTime Fecha { get; set; }
-        public string Vendedor { get; set; } = "";
-        public string DniCliente { get; set; } = "";
-        public string Cliente { get; set; } = "";
-        public string Nivel { get; set; } = "";
-        public decimal Total { get; set; }
-        public int PuntosAcreditados { get; set; }
-        public int SaldoVigente { get; set; }
-        public DateTime FechaEmision { get; set; }
+        public string LM830Comercio { get; set; } = "";
+        public string LM830NroComprobante { get; set; } = "";
+        public DateTime LM830Fecha { get; set; }
+        public string LM830Vendedor { get; set; } = "";
+        public string LM830DniCliente { get; set; } = "";
+        public string LM830Cliente { get; set; } = "";
+        public string LM830Nivel { get; set; } = "";
+        public decimal LM830Total { get; set; }
+        public int LM830PuntosAcreditados { get; set; }
+        public int LM830SaldoVigente { get; set; }
+        public DateTime LM830FechaEmision { get; set; }
 
         [XmlArray("Items")]
         [XmlArrayItem("Item")]
-        public List<ItemComprobante> Items { get; set; } = new List<ItemComprobante>();
+        public List<LM830ItemComprobante> LM830Items { get; set; } = new List<LM830ItemComprobante>();
 
-        public bool TieneCliente() => DniCliente.Length > 0;
+        public bool LM830TieneCliente() => LM830DniCliente.Length > 0;
     }
 
     [Serializable]
-    public class ItemComprobante
+    public class LM830ItemComprobante
     {
-        public string Producto { get; set; } = "";
-        public string Categoria { get; set; } = "";
-        public int Cantidad { get; set; }
-        public decimal PrecioUnitario { get; set; }
-        public decimal Subtotal { get; set; }
-        public int Puntos { get; set; }
+        public string LM830Producto { get; set; } = "";
+        public string LM830Categoria { get; set; } = "";
+        public int LM830Cantidad { get; set; }
+        public decimal LM830PrecioUnitario { get; set; }
+        public decimal LM830Subtotal { get; set; }
+        public int LM830Puntos { get; set; }
     }
 }

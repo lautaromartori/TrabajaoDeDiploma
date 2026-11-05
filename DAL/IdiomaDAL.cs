@@ -1,92 +1,92 @@
 ﻿using Microsoft.Data.SqlClient;
-using Servicios;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DAL
+namespace LM830DAL
 {
-    public class IdiomaDAL : AbstractDAL<IdiomaDAL>
+    public class LM830IdiomaDAL : LM830AbstractDAL<LM830IdiomaDAL>
     {
-        public string ObtenerIdioma(string userName)
+        public string LM830ObtenerIdioma(string LM830userName)
         {
             try
             {
-                _sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.Clear();
 
-                _sqlcommand.CommandText = @"
+                LM830_sqlcommand.CommandText = @"
                     SELECT CodigoIdioma
                     FROM Idioma
                     WHERE UserName = @UserName";
 
-                _sqlcommand.Parameters.AddWithValue(
+                LM830_sqlcommand.Parameters.AddWithValue(
                     "@UserName",
-                    userName);
+                    LM830userName);
 
-                _sqlserver.Open();
+                LM830_sqlserver.Open();
 
-                object resultado =
-                    _sqlcommand.ExecuteScalar();
+                object LM830resultado =
+                    LM830_sqlcommand.ExecuteScalar();
 
-                if (resultado == null)
+                if (LM830resultado == null)
                     return "es";
 
-                return resultado.ToString();
+                return LM830resultado.ToString();
             }
             finally
             {
-                if (_sqlserver.State ==
+                if (LM830_sqlserver.State ==
                     System.Data.ConnectionState.Open)
                 {
-                    _sqlserver.Close();
+                    LM830_sqlserver.Close();
                 }
 
-                _sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.Clear();
             }
         }
-        public List<Idioma> listarTodosLosIdiomas()
+        public List<LM830Idioma> LM830listarTodosLosIdiomas()
         {
-            List<Idioma> lista = new List<Idioma>();
+            List<LM830Idioma> LM830lista = new List<LM830Idioma>();
             try
             {
-                _sqlcommand.CommandText = @"SELECT UserName, CodigoIdioma, DVH FROM Idioma";
-                _sqlcommand.Parameters.Clear();
-                _sqlserver.Open();
-                using (SqlDataReader reader = _sqlcommand.ExecuteReader())
+                LM830_sqlcommand.CommandText = @"SELECT UserName, CodigoIdioma, DVH FROM Idioma";
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlserver.Open();
+                using (SqlDataReader LM830reader = LM830_sqlcommand.ExecuteReader())
                 {
-                    while (reader.Read())
+                    while (LM830reader.Read())
                     {
-                        Idioma idioma = new Idioma
+                        LM830Idioma LM830idioma = new LM830Idioma
                         {
-                            UserName = reader["UserName"].ToString(),
-                            CodigoIdioma = reader["CodigoIdioma"].ToString(),
-                            DVH = reader["DVH"].ToString()
+                            LM830UserName = LM830reader["UserName"].ToString(),
+                            LM830CodigoIdioma = LM830reader["CodigoIdioma"].ToString(),
+                            LM830DVH = LM830reader["DVH"].ToString()
                         };
-                        lista.Add(idioma);
+                        LM830lista.Add(LM830idioma);
                     }
                 }
             }
             finally
             {
-                if (_sqlserver.State == System.Data.ConnectionState.Open)
+                if (LM830_sqlserver.State == System.Data.ConnectionState.Open)
                 {
-                    _sqlserver.Close();
+                    LM830_sqlserver.Close();
                 }
-                _sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.Clear();
             }
-            return lista;
+            return LM830lista;
         }
 
-        public void GuardarIdioma(
-            string userName,
-            string codigoIdioma,
-            string DVH)
+        public void LM830GuardarIdioma(
+            string LM830userName,
+            string LM830codigoIdioma,
+            string LM830DVH)
         {
             try
             {
-                _sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.Clear();
 
-                _sqlcommand.CommandText = @"
+                LM830_sqlcommand.CommandText = @"
                 IF EXISTS
                 (
                     SELECT 1
@@ -116,56 +116,56 @@ namespace DAL
                     )
                 END";
 
-                _sqlcommand.Parameters.AddWithValue(
+                LM830_sqlcommand.Parameters.AddWithValue(
                     "@UserName",
-                    userName);
+                    LM830userName);
 
-                _sqlcommand.Parameters.AddWithValue(
+                LM830_sqlcommand.Parameters.AddWithValue(
                     "@CodigoIdioma",
-                    codigoIdioma);
+                    LM830codigoIdioma);
 
-                _sqlcommand.Parameters.AddWithValue(
+                LM830_sqlcommand.Parameters.AddWithValue(
                     "@dvh",
-                    DVH);
+                    LM830DVH);
 
-                _sqlserver.Open();
+                LM830_sqlserver.Open();
 
-                _sqlcommand.ExecuteNonQuery();
+                LM830_sqlcommand.ExecuteNonQuery();
             }
             finally
             {
-                if (_sqlserver.State ==
+                if (LM830_sqlserver.State ==
                     System.Data.ConnectionState.Open)
                 {
-                    _sqlserver.Close();
+                    LM830_sqlserver.Close();
                 }
 
-                _sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.Clear();
             }
         }
 
-        public void ActualizarDVH(string userName, string dvhCalculado)
+        public void LM830ActualizarDVH(string LM830userName, string LM830dvhCalculado)
         {
             try
             {
-                _sqlcommand.CommandText = @"UPDATE Idioma SET DVH = @DVH WHERE UserName = @UserName";
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.Parameters.AddWithValue("@DVH", dvhCalculado);
-                _sqlcommand.Parameters.AddWithValue("@UserName", userName);
-                _sqlserver.Open();
-                _sqlcommand.ExecuteNonQuery();
+                LM830_sqlcommand.CommandText = @"UPDATE Idioma SET DVH = @DVH WHERE UserName = @UserName";
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.AddWithValue("@DVH", LM830dvhCalculado);
+                LM830_sqlcommand.Parameters.AddWithValue("@UserName", LM830userName);
+                LM830_sqlserver.Open();
+                LM830_sqlcommand.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
                 throw;
             }
             finally
             {
-                if (_sqlserver.State == System.Data.ConnectionState.Open)
+                if (LM830_sqlserver.State == System.Data.ConnectionState.Open)
                 {
-                    _sqlserver.Close();
+                    LM830_sqlserver.Close();
                 }
-                _sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.Clear();
             }
         }
     }

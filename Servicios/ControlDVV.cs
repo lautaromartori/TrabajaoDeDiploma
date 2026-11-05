@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public class ControlDVV
+    public class LM830ControlDVV
     {
-        public string nombreTabla { get; set; }
-        public string nombreColumna { get; set; }
-        public string DVV { get; set; }
+        public string LM830nombreTabla { get; set; }
+        public string LM830nombreColumna { get; set; }
+        public string LM830DVV { get; set; }
     }
 }

@@ -1,131 +1,131 @@
-﻿using BE.RFN1;
+﻿using LM830BE.LM830RFN1;
 using Microsoft.Data.SqlClient;
-using Servicios;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 
-namespace DAL.RFN1
+namespace LM830DAL.LM830RFN1
 {
-    public class LoteDAL : AbstractDAL<LotePuntos>
+    public class LM830LoteDAL : LM830AbstractDAL<LM830LotePuntos>
     {
-        private const string SELECT_LOTE = @"SELECT idLote, idCliente, idVenta, idReclamo, puntosOriginales, puntosDisponibles,
+        private const string LM830SELECT_LOTE = @"SELECT idLote, idCliente, idVenta, idReclamo, puntosOriginales, puntosDisponibles,
                                                     fechaAcreditacion, fechaVencimiento, origen, DVH
                                              FROM LotePuntos";
 
-        public List<LotePuntos> ObtenerPorCliente(int id)
+        public List<LM830LotePuntos> LM830ObtenerPorCliente(int LM830id)
         {
-            var lista = new List<LotePuntos>();
+            var LM830lista = new List<LM830LotePuntos>();
             try
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.CommandText = SELECT_LOTE + " WHERE idCliente = @id ORDER BY fechaVencimiento, idLote";
-                _sqlcommand.Parameters.AddWithValue("@id", id);
-                _sqlserver.Open();
-                using (SqlDataReader r = _sqlcommand.ExecuteReader())
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.CommandText = LM830SELECT_LOTE + " WHERE idCliente = @id ORDER BY fechaVencimiento, idLote";
+                LM830_sqlcommand.Parameters.AddWithValue("@id", LM830id);
+                LM830_sqlserver.Open();
+                using (SqlDataReader LM830r = LM830_sqlcommand.ExecuteReader())
                 {
-                    while (r.Read()) lista.Add(Mapear(r));
+                    while (LM830r.Read()) LM830lista.Add(LM830Mapear(LM830r));
                 }
             }
             finally
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlserver.Close();
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlserver.Close();
             }
-            return lista;
+            return LM830lista;
         }
 
-        internal static void Insertar(LotePuntos l, SqlConnection cn, SqlTransaction tx)
+        internal static void LM830Insertar(LM830LotePuntos LM830l, SqlConnection LM830cn, SqlTransaction LM830tx)
         {
-            using (var cmd = new SqlCommand(@"INSERT INTO LotePuntos (idCliente, idVenta, idReclamo, puntosOriginales, puntosDisponibles,
+            using (var LM830cmd = new SqlCommand(@"INSERT INTO LotePuntos (idCliente, idVenta, idReclamo, puntosOriginales, puntosDisponibles,
                                                                       fechaAcreditacion, fechaVencimiento, origen, DVH)
                                               VALUES (@idCliente, @idVenta, @idReclamo, @orig, @disp, @fAcred, @fVenc, @origen, '');
-                                              SELECT CAST(SCOPE_IDENTITY() AS int);", cn, tx))
+                                              SELECT CAST(SCOPE_IDENTITY() AS int);", LM830cn, LM830tx))
             {
-                cmd.Parameters.AddWithValue("@idCliente", l.IdCliente);
-                cmd.Parameters.AddWithValue("@idVenta", (object?)l.IdVenta ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@idReclamo", (object?)l.IdReclamo ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@orig", l.PuntosOriginales);
-                cmd.Parameters.AddWithValue("@disp", l.PuntosDisponibles);
-                cmd.Parameters.AddWithValue("@fAcred", l.FechaAcreditacion.Date);
-                cmd.Parameters.AddWithValue("@fVenc", l.FechaVencimiento.Date);
-                cmd.Parameters.AddWithValue("@origen", l.Origen.ToString());
-                l.IdLote = (int)cmd.ExecuteScalar();
+                LM830cmd.Parameters.AddWithValue("@idCliente", LM830l.LM830IdCliente);
+                LM830cmd.Parameters.AddWithValue("@idVenta", (object?)LM830l.LM830IdVenta ?? DBNull.Value);
+                LM830cmd.Parameters.AddWithValue("@idReclamo", (object?)LM830l.LM830IdReclamo ?? DBNull.Value);
+                LM830cmd.Parameters.AddWithValue("@orig", LM830l.LM830PuntosOriginales);
+                LM830cmd.Parameters.AddWithValue("@disp", LM830l.LM830PuntosDisponibles);
+                LM830cmd.Parameters.AddWithValue("@fAcred", LM830l.LM830FechaAcreditacion.Date);
+                LM830cmd.Parameters.AddWithValue("@fVenc", LM830l.LM830FechaVencimiento.Date);
+                LM830cmd.Parameters.AddWithValue("@origen", LM830l.LM830Origen.LM830ATexto());
+                LM830l.LM830IdLote = (int)LM830cmd.ExecuteScalar();
             }
 
-            l.DVH = DigitoVerificador.CalcularDVH(l.CadenaDVH());
-            using (var cmd = new SqlCommand("UPDATE LotePuntos SET DVH = @dvh WHERE idLote = @id", cn, tx))
+            LM830l.LM830DVH = LM830DigitoVerificador.LM830CalcularDVH(LM830l.LM830CadenaDVH());
+            using (var LM830cmd = new SqlCommand("UPDATE LotePuntos SET DVH = @dvh WHERE idLote = @id", LM830cn, LM830tx))
             {
-                cmd.Parameters.AddWithValue("@dvh", l.DVH);
-                cmd.Parameters.AddWithValue("@id", l.IdLote);
-                cmd.ExecuteNonQuery();
+                LM830cmd.Parameters.AddWithValue("@dvh", LM830l.LM830DVH);
+                LM830cmd.Parameters.AddWithValue("@id", LM830l.LM830IdLote);
+                LM830cmd.ExecuteNonQuery();
             }
         }
 
-        internal static void ActualizarDisponibles(LotePuntos l, int disponiblesAnteriores, SqlConnection cn, SqlTransaction tx)
+        internal static void LM830ActualizarDisponibles(LM830LotePuntos LM830l, int LM830disponiblesAnteriores, SqlConnection LM830cn, SqlTransaction LM830tx)
         {
-            l.DVH = DigitoVerificador.CalcularDVH(l.CadenaDVH());
-            using (var cmd = new SqlCommand(@"UPDATE LotePuntos SET puntosDisponibles = @disp, DVH = @dvh
-                                              WHERE idLote = @id AND puntosDisponibles = @anterior", cn, tx))
+            LM830l.LM830DVH = LM830DigitoVerificador.LM830CalcularDVH(LM830l.LM830CadenaDVH());
+            using (var LM830cmd = new SqlCommand(@"UPDATE LotePuntos SET puntosDisponibles = @disp, DVH = @dvh
+                                              WHERE idLote = @id AND puntosDisponibles = @anterior", LM830cn, LM830tx))
             {
-                cmd.Parameters.AddWithValue("@disp", l.PuntosDisponibles);
-                cmd.Parameters.AddWithValue("@dvh", l.DVH);
-                cmd.Parameters.AddWithValue("@id", l.IdLote);
-                cmd.Parameters.AddWithValue("@anterior", disponiblesAnteriores);
-                if (cmd.ExecuteNonQuery() == 0)
+                LM830cmd.Parameters.AddWithValue("@disp", LM830l.LM830PuntosDisponibles);
+                LM830cmd.Parameters.AddWithValue("@dvh", LM830l.LM830DVH);
+                LM830cmd.Parameters.AddWithValue("@id", LM830l.LM830IdLote);
+                LM830cmd.Parameters.AddWithValue("@anterior", LM830disponiblesAnteriores);
+                if (LM830cmd.ExecuteNonQuery() == 0)
                     throw new Exception("Los puntos del cliente cambiaron mientras se procesaba la operación. Vuelva a intentarlo.");
             }
         }
 
-        public List<LotePuntos> ListarParaDV()
+        public List<LM830LotePuntos> LM830ListarParaDV()
         {
-            var lista = new List<LotePuntos>();
+            var LM830lista = new List<LM830LotePuntos>();
             try
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.CommandText = SELECT_LOTE + " ORDER BY idLote";
-                _sqlserver.Open();
-                using (SqlDataReader r = _sqlcommand.ExecuteReader())
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.CommandText = LM830SELECT_LOTE + " ORDER BY idLote";
+                LM830_sqlserver.Open();
+                using (SqlDataReader LM830r = LM830_sqlcommand.ExecuteReader())
                 {
-                    while (r.Read()) lista.Add(Mapear(r));
+                    while (LM830r.Read()) LM830lista.Add(LM830Mapear(LM830r));
                 }
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
-            return lista;
+            return LM830lista;
         }
 
-        public void ActualizarDVH(int idLote, string dvh)
+        public void LM830ActualizarDVH(int LM830idLote, string LM830dvh)
         {
             try
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.CommandText = "UPDATE LotePuntos SET DVH = @dvh WHERE idLote = @id";
-                _sqlcommand.Parameters.AddWithValue("@dvh", dvh);
-                _sqlcommand.Parameters.AddWithValue("@id", idLote);
-                _sqlserver.Open();
-                _sqlcommand.ExecuteNonQuery();
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.CommandText = "UPDATE LotePuntos SET DVH = @dvh WHERE idLote = @id";
+                LM830_sqlcommand.Parameters.AddWithValue("@dvh", LM830dvh);
+                LM830_sqlcommand.Parameters.AddWithValue("@id", LM830idLote);
+                LM830_sqlserver.Open();
+                LM830_sqlcommand.ExecuteNonQuery();
             }
             finally
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlserver.Close();
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlserver.Close();
             }
         }
 
-        private static LotePuntos Mapear(SqlDataReader r) => new LotePuntos
+        private static LM830LotePuntos LM830Mapear(SqlDataReader LM830r) => new LM830LotePuntos
         {
-            IdLote = r.GetInt32(0),
-            IdCliente = r.GetInt32(1),
-            IdVenta = r.IsDBNull(2) ? (int?)null : r.GetInt32(2),
-            Reclamo = r.IsDBNull(3) ? null : new Reclamo { IdReclamo = r.GetInt32(3) },
-            PuntosOriginales = r.GetInt32(4),
-            PuntosDisponibles = r.GetInt32(5),
-            FechaAcreditacion = r.GetDateTime(6),
-            FechaVencimiento = r.GetDateTime(7),
-            Origen = (OrigenPuntos)Enum.Parse(typeof(OrigenPuntos), r.GetString(8)),
-            DVH = r.GetString(9)
+            LM830IdLote = LM830r.GetInt32(0),
+            LM830IdCliente = LM830r.GetInt32(1),
+            LM830IdVenta = LM830r.IsDBNull(2) ? (int?)null : LM830r.GetInt32(2),
+            LM830Reclamo = LM830r.IsDBNull(3) ? null : new LM830Reclamo { LM830IdReclamo = LM830r.GetInt32(3) },
+            LM830PuntosOriginales = LM830r.GetInt32(4),
+            LM830PuntosDisponibles = LM830r.GetInt32(5),
+            LM830FechaAcreditacion = LM830r.GetDateTime(6),
+            LM830FechaVencimiento = LM830r.GetDateTime(7),
+            LM830Origen = LM830EnumTexto.LM830DesdeTexto<LM830OrigenPuntos>(LM830r.GetString(8)),
+            LM830DVH = LM830r.GetString(9)
         };
     }
 }

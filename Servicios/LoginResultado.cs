@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public enum LoginResultado
+    public enum LM830LoginResultado
     {
-        ContraseñaIncorrecta,
-        UsuarioNoEncontrado,
-        Valido,
-        Bloqueado,
-        Error,
-        ContraseñaIguales,
-        Inactivo,
+        LM830ContraseñaIncorrecta,
+        LM830UsuarioNoEncontrado,
+        LM830Valido,
+        LM830Bloqueado,
+        LM830Error,
+        LM830ContraseñaIguales,
+        LM830Inactivo,
     }
 }

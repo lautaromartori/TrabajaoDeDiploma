@@ -1,142 +1,142 @@
 ﻿#nullable enable
-using BE.RFN1;
-using BLL.RFN1;
-using Servicios;
+using LM830BE.LM830RFN1;
+using LM830BLL.LM830RFN1;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace GUI.RFN1
+namespace LM830GUI.LM830RFN1
 {
-    public partial class frmResolverReclamos : Form, IObserver
+    public partial class LM830frmResolverReclamos : Form, LM830IObserver
     {
-        private readonly ReclamoBLL _reclamoBLL = new ReclamoBLL();
-        private readonly LoteBLL _loteBLL = new LoteBLL();
-        private List<Reclamo> _pendientes = new List<Reclamo>();
+        private readonly LM830ReclamoBLL LM830_reclamoBLL = new LM830ReclamoBLL();
+        private readonly LM830LoteBLL LM830_loteBLL = new LM830LoteBLL();
+        private List<LM830Reclamo> LM830_pendientes = new List<LM830Reclamo>();
 
-        public frmResolverReclamos()
+        public LM830frmResolverReclamos()
         {
             InitializeComponent();
         }
 
-        private void frmResolverReclamos_Load(object sender, EventArgs e)
+        private void LM830frmResolverReclamos_Load(object LM830sender, EventArgs LM830e)
         {
-            LanguageManager.Instance.AgregarObservador(this);
-            Estilo.Aplicar(this);
-            Actualizar(LanguageManager.Instance);
-            CargarPendientes();
+            LM830LanguageManager.LM830Instance.LM830AgregarObservador(this);
+            LM830Estilo.LM830Aplicar(this);
+            LM830Actualizar(LM830LanguageManager.LM830Instance);
+            LM830CargarPendientes();
         }
 
-        private void CargarPendientes()
+        private void LM830CargarPendientes()
         {
             try
             {
-                _pendientes = _reclamoBLL.ListarPendientes();
-                dgvPendientes.DataSource = _pendientes.Select(r => new
+                LM830_pendientes = LM830_reclamoBLL.LM830ListarPendientes();
+                LM830dgvPendientes.DataSource = LM830_pendientes.Select(LM830r => new
                 {
-                    Fecha = r.FechaReclamo.ToString("dd/MM/yyyy HH:mm"),
-                    Cliente = r.Cliente.NombreCompleto,
-                    Comprobante = r.Venta.NroComprobante,
-                    Puntos = r.PuntosReclamados,
-                    Motivo = r.Motivo
+                    Fecha = LM830r.LM830FechaReclamo.ToString("dd/MM/yyyy HH:mm"),
+                    Cliente = LM830r.LM830Cliente.LM830NombreCompleto,
+                    Comprobante = LM830r.LM830Venta.LM830NroComprobante,
+                    Puntos = LM830r.LM830PuntosReclamados,
+                    Motivo = LM830r.LM830Motivo
                 }).ToList();
-                txtMotivoResolucion.Clear();
-                MostrarDetalle();
+                LM830txtMotivoResolucion.Clear();
+                LM830MostrarDetalle();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830ex.Message, LM830T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private Reclamo? Seleccionado()
+        private LM830Reclamo? LM830Seleccionado()
         {
-            if (dgvPendientes.CurrentRow == null) return null;
-            int i = dgvPendientes.CurrentRow.Index;
-            return i >= 0 && i < _pendientes.Count ? _pendientes[i] : null;
+            if (LM830dgvPendientes.CurrentRow == null) return null;
+            int LM830i = LM830dgvPendientes.CurrentRow.Index;
+            return LM830i >= 0 && LM830i < LM830_pendientes.Count ? LM830_pendientes[LM830i] : null;
         }
 
-        private void dgvPendientes_SelectionChanged(object sender, EventArgs e) => MostrarDetalle();
+        private void LM830dgvPendientes_SelectionChanged(object LM830sender, EventArgs LM830e) => LM830MostrarDetalle();
 
-        private void MostrarDetalle()
+        private void LM830MostrarDetalle()
         {
-            Reclamo? r = Seleccionado();
-            if (r == null)
+            LM830Reclamo? LM830r = LM830Seleccionado();
+            if (LM830r == null)
             {
-                lblVentaDatos.Text = "-";
-                lblClienteDatos.Text = "-";
-                lblMotivoReclamo.Text = "-";
+                LM830lblVentaDatos.Text = "-";
+                LM830lblClienteDatos.Text = "-";
+                LM830lblMotivoReclamo.Text = "-";
                 return;
             }
 
-            string saldo = "-";
-            try { saldo = _loteBLL.ConsultarSaldo(r.Cliente).ToString("N0"); } catch { }
+            string LM830saldo = "-";
+            try { LM830saldo = LM830_loteBLL.LM830ConsultarSaldo(LM830r.LM830Cliente).ToString("N0"); } catch { }
 
-            lblVentaDatos.Text = $"{T("RFN1_Compra")}: {r.Venta.NroComprobante} - {r.Venta.Fecha:dd/MM/yyyy HH:mm} - $ {r.Venta.Total:N2}";
-            lblClienteDatos.Text = $"{T("RFN1_Cliente")}: {r.Cliente.NombreCompleto} (DNI {r.Cliente.Dni}) - {T("RFN1_Nivel")} {r.Cliente.Nivel.Nombre} - {T("RFN1_SaldoVigente")} {saldo}";
-            lblMotivoReclamo.Text = $"{T("RFN1_MotivoReclamo")}: {r.Motivo}";
+            LM830lblVentaDatos.Text = $"{LM830T("RFN1_Compra")}: {LM830r.LM830Venta.LM830NroComprobante} - {LM830r.LM830Venta.LM830Fecha:dd/MM/yyyy HH:mm} - $ {LM830r.LM830Venta.LM830Total:N2}";
+            LM830lblClienteDatos.Text = $"{LM830T("RFN1_Cliente")}: {LM830r.LM830Cliente.LM830NombreCompleto} (DNI {LM830r.LM830Cliente.LM830Dni}) - {LM830T("RFN1_Nivel")} {LM830r.LM830Cliente.LM830Nivel.LM830Nombre} - {LM830T("RFN1_SaldoVigente")} {LM830saldo}";
+            LM830lblMotivoReclamo.Text = $"{LM830T("RFN1_MotivoReclamo")}: {LM830r.LM830Motivo}";
         }
 
-        private void btnAprobar_Click(object sender, EventArgs e) => Decidir(EstadoReclamo.aprobado);
+        private void LM830btnAprobar_Click(object LM830sender, EventArgs LM830e) => LM830Decidir(LM830EstadoReclamo.LM830aprobado);
 
-        private void btnRechazar_Click(object sender, EventArgs e) => Decidir(EstadoReclamo.rechazado);
+        private void LM830btnRechazar_Click(object LM830sender, EventArgs LM830e) => LM830Decidir(LM830EstadoReclamo.LM830rechazado);
 
-        private void Decidir(EstadoReclamo decision)
+        private void LM830Decidir(LM830EstadoReclamo LM830decision)
         {
-            Reclamo? r = Seleccionado();
-            if (r == null)
+            LM830Reclamo? LM830r = LM830Seleccionado();
+            if (LM830r == null)
             {
-                MessageBox.Show(T("RFN1_SeleccioneReclamo"), T("RFN1_ResolverReclamos"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(LM830T("RFN1_SeleccioneReclamo"), LM830T("RFN1_ResolverReclamos"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (decision == EstadoReclamo.rechazado && txtMotivoResolucion.Text.Trim().Length == 0)
+            if (LM830decision == LM830EstadoReclamo.LM830rechazado && LM830txtMotivoResolucion.Text.Trim().Length == 0)
             {
-                MessageBox.Show(T("RFN1_MotivoRechazo"), T("RFN1_ResolverReclamos"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtMotivoResolucion.Select();
+                MessageBox.Show(LM830T("RFN1_MotivoRechazo"), LM830T("RFN1_ResolverReclamos"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LM830txtMotivoResolucion.Select();
                 return;
             }
 
-            string accion = decision == EstadoReclamo.aprobado ? T("RFN1_Aprobar") : T("RFN1_Rechazar");
-            if (MessageBox.Show($"{accion} {T("RFN1_ElReclamoDe")} {r.Cliente.NombreCompleto}?", T("RFN1_ResolverReclamos"),
+            string LM830accion = LM830decision == LM830EstadoReclamo.LM830aprobado ? LM830T("RFN1_Aprobar") : LM830T("RFN1_Rechazar");
+            if (MessageBox.Show($"{LM830accion} {LM830T("RFN1_ElReclamoDe")} {LM830r.LM830Cliente.LM830NombreCompleto}?", LM830T("RFN1_ResolverReclamos"),
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
             try
             {
-                r.Estado = decision;
-                r.MotivoResolucion = txtMotivoResolucion.Text;
-                _reclamoBLL.Resolver(r);
-                MessageBox.Show(T("RFN1_ReclamoResuelto"), T("RFN1_ResolverReclamos"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LM830r.LM830Estado = LM830decision;
+                LM830r.LM830MotivoResolucion = LM830txtMotivoResolucion.Text;
+                LM830_reclamoBLL.LM830Resolver(LM830r);
+                MessageBox.Show(LM830T("RFN1_ReclamoResuelto"), LM830T("RFN1_ResolverReclamos"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                r.Estado = EstadoReclamo.pendiente;
-                MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LM830r.LM830Estado = LM830EstadoReclamo.LM830pendiente;
+                MessageBox.Show(LM830ex.Message, LM830T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            CargarPendientes();
+            LM830CargarPendientes();
         }
 
-        private void btnVolver_Click(object sender, EventArgs e) => Close();
+        private void LM830btnVolver_Click(object LM830sender, EventArgs LM830e) => Close();
 
-        private void frmResolverReclamos_FormClosed(object sender, FormClosedEventArgs e)
+        private void LM830frmResolverReclamos_FormClosed(object LM830sender, FormClosedEventArgs LM830e)
         {
-            LanguageManager.Instance.EliminarObservador(this);
-            Navegacion.MostrarMenu();
+            LM830LanguageManager.LM830Instance.LM830EliminarObservador(this);
+            LM830Navegacion.LM830MostrarMenu();
         }
 
-        private static string T(string clave) => LanguageManager.Instance.GetTraduction(clave);
+        private static string LM830T(string LM830clave) => LM830LanguageManager.LM830Instance.LM830GetTraduction(LM830clave);
 
-        public void Actualizar(LanguageManager lenguaje)
+        public void LM830Actualizar(LM830LanguageManager LM830lenguaje)
         {
-            Text = lenguaje.GetTraduction("RFN1_ResolverReclamos");
-            lblTitulo.Text = Text;
-            lblPendientes.Text = lenguaje.GetTraduction("RFN1_ReclamosPendientes");
-            grpDetalle.Text = lenguaje.GetTraduction("RFN1_Detalle");
-            lblMotivoResolucion.Text = lenguaje.GetTraduction("RFN1_MotivoResolucion");
-            btnAprobar.Text = lenguaje.GetTraduction("RFN1_Aprobar");
-            btnRechazar.Text = lenguaje.GetTraduction("RFN1_Rechazar");
-            btnVolver.Text = lenguaje.GetTraduction("RFN1_Volver");
+            Text = LM830lenguaje.LM830GetTraduction("RFN1_ResolverReclamos");
+            LM830lblTitulo.Text = Text;
+            LM830lblPendientes.Text = LM830lenguaje.LM830GetTraduction("RFN1_ReclamosPendientes");
+            LM830grpDetalle.Text = LM830lenguaje.LM830GetTraduction("RFN1_Detalle");
+            LM830lblMotivoResolucion.Text = LM830lenguaje.LM830GetTraduction("RFN1_MotivoResolucion");
+            LM830btnAprobar.Text = LM830lenguaje.LM830GetTraduction("RFN1_Aprobar");
+            LM830btnRechazar.Text = LM830lenguaje.LM830GetTraduction("RFN1_Rechazar");
+            LM830btnVolver.Text = LM830lenguaje.LM830GetTraduction("RFN1_Volver");
         }
     }
 }

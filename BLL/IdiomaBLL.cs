@@ -1,41 +1,41 @@
-﻿using DAL;
-using Servicios;
+﻿using LM830DAL;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BLL
+namespace LM830BLL
 {
-    public class IdiomaBLL
+    public class LM830IdiomaBLL
     {
-        private readonly IdiomaDAL _idiomaDAL;
-        private readonly BitacoraBLL bll;
-        private readonly DigitoVerificadorBLL digitoVerificadorBLL = new DigitoVerificadorBLL();
-        private const string MODULO_BITACORA = "Idioma";
+        private readonly LM830IdiomaDAL LM830_idiomaDAL;
+        private readonly LM830BitacoraBLL LM830bll;
+        private readonly LM830DigitoVerificadorBLL LM830digitoVerificadorBLL = new LM830DigitoVerificadorBLL();
+        private const string LM830MODULO_BITACORA = "Idioma";
 
-        public IdiomaBLL()
+        public LM830IdiomaBLL()
         {
-            _idiomaDAL = new IdiomaDAL();
-            bll = new BitacoraBLL();
+            LM830_idiomaDAL = new LM830IdiomaDAL();
+            LM830bll = new LM830BitacoraBLL();
         }
 
-        public string ObtenerIdioma(string userName)
+        public string LM830ObtenerIdioma(string LM830userName)
         {
-            return _idiomaDAL.ObtenerIdioma(userName);
+            return LM830_idiomaDAL.LM830ObtenerIdioma(LM830userName);
         }
 
-        public void GuardarIdioma(string userName, string idioma)
+        public void LM830GuardarIdioma(string LM830userName, string LM830idioma)
         {
-            string cadenaDHV = $"{userName}{idioma}";
+            string LM830cadenaDHV = $"{LM830userName}{LM830idioma}";
 
-            _idiomaDAL.GuardarIdioma(userName, idioma, DigitoVerificador.CalcularDVH(cadenaDHV));
-            digitoVerificadorBLL.RecalcularDVV_Idioma();
-            Bitacora bita = new Bitacora();
-            bita.Criticidad = 5;
-            bita.Modulo = MODULO_BITACORA;
-            bita.Evento = $"Se guardo el idioma {idioma}";
-            bita.Login = userName;
-            bll.RegistrarEvento(bita);
+            LM830_idiomaDAL.LM830GuardarIdioma(LM830userName, LM830idioma, LM830DigitoVerificador.LM830CalcularDVH(LM830cadenaDHV));
+            LM830digitoVerificadorBLL.LM830RecalcularDVV_Idioma();
+            LM830Bitacora LM830bita = new LM830Bitacora();
+            LM830bita.LM830Criticidad = 5;
+            LM830bita.LM830Modulo = LM830MODULO_BITACORA;
+            LM830bita.LM830Evento = $"Se guardo el idioma {LM830idioma}";
+            LM830bita.LM830Login = LM830userName;
+            LM830bll.LM830RegistrarEvento(LM830bita);
         }
     }
 }

@@ -1,58 +1,58 @@
-﻿namespace Servicios
+﻿namespace LM830Servicios
 {
-    public class SessionManager
+    public class LM830SessionManager
     {
-        private static SessionManager _instance;
+        private static LM830SessionManager LM830_instance;
 
-        private Usuario _usuarioLogueado;
+        private LM830Usuario LM830_usuarioLogueado;
 
-        private SessionManager()
+        private LM830SessionManager()
         {
-            _usuarioLogueado = null;
+            LM830_usuarioLogueado = null;
         }
 
-        public static SessionManager Instance
+        public static LM830SessionManager LM830Instance
         {
             get
             {
-                if (_instance == null)
+                if (LM830_instance == null)
                 {
-                    _instance = new SessionManager();
+                    LM830_instance = new LM830SessionManager();
                 }
-                return _instance;
+                return LM830_instance;
             }
         }
 
-        public void Loguear(Usuario usuario)
+        public void LM830Loguear(LM830Usuario LM830usuario)
         {
-            if (Logueado())
+            if (LM830Logueado())
             {
-                throw new Exception(LanguageManager.Instance.GetTraduction("UserLogueado"));
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserLogueado"));
             }
-            _usuarioLogueado = usuario;
+            LM830_usuarioLogueado = LM830usuario;
         }
 
-        public void Desloguear()
+        public void LM830Desloguear()
         {
-            if (!Logueado())
+            if (!LM830Logueado())
             {
-                throw new Exception(LanguageManager.Instance.GetTraduction("UserNoLogueado"));
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserNoLogueado"));
             }
-            _usuarioLogueado = null;
+            LM830_usuarioLogueado = null;
         }
 
-        public bool Logueado()
+        public bool LM830Logueado()
         {
-            return _usuarioLogueado != null;
+            return LM830_usuarioLogueado != null;
         }
 
-        public Usuario UsuarioActual()
+        public LM830Usuario LM830UsuarioActual()
         {
-            if (!Logueado())
+            if (!LM830Logueado())
             {
-                throw new Exception(LanguageManager.Instance.GetTraduction("UserNoLogueado"));
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserNoLogueado"));
             }
-            return _usuarioLogueado;
+            return LM830_usuarioLogueado;
         }
     }
 }

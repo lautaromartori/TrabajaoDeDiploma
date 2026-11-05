@@ -1,389 +1,389 @@
 ﻿using Microsoft.Data.SqlClient;
-using Servicios;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace DAL
+namespace LM830DAL
 {
-    public class PerfilDAL : AbstractDAL<ComponentePermiso>
+    public class LM830PerfilDAL : LM830AbstractDAL<LM830ComponentePermiso>
     {
-        public List<PermisoSimple> ObtenerPermisos()
+        public List<LM830PermisoSimple> LM830ObtenerPermisos()
         {
-            var lista = new List<PermisoSimple>();
+            var LM830lista = new List<LM830PermisoSimple>();
             try
             {
-                if (_sqlserver.State != ConnectionState.Open) _sqlserver.Open();
-                _sqlcommand.CommandText = "SELECT Nombre, DVH FROM PermisoSimple";
-                using (var reader = _sqlcommand.ExecuteReader())
+                if (LM830_sqlserver.State != ConnectionState.Open) LM830_sqlserver.Open();
+                LM830_sqlcommand.CommandText = "SELECT Nombre, DVH FROM PermisoSimple";
+                using (var LM830reader = LM830_sqlcommand.ExecuteReader())
                 {
-                    while (reader.Read())
-                        lista.Add(new PermisoSimple
+                    while (LM830reader.Read())
+                        LM830lista.Add(new LM830PermisoSimple
                         {
-                            Nombre = reader["Nombre"].ToString(),
-                            DVH = reader["DVH"].ToString()
+                            LM830Nombre = LM830reader["Nombre"].ToString(),
+                            LM830DVH = LM830reader["DVH"].ToString()
                         });
                 }
             }
             finally
             {
-                if (_sqlserver.State == ConnectionState.Open) _sqlserver.Close();
+                if (LM830_sqlserver.State == ConnectionState.Open) LM830_sqlserver.Close();
             }
-            return lista;
+            return LM830lista;
         }
 
-        public List<Familia> ObtenerFamilias()
+        public List<LM830Familia> LM830ObtenerFamilias()
         {
-            var lista = new List<Familia>();
+            var LM830lista = new List<LM830Familia>();
             try
             {
-                if (_sqlserver.State != ConnectionState.Open) _sqlserver.Open();
-                using (var cmd = new SqlCommand("SELECT Nombre, DVH FROM Familia", _sqlserver))
-                using (var reader = cmd.ExecuteReader())
+                if (LM830_sqlserver.State != ConnectionState.Open) LM830_sqlserver.Open();
+                using (var LM830cmd = new SqlCommand("SELECT Nombre, DVH FROM Familia", LM830_sqlserver))
+                using (var LM830reader = LM830cmd.ExecuteReader())
                 {
-                    while (reader.Read())
-                        lista.Add(new Familia
+                    while (LM830reader.Read())
+                        LM830lista.Add(new LM830Familia
                         {
-                            Nombre = reader["Nombre"].ToString(),
-                            EsRol = false,
-                            DVH = reader["DVH"].ToString()
+                            LM830Nombre = LM830reader["Nombre"].ToString(),
+                            LM830EsRol = false,
+                            LM830DVH = LM830reader["DVH"].ToString()
                         });
                 }
-                foreach (var fam in lista)
-                    CargarHijosComponente(fam);
+                foreach (var LM830fam in LM830lista)
+                    LM830CargarHijosComponente(LM830fam);
             }
             finally
             {
-                if (_sqlserver.State == ConnectionState.Open) _sqlserver.Close();
+                if (LM830_sqlserver.State == ConnectionState.Open) LM830_sqlserver.Close();
             }
-            return lista;
+            return LM830lista;
         }
 
-        public List<Familia> ObtenerPerfiles()
+        public List<LM830Familia> LM830ObtenerPerfiles()
         {
-            var lista = new List<Familia>();
+            var LM830lista = new List<LM830Familia>();
             try
             {
-                if (_sqlserver.State != ConnectionState.Open) _sqlserver.Open();
-                using (var cmd = new SqlCommand("SELECT Nombre, DVH FROM Perfil", _sqlserver))
-                using (var reader = cmd.ExecuteReader())
+                if (LM830_sqlserver.State != ConnectionState.Open) LM830_sqlserver.Open();
+                using (var LM830cmd = new SqlCommand("SELECT Nombre, DVH FROM Perfil", LM830_sqlserver))
+                using (var LM830reader = LM830cmd.ExecuteReader())
                 {
-                    while (reader.Read())
-                        lista.Add(new Familia
+                    while (LM830reader.Read())
+                        LM830lista.Add(new LM830Familia
                         {
-                            Nombre = reader["Nombre"].ToString(),
-                            EsRol = true,
-                            DVH = reader["DVH"].ToString()
+                            LM830Nombre = LM830reader["Nombre"].ToString(),
+                            LM830EsRol = true,
+                            LM830DVH = LM830reader["DVH"].ToString()
                         });
                 }
-                foreach (var perfil in lista)
-                    CargarHijosComponente(perfil);
+                foreach (var LM830perfil in LM830lista)
+                    LM830CargarHijosComponente(LM830perfil);
             }
             finally
             {
-                if (_sqlserver.State == ConnectionState.Open) _sqlserver.Close();
+                if (LM830_sqlserver.State == ConnectionState.Open) LM830_sqlserver.Close();
             }
-            return lista;
+            return LM830lista;
         }
 
-        public List<Familia> ObtenerFamiliasYPerfiles()
+        public List<LM830Familia> LM830ObtenerFamiliasYPerfiles()
         {
-            var listaUnificada = new List<Familia>();
-            var nombresFamilias = new List<string>();
-            var nombresPerfiles = new List<string>();
+            var LM830listaUnificada = new List<LM830Familia>();
+            var LM830nombresFamilias = new List<string>();
+            var LM830nombresPerfiles = new List<string>();
 
             try
             {
-                if (_sqlserver.State != ConnectionState.Open) _sqlserver.Open();
+                if (LM830_sqlserver.State != ConnectionState.Open) LM830_sqlserver.Open();
 
-                using (var cmd = new SqlCommand("SELECT Nombre FROM Familia", _sqlserver))
-                using (var reader = cmd.ExecuteReader())
-                    while (reader.Read())
-                        nombresFamilias.Add(reader["Nombre"].ToString());
+                using (var LM830cmd = new SqlCommand("SELECT Nombre FROM Familia", LM830_sqlserver))
+                using (var LM830reader = LM830cmd.ExecuteReader())
+                    while (LM830reader.Read())
+                        LM830nombresFamilias.Add(LM830reader["Nombre"].ToString());
 
-                using (var cmd = new SqlCommand("SELECT Nombre FROM Perfil", _sqlserver))
-                using (var reader = cmd.ExecuteReader())
-                    while (reader.Read())
-                        nombresPerfiles.Add(reader["Nombre"].ToString());
+                using (var LM830cmd = new SqlCommand("SELECT Nombre FROM Perfil", LM830_sqlserver))
+                using (var LM830reader = LM830cmd.ExecuteReader())
+                    while (LM830reader.Read())
+                        LM830nombresPerfiles.Add(LM830reader["Nombre"].ToString());
 
-                foreach (var nombre in nombresFamilias)
+                foreach (var LM830nombre in LM830nombresFamilias)
                 {
-                    var fam = new Familia { Nombre = nombre, EsRol = false };
-                    CargarHijosComponente(fam);
-                    listaUnificada.Add(fam);
+                    var LM830fam = new LM830Familia { LM830Nombre = LM830nombre, LM830EsRol = false };
+                    LM830CargarHijosComponente(LM830fam);
+                    LM830listaUnificada.Add(LM830fam);
                 }
-                foreach (var nombre in nombresPerfiles)
+                foreach (var LM830nombre in LM830nombresPerfiles)
                 {
-                    var perf = new Familia { Nombre = nombre, EsRol = true };
-                    CargarHijosComponente(perf);
-                    listaUnificada.Add(perf);
+                    var LM830perf = new LM830Familia { LM830Nombre = LM830nombre, LM830EsRol = true };
+                    LM830CargarHijosComponente(LM830perf);
+                    LM830listaUnificada.Add(LM830perf);
                 }
             }
             finally
             {
-                if (_sqlserver.State == ConnectionState.Open) _sqlserver.Close();
+                if (LM830_sqlserver.State == ConnectionState.Open) LM830_sqlserver.Close();
             }
-            return listaUnificada;
+            return LM830listaUnificada;
         }
 
-        private void CargarHijosComponente(Familia padre)
+        private void LM830CargarHijosComponente(LM830Familia LM830padre)
         {
-            string tablaPermisos = padre.EsRol ? "Perfil_PermisoSimple" : "Familia_PermisoSimple";
-            string tablaFamilias = padre.EsRol ? "Perfil_Familia" : "Familia_Familia";
-            string colPadre = padre.EsRol ? "NombrePerfil" : "NombreFamilia";
-            string colPadreHijo = padre.EsRol ? "NombrePerfil" : "NombrePadre";
-            string colHijo = padre.EsRol ? "NombreFamilia" : "NombreHijo";
+            string LM830tablaPermisos = LM830padre.LM830EsRol ? "Perfil_PermisoSimple" : "Familia_PermisoSimple";
+            string LM830tablaFamilias = LM830padre.LM830EsRol ? "Perfil_Familia" : "Familia_Familia";
+            string LM830colPadre = LM830padre.LM830EsRol ? "NombrePerfil" : "NombreFamilia";
+            string LM830colPadreHijo = LM830padre.LM830EsRol ? "NombrePerfil" : "NombrePadre";
+            string LM830colHijo = LM830padre.LM830EsRol ? "NombreFamilia" : "NombreHijo";
 
-            using (var cmd = new SqlCommand(
-                $"SELECT NombrePermiso FROM {tablaPermisos} WHERE {colPadre} = @Padre", _sqlserver))
+            using (var LM830cmd = new SqlCommand(
+                $"SELECT NombrePermiso FROM {LM830tablaPermisos} WHERE {LM830colPadre} = @Padre", LM830_sqlserver))
             {
-                cmd.Parameters.AddWithValue("@Padre", padre.Nombre);
-                using (var reader = cmd.ExecuteReader())
-                    while (reader.Read())
-                        padre.AgregarHijo(new PermisoSimple { Nombre = reader["NombrePermiso"].ToString() });
+                LM830cmd.Parameters.AddWithValue("@Padre", LM830padre.LM830Nombre);
+                using (var LM830reader = LM830cmd.ExecuteReader())
+                    while (LM830reader.Read())
+                        LM830padre.LM830AgregarHijo(new LM830PermisoSimple { LM830Nombre = LM830reader["NombrePermiso"].ToString() });
             }
 
-            var familiasHijas = new List<string>();
-            using (var cmd = new SqlCommand(
-                $"SELECT {colHijo} FROM {tablaFamilias} WHERE {colPadreHijo} = @Padre", _sqlserver))
+            var LM830familiasHijas = new List<string>();
+            using (var LM830cmd = new SqlCommand(
+                $"SELECT {LM830colHijo} FROM {LM830tablaFamilias} WHERE {LM830colPadreHijo} = @Padre", LM830_sqlserver))
             {
-                cmd.Parameters.AddWithValue("@Padre", padre.Nombre);
-                using (var reader = cmd.ExecuteReader())
-                    while (reader.Read())
-                        familiasHijas.Add(reader[colHijo].ToString());
+                LM830cmd.Parameters.AddWithValue("@Padre", LM830padre.LM830Nombre);
+                using (var LM830reader = LM830cmd.ExecuteReader())
+                    while (LM830reader.Read())
+                        LM830familiasHijas.Add(LM830reader[LM830colHijo].ToString());
             }
 
-            foreach (var nombreHijo in familiasHijas)
+            foreach (var LM830nombreHijo in LM830familiasHijas)
             {
-                var sub = new Familia { Nombre = nombreHijo, EsRol = false };
-                CargarHijosComponente(sub);
-                padre.AgregarHijo(sub);
+                var LM830sub = new LM830Familia { LM830Nombre = LM830nombreHijo, LM830EsRol = false };
+                LM830CargarHijosComponente(LM830sub);
+                LM830padre.LM830AgregarHijo(LM830sub);
             }
         }
 
-        private bool ExisteNombre(string nombre, string tabla)
+        private bool LM830ExisteNombre(string LM830nombre, string LM830tabla)
         {
-            using (var cmd = new SqlCommand(
-                $"SELECT COUNT(*) FROM {tabla} WHERE Nombre = @Nombre", _sqlserver))
+            using (var LM830cmd = new SqlCommand(
+                $"SELECT COUNT(*) FROM {LM830tabla} WHERE Nombre = @Nombre", LM830_sqlserver))
             {
-                cmd.Parameters.AddWithValue("@Nombre", nombre);
+                LM830cmd.Parameters.AddWithValue("@Nombre", LM830nombre);
                 try
                 {
-                    if (_sqlserver.State != ConnectionState.Open) _sqlserver.Open();
-                    return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+                    if (LM830_sqlserver.State != ConnectionState.Open) LM830_sqlserver.Open();
+                    return Convert.ToInt32(LM830cmd.ExecuteScalar()) > 0;
                 }
                 finally
                 {
-                    if (_sqlserver.State == ConnectionState.Open) _sqlserver.Close();
+                    if (LM830_sqlserver.State == ConnectionState.Open) LM830_sqlserver.Close();
                 }
             }
         }
 
-        public void GuardarPermiso(PermisoSimple permiso)
+        public void LM830GuardarPermiso(LM830PermisoSimple LM830permiso)
         {
-            if (ExisteNombre(permiso.Nombre, "PermisoSimple"))
-                throw new ArgumentException(LanguageManager.Instance.GetTraduction("PerfilDalText2"));
+            if (LM830ExisteNombre(LM830permiso.LM830Nombre, "PermisoSimple"))
+                throw new ArgumentException(LM830LanguageManager.LM830Instance.LM830GetTraduction("PerfilDalText2"));
 
-            string dvh = DigitoVerificador.CalcularDVH(permiso.Nombre);
+            string LM830dvh = LM830DigitoVerificador.LM830CalcularDVH(LM830permiso.LM830Nombre);
 
-            _sqlcommand.CommandText = "INSERT INTO PermisoSimple (Nombre, DVH) VALUES (@Nombre, @dvh)";
-            _sqlcommand.Parameters.Clear();
-            _sqlcommand.Parameters.AddWithValue("@Nombre", permiso.Nombre);
-            _sqlcommand.Parameters.AddWithValue("@dvh", dvh);
-            EjecutarNonQuery();
+            LM830_sqlcommand.CommandText = "INSERT INTO PermisoSimple (Nombre, DVH) VALUES (@Nombre, @dvh)";
+            LM830_sqlcommand.Parameters.Clear();
+            LM830_sqlcommand.Parameters.AddWithValue("@Nombre", LM830permiso.LM830Nombre);
+            LM830_sqlcommand.Parameters.AddWithValue("@dvh", LM830dvh);
+            LM830EjecutarNonQuery();
         }
 
-        public void EliminarPermiso(string nombre)
+        public void LM830EliminarPermiso(string LM830nombre)
         {
             try
             {
-                if (_sqlserver.State != ConnectionState.Open) _sqlserver.Open();
+                if (LM830_sqlserver.State != ConnectionState.Open) LM830_sqlserver.Open();
 
-                using (var cmd1 = new SqlCommand(
-                    "DELETE FROM Familia_PermisoSimple WHERE NombrePermiso = @Nombre", _sqlserver))
+                using (var LM830cmd1 = new SqlCommand(
+                    "DELETE FROM Familia_PermisoSimple WHERE NombrePermiso = @Nombre", LM830_sqlserver))
                 {
-                    cmd1.Parameters.AddWithValue("@Nombre", nombre);
-                    cmd1.ExecuteNonQuery();
+                    LM830cmd1.Parameters.AddWithValue("@Nombre", LM830nombre);
+                    LM830cmd1.ExecuteNonQuery();
                 }
-                using (var cmd2 = new SqlCommand(
-                    "DELETE FROM Perfil_PermisoSimple WHERE NombrePermiso = @Nombre", _sqlserver))
+                using (var LM830cmd2 = new SqlCommand(
+                    "DELETE FROM Perfil_PermisoSimple WHERE NombrePermiso = @Nombre", LM830_sqlserver))
                 {
-                    cmd2.Parameters.AddWithValue("@Nombre", nombre);
-                    cmd2.ExecuteNonQuery();
+                    LM830cmd2.Parameters.AddWithValue("@Nombre", LM830nombre);
+                    LM830cmd2.ExecuteNonQuery();
                 }
 
-                _sqlcommand.CommandText = "DELETE FROM PermisoSimple WHERE Nombre = @Nombre";
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.Parameters.AddWithValue("@Nombre", nombre);
-                _sqlcommand.ExecuteNonQuery();
+                LM830_sqlcommand.CommandText = "DELETE FROM PermisoSimple WHERE Nombre = @Nombre";
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.AddWithValue("@Nombre", LM830nombre);
+                LM830_sqlcommand.ExecuteNonQuery();
             }
             finally
             {
-                if (_sqlserver.State == ConnectionState.Open) _sqlserver.Close();
-                _sqlcommand.Parameters.Clear();
+                if (LM830_sqlserver.State == ConnectionState.Open) LM830_sqlserver.Close();
+                LM830_sqlcommand.Parameters.Clear();
             }
         }
 
-        public void GuardarFamilia(Familia familia)
+        public void LM830GuardarFamilia(LM830Familia LM830familia)
         {
-            string tabla = familia.EsRol ? "Perfil" : "Familia";
+            string LM830tabla = LM830familia.LM830EsRol ? "Perfil" : "Familia";
 
-            if (ExisteNombre(familia.Nombre, tabla))
+            if (LM830ExisteNombre(LM830familia.LM830Nombre, LM830tabla))
             {
-                string tipo = familia.EsRol ? "perfil" : "familia";
+                string LM830tipo = LM830familia.LM830EsRol ? "perfil" : "familia";
                 throw new ArgumentException(
-                    $"{LanguageManager.Instance.GetTraduction("PerfilDalText2")} {tipo} {LanguageManager.Instance.GetTraduction("PerfilDalText3")}");
+                    $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("PerfilDalText2")} {LM830tipo} {LM830LanguageManager.LM830Instance.LM830GetTraduction("PerfilDalText3")}");
             }
 
-            string dvh = DigitoVerificador.CalcularDVH(familia.Nombre);
+            string LM830dvh = LM830DigitoVerificador.LM830CalcularDVH(LM830familia.LM830Nombre);
 
-            _sqlcommand.CommandText = $"INSERT INTO {tabla} (Nombre, DVH) VALUES (@Nombre, @dvh)";
-            _sqlcommand.Parameters.Clear();
-            _sqlcommand.Parameters.AddWithValue("@Nombre", familia.Nombre);
-            _sqlcommand.Parameters.AddWithValue("@dvh", dvh);
-            EjecutarNonQuery();
+            LM830_sqlcommand.CommandText = $"INSERT INTO {LM830tabla} (Nombre, DVH) VALUES (@Nombre, @dvh)";
+            LM830_sqlcommand.Parameters.Clear();
+            LM830_sqlcommand.Parameters.AddWithValue("@Nombre", LM830familia.LM830Nombre);
+            LM830_sqlcommand.Parameters.AddWithValue("@dvh", LM830dvh);
+            LM830EjecutarNonQuery();
         }
 
-        public void EliminarFamilia(Familia familia)
+        public void LM830EliminarFamilia(LM830Familia LM830familia)
         {
-            string tabla = familia.EsRol ? "Perfil" : "Familia";
+            string LM830tabla = LM830familia.LM830EsRol ? "Perfil" : "Familia";
             try
             {
-                if (_sqlserver.State != ConnectionState.Open) _sqlserver.Open();
+                if (LM830_sqlserver.State != ConnectionState.Open) LM830_sqlserver.Open();
 
-                LimpiarRelacionesComponente(familia.Nombre, familia.EsRol);
+                LM830LimpiarRelacionesComponente(LM830familia.LM830Nombre, LM830familia.LM830EsRol);
 
-                if (!familia.EsRol)
+                if (!LM830familia.LM830EsRol)
                 {
-                    using (var cmd1 = new SqlCommand(
-                        "DELETE FROM Familia_Familia WHERE NombreHijo = @Nombre", _sqlserver))
+                    using (var LM830cmd1 = new SqlCommand(
+                        "DELETE FROM Familia_Familia WHERE NombreHijo = @Nombre", LM830_sqlserver))
                     {
-                        cmd1.Parameters.AddWithValue("@Nombre", familia.Nombre);
-                        cmd1.ExecuteNonQuery();
+                        LM830cmd1.Parameters.AddWithValue("@Nombre", LM830familia.LM830Nombre);
+                        LM830cmd1.ExecuteNonQuery();
                     }
-                    using (var cmd2 = new SqlCommand(
-                        "DELETE FROM Perfil_Familia WHERE NombreFamilia = @Nombre", _sqlserver))
+                    using (var LM830cmd2 = new SqlCommand(
+                        "DELETE FROM Perfil_Familia WHERE NombreFamilia = @Nombre", LM830_sqlserver))
                     {
-                        cmd2.Parameters.AddWithValue("@Nombre", familia.Nombre);
-                        cmd2.ExecuteNonQuery();
+                        LM830cmd2.Parameters.AddWithValue("@Nombre", LM830familia.LM830Nombre);
+                        LM830cmd2.ExecuteNonQuery();
                     }
                 }
 
-                _sqlcommand.CommandText = $"DELETE FROM {tabla} WHERE Nombre = @Nombre";
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.Parameters.AddWithValue("@Nombre", familia.Nombre);
-                _sqlcommand.ExecuteNonQuery();
+                LM830_sqlcommand.CommandText = $"DELETE FROM {LM830tabla} WHERE Nombre = @Nombre";
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.AddWithValue("@Nombre", LM830familia.LM830Nombre);
+                LM830_sqlcommand.ExecuteNonQuery();
             }
             finally
             {
-                if (_sqlserver.State == ConnectionState.Open) _sqlserver.Close();
-                _sqlcommand.Parameters.Clear();
+                if (LM830_sqlserver.State == ConnectionState.Open) LM830_sqlserver.Close();
+                LM830_sqlcommand.Parameters.Clear();
             }
         }
 
-        public void GuardarRelaciones(Familia padre)
+        public void LM830GuardarRelaciones(LM830Familia LM830padre)
         {
             try
             {
-                if (_sqlserver.State != ConnectionState.Open) _sqlserver.Open();
+                if (LM830_sqlserver.State != ConnectionState.Open) LM830_sqlserver.Open();
 
-                LimpiarRelacionesComponente(padre.Nombre, padre.EsRol);
+                LM830LimpiarRelacionesComponente(LM830padre.LM830Nombre, LM830padre.LM830EsRol);
 
-                foreach (var hijo in padre.ObtenerHijos())
+                foreach (var LM830hijo in LM830padre.LM830ObtenerHijos())
                 {
-                    if (hijo is PermisoSimple permiso)
+                    if (LM830hijo is LM830PermisoSimple LM830permiso)
                     {
-                        string tabla = padre.EsRol ? "Perfil_PermisoSimple" : "Familia_PermisoSimple";
-                        string col1 = padre.EsRol ? "NombrePerfil" : "NombreFamilia";
-                        using (var cmd = new SqlCommand(
-                            $"INSERT INTO {tabla} ({col1}, NombrePermiso) VALUES (@Padre, @Hijo)", _sqlserver))
+                        string LM830tabla = LM830padre.LM830EsRol ? "Perfil_PermisoSimple" : "Familia_PermisoSimple";
+                        string LM830col1 = LM830padre.LM830EsRol ? "NombrePerfil" : "NombreFamilia";
+                        using (var LM830cmd = new SqlCommand(
+                            $"INSERT INTO {LM830tabla} ({LM830col1}, NombrePermiso) VALUES (@Padre, @Hijo)", LM830_sqlserver))
                         {
-                            cmd.Parameters.AddWithValue("@Padre", padre.Nombre);
-                            cmd.Parameters.AddWithValue("@Hijo", permiso.Nombre);
-                            cmd.ExecuteNonQuery();
+                            LM830cmd.Parameters.AddWithValue("@Padre", LM830padre.LM830Nombre);
+                            LM830cmd.Parameters.AddWithValue("@Hijo", LM830permiso.LM830Nombre);
+                            LM830cmd.ExecuteNonQuery();
                         }
                     }
-                    else if (hijo is Familia subFamilia)
+                    else if (LM830hijo is LM830Familia LM830subFamilia)
                     {
-                        string tabla = padre.EsRol ? "Perfil_Familia" : "Familia_Familia";
-                        string col1 = padre.EsRol ? "NombrePerfil" : "NombrePadre";
-                        string col2 = padre.EsRol ? "NombreFamilia" : "NombreHijo";
-                        using (var cmd = new SqlCommand(
-                            $"INSERT INTO {tabla} ({col1}, {col2}) VALUES (@Padre, @Hijo)", _sqlserver))
+                        string LM830tabla = LM830padre.LM830EsRol ? "Perfil_Familia" : "Familia_Familia";
+                        string LM830col1 = LM830padre.LM830EsRol ? "NombrePerfil" : "NombrePadre";
+                        string LM830col2 = LM830padre.LM830EsRol ? "NombreFamilia" : "NombreHijo";
+                        using (var LM830cmd = new SqlCommand(
+                            $"INSERT INTO {LM830tabla} ({LM830col1}, {LM830col2}) VALUES (@Padre, @Hijo)", LM830_sqlserver))
                         {
-                            cmd.Parameters.AddWithValue("@Padre", padre.Nombre);
-                            cmd.Parameters.AddWithValue("@Hijo", subFamilia.Nombre);
-                            cmd.ExecuteNonQuery();
+                            LM830cmd.Parameters.AddWithValue("@Padre", LM830padre.LM830Nombre);
+                            LM830cmd.Parameters.AddWithValue("@Hijo", LM830subFamilia.LM830Nombre);
+                            LM830cmd.ExecuteNonQuery();
                         }
                     }
                 }
             }
             finally
             {
-                if (_sqlserver.State == ConnectionState.Open) _sqlserver.Close();
+                if (LM830_sqlserver.State == ConnectionState.Open) LM830_sqlserver.Close();
             }
         }
 
-        private void LimpiarRelacionesComponente(string nombrePadre, bool esRol)
+        private void LM830LimpiarRelacionesComponente(string LM830nombrePadre, bool LM830esRol)
         {
-            string q1 = esRol
+            string LM830q1 = LM830esRol
                 ? "DELETE FROM Perfil_PermisoSimple WHERE NombrePerfil = @Padre"
                 : "DELETE FROM Familia_PermisoSimple WHERE NombreFamilia = @Padre";
-            string q2 = esRol
+            string LM830q2 = LM830esRol
                 ? "DELETE FROM Perfil_Familia WHERE NombrePerfil = @Padre"
                 : "DELETE FROM Familia_Familia WHERE NombrePadre = @Padre";
 
-            using (var cmd1 = new SqlCommand(q1, _sqlserver))
+            using (var LM830cmd1 = new SqlCommand(LM830q1, LM830_sqlserver))
             {
-                cmd1.Parameters.AddWithValue("@Padre", nombrePadre);
-                cmd1.ExecuteNonQuery();
+                LM830cmd1.Parameters.AddWithValue("@Padre", LM830nombrePadre);
+                LM830cmd1.ExecuteNonQuery();
             }
-            using (var cmd2 = new SqlCommand(q2, _sqlserver))
+            using (var LM830cmd2 = new SqlCommand(LM830q2, LM830_sqlserver))
             {
-                cmd2.Parameters.AddWithValue("@Padre", nombrePadre);
-                cmd2.ExecuteNonQuery();
+                LM830cmd2.Parameters.AddWithValue("@Padre", LM830nombrePadre);
+                LM830cmd2.ExecuteNonQuery();
             }
         }
 
-        private void EjecutarNonQuery()
+        private void LM830EjecutarNonQuery()
         {
             try
             {
-                if (_sqlserver.State != ConnectionState.Open) _sqlserver.Open();
-                _sqlcommand.ExecuteNonQuery();
+                if (LM830_sqlserver.State != ConnectionState.Open) LM830_sqlserver.Open();
+                LM830_sqlcommand.ExecuteNonQuery();
             }
             finally
             {
-                if (_sqlserver.State == ConnectionState.Open) _sqlserver.Close();
-                _sqlcommand.Parameters.Clear();
+                if (LM830_sqlserver.State == ConnectionState.Open) LM830_sqlserver.Close();
+                LM830_sqlcommand.Parameters.Clear();
             }
         }
 
-        public void ActualizarPefilDVH(string nombre, string dvhCalculado)
+        public void LM830ActualizarPefilDVH(string LM830nombre, string LM830dvhCalculado)
         {
-            _sqlcommand.CommandText = "UPDATE Perfil SET DVH = @dvh WHERE Nombre = @nom";
-            _sqlcommand.Parameters.Clear();
-            _sqlcommand.Parameters.AddWithValue("@dvh", dvhCalculado);
-            _sqlcommand.Parameters.AddWithValue("@nom", nombre);
-            EjecutarNonQuery();
+            LM830_sqlcommand.CommandText = "UPDATE Perfil SET DVH = @dvh WHERE Nombre = @nom";
+            LM830_sqlcommand.Parameters.Clear();
+            LM830_sqlcommand.Parameters.AddWithValue("@dvh", LM830dvhCalculado);
+            LM830_sqlcommand.Parameters.AddWithValue("@nom", LM830nombre);
+            LM830EjecutarNonQuery();
         }
 
-        public void ActualizarPermisoSimpleDVH(string nombre, string dvhCalculado)
+        public void LM830ActualizarPermisoSimpleDVH(string LM830nombre, string LM830dvhCalculado)
         {
-            _sqlcommand.CommandText = "UPDATE PermisoSimple SET DVH = @dvh WHERE Nombre = @nom";
-            _sqlcommand.Parameters.Clear();
-            _sqlcommand.Parameters.AddWithValue("@dvh", dvhCalculado);
-            _sqlcommand.Parameters.AddWithValue("@nom", nombre);
-            EjecutarNonQuery();
+            LM830_sqlcommand.CommandText = "UPDATE PermisoSimple SET DVH = @dvh WHERE Nombre = @nom";
+            LM830_sqlcommand.Parameters.Clear();
+            LM830_sqlcommand.Parameters.AddWithValue("@dvh", LM830dvhCalculado);
+            LM830_sqlcommand.Parameters.AddWithValue("@nom", LM830nombre);
+            LM830EjecutarNonQuery();
         }
 
-        public void ActualizarDVH(string nombre, string dvhCalculado)
+        public void LM830ActualizarDVH(string LM830nombre, string LM830dvhCalculado)
         {
-            _sqlcommand.CommandText = "UPDATE Familia SET DVH = @dvh WHERE Nombre = @nom";
-            _sqlcommand.Parameters.Clear();
-            _sqlcommand.Parameters.AddWithValue("@dvh", dvhCalculado);
-            _sqlcommand.Parameters.AddWithValue("@nom", nombre);
-            EjecutarNonQuery();
+            LM830_sqlcommand.CommandText = "UPDATE Familia SET DVH = @dvh WHERE Nombre = @nom";
+            LM830_sqlcommand.Parameters.Clear();
+            LM830_sqlcommand.Parameters.AddWithValue("@dvh", LM830dvhCalculado);
+            LM830_sqlcommand.Parameters.AddWithValue("@nom", LM830nombre);
+            LM830EjecutarNonQuery();
         }
     }
 }

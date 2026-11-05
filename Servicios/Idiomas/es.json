@@ -12,12 +12,10 @@
   "btnCambiarClave": "CambiarClave",
   "btnLogout": "Log Out",
   "btnCambiarIdioma": "Cambiar Idioma",
-
   "YaHaySesionActiva": "Ya hay una sesión iniciada. Por favor, cierre sesión antes de intentar iniciar una nueva.",
   "Informacion": "Informacion",
   "menumsj1": "Quiere cerrar sesion?",
   "menumsj2": "cerrar sesion",
-
   "lblTextoTabla": "Usuarios Activos",
   "DNI": "DNI",
   "lblApe": "Apellidos",
@@ -64,13 +62,11 @@
   "UserMsj1": "Debe seleccionar un perfil.",
   "UserMsj2": "Tu perfil fue modificado y ya no tenés acceso a esta sección.",
   "UserMsj3": "Acceso revocado",
-
   "lblUsuarioFCC": "Usuario",
   "lblContraseñaActual": "Contraseña actual",
   "lblContraseñaFCC": "Contraseña",
   "btnGuardarContra": "Guardar contraseña",
   "linkVolver": "Volver a Login",
-
   "CamClaMsj1": "Contraseña cambiada con éxito!",
   "CamClaMsj2": "La nueva contraseña no puede ser igual a la anterior!",
   "CamClaMsj3": "Hay un error en Usuario!",
@@ -79,7 +75,6 @@
   "CamMsj6": "Ingrese su Usuario!",
   "CamMsj7": "Ingrese su Contraseña!",
   "CamMsj8": "Ingrese una nueva Contraseña!",
-
   "lblBitacora": "Bitacora",
   "lblNombreB": "Nombre",
   "lblApellidoB": "Apellido",
@@ -92,7 +87,6 @@
   "btnLimpiarB": "Limpiar",
   "btnAplicarB": "Aplicar",
   "btnImprimirB": "Imprimir",
-
   "Bitmsj1": "No se pudo conectar a la base de datos. Verificá tu conexión.",
   "Bitmsj2": "Error de conexión",
   "BitMsj3": "No se pudieron cargar los filtros. Verificá tu conexión.",
@@ -111,15 +105,11 @@
   "BitMsj16": "No se pudo generar el PDF. Intentá de nuevo.",
   "BitMsj17": "No tiene permisos para acceder a la Bitácora.",
   "BitMsj18": "Acceso Denegado",
-
   "lblCambiarIdioma": "Cambiar Idioma",
   "btnCambiarCI": "Cambiar",
   "MsjCambiarIdioma": "Idioma cambiado",
   "MsjConfirmacion": "Confirmado",
   "Salir": "Salir",
-
-
-
   "Español": "Español",
   "Ingles": "Ingles",
   "Japones": "Japones",
@@ -157,10 +147,6 @@
   "btnAsignarPermisos": "Asignar",
   "label8": "Permisos Asignados:",
   "btnQuitarPermisos": "Quitar",
-
-
-
-
   "VerPerfiles": "Ver Perfiles",
   "NoTienePermisosParaAcceder": "No tiene permisos para acceder a la Gestión de Usuarios y Perfiles.",
   "AccesoDenegado": "Acceso Denegado",
@@ -242,7 +228,6 @@
   "text32": "Cancelar la operación (No realizar modificaciones)",
   "text33": "Sus permisos fueron modificados. Ya no posee acceso a esta pantalla.",
   "text34": "Permisos actualizados",
-
   "UserLogueado": "Ya hay un usuario logueado.",
   "UserNoLogueado": "No hay ningún usuario logueado.",
   "PerSimText1": "No se pueden agregar componentes a un permiso simple.",
@@ -275,7 +260,6 @@
   "BitBlltext3": "No se pudieron filtrar los eventos.",
   "BitBlltext4": "No se pudieron obtener los usuarios.",
   "BitBlltext5": "No se pudo obtener el usuario.",
-
   "lblErrorDV": "Inconsistencias Detectadas",
   "lblModuloReparacion": "Modulo de reparacion",
   "lblForzar": "Forzar nuevos digitos verificadores",
@@ -283,7 +267,6 @@
   "lblSelecVers": "Seleccione una version:",
   "btnRestaurar": "Restaurar",
   "btnCancelardv": "Cancelar",
-
   "TextDV1": "Se recalcularan los digitos verificadores de todas las tablas, esta seguro?",
   "TextDV2": "Recalculo de DV",
   "TextDV3": "Se recalcularon los digitos verificadores correctamente",
@@ -305,22 +288,18 @@
   "TextDV19": "El archivo no tiene extensión válida (.bak).",
   "TextDV20": "El archivo no es un respaldo válido de la base de datos.",
   "TextDV21": "Ocurrió un error al restaurar la base de datos.",
-
   "lblTitulo": "Backup",
   "lblPath": "Path",
   "btnExaminar": "Examinar",
   "btnGenerar": "Generar",
   "btnVolverDV": "Volver",
-
   "TextBP1": "Debe seleccionar una carpeta de destino.",
   "TextBP2": "Atención",
   "TextBP3": "Backup generado correctamente en",
   "TextBP4": "Operación Exitosa",
   "TextBP5": "No se pudo generar el Backup.",
-
   "lblTituloRes": "Restore",
   "btnEjecutar": "Ejecutar",
-
   "btnGestion": "Clientes y puntos",
   "RFN1_RegistrarCliente": "Registrar cliente",
   "RFN1_ConsultarSaldo": "Consultar saldo",
@@ -337,6 +316,33 @@
   "RFN1_Buscar": "Buscar",
   "RFN1_BuscarCliente": "Buscar cliente",
   "RFN1_Volver": "Volver",
+  "RFN1_GestionProductos": "Productos",
+  "RFN1_Datos": "Datos",
+  "RFN1_Precio": "Precio",
+  "RFN1_Categoria": "Categoría",
+  "RFN1_Agregar": "Agregar",
+  "RFN1_Modificar": "Modificar",
+  "RFN1_Eliminar": "Eliminar",
+  "RFN1_Limpiar": "Limpiar",
+  "RFN1_SeleccioneRegistro": "Seleccione un registro de la grilla.",
+  "RFN1_ConfirmarEliminar": "¿Eliminar {0}?",
+  "RFN1_CambiosGuardados": "Los cambios se guardaron.",
+  "RFN1_PH_NombreProducto": "Ej.: Pan de campo",
+  "RFN2_GestionPremios": "Administrar premios",
+  "RFN2_Descripcion": "Descripción",
+  "RFN2_PuntosRequeridos": "Puntos requeridos",
+  "RFN2_Stock": "Stock",
+  "RFN2_ValorDeReferencia": "Valor de referencia",
+  "RFN2_PH_NombrePremio": "Ej.: Taza Le Marchant",
+  "RFN2_PH_Descripcion": "Opcional. Ej.: Taza de cerámica 350 ml",
+  "RFN2_PH_NroCanje": "Ej.: C-00000001 (figura en el comprobante del canje)",
+  "RFN1_PH_Dni": "Ej.: 30111222 (7 u 8 números, sin puntos)",
+  "RFN1_PH_Nombre": "Ej.: Ana (solo letras)",
+  "RFN1_PH_Apellido": "Ej.: Gómez (solo letras)",
+  "RFN1_PH_Email": "Ej.: ana.gomez@mail.com",
+  "RFN1_PH_Telefono": "Opcional. Ej.: 11 4555-1234",
+  "RFN1_PH_NroComprobante": "Ej.: V-00000001 (figura en el ticket)",
+  "RFN1_PH_Producto": "Ej.: Pan de campo (alcanza con parte del nombre)",
   "RFN1_Cliente": "Cliente",
   "RFN1_Nivel": "Nivel",
   "RFN1_SaldoVigente": "Saldo vigente",
@@ -446,5 +452,15 @@
   "RFN2_MotivoDeAnulacion": "Motivo de la anulación",
   "RFN2_MotivoAnulacion": "Ingrese el motivo de la anulación.",
   "RFN2_ConfirmarAnulacion": "¿Anular el canje",
-  "RFN2_CanjeAnulado": "Canje anulado. Puntos reintegrados:"
+  "RFN2_CanjeAnulado": "Canje anulado. Puntos reintegrados:",
+  "btnBitacoraCambios": "Bitácora de cambios",
+  "BC_Titulo": "Bitácora de cambios",
+  "BC_FiltroDni": "DNI del cliente",
+  "BC_Desde": "Desde",
+  "BC_Hasta": "Hasta",
+  "BC_Restaurar": "Restaurar versión",
+  "BC_SeleccioneVersion": "Seleccione una versión de la grilla.",
+  "BC_YaVigente": "La versión elegida ya es la vigente.",
+  "BC_ConfirmarRestaurar": "¿Restaurar esta versión?",
+  "BC_Restaurado": "Versión restaurada. Ahora es la versión activa."
 }

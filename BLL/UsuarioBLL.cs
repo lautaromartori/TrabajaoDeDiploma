@@ -1,303 +1,303 @@
-﻿using DAL;
-using Servicios;
+﻿using LM830DAL;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace BLL
+namespace LM830BLL
 {
-    public class UsuarioBLL
+    public class LM830UsuarioBLL
     {
-        private readonly UsuarioDAL usuarioDAL;
-        private readonly BitacoraBLL bitacoraBLL;
-        private readonly DigitoVerificadorBLL digitoVerificadorBLL;
+        private readonly LM830UsuarioDAL LM830usuarioDAL;
+        private readonly LM830BitacoraBLL LM830bitacoraBLL;
+        private readonly LM830DigitoVerificadorBLL LM830digitoVerificadorBLL;
 
-        public UsuarioBLL()
+        public LM830UsuarioBLL()
         {
-            usuarioDAL = new UsuarioDAL();
-            bitacoraBLL = new BitacoraBLL();
-            digitoVerificadorBLL = new DigitoVerificadorBLL();
+            LM830usuarioDAL = new LM830UsuarioDAL();
+            LM830bitacoraBLL = new LM830BitacoraBLL();
+            LM830digitoVerificadorBLL = new LM830DigitoVerificadorBLL();
         }
 
-        public LoginResultado Login(string usuario, string contraseña)
+        public LM830LoginResultado LM830Login(string LM830usuario, string LM830contraseña)
         {
             try
             {
-                if (SessionManager.Instance.Logueado())
+                if (LM830SessionManager.LM830Instance.LM830Logueado())
                 {
-                    throw new Exception(LanguageManager.Instance.GetTraduction("UserBLLText1"));
+                    throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserBLLText1"));
                 }
 
-                if (usuarioDAL == null)
+                if (LM830usuarioDAL == null)
                 {
-                    throw new Exception(LanguageManager.Instance.GetTraduction("UserBLLText2"));
+                    throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserBLLText2"));
                 }
 
-                Usuario usuarioBE = usuarioDAL.ObtenerPorUserName(usuario);
-                if (usuarioBE != null)
+                LM830Usuario LM830usuarioBE = LM830usuarioDAL.LM830ObtenerPorUserName(LM830usuario);
+                if (LM830usuarioBE != null)
                 {
-                    if (!usuarioBE.Activo) return LoginResultado.Inactivo;
-                    if (usuarioBE.Bloqueado) return LoginResultado.Bloqueado;
+                    if (!LM830usuarioBE.LM830Activo) return LM830LoginResultado.LM830Inactivo;
+                    if (LM830usuarioBE.LM830Bloqueado) return LM830LoginResultado.LM830Bloqueado;
 
-                    if (usuarioBE.Password != Encriptador.GetHash256(contraseña))
+                    if (LM830usuarioBE.LM830Password != LM830Encriptador.LM830GetHash256(LM830contraseña))
                     {
-                        usuarioDAL.SumarIntentoFallido(usuarioBE);
-                        bool bloquear = usuarioDAL.ObtenerIntentosFallidos(usuarioBE.DNI) >= 3;
-                        if (bloquear)
+                        LM830usuarioDAL.LM830SumarIntentoFallido(LM830usuarioBE);
+                        bool LM830bloquear = LM830usuarioDAL.LM830ObtenerIntentosFallidos(LM830usuarioBE.LM830DNI) >= 3;
+                        if (LM830bloquear)
                         {
-                            usuarioDAL.BloquearUsuario(usuarioBE.Username);
+                            LM830usuarioDAL.LM830BloquearUsuario(LM830usuarioBE.LM830Username);
                         }
 
-                        digitoVerificadorBLL.RecalcularDVH_Usuario(usuarioBE.DNI);
-                        digitoVerificadorBLL.RecalcularDVV_Usuario();
-                        RegistrarEventoLogin(usuarioBE.Username, bloquear ? "Usuario bloqueado por intentos fallidos" : "Login fallido", bloquear ? 3 : 2);
+                        LM830digitoVerificadorBLL.LM830RecalcularDVH_Usuario(LM830usuarioBE.LM830DNI);
+                        LM830digitoVerificadorBLL.LM830RecalcularDVV_Usuario();
+                        LM830RegistrarEventoLogin(LM830usuarioBE.LM830Username, LM830bloquear ? "Usuario bloqueado por intentos fallidos" : "Login fallido", LM830bloquear ? 3 : 2);
 
-                        return bloquear ? LoginResultado.Bloqueado : LoginResultado.ContraseñaIncorrecta;
+                        return LM830bloquear ? LM830LoginResultado.LM830Bloqueado : LM830LoginResultado.LM830ContraseñaIncorrecta;
                     }
                     else
                     {
-                        if (usuarioDAL.ObtenerIntentosFallidos(usuarioBE.DNI) > 0)
+                        if (LM830usuarioDAL.LM830ObtenerIntentosFallidos(LM830usuarioBE.LM830DNI) > 0)
                         {
-                            usuarioDAL.ResetearIntentos(usuarioBE);
-                            digitoVerificadorBLL.RecalcularDVH_Usuario(usuarioBE.DNI);
-                            digitoVerificadorBLL.RecalcularDVV_Usuario();
+                            LM830usuarioDAL.LM830ResetearIntentos(LM830usuarioBE);
+                            LM830digitoVerificadorBLL.LM830RecalcularDVH_Usuario(LM830usuarioBE.LM830DNI);
+                            LM830digitoVerificadorBLL.LM830RecalcularDVV_Usuario();
                         }
 
-                        BLL.PerfilBLL perfilBLL = new BLL.PerfilBLL();
-                        var todosLosPerfiles = perfilBLL.ObtenerPerfiles();
-                        var perfilUsuario = todosLosPerfiles.FirstOrDefault(p => p.Nombre == usuarioBE.Rol);
+                        LM830BLL.LM830PerfilBLL LM830perfilBLL = new LM830BLL.LM830PerfilBLL();
+                        var LM830todosLosPerfiles = LM830perfilBLL.LM830ObtenerPerfiles();
+                        var LM830perfilUsuario = LM830todosLosPerfiles.FirstOrDefault(LM830p => LM830p.LM830Nombre == LM830usuarioBE.LM830Rol);
 
-                        if (perfilUsuario != null)
+                        if (LM830perfilUsuario != null)
                         {
-                            usuarioBE.Permisos.Add(perfilUsuario);
+                            LM830usuarioBE.LM830Permisos.Add(LM830perfilUsuario);
                         }
 
-                        SessionManager.Instance.Loguear(usuarioBE);
+                        LM830SessionManager.LM830Instance.LM830Loguear(LM830usuarioBE);
 
-                        return LoginResultado.Valido;
+                        return LM830LoginResultado.LM830Valido;
                     }
                 }
-                return LoginResultado.UsuarioNoEncontrado;
+                return LM830LoginResultado.LM830UsuarioNoEncontrado;
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception(LM830ex.Message);
             }
         }
 
-        private void RegistrarEventoLogin(string login, string evento, int criticidad)
+        private void LM830RegistrarEventoLogin(string LM830login, string LM830evento, int LM830criticidad)
         {
             try
             {
-                bitacoraBLL.RegistrarEvento(new Bitacora { Login = login, Modulo = "Usuarios", Evento = evento, Criticidad = criticidad });
+                LM830bitacoraBLL.LM830RegistrarEvento(new LM830Bitacora { LM830Login = LM830login, LM830Modulo = "Usuarios", LM830Evento = LM830evento, LM830Criticidad = LM830criticidad });
             }
             catch { }
         }
 
-        public void Desloguear()
+        public void LM830Desloguear()
         {
             try
             {
-                Bitacora bitacora = new Bitacora();
-                bitacora.Login = SessionManager.Instance.UsuarioActual().Username;
+                LM830Bitacora LM830bitacora = new LM830Bitacora();
+                LM830bitacora.LM830Login = LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username;
 
-                SessionManager.Instance.Desloguear();
+                LM830SessionManager.LM830Instance.LM830Desloguear();
 
-                bitacora.Modulo = "Usuarios";
-                bitacora.Evento = "Desloguear usuario";
-                bitacora.Criticidad = 1;
-                bitacoraBLL.RegistrarEvento(bitacora);
+                LM830bitacora.LM830Modulo = "Usuarios";
+                LM830bitacora.LM830Evento = "Desloguear usuario";
+                LM830bitacora.LM830Criticidad = 1;
+                LM830bitacoraBLL.LM830RegistrarEvento(LM830bitacora);
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception(LM830ex.Message);
             }
         }
 
-        public void RegistrarUsuario(Usuario usuarioBE)
+        public void LM830RegistrarUsuario(LM830Usuario LM830usuarioBE)
         {
             try
             {
-                ValidarCaracteresUsuario(usuarioBE);
-                if (usuarioDAL.BuscarUsuarioPorDNI(usuarioBE.DNI) == null)
+                LM830ValidarCaracteresUsuario(LM830usuarioBE);
+                if (LM830usuarioDAL.LM830BuscarUsuarioPorDNI(LM830usuarioBE.LM830DNI) == null)
                 {
-                    usuarioBE.Bloqueado = false;
-                    usuarioBE.Activo = true;
-                    usuarioBE.Intentos = 0;
-                    string cadenaDV = DigitoVerificadorBLL.CadenaDVH_Usuario(usuarioBE);
+                    LM830usuarioBE.LM830Bloqueado = false;
+                    LM830usuarioBE.LM830Activo = true;
+                    LM830usuarioBE.LM830Intentos = 0;
+                    string LM830cadenaDV = LM830DigitoVerificadorBLL.LM830CadenaDVH_Usuario(LM830usuarioBE);
 
-                    usuarioDAL.Registrar(usuarioBE, DigitoVerificador.CalcularDVH(cadenaDV));
-                    digitoVerificadorBLL.RecalcularDVV_Usuario();
-                    Bitacora bitacora = new Bitacora();
-                    bitacora.Login = SessionManager.Instance.UsuarioActual().Username;
-                    bitacora.Modulo = "Usuarios";
-                    bitacora.Evento = "Crear usuario exitoso";
-                    bitacora.Criticidad = 1;
-                    bitacoraBLL.RegistrarEvento(bitacora);
+                    LM830usuarioDAL.LM830Registrar(LM830usuarioBE, LM830DigitoVerificador.LM830CalcularDVH(LM830cadenaDV));
+                    LM830digitoVerificadorBLL.LM830RecalcularDVV_Usuario();
+                    LM830Bitacora LM830bitacora = new LM830Bitacora();
+                    LM830bitacora.LM830Login = LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username;
+                    LM830bitacora.LM830Modulo = "Usuarios";
+                    LM830bitacora.LM830Evento = "Crear usuario exitoso";
+                    LM830bitacora.LM830Criticidad = 1;
+                    LM830bitacoraBLL.LM830RegistrarEvento(LM830bitacora);
                 }
                 else
                 {
-                    throw new Exception(LanguageManager.Instance.GetTraduction("UserBLLText3"));
+                    throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserBLLText3"));
                 }
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw new Exception(ex.Message, ex);
+                throw new Exception(LM830ex.Message, LM830ex);
             }
         }
 
-        private void ValidarCaracteresUsuario(Usuario usuario)
+        private void LM830ValidarCaracteresUsuario(LM830Usuario LM830usuario)
         {
-            if (!Regex.IsMatch(usuario.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$")) throw new Exception(LanguageManager.Instance.GetTraduction("UserBLLText4"));
-            if (!Regex.IsMatch(usuario.DNI, @"^\d{8}$")) throw new Exception(LanguageManager.Instance.GetTraduction("UserBLLText5"));
-            if (!Regex.IsMatch(usuario.Nombre, @"^.{3,}$") || !Regex.IsMatch(usuario.Apellido, @"^.{3,}$"))
-                throw new Exception(LanguageManager.Instance.GetTraduction("UserBLLText6"));
+            if (!Regex.IsMatch(LM830usuario.LM830Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$")) throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserBLLText4"));
+            if (!Regex.IsMatch(LM830usuario.LM830DNI, @"^\d{8}$")) throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserBLLText5"));
+            if (!Regex.IsMatch(LM830usuario.LM830Nombre, @"^.{3,}$") || !Regex.IsMatch(LM830usuario.LM830Apellido, @"^.{3,}$"))
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserBLLText6"));
         }
 
-        public List<Usuario> ListarUsuariosActivos()
+        public List<LM830Usuario> LM830ListarUsuariosActivos()
         {
-            var todos = usuarioDAL.ListarTodosLosUsuarios();
-            var activos = todos.Where(u => u.Activo).ToList();
-            return activos;
+            var LM830todos = LM830usuarioDAL.LM830ListarTodosLosUsuarios();
+            var LM830activos = LM830todos.Where(LM830u => LM830u.LM830Activo).ToList();
+            return LM830activos;
         }
 
-        public void EliminarLogico(string dNI)
+        public void LM830EliminarLogico(string LM830dNI)
         {
             try
             {
-                Usuario user = usuarioDAL.BuscarUsuarioPorDNI(dNI);
+                LM830Usuario LM830user = LM830usuarioDAL.LM830BuscarUsuarioPorDNI(LM830dNI);
 
-                if (user.Activo)
+                if (LM830user.LM830Activo)
                 {
-                    usuarioDAL.EliminarLogico(dNI);
-                    digitoVerificadorBLL.RecalcularDVH_Usuario(dNI);
-                    digitoVerificadorBLL.RecalcularDVV_Usuario();
+                    LM830usuarioDAL.LM830EliminarLogico(LM830dNI);
+                    LM830digitoVerificadorBLL.LM830RecalcularDVH_Usuario(LM830dNI);
+                    LM830digitoVerificadorBLL.LM830RecalcularDVV_Usuario();
 
-                    Bitacora bitacora = new Bitacora();
-                    bitacora.Login = SessionManager.Instance.UsuarioActual().Username;
-                    bitacora.Modulo = "Usuarios";
-                    bitacora.Evento = "Eliminar Usuario (Baja lógica) exitoso";
-                    bitacora.Criticidad = 1;
-                    bitacoraBLL.RegistrarEvento(bitacora);
+                    LM830Bitacora LM830bitacora = new LM830Bitacora();
+                    LM830bitacora.LM830Login = LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username;
+                    LM830bitacora.LM830Modulo = "Usuarios";
+                    LM830bitacora.LM830Evento = "Eliminar Usuario (Baja lógica) exitoso";
+                    LM830bitacora.LM830Criticidad = 1;
+                    LM830bitacoraBLL.LM830RegistrarEvento(LM830bitacora);
                 }
                 else
                 {
-                    usuarioDAL.ActivarUsuario(dNI);
-                    digitoVerificadorBLL.RecalcularDVH_Usuario(dNI);
-                    digitoVerificadorBLL.RecalcularDVV_Usuario();
-                    Bitacora bitacora = new Bitacora();
-                    bitacora.Login = SessionManager.Instance.UsuarioActual().Username;
-                    bitacora.Modulo = "Usuarios";
-                    bitacora.Evento = "Activar Usuario (Baja lógica) exitoso";
-                    bitacora.Criticidad = 1;
-                    bitacoraBLL.RegistrarEvento(bitacora);
+                    LM830usuarioDAL.LM830ActivarUsuario(LM830dNI);
+                    LM830digitoVerificadorBLL.LM830RecalcularDVH_Usuario(LM830dNI);
+                    LM830digitoVerificadorBLL.LM830RecalcularDVV_Usuario();
+                    LM830Bitacora LM830bitacora = new LM830Bitacora();
+                    LM830bitacora.LM830Login = LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username;
+                    LM830bitacora.LM830Modulo = "Usuarios";
+                    LM830bitacora.LM830Evento = "Activar Usuario (Baja lógica) exitoso";
+                    LM830bitacora.LM830Criticidad = 1;
+                    LM830bitacoraBLL.LM830RegistrarEvento(LM830bitacora);
                 }
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw ex;
+                throw LM830ex;
             }
         }
 
-        public LoginResultado CambiarClave(string usuario, string contraActual, string nuevaContra)
+        public LM830LoginResultado LM830CambiarClave(string LM830usuario, string LM830contraActual, string LM830nuevaContra)
         {
             try
             {
-                Usuario user = usuarioDAL.ObtenerPorUserName(usuario);
+                LM830Usuario LM830user = LM830usuarioDAL.LM830ObtenerPorUserName(LM830usuario);
 
-                if (user == null) return LoginResultado.UsuarioNoEncontrado;
-                if (user.Password == Encriptador.GetHash256(nuevaContra)) return LoginResultado.ContraseñaIguales;
-                if (user.Password != Encriptador.GetHash256(contraActual)) return LoginResultado.ContraseñaIncorrecta;
-                if (user.Bloqueado) return LoginResultado.Bloqueado;
+                if (LM830user == null) return LM830LoginResultado.LM830UsuarioNoEncontrado;
+                if (LM830user.LM830Password == LM830Encriptador.LM830GetHash256(LM830nuevaContra)) return LM830LoginResultado.LM830ContraseñaIguales;
+                if (LM830user.LM830Password != LM830Encriptador.LM830GetHash256(LM830contraActual)) return LM830LoginResultado.LM830ContraseñaIncorrecta;
+                if (LM830user.LM830Bloqueado) return LM830LoginResultado.LM830Bloqueado;
 
-                usuarioDAL.CambiarClave(usuario, Encriptador.GetHash256(nuevaContra));
-                digitoVerificadorBLL.RecalcularDVH_Usuario(user.DNI);
-                digitoVerificadorBLL.RecalcularDVV_Usuario();
-                Bitacora bitacora = new Bitacora();
-                bitacora.Login = usuario;
-                bitacora.Modulo = "Usuarios";
-                bitacora.Evento = "Cambiar Clave exitoso";
-                bitacora.Criticidad = 1;
-                bitacoraBLL.RegistrarEvento(bitacora);
+                LM830usuarioDAL.LM830CambiarClave(LM830usuario, LM830Encriptador.LM830GetHash256(LM830nuevaContra));
+                LM830digitoVerificadorBLL.LM830RecalcularDVH_Usuario(LM830user.LM830DNI);
+                LM830digitoVerificadorBLL.LM830RecalcularDVV_Usuario();
+                LM830Bitacora LM830bitacora = new LM830Bitacora();
+                LM830bitacora.LM830Login = LM830usuario;
+                LM830bitacora.LM830Modulo = "Usuarios";
+                LM830bitacora.LM830Evento = "Cambiar Clave exitoso";
+                LM830bitacora.LM830Criticidad = 1;
+                LM830bitacoraBLL.LM830RegistrarEvento(LM830bitacora);
 
-                return LoginResultado.Valido;
+                return LM830LoginResultado.LM830Valido;
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw ex;
+                throw LM830ex;
             }
         }
 
-        public void Modificar(string dNI, Usuario usuarioBE)
+        public void LM830Modificar(string LM830dNI, LM830Usuario LM830usuarioBE)
         {
-            Usuario existente = usuarioDAL.BuscarUsuarioPorDNI(usuarioBE.DNI);
-            if (existente != null && existente.DNI != dNI)
-                throw new Exception(LanguageManager.Instance.GetTraduction("UserBLLText7"));
+            LM830Usuario LM830existente = LM830usuarioDAL.LM830BuscarUsuarioPorDNI(LM830usuarioBE.LM830DNI);
+            if (LM830existente != null && LM830existente.LM830DNI != LM830dNI)
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserBLLText7"));
             else
             {
-                Usuario repetido = usuarioDAL.ObtenerPorUserName(usuarioBE.Username);
-                if (repetido != null && repetido.DNI != dNI)
-                    throw new Exception(LanguageManager.Instance.GetTraduction("UserBLLText8"));
+                LM830Usuario LM830repetido = LM830usuarioDAL.LM830ObtenerPorUserName(LM830usuarioBE.LM830Username);
+                if (LM830repetido != null && LM830repetido.LM830DNI != LM830dNI)
+                    throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserBLLText8"));
                 else
                 {
-                    usuarioDAL.Modificar(dNI, usuarioBE);
-                    digitoVerificadorBLL.RecalcularDVH_Usuario(usuarioBE.DNI);
-                    digitoVerificadorBLL.RecalcularDVV_Usuario();
-                    Bitacora bitacora = new Bitacora();
-                    bitacora.Login = SessionManager.Instance.UsuarioActual().Username;
-                    bitacora.Modulo = "Usuarios";
-                    bitacora.Evento = "Modificar Usuario exitoso";
-                    bitacora.Criticidad = 1;
-                    bitacoraBLL.RegistrarEvento(bitacora);
+                    LM830usuarioDAL.LM830Modificar(LM830dNI, LM830usuarioBE);
+                    LM830digitoVerificadorBLL.LM830RecalcularDVH_Usuario(LM830usuarioBE.LM830DNI);
+                    LM830digitoVerificadorBLL.LM830RecalcularDVV_Usuario();
+                    LM830Bitacora LM830bitacora = new LM830Bitacora();
+                    LM830bitacora.LM830Login = LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username;
+                    LM830bitacora.LM830Modulo = "Usuarios";
+                    LM830bitacora.LM830Evento = "Modificar Usuario exitoso";
+                    LM830bitacora.LM830Criticidad = 1;
+                    LM830bitacoraBLL.LM830RegistrarEvento(LM830bitacora);
                 }
             }
         }
 
-        public void DesbloquearUsuario(Usuario usuarioBE)
+        public void LM830DesbloquearUsuario(LM830Usuario LM830usuarioBE)
         {
             try
             {
-                Usuario user = usuarioDAL.BuscarUsuarioPorDNI(usuarioBE.DNI);
+                LM830Usuario LM830user = LM830usuarioDAL.LM830BuscarUsuarioPorDNI(LM830usuarioBE.LM830DNI);
 
-                if (user.Bloqueado)
+                if (LM830user.LM830Bloqueado)
                 {
-                    string nuevaClave = Encriptador.GetHash256(user.DNI + user.Nombre);
+                    string LM830nuevaClave = LM830Encriptador.LM830GetHash256(LM830user.LM830DNI + LM830user.LM830Nombre);
 
-                    usuarioDAL.DesbloquearUsuario(user.DNI, nuevaClave);
-                    digitoVerificadorBLL.RecalcularDVH_Usuario(user.DNI);
-                    digitoVerificadorBLL.RecalcularDVV_Usuario();
-                    Bitacora bitacora = new Bitacora();
-                    bitacora.Login = SessionManager.Instance.UsuarioActual().Username;
-                    bitacora.Modulo = "Usuarios";
-                    bitacora.Evento = "Desbloquear Usuario exitoso";
-                    bitacora.Criticidad = 1;
-                    bitacoraBLL.RegistrarEvento(bitacora);
+                    LM830usuarioDAL.LM830DesbloquearUsuario(LM830user.LM830DNI, LM830nuevaClave);
+                    LM830digitoVerificadorBLL.LM830RecalcularDVH_Usuario(LM830user.LM830DNI);
+                    LM830digitoVerificadorBLL.LM830RecalcularDVV_Usuario();
+                    LM830Bitacora LM830bitacora = new LM830Bitacora();
+                    LM830bitacora.LM830Login = LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username;
+                    LM830bitacora.LM830Modulo = "Usuarios";
+                    LM830bitacora.LM830Evento = "Desbloquear Usuario exitoso";
+                    LM830bitacora.LM830Criticidad = 1;
+                    LM830bitacoraBLL.LM830RegistrarEvento(LM830bitacora);
                 }
                 else
                 {
-                    throw new Exception(LanguageManager.Instance.GetTraduction("UserBLLText9"));
+                    throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserBLLText9"));
                 }
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw ex;
+                throw LM830ex;
             }
         }
 
-        public List<Usuario> ListarTodosUsuarios() => usuarioDAL.ListarTodosLosUsuarios();
-        public Usuario BuscarUsuarioPorDNI(string v) => usuarioDAL.BuscarUsuarioPorDNI(v);
-        public Usuario BuscarUsuarioPorUserName(string user) => usuarioDAL.ObtenerPorUserName(user);
+        public List<LM830Usuario> LM830ListarTodosUsuarios() => LM830usuarioDAL.LM830ListarTodosLosUsuarios();
+        public LM830Usuario LM830BuscarUsuarioPorDNI(string LM830v) => LM830usuarioDAL.LM830BuscarUsuarioPorDNI(LM830v);
+        public LM830Usuario LM830BuscarUsuarioPorUserName(string LM830user) => LM830usuarioDAL.LM830ObtenerPorUserName(LM830user);
 
-        public bool ValidarNuevoUsuario(string user, string contra)
+        public bool LM830ValidarNuevoUsuario(string LM830user, string LM830contra)
         {
-            Usuario usuario = usuarioDAL.ObtenerPorUserName(user);
-            if (usuario != null)
+            LM830Usuario LM830usuario = LM830usuarioDAL.LM830ObtenerPorUserName(LM830user);
+            if (LM830usuario != null)
             {
-                if (usuario.Password == Encriptador.GetHash256(usuario.DNI + usuario.Nombre))
+                if (LM830usuario.LM830Password == LM830Encriptador.LM830GetHash256(LM830usuario.LM830DNI + LM830usuario.LM830Nombre))
                 {
-                    if (Encriptador.GetHash256(contra) == usuario.Password)
+                    if (LM830Encriptador.LM830GetHash256(LM830contra) == LM830usuario.LM830Password)
                     {
                         return true;
                     }
@@ -306,10 +306,10 @@ namespace BLL
             return false;
         }
 
-        public string RetornarRol(string username)
+        public string LM830RetornarRol(string LM830username)
         {
-            Usuario usuario = BuscarUsuarioPorUserName(username);
-            return usuario.Rol;
+            LM830Usuario LM830usuario = LM830BuscarUsuarioPorUserName(LM830username);
+            return LM830usuario.LM830Rol;
         }
     }
 }

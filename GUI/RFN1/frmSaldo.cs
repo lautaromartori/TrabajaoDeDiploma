@@ -1,100 +1,107 @@
 ﻿#nullable enable
-using BE.RFN1;
-using BLL.RFN1;
-using Servicios;
+using LM830BE.LM830RFN1;
+using LM830BLL.LM830RFN1;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace GUI.RFN1
+namespace LM830GUI.LM830RFN1
 {
-    public partial class frmSaldo : Form, IObserver
+    public partial class LM830frmSaldo : Form, LM830IObserver
     {
-        private readonly ClienteBLL _clienteBLL = new ClienteBLL();
-        private readonly LoteBLL _loteBLL = new LoteBLL();
+        private const int LM830EM_SETCUEBANNER = 0x1501;
 
-        public frmSaldo()
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, string lParam);
+
+        private readonly LM830ClienteBLL LM830_clienteBLL = new LM830ClienteBLL();
+        private readonly LM830LoteBLL LM830_loteBLL = new LM830LoteBLL();
+
+        public LM830frmSaldo()
         {
             InitializeComponent();
         }
 
-        private void frmSaldo_Load(object sender, EventArgs e)
+        private void LM830frmSaldo_Load(object LM830sender, EventArgs LM830e)
         {
-            LanguageManager.Instance.AgregarObservador(this);
-            Estilo.Aplicar(this);
-            Actualizar(LanguageManager.Instance);
-            LimpiarCliente();
+            LM830LanguageManager.LM830Instance.LM830AgregarObservador(this);
+            LM830Estilo.LM830Aplicar(this);
+            LM830Actualizar(LM830LanguageManager.LM830Instance);
+            LM830LimpiarCliente();
         }
 
-        private void btnBuscar_Click(object sender, EventArgs e)
+        private void LM830btnBuscar_Click(object LM830sender, EventArgs LM830e)
         {
             try
             {
-                LimpiarCliente();
-                string dni = txtDni.Text.Trim();
-                if (!Regex.IsMatch(dni, @"^\d{7,8}$"))
+                LM830LimpiarCliente();
+                string LM830dni = LM830txtDni.Text.Trim();
+                if (!Regex.IsMatch(LM830dni, @"^\d{7,8}$"))
                 {
-                    MessageBox.Show(T("RFN1_DniInvalido"), T("RFN1_ConsultarSaldo"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(LM830T("RFN1_DniInvalido"), LM830T("RFN1_ConsultarSaldo"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                Cliente? cliente = _clienteBLL.Buscar(dni);
-                if (cliente == null)
+                LM830Cliente? LM830cliente = LM830_clienteBLL.LM830Buscar(LM830dni);
+                if (LM830cliente == null)
                 {
-                    MessageBox.Show(T("RFN1_ClienteNoInscripto"), T("RFN1_ConsultarSaldo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(LM830T("RFN1_ClienteNoInscripto"), LM830T("RFN1_ConsultarSaldo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                int saldo = _loteBLL.ConsultarSaldo(cliente, out List<LotePuntos> lotes);
+                int LM830saldo = LM830_loteBLL.LM830ConsultarSaldo(LM830cliente, out List<LM830LotePuntos> LM830lotes);
 
-                lblClienteDatos.Text = $"{cliente.NombreCompleto}   DNI {cliente.Dni}   {cliente.Email}";
-                lblNivel.Text = cliente.Nivel.Nombre;
-                lblSaldo.Text = saldo.ToString("N0");
-                dgvLotes.DataSource = lotes.Select(l => new
+                LM830lblClienteDatos.Text = $"{LM830cliente.LM830NombreCompleto}   DNI {LM830cliente.LM830Dni}   {LM830cliente.LM830Email}";
+                LM830lblNivel.Text = LM830cliente.LM830Nivel.LM830Nombre;
+                LM830lblSaldo.Text = LM830saldo.ToString("N0");
+                LM830dgvLotes.DataSource = LM830lotes.Select(LM830l => new
                 {
-                    Origen = l.Origen.ToString(),
-                    Acreditado = l.FechaAcreditacion.ToString("dd/MM/yyyy"),
-                    Disponibles = l.PuntosDisponibles,
-                    Vence = l.FechaVencimiento.ToString("dd/MM/yyyy")
+                    Origen = LM830l.LM830Origen.LM830ATexto(),
+                    Acreditado = LM830l.LM830FechaAcreditacion.ToString("dd/MM/yyyy"),
+                    Disponibles = LM830l.LM830PuntosDisponibles,
+                    Vence = LM830l.LM830FechaVencimiento.ToString("dd/MM/yyyy")
                 }).ToList();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830ex.Message, LM830T("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void LimpiarCliente()
+        private void LM830LimpiarCliente()
         {
-            lblClienteDatos.Text = "-";
-            lblNivel.Text = "-";
-            lblSaldo.Text = "-";
-            dgvLotes.DataSource = null;
+            LM830lblClienteDatos.Text = "-";
+            LM830lblNivel.Text = "-";
+            LM830lblSaldo.Text = "-";
+            LM830dgvLotes.DataSource = null;
         }
 
-        private void btnVolver_Click(object sender, EventArgs e) => Close();
+        private void LM830btnVolver_Click(object LM830sender, EventArgs LM830e) => Close();
 
-        private void frmSaldo_FormClosed(object sender, FormClosedEventArgs e)
+        private void LM830frmSaldo_FormClosed(object LM830sender, FormClosedEventArgs LM830e)
         {
-            LanguageManager.Instance.EliminarObservador(this);
-            Navegacion.MostrarMenu();
+            LM830LanguageManager.LM830Instance.LM830EliminarObservador(this);
+            LM830Navegacion.LM830MostrarMenu();
         }
 
-        private static string T(string clave) => LanguageManager.Instance.GetTraduction(clave);
+        private static string LM830T(string LM830clave) => LM830LanguageManager.LM830Instance.LM830GetTraduction(LM830clave);
 
-        public void Actualizar(LanguageManager lenguaje)
+        public void LM830Actualizar(LM830LanguageManager LM830lenguaje)
         {
-            Text = lenguaje.GetTraduction("RFN1_ConsultarSaldo");
-            lblTitulo.Text = Text;
-            lblDni.Text = lenguaje.GetTraduction("RFN1_Dni");
-            btnBuscar.Text = lenguaje.GetTraduction("RFN1_Buscar");
-            grpCliente.Text = lenguaje.GetTraduction("RFN1_Cliente");
-            lblNivelTitulo.Text = lenguaje.GetTraduction("RFN1_Nivel") + ":";
-            lblSaldoTitulo.Text = lenguaje.GetTraduction("RFN1_SaldoVigente") + ":";
-            lblLotes.Text = lenguaje.GetTraduction("RFN1_PuntosPorVencer");
-            btnVolver.Text = lenguaje.GetTraduction("RFN1_Volver");
+            Text = LM830lenguaje.LM830GetTraduction("RFN1_ConsultarSaldo");
+            LM830lblTitulo.Text = Text;
+            LM830lblDni.Text = LM830lenguaje.LM830GetTraduction("RFN1_Dni");
+            LM830btnBuscar.Text = LM830lenguaje.LM830GetTraduction("RFN1_Buscar");
+            LM830grpCliente.Text = LM830lenguaje.LM830GetTraduction("RFN1_Cliente");
+            LM830lblNivelTitulo.Text = LM830lenguaje.LM830GetTraduction("RFN1_Nivel") + ":";
+            LM830lblSaldoTitulo.Text = LM830lenguaje.LM830GetTraduction("RFN1_SaldoVigente") + ":";
+            LM830lblLotes.Text = LM830lenguaje.LM830GetTraduction("RFN1_PuntosPorVencer");
+            LM830btnVolver.Text = LM830lenguaje.LM830GetTraduction("RFN1_Volver");
+            SendMessage(LM830txtDni.Handle, LM830EM_SETCUEBANNER, (IntPtr)1, LM830lenguaje.LM830GetTraduction("RFN1_PH_Dni"));
         }
     }
 }

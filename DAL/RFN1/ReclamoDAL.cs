@@ -1,73 +1,73 @@
-﻿using BE.RFN1;
+﻿using LM830BE.LM830RFN1;
 using Microsoft.Data.SqlClient;
-using Servicios;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 
-namespace DAL.RFN1
+namespace LM830DAL.LM830RFN1
 {
-    public class ReclamoDAL : AbstractDAL<Reclamo>
+    public class LM830ReclamoDAL : LM830AbstractDAL<LM830Reclamo>
     {
-        public bool ExistePendiente(Venta v)
+        public bool LM830ExistePendiente(LM830Venta LM830v)
         {
             try
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.CommandText = "SELECT COUNT(1) FROM Reclamo WHERE idVenta = @idVenta AND estado = 'pendiente'";
-                _sqlcommand.Parameters.AddWithValue("@idVenta", v.IdVenta);
-                _sqlserver.Open();
-                return Convert.ToInt32(_sqlcommand.ExecuteScalar()) > 0;
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.CommandText = "SELECT COUNT(1) FROM Reclamo WHERE idVenta = @idVenta AND estado = 'pendiente'";
+                LM830_sqlcommand.Parameters.AddWithValue("@idVenta", LM830v.LM830IdVenta);
+                LM830_sqlserver.Open();
+                return Convert.ToInt32(LM830_sqlcommand.ExecuteScalar()) > 0;
             }
             finally
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlserver.Close();
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlserver.Close();
             }
         }
 
-        public void Insertar(Reclamo r)
+        public void LM830Insertar(LM830Reclamo LM830r)
         {
-            _sqlserver.Open();
-            SqlTransaction tx = _sqlserver.BeginTransaction();
+            LM830_sqlserver.Open();
+            SqlTransaction LM830tx = LM830_sqlserver.BeginTransaction();
             try
             {
-                using (var cmd = new SqlCommand(@"INSERT INTO Reclamo (idCliente, idVenta, fechaReclamo, puntosReclamados, motivo, estado, dniVendedor, DVH)
+                using (var LM830cmd = new SqlCommand(@"INSERT INTO Reclamo (idCliente, idVenta, fechaReclamo, puntosReclamados, motivo, estado, dniVendedor, DVH)
                                                   VALUES (@idCliente, @idVenta, @fecha, @puntos, @motivo, @estado, @dniVendedor, '');
-                                                  SELECT CAST(SCOPE_IDENTITY() AS int);", _sqlserver, tx))
+                                                  SELECT CAST(SCOPE_IDENTITY() AS int);", LM830_sqlserver, LM830tx))
                 {
-                    cmd.Parameters.AddWithValue("@idCliente", r.Cliente.IdCliente);
-                    cmd.Parameters.AddWithValue("@idVenta", r.Venta.IdVenta);
-                    cmd.Parameters.AddWithValue("@fecha", r.FechaReclamo);
-                    cmd.Parameters.AddWithValue("@puntos", r.PuntosReclamados);
-                    cmd.Parameters.AddWithValue("@motivo", r.Motivo);
-                    cmd.Parameters.AddWithValue("@estado", r.Estado.ToString());
-                    cmd.Parameters.AddWithValue("@dniVendedor", r.Vendedor.DNI);
-                    r.IdReclamo = (int)cmd.ExecuteScalar();
+                    LM830cmd.Parameters.AddWithValue("@idCliente", LM830r.LM830Cliente.LM830IdCliente);
+                    LM830cmd.Parameters.AddWithValue("@idVenta", LM830r.LM830Venta.LM830IdVenta);
+                    LM830cmd.Parameters.AddWithValue("@fecha", LM830r.LM830FechaReclamo);
+                    LM830cmd.Parameters.AddWithValue("@puntos", LM830r.LM830PuntosReclamados);
+                    LM830cmd.Parameters.AddWithValue("@motivo", LM830r.LM830Motivo);
+                    LM830cmd.Parameters.AddWithValue("@estado", LM830r.LM830Estado.LM830ATexto());
+                    LM830cmd.Parameters.AddWithValue("@dniVendedor", LM830r.LM830Vendedor.LM830DNI);
+                    LM830r.LM830IdReclamo = (int)LM830cmd.ExecuteScalar();
                 }
 
-                r.DVH = DigitoVerificador.CalcularDVH(r.CadenaDVH());
-                ActualizarDVH(r.IdReclamo, r.DVH, _sqlserver, tx);
+                LM830r.LM830DVH = LM830DigitoVerificador.LM830CalcularDVH(LM830r.LM830CadenaDVH());
+                LM830ActualizarDVH(LM830r.LM830IdReclamo, LM830r.LM830DVH, LM830_sqlserver, LM830tx);
 
-                tx.Commit();
+                LM830tx.Commit();
             }
             catch
             {
-                tx.Rollback();
+                LM830tx.Rollback();
                 throw;
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
         }
 
-        public List<Reclamo> ListarPendientes()
+        public List<LM830Reclamo> LM830ListarPendientes()
         {
-            var lista = new List<Reclamo>();
+            var LM830lista = new List<LM830Reclamo>();
             try
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.CommandText = @"SELECT r.idReclamo, r.fechaReclamo, r.puntosReclamados, r.motivo, r.estado, r.dniVendedor, r.DVH,
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.CommandText = @"SELECT r.idReclamo, r.fechaReclamo, r.puntosReclamados, r.motivo, r.estado, r.dniVendedor, r.DVH,
                                                    v.idVenta, v.nroComprobante, v.fecha, v.total, v.puntosAcreditados,
                                                    c.idCliente, c.dni, c.nombre, c.apellido, c.email, c.telefono, c.fechaInscripcion, c.DVH,
                                                    n.idNivel, n.nombre, n.puntosMinimos, n.multiplicador
@@ -77,44 +77,44 @@ namespace DAL.RFN1
                                             INNER JOIN Nivel n ON n.idNivel = c.idNivel
                                             WHERE r.estado = 'pendiente'
                                             ORDER BY r.fechaReclamo";
-                _sqlserver.Open();
-                using (SqlDataReader dr = _sqlcommand.ExecuteReader())
+                LM830_sqlserver.Open();
+                using (SqlDataReader LM830dr = LM830_sqlcommand.ExecuteReader())
                 {
-                    while (dr.Read())
+                    while (LM830dr.Read())
                     {
-                        lista.Add(new Reclamo
+                        LM830lista.Add(new LM830Reclamo
                         {
-                            IdReclamo = dr.GetInt32(0),
-                            FechaReclamo = dr.GetDateTime(1),
-                            PuntosReclamados = dr.GetInt32(2),
-                            Motivo = dr.GetString(3),
-                            Estado = (EstadoReclamo)Enum.Parse(typeof(EstadoReclamo), dr.GetString(4)),
-                            Vendedor = new Usuario { DNI = dr.GetString(5) },
-                            DVH = dr.GetString(6),
-                            Venta = new Venta
+                            LM830IdReclamo = LM830dr.GetInt32(0),
+                            LM830FechaReclamo = LM830dr.GetDateTime(1),
+                            LM830PuntosReclamados = LM830dr.GetInt32(2),
+                            LM830Motivo = LM830dr.GetString(3),
+                            LM830Estado = LM830EnumTexto.LM830DesdeTexto<LM830EstadoReclamo>(LM830dr.GetString(4)),
+                            LM830Vendedor = new LM830Usuario { LM830DNI = LM830dr.GetString(5) },
+                            LM830DVH = LM830dr.GetString(6),
+                            LM830Venta = new LM830Venta
                             {
-                                IdVenta = dr.GetInt32(7),
-                                NroComprobante = dr.GetString(8),
-                                Fecha = dr.GetDateTime(9),
-                                Total = dr.GetDecimal(10),
-                                PuntosAcreditados = dr.GetInt32(11)
+                                LM830IdVenta = LM830dr.GetInt32(7),
+                                LM830NroComprobante = LM830dr.GetString(8),
+                                LM830Fecha = LM830dr.GetDateTime(9),
+                                LM830Total = LM830dr.GetDecimal(10),
+                                LM830PuntosAcreditados = LM830dr.GetInt32(11)
                             },
-                            Cliente = new Cliente
+                            LM830Cliente = new LM830Cliente
                             {
-                                IdCliente = dr.GetInt32(12),
-                                Dni = dr.GetString(13),
-                                Nombre = dr.GetString(14),
-                                Apellido = dr.GetString(15),
-                                Email = dr.GetString(16),
-                                Telefono = dr.GetString(17),
-                                FechaInscripcion = dr.GetDateTime(18),
-                                DVH = dr.GetString(19),
-                                Nivel = new Nivel
+                                LM830IdCliente = LM830dr.GetInt32(12),
+                                LM830Dni = LM830dr.GetString(13),
+                                LM830Nombre = LM830dr.GetString(14),
+                                LM830Apellido = LM830dr.GetString(15),
+                                LM830Email = LM830dr.GetString(16),
+                                LM830Telefono = LM830dr.GetString(17),
+                                LM830FechaInscripcion = LM830dr.GetDateTime(18),
+                                LM830DVH = LM830dr.GetString(19),
+                                LM830Nivel = new LM830Nivel
                                 {
-                                    IdNivel = dr.GetInt32(20),
-                                    Nombre = dr.GetString(21),
-                                    PuntosMinimos = dr.GetInt32(22),
-                                    Multiplicador = dr.GetDecimal(23)
+                                    LM830IdNivel = LM830dr.GetInt32(20),
+                                    LM830Nombre = LM830dr.GetString(21),
+                                    LM830PuntosMinimos = LM830dr.GetInt32(22),
+                                    LM830Multiplicador = LM830dr.GetDecimal(23)
                                 }
                             }
                         });
@@ -123,111 +123,111 @@ namespace DAL.RFN1
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
-            return lista;
+            return LM830lista;
         }
 
-        public void Resolver(Reclamo r, LotePuntos? l)
+        public void LM830Resolver(LM830Reclamo LM830r, LM830LotePuntos? LM830l)
         {
-            _sqlserver.Open();
-            SqlTransaction tx = _sqlserver.BeginTransaction();
+            LM830_sqlserver.Open();
+            SqlTransaction LM830tx = LM830_sqlserver.BeginTransaction();
             try
             {
-                r.DVH = DigitoVerificador.CalcularDVH(r.CadenaDVH());
-                using (var cmd = new SqlCommand(@"UPDATE Reclamo
+                LM830r.LM830DVH = LM830DigitoVerificador.LM830CalcularDVH(LM830r.LM830CadenaDVH());
+                using (var LM830cmd = new SqlCommand(@"UPDATE Reclamo
                                                   SET estado = @estado, dniSupervisor = @dniSupervisor,
                                                       motivoResolucion = @motivoRes, fechaResolucion = @fechaRes, DVH = @dvh
-                                                  WHERE idReclamo = @id AND estado = 'pendiente'", _sqlserver, tx))
+                                                  WHERE idReclamo = @id AND estado = 'pendiente'", LM830_sqlserver, LM830tx))
                 {
-                    cmd.Parameters.AddWithValue("@estado", r.Estado.ToString());
-                    cmd.Parameters.AddWithValue("@dniSupervisor", (object?)r.Supervisor?.DNI ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@motivoRes", (object?)r.MotivoResolucion ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@fechaRes", (object?)r.FechaResolucion ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@dvh", r.DVH);
-                    cmd.Parameters.AddWithValue("@id", r.IdReclamo);
-                    if (cmd.ExecuteNonQuery() == 0)
+                    LM830cmd.Parameters.AddWithValue("@estado", LM830r.LM830Estado.LM830ATexto());
+                    LM830cmd.Parameters.AddWithValue("@dniSupervisor", (object?)LM830r.LM830Supervisor?.LM830DNI ?? DBNull.Value);
+                    LM830cmd.Parameters.AddWithValue("@motivoRes", (object?)LM830r.LM830MotivoResolucion ?? DBNull.Value);
+                    LM830cmd.Parameters.AddWithValue("@fechaRes", (object?)LM830r.LM830FechaResolucion ?? DBNull.Value);
+                    LM830cmd.Parameters.AddWithValue("@dvh", LM830r.LM830DVH);
+                    LM830cmd.Parameters.AddWithValue("@id", LM830r.LM830IdReclamo);
+                    if (LM830cmd.ExecuteNonQuery() == 0)
                         throw new Exception("El reclamo ya fue resuelto por otro usuario.");
                 }
 
-                if (l != null)
+                if (LM830l != null)
                 {
-                    LoteDAL.Insertar(l, _sqlserver, tx);
-                    ClienteDAL.ActualizarNivel(r.Cliente, _sqlserver, tx);
+                    LM830LoteDAL.LM830Insertar(LM830l, LM830_sqlserver, LM830tx);
+                    LM830ClienteDAL.LM830ActualizarNivel(LM830r.LM830Cliente, LM830_sqlserver, LM830tx);
                 }
 
-                tx.Commit();
+                LM830tx.Commit();
             }
             catch
             {
-                tx.Rollback();
+                LM830tx.Rollback();
                 throw;
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
         }
 
-        public List<Reclamo> ListarParaDV()
+        public List<LM830Reclamo> LM830ListarParaDV()
         {
-            var lista = new List<Reclamo>();
+            var LM830lista = new List<LM830Reclamo>();
             try
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.CommandText = @"SELECT idReclamo, idCliente, idVenta, fechaReclamo, puntosReclamados, motivo, estado,
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.CommandText = @"SELECT idReclamo, idCliente, idVenta, fechaReclamo, puntosReclamados, motivo, estado,
                                                    dniVendedor, dniSupervisor, motivoResolucion, fechaResolucion, DVH
                                             FROM Reclamo ORDER BY idReclamo";
-                _sqlserver.Open();
-                using (SqlDataReader dr = _sqlcommand.ExecuteReader())
+                LM830_sqlserver.Open();
+                using (SqlDataReader LM830dr = LM830_sqlcommand.ExecuteReader())
                 {
-                    while (dr.Read())
+                    while (LM830dr.Read())
                     {
-                        lista.Add(new Reclamo
+                        LM830lista.Add(new LM830Reclamo
                         {
-                            IdReclamo = dr.GetInt32(0),
-                            Cliente = new Cliente { IdCliente = dr.GetInt32(1) },
-                            Venta = new Venta { IdVenta = dr.GetInt32(2) },
-                            FechaReclamo = dr.GetDateTime(3),
-                            PuntosReclamados = dr.GetInt32(4),
-                            Motivo = dr.GetString(5),
-                            Estado = (EstadoReclamo)Enum.Parse(typeof(EstadoReclamo), dr.GetString(6)),
-                            Vendedor = new Usuario { DNI = dr.GetString(7) },
-                            Supervisor = dr.IsDBNull(8) ? null : new Usuario { DNI = dr.GetString(8) },
-                            MotivoResolucion = dr.IsDBNull(9) ? null : dr.GetString(9),
-                            FechaResolucion = dr.IsDBNull(10) ? (DateTime?)null : dr.GetDateTime(10),
-                            DVH = dr.GetString(11)
+                            LM830IdReclamo = LM830dr.GetInt32(0),
+                            LM830Cliente = new LM830Cliente { LM830IdCliente = LM830dr.GetInt32(1) },
+                            LM830Venta = new LM830Venta { LM830IdVenta = LM830dr.GetInt32(2) },
+                            LM830FechaReclamo = LM830dr.GetDateTime(3),
+                            LM830PuntosReclamados = LM830dr.GetInt32(4),
+                            LM830Motivo = LM830dr.GetString(5),
+                            LM830Estado = LM830EnumTexto.LM830DesdeTexto<LM830EstadoReclamo>(LM830dr.GetString(6)),
+                            LM830Vendedor = new LM830Usuario { LM830DNI = LM830dr.GetString(7) },
+                            LM830Supervisor = LM830dr.IsDBNull(8) ? null : new LM830Usuario { LM830DNI = LM830dr.GetString(8) },
+                            LM830MotivoResolucion = LM830dr.IsDBNull(9) ? null : LM830dr.GetString(9),
+                            LM830FechaResolucion = LM830dr.IsDBNull(10) ? (DateTime?)null : LM830dr.GetDateTime(10),
+                            LM830DVH = LM830dr.GetString(11)
                         });
                     }
                 }
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
-            return lista;
+            return LM830lista;
         }
 
-        public void ActualizarDVH(int idReclamo, string dvh)
+        public void LM830ActualizarDVH(int LM830idReclamo, string LM830dvh)
         {
             try
             {
-                _sqlserver.Open();
-                ActualizarDVH(idReclamo, dvh, _sqlserver, null);
+                LM830_sqlserver.Open();
+                LM830ActualizarDVH(LM830idReclamo, LM830dvh, LM830_sqlserver, null);
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
         }
 
-        private static void ActualizarDVH(int idReclamo, string dvh, SqlConnection cn, SqlTransaction? tx)
+        private static void LM830ActualizarDVH(int LM830idReclamo, string LM830dvh, SqlConnection LM830cn, SqlTransaction? LM830tx)
         {
-            using (var cmd = new SqlCommand("UPDATE Reclamo SET DVH = @dvh WHERE idReclamo = @id", cn, tx))
+            using (var LM830cmd = new SqlCommand("UPDATE Reclamo SET DVH = @dvh WHERE idReclamo = @id", LM830cn, LM830tx))
             {
-                cmd.Parameters.AddWithValue("@dvh", dvh);
-                cmd.Parameters.AddWithValue("@id", idReclamo);
-                cmd.ExecuteNonQuery();
+                LM830cmd.Parameters.AddWithValue("@dvh", LM830dvh);
+                LM830cmd.Parameters.AddWithValue("@id", LM830idReclamo);
+                LM830cmd.ExecuteNonQuery();
             }
         }
     }

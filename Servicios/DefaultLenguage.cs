@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public class DefaultLenguage
+    public class LM830DefaultLenguage
     {
-        public string Idioma { get; set; }
+        public string LM830Idioma { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿using BLL;
-using Servicios;
+﻿using LM830BLL;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,162 +10,162 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GUI
+namespace LM830GUI
 {
-    public partial class CambiarContraseña : Form,IObserver
+    public partial class LM830CambiarContraseña : Form,LM830IObserver
     {
-        public CambiarContraseña()
+        public LM830CambiarContraseña()
         {
             InitializeComponent();
         }
 
-        private void btnGuardarContra_Click(object sender, EventArgs e)
+        private void LM830btnGuardarContra_Click(object LM830sender, EventArgs LM830e)
         {
             try
             {
-                ValidarCamposVacios();
-                UsuarioBLL usuarioBLL = new UsuarioBLL();
+                LM830ValidarCamposVacios();
+                LM830UsuarioBLL LM830usuarioBLL = new LM830UsuarioBLL();
 
-                switch (usuarioBLL.CambiarClave(txtUsuario.Text, txtContraseña.Text, txtNuevaContraseña.Text))
+                switch (LM830usuarioBLL.LM830CambiarClave(LM830txtUsuario.Text, LM830txtContraseña.Text, LM830txtNuevaContraseña.Text))
                 {
-                    case LoginResultado.Valido:
-                        MessageBox.Show(LanguageManager.Instance.GetTraduction("CamClaMsj1"), LanguageManager.Instance.GetTraduction("ExitoP"), MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        if(SessionManager.Instance.Logueado())
+                    case LM830LoginResultado.LM830Valido:
+                        MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("CamClaMsj1"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if(LM830SessionManager.LM830Instance.LM830Logueado())
                         {
-                            usuarioBLL.Desloguear();
+                            LM830usuarioBLL.LM830Desloguear();
                         }
 
                         this.Close();
-                        Login login = new Login();
-                        login.Show();
+                        LM830Login LM830login = new LM830Login();
+                        LM830login.Show();
                         break;
-                    case LoginResultado.ContraseñaIguales:
-                        MessageBox.Show(LanguageManager.Instance.GetTraduction("CamClaMsj2"), LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    case LM830LoginResultado.LM830ContraseñaIguales:
+                        MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("CamClaMsj2"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
-                    case LoginResultado.UsuarioNoEncontrado:
-                        MessageBox.Show(LanguageManager.Instance.GetTraduction("CamClaMsj3"), LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    case LM830LoginResultado.LM830UsuarioNoEncontrado:
+                        MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("CamClaMsj3"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
-                    case LoginResultado.ContraseñaIncorrecta:
-                        MessageBox.Show(LanguageManager.Instance.GetTraduction("CamClaMsj4"), LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    case LM830LoginResultado.LM830ContraseñaIncorrecta:
+                        MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("CamClaMsj4"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
-                    case LoginResultado.Bloqueado:
-                        MessageBox.Show(LanguageManager.Instance.GetTraduction("CamMsj5"), LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    case LM830LoginResultado.LM830Bloqueado:
+                        MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("CamMsj5"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LM830ex.Message, LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void ValidarCamposVacios()
+        private void LM830ValidarCamposVacios()
         {
-            if (txtUsuario.Text == "")
+            if (LM830txtUsuario.Text == "")
             {
-                txtUsuario.Focus();
-                throw new Exception(LanguageManager.Instance.GetTraduction("CamMsj6"));
+                LM830txtUsuario.Focus();
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("CamMsj6"));
             }
-            if (txtContraseña.Text == "")
+            if (LM830txtContraseña.Text == "")
             {
-                throw new Exception(LanguageManager.Instance.GetTraduction("CamMsj7"));
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("CamMsj7"));
             }
-            if (txtNuevaContraseña.Text == "")
+            if (LM830txtNuevaContraseña.Text == "")
             {
-                throw new Exception(LanguageManager.Instance.GetTraduction("CamMsj8"));
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("CamMsj8"));
             }
         }
 
-        private void btnCerrar_Click(object sender, EventArgs e)
+        private void LM830btnCerrar_Click(object LM830sender, EventArgs LM830e)
         {
             Application.Exit();
         }
 
-        private void btnMinimizar_Click(object sender, EventArgs e)
+        private void LM830btnMinimizar_Click(object LM830sender, EventArgs LM830e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void linkVolver_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LM830linkVolver_LinkClicked(object LM830sender, LinkLabelLinkClickedEventArgs LM830e)
         {
-            if (SessionManager.Instance.Logueado())
+            if (LM830SessionManager.LM830Instance.LM830Logueado())
             {
-                Navegacion.VolverAlMenu(this);
+                LM830Navegacion.LM830VolverAlMenu(this);
             }
             else
             {
                 this.Close();
-                Login login = new Login();
-                login.Show();
+                LM830Login LM830login = new LM830Login();
+                LM830login.Show();
             }
         }
 
-        private void pbMostrarClave_Click(object sender, EventArgs e)
+        private void LM830pbMostrarClave_Click(object LM830sender, EventArgs LM830e)
         {
-            bool mostrar = txtContraseña.UseSystemPasswordChar;
-            if (mostrar)
+            bool LM830mostrar = LM830txtContraseña.UseSystemPasswordChar;
+            if (LM830mostrar)
             {
-                MostrarClave(false);
-                txtContraseña.UseSystemPasswordChar = false;
-                txtNuevaContraseña.UseSystemPasswordChar = false;
+                LM830MostrarClave(false);
+                LM830txtContraseña.UseSystemPasswordChar = false;
+                LM830txtNuevaContraseña.UseSystemPasswordChar = false;
             }
             else
             {
-                MostrarClave(true);
-                txtContraseña.UseSystemPasswordChar = true;
-                txtNuevaContraseña.UseSystemPasswordChar = true;
+                LM830MostrarClave(true);
+                LM830txtContraseña.UseSystemPasswordChar = true;
+                LM830txtNuevaContraseña.UseSystemPasswordChar = true;
             }
         }
-        private void MostrarClave(bool mostrar)
+        private void LM830MostrarClave(bool LM830mostrar)
         {
-            if (mostrar)
+            if (LM830mostrar)
             {
-                pbMostrarClave.Image = Properties.Resources.OjoAbierto;
+                LM830pbMostrarClave.Image = Properties.Resources.OjoAbierto;
             }
             else
             {
-                pbMostrarClave.Image = Properties.Resources.OjoCerrado;
+                LM830pbMostrarClave.Image = Properties.Resources.OjoCerrado;
             }
         }
 
-        private void txtUsuario_KeyPress(object sender, KeyPressEventArgs e)
+        private void LM830txtUsuario_KeyPress(object LM830sender, KeyPressEventArgs LM830e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (LM830e.KeyChar == (char)Keys.Enter)
             {
-                e.Handled = true;
+                LM830e.Handled = true;
             }
         }
 
-        private void txtContraseña_KeyPress(object sender, KeyPressEventArgs e)
+        private void LM830txtContraseña_KeyPress(object LM830sender, KeyPressEventArgs LM830e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (LM830e.KeyChar == (char)Keys.Enter)
             {
-                e.Handled = true;
+                LM830e.Handled = true;
             }
         }
 
-        private void txtNuevaContraseña_KeyPress(object sender, KeyPressEventArgs e)
+        private void LM830txtNuevaContraseña_KeyPress(object LM830sender, KeyPressEventArgs LM830e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (LM830e.KeyChar == (char)Keys.Enter)
             {
-                e.Handled = true;
+                LM830e.Handled = true;
             }
         }
 
-        public void Actualizar(LanguageManager lenguaje)
+        public void LM830Actualizar(LM830LanguageManager LM830lenguaje)
         {
-            lblUsuarioFCC.Text = lenguaje.GetTraduction("lblUsuarioFCC");
-            lblContraseñaActual.Text = lenguaje.GetTraduction("lblContraseñaActual");
-            lblContraseñaFCC.Text = lenguaje.GetTraduction("lblContraseñaFCC");
+            LM830lblUsuarioFCC.Text = LM830lenguaje.LM830GetTraduction("lblUsuarioFCC");
+            LM830lblContraseñaActual.Text = LM830lenguaje.LM830GetTraduction("lblContraseñaActual");
+            LM830lblContraseñaFCC.Text = LM830lenguaje.LM830GetTraduction("lblContraseñaFCC");
 
-            btnGuardarContra.Text = lenguaje.GetTraduction("btnGuardarContra");
-            linkVolver.Text = lenguaje.GetTraduction("linkVolver");
+            LM830btnGuardarContra.Text = LM830lenguaje.LM830GetTraduction("btnGuardarContra");
+            LM830linkVolver.Text = LM830lenguaje.LM830GetTraduction("linkVolver");
         }
 
-        private void CambiarContraseña_Load(object sender, EventArgs e)
+        private void LM830CambiarContraseña_Load(object LM830sender, EventArgs LM830e)
         {
-            LanguageManager.Instance.AgregarObservador(this);
-            Actualizar(LanguageManager.Instance);
+            LM830LanguageManager.LM830Instance.LM830AgregarObservador(this);
+            LM830Actualizar(LM830LanguageManager.LM830Instance);
         }
     }
 }

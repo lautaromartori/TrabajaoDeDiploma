@@ -1,43 +1,43 @@
-﻿using Servicios;
+﻿using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DAL
+namespace LM830DAL
 {
-    public class DigitoVerificadorDAL : AbstractDAL<ControlDVV>
+    public class LM830DigitoVerificadorDAL : LM830AbstractDAL<LM830ControlDVV>
     {
-        public string? ObtenerDVV(string nomTabla, string nomColumna)
+        public string? LM830ObtenerDVV(string LM830nomTabla, string LM830nomColumna)
         {
             try
             {
-                _sqlcommand.CommandText = @"SELECT DVV
+                LM830_sqlcommand.CommandText = @"SELECT DVV
                                             FROM ControlDVV
                                             WHERE NombreTabla = @NomTabla AND ColumnaNombre = @NomColumna";
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.Parameters.AddWithValue("@NomTabla", nomTabla);
-                _sqlcommand.Parameters.AddWithValue("@NomColumna", nomColumna);
-                _sqlserver.Open();
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.AddWithValue("@NomTabla", LM830nomTabla);
+                LM830_sqlcommand.Parameters.AddWithValue("@NomColumna", LM830nomColumna);
+                LM830_sqlserver.Open();
 
-                return _sqlcommand.ExecuteScalar()?.ToString();
+                return LM830_sqlcommand.ExecuteScalar()?.ToString();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw ex;
+                throw LM830ex;
             }
             finally
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlserver.Close();
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlserver.Close();
             }
             ;
         }
 
-        public void ActualizarDVV(string nomTabla, string nomColumna, string DVV)
+        public void LM830ActualizarDVV(string LM830nomTabla, string LM830nomColumna, string LM830DVV)
         {
             try
             {
-                _sqlcommand.CommandText = @"IF EXISTS (SELECT 1 FROM ControlDVV WHERE NombreTabla = @NomTabla AND ColumnaNombre = @NomColumn)
+                LM830_sqlcommand.CommandText = @"IF EXISTS (SELECT 1 FROM ControlDVV WHERE NombreTabla = @NomTabla AND ColumnaNombre = @NomColumn)
                                             BEGIN
                                                 UPDATE ControlDVV
                                                 SET DVV = @dvv
@@ -48,22 +48,22 @@ namespace DAL
                                                 INSERT INTO ControlDVV (NombreTabla, ColumnaNombre, DVV)
                                                 VALUES (@NomTabla, @NomColumn, @dvv)
                                             END";
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.Parameters.AddWithValue("@NomTabla", nomTabla);
-                _sqlcommand.Parameters.AddWithValue("@NomColumn", nomColumna);
-                _sqlcommand.Parameters.AddWithValue("@dvv", DVV);
-                _sqlserver.Open();
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.Parameters.AddWithValue("@NomTabla", LM830nomTabla);
+                LM830_sqlcommand.Parameters.AddWithValue("@NomColumn", LM830nomColumna);
+                LM830_sqlcommand.Parameters.AddWithValue("@dvv", LM830DVV);
+                LM830_sqlserver.Open();
 
-                _sqlcommand.ExecuteNonQuery();
+                LM830_sqlcommand.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                throw ex;
+                throw LM830ex;
             }
             finally
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlserver.Close();
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlserver.Close();
             }
         }
     }

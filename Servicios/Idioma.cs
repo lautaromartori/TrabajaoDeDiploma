@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public class Idioma
+    public class LM830Idioma
     {
-        public string DNI { get; set; }
-        public string UserName { get; set; }
-        public string CodigoIdioma { get; set; }
-        public string DVH { get; set; }
+        public string LM830DNI { get; set; }
+        public string LM830UserName { get; set; }
+        public string LM830CodigoIdioma { get; set; }
+        public string LM830DVH { get; set; }
 
-        public Idioma()
+        public LM830Idioma()
         {
         }
-        public Idioma(string userName, string codIdioma, string dVH)
+        public LM830Idioma(string LM830userName, string LM830codIdioma, string LM830dVH)
         {
-            UserName = userName;
-            CodigoIdioma = codIdioma;
-            DVH = dVH;
+            LM830UserName = LM830userName;
+            LM830CodigoIdioma = LM830codIdioma;
+            LM830DVH = LM830dVH;
         }
     }
 }

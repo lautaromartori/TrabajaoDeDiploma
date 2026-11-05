@@ -1,185 +1,166 @@
-﻿using BE.RFN1;
-using DAL.RFN1;
-using Servicios;
+﻿using LM830BE.LM830RFN1;
+using LM830DAL.LM830RFN1;
+using LM830Servicios;
 using System;
 using System.Linq;
 
-namespace BLL.RFN1
+namespace LM830BLL.LM830RFN1
 {
-    public class VentaBLL
+    public class LM830VentaBLL
     {
-        private const string MODULO = "Ventas";
+        private const string LM830MODULO = "Ventas";
 
-        private readonly VentaDAL _ventaDAL = new VentaDAL();
-        private readonly NivelBLL _nivelBLL = new NivelBLL();
-        private readonly BitacoraBLL _bitacoraBLL = new BitacoraBLL();
-        private readonly DigitoVerificadorBLL _digitoVerificadorBLL = new DigitoVerificadorBLL();
+        private readonly LM830VentaDAL LM830_ventaDAL = new LM830VentaDAL();
+        private readonly LM830NivelBLL LM830_nivelBLL = new LM830NivelBLL();
+        private readonly LM830DigitoVerificadorBLL LM830_digitoVerificadorBLL = new LM830DigitoVerificadorBLL();
 
-        public Venta VentaActual { get; private set; } = new Venta();
+        public LM830Venta LM830VentaActual { get; private set; } = new LM830Venta();
 
-        public Nivel? NivelAnterior { get; private set; }
+        public LM830Nivel? LM830NivelAnterior { get; private set; }
 
-        public void NuevaVenta(Cliente? cliente)
+        public void LM830NuevaVenta(LM830Cliente? LM830cliente)
         {
-            VentaActual = new Venta { Cliente = cliente };
-            NivelAnterior = null;
+            LM830VentaActual = new LM830Venta { LM830Cliente = LM830cliente };
+            LM830NivelAnterior = null;
         }
 
-        public void AsignarCliente(Cliente? cliente)
+        public void LM830AsignarCliente(LM830Cliente? LM830cliente)
         {
-            VentaActual.Cliente = cliente;
+            LM830VentaActual.LM830Cliente = LM830cliente;
         }
 
-        public void AgregarItem(DetalleVenta i)
+        public void LM830AgregarItem(LM830DetalleVenta LM830i)
         {
-            if (i.Producto == null || i.Producto.IdProducto == 0)
+            if (LM830i.LM830Producto == null || LM830i.LM830Producto.LM830IdProducto == 0)
                 throw new Exception("Busque un producto existente antes de agregarlo.");
-            if (i.Cantidad <= 0)
+            if (LM830i.LM830Cantidad <= 0)
                 throw new Exception("La cantidad debe ser mayor a cero.");
 
-            DetalleVenta? existente = VentaActual.Detalle.FirstOrDefault(d => d.Producto.IdProducto == i.Producto.IdProducto);
-            if (existente != null)
+            LM830DetalleVenta? LM830existente = LM830VentaActual.LM830Detalle.FirstOrDefault(LM830d => LM830d.LM830Producto.LM830IdProducto == LM830i.LM830Producto.LM830IdProducto);
+            if (LM830existente != null)
             {
-                existente.Cantidad += i.Cantidad;
-                existente.Subtotal = existente.PrecioUnitario * existente.Cantidad;
+                LM830existente.LM830Cantidad += LM830i.LM830Cantidad;
+                LM830existente.LM830Subtotal = LM830existente.LM830PrecioUnitario * LM830existente.LM830Cantidad;
             }
             else
             {
-                i.PrecioUnitario = i.Producto.Precio;
-                i.Subtotal = i.PrecioUnitario * i.Cantidad;
-                VentaActual.Detalle.Add(i);
+                LM830i.LM830PrecioUnitario = LM830i.LM830Producto.LM830Precio;
+                LM830i.LM830Subtotal = LM830i.LM830PrecioUnitario * LM830i.LM830Cantidad;
+                LM830VentaActual.LM830Detalle.Add(LM830i);
             }
-            RecalcularTotal(VentaActual);
+            LM830RecalcularTotal(LM830VentaActual);
         }
 
-        public void QuitarItem(DetalleVenta i)
+        public void LM830QuitarItem(LM830DetalleVenta LM830i)
         {
-            VentaActual.Detalle.Remove(i);
-            RecalcularTotal(VentaActual);
+            LM830VentaActual.LM830Detalle.Remove(LM830i);
+            LM830RecalcularTotal(LM830VentaActual);
         }
 
-        private static void RecalcularTotal(Venta v)
+        private static void LM830RecalcularTotal(LM830Venta LM830v)
         {
-            v.Total = v.Detalle.Sum(d => d.Subtotal);
+            LM830v.LM830Total = LM830v.LM830Detalle.Sum(LM830d => LM830d.LM830Subtotal);
         }
 
-        public int CalcularPuntos(Venta v, Cliente? c)
+        public int LM830CalcularPuntos(LM830Venta LM830v, LM830Cliente? LM830c)
         {
-            if (c == null)
+            if (LM830c == null)
             {
-                foreach (DetalleVenta d in v.Detalle) d.PuntosCalculados = 0;
+                foreach (LM830DetalleVenta LM830d in LM830v.LM830Detalle) LM830d.LM830PuntosCalculados = 0;
                 return 0;
             }
 
-            decimal total = 0;
-            foreach (DetalleVenta d in v.Detalle)
+            decimal LM830total = 0;
+            foreach (LM830DetalleVenta LM830d in LM830v.LM830Detalle)
             {
-                decimal puntosItem = AplicarReglas(d, c);
-                d.PuntosCalculados = (int)Math.Floor(puntosItem);
-                total += puntosItem;
+                decimal LM830puntosItem = LM830AplicarReglas(LM830d, LM830c);
+                LM830d.LM830PuntosCalculados = (int)Math.Floor(LM830puntosItem);
+                LM830total += LM830puntosItem;
             }
-            return (int)Math.Floor(total);
+            return (int)Math.Floor(LM830total);
         }
 
-        private static decimal AplicarReglas(DetalleVenta d, Cliente c)
+        private static decimal LM830AplicarReglas(LM830DetalleVenta LM830d, LM830Cliente LM830c)
         {
-            ProgramaPuntos programa = ProgramaPuntosBLL.Obtener();
-            if (programa.MontoPorPunto <= 0) return 0;
-            return d.Subtotal / programa.MontoPorPunto * d.Producto.Categoria.Multiplicador * c.Nivel.Multiplicador;
+            LM830ProgramaPuntos LM830programa = LM830ProgramaPuntosBLL.LM830Obtener();
+            if (LM830programa.LM830MontoPorPunto <= 0) return 0;
+            return LM830d.LM830Subtotal / LM830programa.LM830MontoPorPunto * LM830d.LM830Producto.LM830Categoria.LM830Multiplicador * LM830c.LM830Nivel.LM830Multiplicador;
         }
 
-        public Nivel CalcularNivel(Cliente c) => _nivelBLL.CalcularNivel(c, 0);
+        public LM830Nivel LM830CalcularNivel(LM830Cliente LM830c) => LM830_nivelBLL.LM830CalcularNivel(LM830c, 0);
 
-        public void RegistrarVenta(Venta v)
+        public void LM830RegistrarVenta(LM830Venta LM830v)
         {
-            if (v.Detalle.Count == 0)
+            if (LM830v.LM830Detalle.Count == 0)
                 throw new Exception("La venta no tiene ítems.");
 
-            Usuario vendedor = SessionManager.Instance.UsuarioActual();
-            v.Vendedor = vendedor;
-            v.Fecha = BitacoraBLL.AhoraSinMilisegundos();
-            v.PuntosAcreditados = CalcularPuntos(v, v.Cliente);
-            v.Lote = null;
-            NivelAnterior = null;
+            LM830Usuario LM830vendedor = LM830SessionManager.LM830Instance.LM830UsuarioActual();
+            LM830v.LM830Vendedor = LM830vendedor;
+            LM830v.LM830Fecha = LM830BitacoraBLL.LM830AhoraSinMilisegundos();
+            LM830v.LM830PuntosAcreditados = LM830CalcularPuntos(LM830v, LM830v.LM830Cliente);
+            LM830v.LM830Lote = null;
+            LM830NivelAnterior = null;
 
-            if (v.Cliente != null)
+            if (LM830v.LM830Cliente != null)
             {
-                if (v.PuntosAcreditados > 0)
+                if (LM830v.LM830PuntosAcreditados > 0)
                 {
-                    v.Lote = ArmarLote(v);
+                    LM830v.LM830Lote = LM830ArmarLote(LM830v);
                 }
 
-                Nivel nivelActual = v.Cliente.Nivel;
-                Nivel nivelNuevo = _nivelBLL.CalcularNivel(v.Cliente, v.PuntosAcreditados);
-                if (nivelNuevo.IdNivel != nivelActual.IdNivel)
+                LM830Nivel LM830nivelActual = LM830v.LM830Cliente.LM830Nivel;
+                LM830Nivel LM830nivelNuevo = LM830_nivelBLL.LM830CalcularNivel(LM830v.LM830Cliente, LM830v.LM830PuntosAcreditados);
+                if (LM830nivelNuevo.LM830IdNivel != LM830nivelActual.LM830IdNivel)
                 {
-                    NivelAnterior = nivelActual;
+                    LM830NivelAnterior = LM830nivelActual;
                 }
-                v.Cliente.Nivel = nivelNuevo;
-                v.Cliente.DVH = DigitoVerificador.CalcularDVH(v.Cliente.CadenaDVH());
+                LM830v.LM830Cliente.LM830Nivel = LM830nivelNuevo;
+                LM830v.LM830Cliente.LM830DVH = LM830DigitoVerificador.LM830CalcularDVH(LM830v.LM830Cliente.LM830CadenaDVH());
             }
 
             try
             {
-                _ventaDAL.Guardar(v);
+                LM830_ventaDAL.LM830Guardar(LM830v);
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                if (NivelAnterior != null && v.Cliente != null) v.Cliente.Nivel = NivelAnterior;
-                NivelAnterior = null;
-                RegistrarEvento("Error al grabar venta: " + Recortar(ex.Message, 60), 3);
-                throw new Exception("No se pudo grabar la venta. No se acreditaron puntos. " + ex.Message, ex);
+                if (LM830NivelAnterior != null && LM830v.LM830Cliente != null) LM830v.LM830Cliente.LM830Nivel = LM830NivelAnterior;
+                LM830NivelAnterior = null;
+                throw new Exception("No se pudo grabar la venta. No se acreditaron puntos. " + LM830ex.Message, LM830ex);
             }
 
-            _digitoVerificadorBLL.RecalcularDVV_Venta();
-            _digitoVerificadorBLL.RecalcularDVV_DetalleVenta();
-            if (v.Cliente != null)
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_Venta();
+            LM830_digitoVerificadorBLL.LM830RecalcularDVV_DetalleVenta();
+            if (LM830v.LM830Cliente != null)
             {
-                _digitoVerificadorBLL.RecalcularDVV_LotePuntos();
-                _digitoVerificadorBLL.RecalcularDVV_Cliente();
+                LM830_digitoVerificadorBLL.LM830RecalcularDVV_LotePuntos();
+                LM830_digitoVerificadorBLL.LM830RecalcularDVV_Cliente();
             }
-
-            string conCliente = v.Cliente != null ? $" cliente {v.Cliente.Dni}, {v.PuntosAcreditados} pts" : " sin cliente";
-            RegistrarEvento($"Registrar venta {v.NroComprobante}{conCliente}", 1);
         }
 
-        private static LotePuntos ArmarLote(Venta v)
+        private static LM830LotePuntos LM830ArmarLote(LM830Venta LM830v)
         {
-            ProgramaPuntos programa = ProgramaPuntosBLL.Obtener();
-            return new LotePuntos
+            LM830ProgramaPuntos LM830programa = LM830ProgramaPuntosBLL.LM830Obtener();
+            return new LM830LotePuntos
             {
-                IdCliente = v.Cliente!.IdCliente,
-                PuntosOriginales = v.PuntosAcreditados,
-                PuntosDisponibles = v.PuntosAcreditados,
-                FechaAcreditacion = v.Fecha.Date,
-                FechaVencimiento = v.Fecha.Date.AddMonths(programa.MesesVencimiento),
-                Origen = OrigenPuntos.venta
+                LM830IdCliente = LM830v.LM830Cliente!.LM830IdCliente,
+                LM830PuntosOriginales = LM830v.LM830PuntosAcreditados,
+                LM830PuntosDisponibles = LM830v.LM830PuntosAcreditados,
+                LM830FechaAcreditacion = LM830v.LM830Fecha.Date,
+                LM830FechaVencimiento = LM830v.LM830Fecha.Date.AddMonths(LM830programa.LM830MesesVencimiento),
+                LM830Origen = LM830OrigenPuntos.LM830venta
             };
         }
 
-        public Venta? ObtenerPorNro(string nro)
+        public LM830Venta? LM830ObtenerPorNro(string LM830nro)
         {
-            nro = (nro ?? "").Trim().ToUpperInvariant();
-            if (nro.Length == 0) return null;
-            return _ventaDAL.ObtenerPorNro(nro);
+            LM830nro = (LM830nro ?? "").Trim().ToUpperInvariant();
+            if (LM830nro.Length == 0) return null;
+            return LM830_ventaDAL.LM830ObtenerPorNro(LM830nro);
         }
 
-        private void RegistrarEvento(string evento, int criticidad)
-        {
-            try
-            {
-                _bitacoraBLL.RegistrarEvento(new Bitacora
-                {
-                    Login = SessionManager.Instance.UsuarioActual().Username,
-                    Modulo = MODULO,
-                    Evento = Recortar(evento, 100),
-                    Criticidad = criticidad
-                });
-            }
-            catch { }
-        }
 
-        internal static string Recortar(string texto, int largo) =>
-            texto.Length <= largo ? texto : texto.Substring(0, largo);
+        internal static string LM830Recortar(string LM830texto, int LM830largo) =>
+            LM830texto.Length <= LM830largo ? LM830texto : LM830texto.Substring(0, LM830largo);
     }
 }

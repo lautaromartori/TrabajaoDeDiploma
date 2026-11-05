@@ -1,37 +1,37 @@
-﻿using BE.RFN1;
-using DAL.RFN1;
+﻿using LM830BE.LM830RFN1;
+using LM830DAL.LM830RFN1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BLL.RFN1
+namespace LM830BLL.LM830RFN1
 {
-    public class LoteBLL
+    public class LM830LoteBLL
     {
-        private readonly LoteDAL _loteDAL = new LoteDAL();
+        private readonly LM830LoteDAL LM830_loteDAL = new LM830LoteDAL();
 
-        public int ConsultarSaldo(Cliente c)
+        public int LM830ConsultarSaldo(LM830Cliente LM830c)
         {
-            return ConsultarSaldo(c, out _);
+            return LM830ConsultarSaldo(LM830c, out _);
         }
 
-        public int ConsultarSaldo(Cliente c, out List<LotePuntos> lotesVigentes)
+        public int LM830ConsultarSaldo(LM830Cliente LM830c, out List<LM830LotePuntos> LM830lotesVigentes)
         {
-            List<LotePuntos> lotes = _loteDAL.ObtenerPorCliente(c.IdCliente);
-            lotesVigentes = DescartarVencidos(lotes);
-            return CalcularSaldo(lotesVigentes);
+            List<LM830LotePuntos> LM830lotes = LM830_loteDAL.LM830ObtenerPorCliente(LM830c.LM830IdCliente);
+            LM830lotesVigentes = LM830DescartarVencidos(LM830lotes);
+            return LM830CalcularSaldo(LM830lotesVigentes);
         }
 
-        public List<LotePuntos> DescartarVencidos(List<LotePuntos> l)
+        public List<LM830LotePuntos> LM830DescartarVencidos(List<LM830LotePuntos> LM830l)
         {
-            return l.Where(x => x.FechaVencimiento.Date >= DateTime.Today && x.PuntosDisponibles > 0)
-                    .OrderBy(x => x.FechaVencimiento)
+            return LM830l.Where(LM830x => LM830x.LM830FechaVencimiento.Date >= DateTime.Today && LM830x.LM830PuntosDisponibles > 0)
+                    .OrderBy(LM830x => LM830x.LM830FechaVencimiento)
                     .ToList();
         }
 
-        public int CalcularSaldo(List<LotePuntos> l)
+        public int LM830CalcularSaldo(List<LM830LotePuntos> LM830l)
         {
-            return l.Sum(x => x.PuntosDisponibles);
+            return LM830l.Sum(LM830x => LM830x.LM830PuntosDisponibles);
         }
     }
 }

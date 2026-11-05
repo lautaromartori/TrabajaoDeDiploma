@@ -12,12 +12,10 @@
   "btnCambiarClave": "パスワード変更",
   "btnLogout": "ログアウト",
   "btnCambiarIdioma": "言語変更",
-
   "YaHaySesionActiva": "既にセッションが開始されています。新しいセッションを開始する前にログアウトしてください。",
   "Informacion": "情報",
   "menumsj1": "アウト?",
   "menumsj2": "にセッ",
-
   "lblTextoTabla": "アクティブユーザー",
   "DNI": "身分証明書",
   "lblApe": "名字",
@@ -64,13 +62,11 @@
   "UserMsj1": "プロファイルを選択してください。",
   "UserMsj2": "プロファイルが変更されたため、このセクションへのアクセス権限がなくなりました。",
   "UserMsj3": "アクセス権限が取り消されました",
-
   "lblUsuarioFCC": "ユーザー",
   "lblContraseñaActual": "現在のパスワード",
   "lblContraseñaFCC": "パスワード",
   "btnGuardarContra": "パスワードを保存",
   "linkVolver": "ログイン画面に戻る",
-
   "CamClaMsj1": "パスワードが正常に変更されました！",
   "CamClaMsj2": "新しいパスワードは現在のパスワードと同じにすることはできません！",
   "CamClaMsj3": "ユーザー名にエラーがあります！",
@@ -79,7 +75,6 @@
   "CamMsj6": "ユーザー名を入力してください！",
   "CamMsj7": "パスワードを入力してください！",
   "CamMsj8": "新しいパスワードを入力してください！",
-
   "lblBitacora": "ログ",
   "lblNombreB": "名前",
   "lblApellidoB": "名字",
@@ -92,7 +87,6 @@
   "btnLimpiarB": "クリア",
   "btnAplicarB": "適用",
   "btnImprimirB": "印刷",
-
   "Bitmsj1": "データベースに接続できませんでした。接続を確認してください。",
   "Bitmsj2": "接続エラー",
   "BitMsj3": "フィルターを読み込めませんでした。接続を確認してください。",
@@ -111,19 +105,14 @@
   "BitMsj16": "PDFを生成できませんでした。もう一度お試しください。",
   "BitMsj17": "ログへのアクセス権限がありません。",
   "BitMsj18": "アクセス拒否",
-
   "lblCambiarIdioma": "言語変更",
   "btnCambiarCI": "変更",
   "MsjCambiarIdioma": "言語が変更されました",
   "MsjConfirmacion": "確認済み",
   "Salir": "終了",
-
   "Español": "スペイン語",
   "Ingles": "英語",
   "Japones": "日本語",
-
-
-
   "RbPermisos": "権限",
   "RbFamilias": "ファミリー",
   "RbPerfiles": "プロファイル",
@@ -158,7 +147,6 @@
   "btnAsignarPermisos": "割り当て",
   "label8": "割り当て済み権限：",
   "btnQuitarPermisos": "解除",
-
   "VerPerfiles": "プロファイル表示",
   "NoTienePermisosParaAcceder": "ユーザーおよびプロファイル管理にアクセスする権限がありません。",
   "AccesoDenegado": "アクセス拒否",
@@ -240,7 +228,6 @@
   "text32": "操作をキャンセル（変更を行わない）",
   "text33": "権限が変更されました。この画面へのアクセス権限はもうありません。",
   "text34": "権限が更新されました",
-
   "UserLogueado": "既にユーザーがログインしています。",
   "UserNoLogueado": "ログインしているユーザーはいません。",
   "PerSimText1": "単純権限にコンポーネントを追加することはできません。",
@@ -273,7 +260,6 @@
   "BitBlltext3": "イベントをフィルタリングできませんでした。",
   "BitBlltext4": "ユーザー一覧を取得できませんでした。",
   "BitBlltext5": "ユーザー情報を取得できませんでした。",
-
   "lblErrorDV": "検出された不整合",
   "lblModuloReparacion": "修復モジュール",
   "lblForzar": "新しい検証コードを強制生成",
@@ -281,7 +267,6 @@
   "lblSelecVers": "バージョンを選択してください：",
   "btnRestaurar": "復元",
   "btnCancelardv": "キャンセル",
-
   "TextDV1": "すべてのテーブルの検証コードを再計算します。よろしいですか？",
   "TextDV2": "検証コードの再計算",
   "TextDV3": "検証コードが正常に再計算されました",
@@ -303,7 +288,6 @@
   "TextDV19": "ファイルの拡張子が無効です（.bak）。",
   "TextDV20": "このファイルは有効なデータベースバックアップではありません。",
   "TextDV21": "データベースの復元中にエラーが発生しました。",
-
   "lblTitulo": "バックアップ",
   "lblPath": "パス",
   "btnExaminar": "参照",
@@ -314,10 +298,8 @@
   "TextBP3": "バックアップが正常に生成されました：",
   "TextBP4": "操作成功",
   "TextBP5": "バックアップを生成できませんでした。",
-
   "lblTituloRes": "復元",
   "btnEjecutar": "実行",
-
   "btnGestion": "顧客とポイント",
   "RFN1_RegistrarCliente": "顧客登録",
   "RFN1_ConsultarSaldo": "残高照会",
@@ -334,6 +316,33 @@
   "RFN1_Buscar": "検索",
   "RFN1_BuscarCliente": "顧客検索",
   "RFN1_Volver": "戻る",
+  "RFN1_GestionProductos": "商品",
+  "RFN1_Datos": "詳細",
+  "RFN1_Precio": "価格",
+  "RFN1_Categoria": "カテゴリー",
+  "RFN1_Agregar": "追加",
+  "RFN1_Modificar": "変更",
+  "RFN1_Eliminar": "削除",
+  "RFN1_Limpiar": "クリア",
+  "RFN1_SeleccioneRegistro": "一覧から行を選択してください。",
+  "RFN1_ConfirmarEliminar": "{0} を削除しますか?",
+  "RFN1_CambiosGuardados": "変更を保存しました。",
+  "RFN1_PH_NombreProducto": "例: Pan de campo",
+  "RFN2_GestionPremios": "景品の管理",
+  "RFN2_Descripcion": "説明",
+  "RFN2_PuntosRequeridos": "必要ポイント",
+  "RFN2_Stock": "在庫",
+  "RFN2_ValorDeReferencia": "参考価格",
+  "RFN2_PH_NombrePremio": "例: Taza Le Marchant",
+  "RFN2_PH_Descripcion": "任意。例: 陶器のマグカップ 350 ml",
+  "RFN2_PH_NroCanje": "例: C-00000001(交換の控えに記載)",
+  "RFN1_PH_Dni": "例: 30111222(7〜8桁、点なし)",
+  "RFN1_PH_Nombre": "例: Ana(文字のみ)",
+  "RFN1_PH_Apellido": "例: Gómez(文字のみ)",
+  "RFN1_PH_Email": "例: ana.gomez@mail.com",
+  "RFN1_PH_Telefono": "任意。例: 11 4555-1234",
+  "RFN1_PH_NroComprobante": "例: V-00000001(レシートに記載)",
+  "RFN1_PH_Producto": "例: Pan de campo(名前の一部でも可)",
   "RFN1_Cliente": "顧客",
   "RFN1_Nivel": "レベル",
   "RFN1_SaldoVigente": "有効残高",
@@ -443,5 +452,15 @@
   "RFN2_MotivoDeAnulacion": "取り消しの理由",
   "RFN2_MotivoAnulacion": "取り消しの理由を入力してください。",
   "RFN2_ConfirmarAnulacion": "次の交換を取り消しますか:",
-  "RFN2_CanjeAnulado": "交換を取り消しました。返還ポイント:"
+  "RFN2_CanjeAnulado": "交換を取り消しました。返還ポイント:",
+  "btnBitacoraCambios": "変更履歴",
+  "BC_Titulo": "変更履歴",
+  "BC_FiltroDni": "顧客DNI",
+  "BC_Desde": "開始",
+  "BC_Hasta": "終了",
+  "BC_Restaurar": "バージョンを復元",
+  "BC_SeleccioneVersion": "一覧からバージョンを選択してください。",
+  "BC_YaVigente": "選択したバージョンはすでに現行です。",
+  "BC_ConfirmarRestaurar": "このバージョンを復元しますか？",
+  "BC_Restaurado": "復元しました。現在の有効なバージョンです。"
 }

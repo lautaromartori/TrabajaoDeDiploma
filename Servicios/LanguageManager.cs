@@ -6,95 +6,95 @@ using System.Net;
 using System.Text;
 using System.Xml;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public class LanguageManager : IObserved
+    public class LM830LanguageManager : LM830IObserved
     {
-        private List<IObserver> _observers;
-        private static LanguageManager _lenguageManager;
-        private DefaultLenguage _language;
-        private Dictionary<string, string> _jsonidioma;
+        private List<LM830IObserver> LM830_observers;
+        private static LM830LanguageManager LM830_lenguageManager;
+        private LM830DefaultLenguage LM830_language;
+        private Dictionary<string, string> LM830_jsonidioma;
 
-        public static LanguageManager Instance
+        public static LM830LanguageManager LM830Instance
         {
             get
             {
-                if (_lenguageManager == null) _lenguageManager = new LanguageManager();
-                return _lenguageManager;
+                if (LM830_lenguageManager == null) LM830_lenguageManager = new LM830LanguageManager();
+                return LM830_lenguageManager;
             }
         }
-        public string CodigoIdiomaActual
+        public string LM830CodigoIdiomaActual
         {
             get
             {
-                if (_language == null)
+                if (LM830_language == null)
                     return "es";
 
-                return _language.Idioma;
+                return LM830_language.LM830Idioma;
             }
         }
 
-        private LanguageManager()
+        private LM830LanguageManager()
         {
-            _observers = new List<IObserver>();
+            LM830_observers = new List<LM830IObserver>();
         }
 
-        public void AgregarObservador(IObserver observable)
+        public void LM830AgregarObservador(LM830IObserver LM830observable)
         {
-            _observers.Add(observable);
+            LM830_observers.Add(LM830observable);
         }
 
-        public void EliminarObservador(IObserver observable)
+        public void LM830EliminarObservador(LM830IObserver LM830observable)
         {
-            _observers.Remove(observable);
+            LM830_observers.Remove(LM830observable);
         }
 
-        public void NotificarObservadores()
+        public void LM830NotificarObservadores()
         {
-            foreach (IObserver item in _observers)
+            foreach (LM830IObserver LM830item in LM830_observers)
             {
-                item.Actualizar(this);
+                LM830item.LM830Actualizar(this);
             }
         }
 
-        public CultureInfo GetCurrentLanguage()
+        public CultureInfo LM830GetCurrentLanguage()
         {
-            if (_language == null)
+            if (LM830_language == null)
                 return new CultureInfo("es");
 
             return new CultureInfo(
-                _language.Idioma);
+                LM830_language.LM830Idioma);
         }
 
-        public string GetTraduction(string key)
+        public string LM830GetTraduction(string LM830key)
         {
-            if (_jsonidioma == null)
-                return key;
+            if (LM830_jsonidioma == null)
+                return LM830key;
 
-            if (!_jsonidioma.ContainsKey(key))
-                return key;
+            if (!LM830_jsonidioma.ContainsKey(LM830key))
+                return LM830key;
 
-            return _jsonidioma[key];
+            return LM830_jsonidioma[LM830key];
         }
 
-        private string GetJsonRute(string name)
+        private string LM830GetJsonRute(string LM830name)
         {
-            string directory = AppDomain.CurrentDomain.BaseDirectory;
-            string jsonruta = Path.Combine(directory, "Idiomas", $"{name}.json");
-            return jsonruta;
+            string LM830directory = AppDomain.CurrentDomain.BaseDirectory;
+            string LM830jsonruta = Path.Combine(LM830directory, "Idiomas", $"{LM830name}.json");
+            return LM830jsonruta;
         }
-        public void CargarIdioma(string codigoIdioma)
+        public void LM830CargarIdioma(string LM830codigoIdioma)
         {
-            string readjson =File.ReadAllText(GetJsonRute(codigoIdioma));
+            string LM830readjson =File.ReadAllText(LM830GetJsonRute(LM830codigoIdioma));
 
-            _jsonidioma =JsonConvert.DeserializeObject<Dictionary<string, string>>(readjson);
+            LM830_jsonidioma =JsonConvert.DeserializeObject<Dictionary<string, string>>(LM830readjson);
 
-            _language = new DefaultLenguage
+            LM830_language = new LM830DefaultLenguage
             {
-                Idioma = codigoIdioma
+                LM830Idioma = LM830codigoIdioma
             };
 
-            NotificarObservadores();
+            LM830NotificarObservadores();
         }
     }
 }

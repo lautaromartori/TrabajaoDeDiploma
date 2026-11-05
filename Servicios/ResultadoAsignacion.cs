@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public enum EstadoAsignacion
+    public enum LM830EstadoAsignacion
     {
-        Ok,
-        ConflictoPermisos
+        LM830Ok,
+        LM830ConflictoPermisos
     }
 
-    public class ResultadoAsignacion
+    public class LM830ResultadoAsignacion
     {
-        public EstadoAsignacion Estado { get; set; }
+        public LM830EstadoAsignacion LM830Estado { get; set; }
 
-        public List<string> PermisosConflictivos { get; set; } = new List<string>();
+        public List<string> LM830PermisosConflictivos { get; set; } = new List<string>();
 
-        public Dictionary<string, string> OrigenConflicto { get; set; }
+        public Dictionary<string, string> LM830OrigenConflicto { get; set; }
             = new Dictionary<string, string>();
     }
 }

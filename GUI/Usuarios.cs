@@ -1,5 +1,5 @@
-﻿using BLL;
-using Servicios;
+﻿using LM830BLL;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,76 +8,76 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace GUI
+namespace LM830GUI
 {
-    public partial class Usuarios : Form, IObserver
+    public partial class LM830Usuarios : Form, LM830IObserver
     {
-        int posX, posY;
-        bool arrastrando = false;
-        private UserAction userAction;
-        private UsuarioBLL usuarioBLL;
-        private PerfilBLL perfilBLL;
+        int LM830posX, LM830posY;
+        bool LM830arrastrando = false;
+        private LM830UserAction LM830userAction;
+        private LM830UsuarioBLL LM830usuarioBLL;
+        private LM830PerfilBLL LM830perfilBLL;
 
-        public Usuarios()
+        public LM830Usuarios()
         {
             InitializeComponent();
-            usuarioBLL = new UsuarioBLL();
-            perfilBLL = new PerfilBLL();
-            lblTextoTabla.Text = LanguageManager.Instance.GetTraduction("lblTextoTablaUserActivos");
-            MostrarUsuarios(dataGridView1, usuarioBLL.ListarUsuariosActivos());
-            MostrarCantidadUsuarios();
-            ConfigurarGrillaSeleccionFila(dataGridView1);
-            ReiniciarBotones();
+            LM830usuarioBLL = new LM830UsuarioBLL();
+            LM830perfilBLL = new LM830PerfilBLL();
+            LM830lblTextoTabla.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("lblTextoTablaUserActivos");
+            LM830MostrarUsuarios(LM830dataGridView1, LM830usuarioBLL.LM830ListarUsuariosActivos());
+            LM830MostrarCantidadUsuarios();
+            LM830ConfigurarGrillaSeleccionFila(LM830dataGridView1);
+            LM830ReiniciarBotones();
         }
 
-        private void CargarPerfiles()
+        private void LM830CargarPerfiles()
         {
-            cbRol.Items.Clear();
-            foreach (var perfil in perfilBLL.ObtenerPerfiles())
-                cbRol.Items.Add(perfil.Nombre);
+            LM830cbRol.Items.Clear();
+            foreach (var LM830perfil in LM830perfilBLL.LM830ObtenerPerfiles())
+                LM830cbRol.Items.Add(LM830perfil.LM830Nombre);
         }
 
-        private void MostrarCantidadUsuarios()
+        private void LM830MostrarCantidadUsuarios()
         {
-            if (rbActivos.Checked)
+            if (LM830rbActivos.Checked)
             {
-                lblCantidadUsers.Text = $"{LanguageManager.Instance.GetTraduction("lblCantidadUser")}: {usuarioBLL.ListarUsuariosActivos().Count}";
+                LM830lblCantidadUsers.Text = $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("lblCantidadUser")}: {LM830usuarioBLL.LM830ListarUsuariosActivos().Count}";
             }
             else
             {
-                lblCantidadUsers.Text = $"{LanguageManager.Instance.GetTraduction("lblCantidadUser")}: {usuarioBLL.ListarTodosUsuarios().Count}";
+                LM830lblCantidadUsers.Text = $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("lblCantidadUser")}: {LM830usuarioBLL.LM830ListarTodosUsuarios().Count}";
             }
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void LM830radioButton1_CheckedChanged(object LM830sender, EventArgs LM830e)
         {
-            if (rbActivos.Checked)
+            if (LM830rbActivos.Checked)
             {
-                lblTextoTabla.Text = LanguageManager.Instance.GetTraduction("lblTextoTablaUserActivos");
-                MostrarUsuarios(dataGridView1, usuarioBLL.ListarUsuariosActivos() as List<Usuario>);
-                MostrarCantidadUsuarios();
+                LM830lblTextoTabla.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("lblTextoTablaUserActivos");
+                LM830MostrarUsuarios(LM830dataGridView1, LM830usuarioBLL.LM830ListarUsuariosActivos() as List<LM830Usuario>);
+                LM830MostrarCantidadUsuarios();
             }
             else
             {
-                lblTextoTabla.Text = LanguageManager.Instance.GetTraduction("lblTextoTablaUserTodos");
-                MostrarCantidadUsuarios();
+                LM830lblTextoTabla.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("lblTextoTablaUserTodos");
+                LM830MostrarCantidadUsuarios();
             }
         }
 
-        private void btnCerrar_Click(object sender, EventArgs e)
+        private void LM830btnCerrar_Click(object LM830sender, EventArgs LM830e)
         {
-            Navegacion.VolverAlMenu(this);
+            LM830Navegacion.LM830VolverAlMenu(this);
         }
 
-        private void panel1_MouseUp(object sender, MouseEventArgs e) => arrastrando = false;
+        private void LM830panel1_MouseUp(object LM830sender, MouseEventArgs LM830e) => LM830arrastrando = false;
 
-        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        private void LM830panel1_MouseMove(object LM830sender, MouseEventArgs LM830e)
         {
-            if (arrastrando)
-                this.Location = new Point(this.Location.X + (e.X - posX), this.Location.Y + (e.Y - posY));
+            if (LM830arrastrando)
+                this.Location = new Point(this.Location.X + (LM830e.X - LM830posX), this.Location.Y + (LM830e.Y - LM830posY));
         }
 
-        private void btnMaximizar_Click(object sender, EventArgs e)
+        private void LM830btnMaximizar_Click(object LM830sender, EventArgs LM830e)
         {
             if (this.WindowState == FormWindowState.Normal)
                 this.WindowState = FormWindowState.Maximized;
@@ -85,403 +85,403 @@ namespace GUI
                 this.WindowState = FormWindowState.Normal;
         }
 
-        private void btnMinimizar_Click(object sender, EventArgs e) =>
+        private void LM830btnMinimizar_Click(object LM830sender, EventArgs LM830e) =>
             this.WindowState = FormWindowState.Minimized;
 
-        private void panModificarUsuario_EnabledChanged(object sender, EventArgs e)
+        private void LM830panModificarUsuario_EnabledChanged(object LM830sender, EventArgs LM830e)
         {
-            Color color = panModificarUsuario.Enabled ? Color.White : Color.Gray;
-            txtDni.BackColor = color;
-            txtNom.BackColor = color;
-            txtApe.BackColor = color;
-            txtEmail.BackColor = color;
-            txtUsuario.BackColor = color;
-            cbRol.BackColor = color;
+            Color LM830color = LM830panModificarUsuario.Enabled ? Color.White : Color.Gray;
+            LM830txtDni.BackColor = LM830color;
+            LM830txtNom.BackColor = LM830color;
+            LM830txtApe.BackColor = LM830color;
+            LM830txtEmail.BackColor = LM830color;
+            LM830txtUsuario.BackColor = LM830color;
+            LM830cbRol.BackColor = LM830color;
         }
 
-        private void btnAplicar_Click(object sender, EventArgs e)
+        private void LM830btnAplicar_Click(object LM830sender, EventArgs LM830e)
         {
             try
             {
-                switch (userAction)
+                switch (LM830userAction)
                 {
-                    case UserAction.Add:
-                        if (ValidarCamposVacios(txtDni, txtApe, txtNom, txtEmail, txtUsuario) && ValidarComboBox(cbRol))
+                    case LM830UserAction.LM830Add:
+                        if (LM830ValidarCamposVacios(LM830txtDni, LM830txtApe, LM830txtNom, LM830txtEmail, LM830txtUsuario) && LM830ValidarComboBox(LM830cbRol))
                         {
-                            usuarioBLL.RegistrarUsuario(new Usuario(
-                                txtDni.Text, txtNom.Text, txtApe.Text, txtUsuario.Text,
-                                Encriptador.GetHash256(txtDni.Text + txtNom.Text),
-                                txtEmail.Text, false, true, cbRol.SelectedItem.ToString()));
-                            ReiniciarBotones();
-                            MostrarUsuarios(dataGridView1, usuarioBLL.ListarUsuariosActivos());
-                            MostrarCantidadUsuarios();
+                            LM830usuarioBLL.LM830RegistrarUsuario(new LM830Usuario(
+                                LM830txtDni.Text, LM830txtNom.Text, LM830txtApe.Text, LM830txtUsuario.Text,
+                                LM830Encriptador.LM830GetHash256(LM830txtDni.Text + LM830txtNom.Text),
+                                LM830txtEmail.Text, false, true, LM830cbRol.SelectedItem.ToString()));
+                            LM830ReiniciarBotones();
+                            LM830MostrarUsuarios(LM830dataGridView1, LM830usuarioBLL.LM830ListarUsuariosActivos());
+                            LM830MostrarCantidadUsuarios();
                         }
                         break;
 
-                    case UserAction.Delete:
-                        usuarioBLL.EliminarLogico((dataGridView1.SelectedRows[0].DataBoundItem as Usuario).DNI);
-                        ReiniciarBotones();
-                        MostrarUsuarios(dataGridView1, rbActivos.Checked
-                            ? usuarioBLL.ListarUsuariosActivos()
-                            : usuarioBLL.ListarTodosUsuarios());
-                        MostrarCantidadUsuarios();
+                    case LM830UserAction.LM830Delete:
+                        LM830usuarioBLL.LM830EliminarLogico((LM830dataGridView1.SelectedRows[0].DataBoundItem as LM830Usuario).LM830DNI);
+                        LM830ReiniciarBotones();
+                        LM830MostrarUsuarios(LM830dataGridView1, LM830rbActivos.Checked
+                            ? LM830usuarioBLL.LM830ListarUsuariosActivos()
+                            : LM830usuarioBLL.LM830ListarTodosUsuarios());
+                        LM830MostrarCantidadUsuarios();
 
-                        MessageBox.Show(LanguageManager.Instance.GetTraduction("UserElimi"), LanguageManager.Instance.GetTraduction("Alerta"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserElimi"), LM830LanguageManager.LM830Instance.LM830GetTraduction("Alerta"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                         break;
 
-                            case UserAction.Modify:
-                                if (ValidarCamposVacios(txtNom, txtApe, txtDni, txtUsuario, txtEmail) && ValidarComboBox(cbRol) && ValidarEntradaUsuario())
+                            case LM830UserAction.LM830Modify:
+                                if (LM830ValidarCamposVacios(LM830txtNom, LM830txtApe, LM830txtDni, LM830txtUsuario, LM830txtEmail) && LM830ValidarComboBox(LM830cbRol) && LM830ValidarEntradaUsuario())
                                 {
-                                    string dniOriginal = (dataGridView1.SelectedRows[0].DataBoundItem as Usuario).DNI;
-                                    string rolNuevo = cbRol.SelectedItem.ToString();
+                                    string LM830dniOriginal = (LM830dataGridView1.SelectedRows[0].DataBoundItem as LM830Usuario).LM830DNI;
+                                    string LM830rolNuevo = LM830cbRol.SelectedItem.ToString();
 
-                                    usuarioBLL.Modificar(dniOriginal, new Usuario(
-                                        dniOriginal,
-                                        txtNom.Text, txtApe.Text, txtUsuario.Text,
-                                        string.Empty, txtEmail.Text, default, default, rolNuevo));
+                                    LM830usuarioBLL.LM830Modificar(LM830dniOriginal, new LM830Usuario(
+                                        LM830dniOriginal,
+                                        LM830txtNom.Text, LM830txtApe.Text, LM830txtUsuario.Text,
+                                        string.Empty, LM830txtEmail.Text, default, default, LM830rolNuevo));
 
-                                    Usuario usuarioEnSesion = SessionManager.Instance.UsuarioActual();
-                                    if (usuarioEnSesion.DNI == dniOriginal)
+                                    LM830Usuario LM830usuarioEnSesion = LM830SessionManager.LM830Instance.LM830UsuarioActual();
+                                    if (LM830usuarioEnSesion.LM830DNI == LM830dniOriginal)
                                     {
-                                        var perfiles = perfilBLL.ObtenerPerfiles();
-                                        var perfilNuevo = perfiles.FirstOrDefault(p => p.Nombre == rolNuevo);
-                                        usuarioEnSesion.Permisos.Clear();
-                                        if (perfilNuevo != null)
-                                            usuarioEnSesion.Permisos.Add(perfilNuevo);
+                                        var LM830perfiles = LM830perfilBLL.LM830ObtenerPerfiles();
+                                        var LM830perfilNuevo = LM830perfiles.FirstOrDefault(LM830p => LM830p.LM830Nombre == LM830rolNuevo);
+                                        LM830usuarioEnSesion.LM830Permisos.Clear();
+                                        if (LM830perfilNuevo != null)
+                                            LM830usuarioEnSesion.LM830Permisos.Add(LM830perfilNuevo);
                                     }
 
-                                    ReiniciarBotones();
-                                    MessageBox.Show(LanguageManager.Instance.GetTraduction("UserModif"),
-                                        LanguageManager.Instance.GetTraduction("Alerta"),
+                                    LM830ReiniciarBotones();
+                                    MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserModif"),
+                                        LM830LanguageManager.LM830Instance.LM830GetTraduction("Alerta"),
                                         MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    MostrarUsuarios(dataGridView1, usuarioBLL.ListarUsuariosActivos());
+                                    LM830MostrarUsuarios(LM830dataGridView1, LM830usuarioBLL.LM830ListarUsuariosActivos());
 
-                                    if (usuarioEnSesion.DNI == dniOriginal && !usuarioEnSesion.TienePermiso("Ver Usuarios"))
+                                    if (LM830usuarioEnSesion.LM830DNI == LM830dniOriginal && !LM830usuarioEnSesion.LM830TienePermiso("Ver Usuarios"))
                                     {
-                                        MessageBox.Show(LanguageManager.Instance.GetTraduction("UserMsj2"),
-                                            LanguageManager.Instance.GetTraduction("UserMsj3"),
+                                        MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserMsj2"),
+                                            LM830LanguageManager.LM830Instance.LM830GetTraduction("UserMsj3"),
                                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                        btnCerrar_Click(sender, e);
+                                        LM830btnCerrar_Click(LM830sender, LM830e);
                                         return;
                                     }
-                                    ValidarPermisos();
+                                    LM830ValidarPermisos();
                                 }
                                 break;
 
-                            case UserAction.UnBlock:
-                        ReiniciarBotones();
-                        usuarioBLL.DesbloquearUsuario(dataGridView1.SelectedRows[0].DataBoundItem as Usuario);
-                        MostrarUsuarios(dataGridView1, rbActivos.Checked
-                            ? usuarioBLL.ListarUsuariosActivos()
-                            : usuarioBLL.ListarTodosUsuarios());
-                        MessageBox.Show(LanguageManager.Instance.GetTraduction("UserDesbloqueado"), LanguageManager.Instance.GetTraduction("Alerta"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            case LM830UserAction.LM830UnBlock:
+                        LM830ReiniciarBotones();
+                        LM830usuarioBLL.LM830DesbloquearUsuario(LM830dataGridView1.SelectedRows[0].DataBoundItem as LM830Usuario);
+                        LM830MostrarUsuarios(LM830dataGridView1, LM830rbActivos.Checked
+                            ? LM830usuarioBLL.LM830ListarUsuariosActivos()
+                            : LM830usuarioBLL.LM830ListarTodosUsuarios());
+                        MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserDesbloqueado"), LM830LanguageManager.LM830Instance.LM830GetTraduction("Alerta"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                         break;
 
-                    case UserAction.Activate:
-                        usuarioBLL.EliminarLogico((dataGridView1.SelectedRows[0].DataBoundItem as Usuario).DNI);
-                        ReiniciarBotones();
-                        if (rbActivos.Checked)
+                    case LM830UserAction.LM830Activate:
+                        LM830usuarioBLL.LM830EliminarLogico((LM830dataGridView1.SelectedRows[0].DataBoundItem as LM830Usuario).LM830DNI);
+                        LM830ReiniciarBotones();
+                        if (LM830rbActivos.Checked)
                         {
-                            MostrarUsuarios(dataGridView1, usuarioBLL.ListarUsuariosActivos());
+                            LM830MostrarUsuarios(LM830dataGridView1, LM830usuarioBLL.LM830ListarUsuariosActivos());
                         }
                         else
                         {
-                            MostrarUsuarios(dataGridView1, usuarioBLL.ListarTodosUsuarios());
+                            LM830MostrarUsuarios(LM830dataGridView1, LM830usuarioBLL.LM830ListarTodosUsuarios());
                         }
-                        MostrarUsuarios(dataGridView1, rbActivos.Checked
-                            ? usuarioBLL.ListarUsuariosActivos()
-                            : usuarioBLL.ListarTodosUsuarios());
-                        MessageBox.Show(LanguageManager.Instance.GetTraduction("UserActi"), LanguageManager.Instance.GetTraduction("Alerta"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LM830MostrarUsuarios(LM830dataGridView1, LM830rbActivos.Checked
+                            ? LM830usuarioBLL.LM830ListarUsuariosActivos()
+                            : LM830usuarioBLL.LM830ListarTodosUsuarios());
+                        MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserActi"), LM830LanguageManager.LM830Instance.LM830GetTraduction("Alerta"), MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         break;
 
-                    case UserAction.Consult:
+                    case LM830UserAction.LM830Consult:
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(LM830ex.Message);
             }
         }
 
-        public void MostrarUsuarios(DataGridView dgv, object obj)
+        public void LM830MostrarUsuarios(DataGridView LM830dgv, object LM830obj)
         {
-            dgv.DataSource = null;
-            dgv.DataSource = obj;
+            LM830dgv.DataSource = null;
+            LM830dgv.DataSource = LM830obj;
         }
 
-        private bool ValidarCamposVacios(params Control[] controles)
+        private bool LM830ValidarCamposVacios(params Control[] LM830controles)
         {
-            StringBuilder mensaje = new StringBuilder();
-            bool hayVacios = false;
-            Control primerInvalido = null;
+            StringBuilder LM830mensaje = new StringBuilder();
+            bool LM830hayVacios = false;
+            Control LM830primerInvalido = null;
 
-            foreach (Control c in controles)
+            foreach (Control LM830c in LM830controles)
             {
-                string nombreCampo = c.Tag?.ToString() ?? c.Name;
-                if (c is TextBox txt && string.IsNullOrWhiteSpace(txt.Text))
+                string LM830nombreCampo = LM830c.Tag?.ToString() ?? LM830c.Name;
+                if (LM830c is TextBox LM830txt && string.IsNullOrWhiteSpace(LM830txt.Text))
                 {
-                    mensaje.AppendLine($"{LanguageManager.Instance.GetTraduction("ElCampo")} " + " " + nombreCampo + " " + LanguageManager.Instance.GetTraduction("EstaVacio"));
-                    if (primerInvalido == null) primerInvalido = txt;
-                    hayVacios = true;
+                    LM830mensaje.AppendLine($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("ElCampo")} " + " " + LM830nombreCampo + " " + LM830LanguageManager.LM830Instance.LM830GetTraduction("EstaVacio"));
+                    if (LM830primerInvalido == null) LM830primerInvalido = LM830txt;
+                    LM830hayVacios = true;
                 }
-                else if (c is ComboBox cb && cb.SelectedIndex == -1)
+                else if (LM830c is ComboBox LM830cb && LM830cb.SelectedIndex == -1)
                 {
-                    mensaje.AppendLine($"{LanguageManager.Instance.GetTraduction("ElCampo")}" + " " + nombreCampo + " " + LanguageManager.Instance.GetTraduction("NoFueSelecc"));
-                    if (primerInvalido == null) primerInvalido = cb;
-                    hayVacios = true;
+                    LM830mensaje.AppendLine($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("ElCampo")}" + " " + LM830nombreCampo + " " + LM830LanguageManager.LM830Instance.LM830GetTraduction("NoFueSelecc"));
+                    if (LM830primerInvalido == null) LM830primerInvalido = LM830cb;
+                    LM830hayVacios = true;
                 }
             }
 
-            if (hayVacios)
+            if (LM830hayVacios)
             {
-                MessageBox.Show(mensaje.ToString(), LanguageManager.Instance.GetTraduction("FaltaCompl"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                primerInvalido?.Focus();
+                MessageBox.Show(LM830mensaje.ToString(), LM830LanguageManager.LM830Instance.LM830GetTraduction("FaltaCompl"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LM830primerInvalido?.Focus();
             }
-            return !hayVacios;
+            return !LM830hayVacios;
         }
-        private bool ValidarComboBox(ComboBox cb)
+        private bool LM830ValidarComboBox(ComboBox LM830cb)
         {
-            if (cb.SelectedIndex == -1)
+            if (LM830cb.SelectedIndex == -1)
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("UserMsj1"), LanguageManager.Instance.GetTraduction("FaltaCompl"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                cb.Focus();
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserMsj1"), LM830LanguageManager.LM830Instance.LM830GetTraduction("FaltaCompl"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LM830cb.Focus();
                 return false;
             }
             return true;
         }
 
-        private bool ValidarEntradaUsuario()
+        private bool LM830ValidarEntradaUsuario()
         {
-            StringBuilder errores = new StringBuilder();
+            StringBuilder LM830errores = new StringBuilder();
 
-            if (!Regex.IsMatch(txtNom.Text.Trim(), @"^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$"))
-                errores.AppendLine(LanguageManager.Instance.GetTraduction("CampoNombre"));
+            if (!Regex.IsMatch(LM830txtNom.Text.Trim(), @"^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$"))
+                LM830errores.AppendLine(LM830LanguageManager.LM830Instance.LM830GetTraduction("CampoNombre"));
 
-            if (!Regex.IsMatch(txtApe.Text.Trim(), @"^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$"))
-                errores.AppendLine(LanguageManager.Instance.GetTraduction("CampoApell"));
+            if (!Regex.IsMatch(LM830txtApe.Text.Trim(), @"^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$"))
+                LM830errores.AppendLine(LM830LanguageManager.LM830Instance.LM830GetTraduction("CampoApell"));
 
-            if (!Regex.IsMatch(txtDni.Text.Trim(), @"^\d{8}$"))
-                errores.AppendLine(LanguageManager.Instance.GetTraduction("CampoDni"));
+            if (!Regex.IsMatch(LM830txtDni.Text.Trim(), @"^\d{8}$"))
+                LM830errores.AppendLine(LM830LanguageManager.LM830Instance.LM830GetTraduction("CampoDni"));
 
-            if (!(userAction == UserAction.Add))
+            if (!(LM830userAction == LM830UserAction.LM830Add))
             {
-                if (string.IsNullOrWhiteSpace(txtUsuario.Text) || txtUsuario.Text.Length < 4)
-                    errores.AppendLine(LanguageManager.Instance.GetTraduction("ElNombreUser"));
+                if (string.IsNullOrWhiteSpace(LM830txtUsuario.Text) || LM830txtUsuario.Text.Length < 4)
+                    LM830errores.AppendLine(LM830LanguageManager.LM830Instance.LM830GetTraduction("ElNombreUser"));
             }
 
-            if (!Regex.IsMatch(txtEmail.Text.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-                errores.AppendLine(LanguageManager.Instance.GetTraduction("ElCorreoElec"));
+            if (!Regex.IsMatch(LM830txtEmail.Text.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                LM830errores.AppendLine(LM830LanguageManager.LM830Instance.LM830GetTraduction("ElCorreoElec"));
 
-            if (errores.Length > 0)
+            if (LM830errores.Length > 0)
             {
-                MessageBox.Show(errores.ToString(), LanguageManager.Instance.GetTraduction("ErrorEntradaDeDatos"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(LM830errores.ToString(), LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorEntradaDeDatos"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             return true;
         }
 
-        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        private void LM830panel1_MouseDown(object LM830sender, MouseEventArgs LM830e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (LM830e.Button == MouseButtons.Left)
             {
-                arrastrando = true;
-                posX = e.X;
-                posY = e.Y;
+                LM830arrastrando = true;
+                LM830posX = LM830e.X;
+                LM830posY = LM830e.Y;
             }
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e) => ReiniciarBotones();
+        private void LM830btnCancelar_Click(object LM830sender, EventArgs LM830e) => LM830ReiniciarBotones();
 
-        private void SetModoEdicion(bool enEdicion)
+        private void LM830SetModoEdicion(bool LM830enEdicion)
         {
-            btnCrear.Enabled = !enEdicion;
-            btnDesbloquear.Enabled = !enEdicion;
-            btnModificar.Enabled = !enEdicion;
-            btnActDes.Enabled = !enEdicion;
+            LM830btnCrear.Enabled = !LM830enEdicion;
+            LM830btnDesbloquear.Enabled = !LM830enEdicion;
+            LM830btnModificar.Enabled = !LM830enEdicion;
+            LM830btnActDes.Enabled = !LM830enEdicion;
 
-            btnCrear.BackColor = !enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
-            btnDesbloquear.BackColor = !enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
-            btnModificar.BackColor = !enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
-            btnActDes.BackColor = !enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            LM830btnCrear.BackColor = !LM830enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            LM830btnDesbloquear.BackColor = !LM830enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            LM830btnModificar.BackColor = !LM830enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            LM830btnActDes.BackColor = !LM830enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
 
-            btnAplicar.Enabled = enEdicion;
-            btnCancelar.Enabled = enEdicion;
-            btnAplicar.BackColor = enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
-            btnCancelar.BackColor = enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
-            panel10.BackColor = enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
-            panel11.BackColor = enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            LM830btnAplicar.Enabled = LM830enEdicion;
+            LM830btnCancelar.Enabled = LM830enEdicion;
+            LM830btnAplicar.BackColor = LM830enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            LM830btnCancelar.BackColor = LM830enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            LM830panel10.BackColor = LM830enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
+            LM830panel11.BackColor = LM830enEdicion ? Color.FromArgb(46, 125, 50) : Color.DarkGray;
 
-            pnFiltrado.Enabled = !enEdicion;
-            panel3.Enabled = !enEdicion;
-            panModificarUsuario.Enabled = enEdicion;
+            LM830pnFiltrado.Enabled = !LM830enEdicion;
+            LM830panel3.Enabled = !LM830enEdicion;
+            LM830panModificarUsuario.Enabled = LM830enEdicion;
         }
-        private void ReiniciarBotones()
+        private void LM830ReiniciarBotones()
         {
-            txtNom.Clear();
-            txtApe.Clear();
-            txtDni.Clear();
-            txtEmail.Clear();
-            txtUsuario.Clear();
-            cbRol.SelectedIndex = -1;
-            txtDni.ReadOnly = false;
+            LM830txtNom.Clear();
+            LM830txtApe.Clear();
+            LM830txtDni.Clear();
+            LM830txtEmail.Clear();
+            LM830txtUsuario.Clear();
+            LM830cbRol.SelectedIndex = -1;
+            LM830txtDni.ReadOnly = false;
 
-            SetModoEdicion(false);
+            LM830SetModoEdicion(false);
 
-            txtBoxModo.Text = LanguageManager.Instance.GetTraduction("txtBoxModoConsulta");
-            userAction = UserAction.Consult;
+            LM830txtBoxModo.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("txtBoxModoConsulta");
+            LM830userAction = LM830UserAction.LM830Consult;
 
-            if (SessionManager.Instance.Logueado())
-                ValidarPermisos();
+            if (LM830SessionManager.LM830Instance.LM830Logueado())
+                LM830ValidarPermisos();
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e) =>
-            MostrarUsuarios(dataGridView1, usuarioBLL.ListarTodosUsuarios());
+        private void LM830radioButton2_CheckedChanged(object LM830sender, EventArgs LM830e) =>
+            LM830MostrarUsuarios(LM830dataGridView1, LM830usuarioBLL.LM830ListarTodosUsuarios());
 
-        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        private void LM830dataGridView1_SelectionChanged(object LM830sender, EventArgs LM830e)
         {
-            if (userAction == UserAction.Delete || userAction == UserAction.Modify || userAction == UserAction.UnBlock)
+            if (LM830userAction == LM830UserAction.LM830Delete || LM830userAction == LM830UserAction.LM830Modify || LM830userAction == LM830UserAction.LM830UnBlock)
             {
-                if (dataGridView1.SelectedRows.Count > 0 && dataGridView1.SelectedRows[0].Cells[0].Value != null)
+                if (LM830dataGridView1.SelectedRows.Count > 0 && LM830dataGridView1.SelectedRows[0].Cells[0].Value != null)
                 {
-                    Usuario user = usuarioBLL.BuscarUsuarioPorDNI(
-                        dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
-                    if (user == null) return;
+                    LM830Usuario LM830user = LM830usuarioBLL.LM830BuscarUsuarioPorDNI(
+                        LM830dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                    if (LM830user == null) return;
 
-                    txtDni.Text = user.DNI;
-                    txtDni.ReadOnly = (userAction == UserAction.Modify);
-                    txtNom.Text = user.Nombre;
-                    txtApe.Text = user.Apellido;
-                    txtUsuario.Text = user.Username;
-                    txtEmail.Text = user.Email;
-                    cbRol.SelectedItem = user.Rol;
+                    LM830txtDni.Text = LM830user.LM830DNI;
+                    LM830txtDni.ReadOnly = (LM830userAction == LM830UserAction.LM830Modify);
+                    LM830txtNom.Text = LM830user.LM830Nombre;
+                    LM830txtApe.Text = LM830user.LM830Apellido;
+                    LM830txtUsuario.Text = LM830user.LM830Username;
+                    LM830txtEmail.Text = LM830user.LM830Email;
+                    LM830cbRol.SelectedItem = LM830user.LM830Rol;
                 }
             }
         }
 
-        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void LM830dataGridView1_CellFormatting(object LM830sender, DataGridViewCellFormattingEventArgs LM830e)
         {
-            if (e.RowIndex >= 0 && dataGridView1.Rows[e.RowIndex].DataBoundItem is Usuario usuario)
-                e.CellStyle.ForeColor = usuario.Bloqueado ? Color.Red : Color.Black;
+            if (LM830e.RowIndex >= 0 && LM830dataGridView1.Rows[LM830e.RowIndex].DataBoundItem is LM830Usuario LM830usuario)
+                LM830e.CellStyle.ForeColor = LM830usuario.LM830Bloqueado ? Color.Red : Color.Black;
         }
 
-        private void btnCrear_Click(object sender, EventArgs e)
+        private void LM830btnCrear_Click(object LM830sender, EventArgs LM830e)
         {
-            userAction = UserAction.Add;
-            CargarPerfiles();
-            txtBoxModo.Text = LanguageManager.Instance.GetTraduction("txtBoxModoAnadir");
-            SetModoEdicion(true);
+            LM830userAction = LM830UserAction.LM830Add;
+            LM830CargarPerfiles();
+            LM830txtBoxModo.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("txtBoxModoAnadir");
+            LM830SetModoEdicion(true);
         }
 
-        private void btnDesbloquear_Click(object sender, EventArgs e)
+        private void LM830btnDesbloquear_Click(object LM830sender, EventArgs LM830e)
         {
-            if (dataGridView1.SelectedRows.Count > 0)
+            if (LM830dataGridView1.SelectedRows.Count > 0)
             {
-                userAction = UserAction.UnBlock;
-                txtBoxModo.Text = LanguageManager.Instance.GetTraduction("txtBoxModoDesbloquear");
-                SetModoEdicion(true);
-                panModificarUsuario.Enabled = false;
+                LM830userAction = LM830UserAction.LM830UnBlock;
+                LM830txtBoxModo.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("txtBoxModoDesbloquear");
+                LM830SetModoEdicion(true);
+                LM830panModificarUsuario.Enabled = false;
             }
         }
 
-        private void btnModificar_Click(object sender, EventArgs e)
+        private void LM830btnModificar_Click(object LM830sender, EventArgs LM830e)
         {
-            if (dataGridView1.SelectedRows.Count == 0 || dataGridView1.SelectedRows[0].Cells[0].Value == null)
+            if (LM830dataGridView1.SelectedRows.Count == 0 || LM830dataGridView1.SelectedRows[0].Cells[0].Value == null)
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("UserMsj4"));
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("UserMsj4"));
                 return;
             }
 
-            userAction = UserAction.Modify;
-            txtBoxModo.Text = LanguageManager.Instance.GetTraduction("txtBoxModoModificar");
-            CargarPerfiles();
-            SetModoEdicion(true);
+            LM830userAction = LM830UserAction.LM830Modify;
+            LM830txtBoxModo.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("txtBoxModoModificar");
+            LM830CargarPerfiles();
+            LM830SetModoEdicion(true);
 
-            Usuario user = usuarioBLL.BuscarUsuarioPorDNI(
-                dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+            LM830Usuario LM830user = LM830usuarioBLL.LM830BuscarUsuarioPorDNI(
+                LM830dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
 
-            if (user == null) return;
+            if (LM830user == null) return;
 
-            txtDni.Text = user.DNI;
-            txtNom.Text = user.Nombre;
-            txtApe.Text = user.Apellido;
-            txtUsuario.Text = user.Username;
-            txtEmail.Text = user.Email;
-            cbRol.SelectedItem = user.Rol;
-            txtDni.ReadOnly = true;
+            LM830txtDni.Text = LM830user.LM830DNI;
+            LM830txtNom.Text = LM830user.LM830Nombre;
+            LM830txtApe.Text = LM830user.LM830Apellido;
+            LM830txtUsuario.Text = LM830user.LM830Username;
+            LM830txtEmail.Text = LM830user.LM830Email;
+            LM830cbRol.SelectedItem = LM830user.LM830Rol;
+            LM830txtDni.ReadOnly = true;
         }
 
-        private void btnActDes_Click(object sender, EventArgs e)
+        private void LM830btnActDes_Click(object LM830sender, EventArgs LM830e)
         {
-            if (dataGridView1.SelectedRows.Count > 0 && dataGridView1.SelectedRows[0].Cells[0].Value != null)
+            if (LM830dataGridView1.SelectedRows.Count > 0 && LM830dataGridView1.SelectedRows[0].Cells[0].Value != null)
             {
-                Usuario us = usuarioBLL.BuscarUsuarioPorDNI(
-                    dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
-                if (us == null) return;
+                LM830Usuario LM830us = LM830usuarioBLL.LM830BuscarUsuarioPorDNI(
+                    LM830dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+                if (LM830us == null) return;
 
-                if (!us.Activo)
+                if (!LM830us.LM830Activo)
                 {
-                    userAction = UserAction.Activate;
-                    txtBoxModo.Text = LanguageManager.Instance.GetTraduction("txtBoxModoActivar");
+                    LM830userAction = LM830UserAction.LM830Activate;
+                    LM830txtBoxModo.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("txtBoxModoActivar");
                 }
                 else
                 {
-                    userAction = UserAction.Delete;
-                    txtBoxModo.Text = LanguageManager.Instance.GetTraduction("txtBoxModoEliminar");
+                    LM830userAction = LM830UserAction.LM830Delete;
+                    LM830txtBoxModo.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("txtBoxModoEliminar");
                 }
-                SetModoEdicion(true);
-                panModificarUsuario.Enabled = false;
+                LM830SetModoEdicion(true);
+                LM830panModificarUsuario.Enabled = false;
             }
         }
 
-        private void Usuarios_Load(object sender, EventArgs e)
+        private void LM830Usuarios_Load(object LM830sender, EventArgs LM830e)
         {
-            LanguageManager.Instance.AgregarObservador(this);
-            Actualizar(LanguageManager.Instance);
-            ValidarPermisos();
+            LM830LanguageManager.LM830Instance.LM830AgregarObservador(this);
+            LM830Actualizar(LM830LanguageManager.LM830Instance);
+            LM830ValidarPermisos();
         }
 
-        private void ValidarPermisos()
+        private void LM830ValidarPermisos()
         {
-            Usuario usuarioActual = SessionManager.Instance.UsuarioActual();
+            LM830Usuario LM830usuarioActual = LM830SessionManager.LM830Instance.LM830UsuarioActual();
 
-            btnCrear.Enabled = usuarioActual.TienePermiso("Crear Usuario");
-            btnModificar.Enabled = usuarioActual.TienePermiso("Modificar Usuario");
-            btnActDes.Enabled = usuarioActual.TienePermiso("Activar Desactivar Usuario");
-            btnDesbloquear.Enabled = usuarioActual.TienePermiso("Desbloquear Usuario");
+            LM830btnCrear.Enabled = LM830usuarioActual.LM830TienePermiso("Crear Usuario");
+            LM830btnModificar.Enabled = LM830usuarioActual.LM830TienePermiso("Modificar Usuario");
+            LM830btnActDes.Enabled = LM830usuarioActual.LM830TienePermiso("Activar Desactivar Usuario");
+            LM830btnDesbloquear.Enabled = LM830usuarioActual.LM830TienePermiso("Desbloquear Usuario");
         }
 
-        private void ConfigurarGrillaSeleccionFila(DataGridView dgv)
+        private void LM830ConfigurarGrillaSeleccionFila(DataGridView LM830dgv)
         {
-            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgv.MultiSelect = false;
-            dgv.ReadOnly = true;
-            dgv.AllowUserToAddRows = false;
+            LM830dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            LM830dgv.MultiSelect = false;
+            LM830dgv.ReadOnly = true;
+            LM830dgv.AllowUserToAddRows = false;
         }
 
-        public void Actualizar(LanguageManager lenguaje)
+        public void LM830Actualizar(LM830LanguageManager LM830lenguaje)
         {
-            lblTextoTabla.Text = lenguaje.GetTraduction("lblTextoTabla");
-            txtDni.Text = lenguaje.GetTraduction("DNI");
-            lblApe.Text = lenguaje.GetTraduction("lblApe");
-            lblNombre.Text = lenguaje.GetTraduction("lblNombre");
-            lblEmail.Text = lenguaje.GetTraduction("lblEmail");
-            lblRol.Text = lenguaje.GetTraduction("lblRol");
-            lblUsuarioFU.Text = lenguaje.GetTraduction("lblUsuarioFU");
-            lblMsj.Text = lenguaje.GetTraduction("lblMsj");
-            lblOpciones.Text = lenguaje.GetTraduction("lblOpciones");
+            LM830lblTextoTabla.Text = LM830lenguaje.LM830GetTraduction("lblTextoTabla");
+            LM830txtDni.Text = LM830lenguaje.LM830GetTraduction("DNI");
+            LM830lblApe.Text = LM830lenguaje.LM830GetTraduction("lblApe");
+            LM830lblNombre.Text = LM830lenguaje.LM830GetTraduction("lblNombre");
+            LM830lblEmail.Text = LM830lenguaje.LM830GetTraduction("lblEmail");
+            LM830lblRol.Text = LM830lenguaje.LM830GetTraduction("lblRol");
+            LM830lblUsuarioFU.Text = LM830lenguaje.LM830GetTraduction("lblUsuarioFU");
+            LM830lblMsj.Text = LM830lenguaje.LM830GetTraduction("lblMsj");
+            LM830lblOpciones.Text = LM830lenguaje.LM830GetTraduction("lblOpciones");
 
-            btnCrear.Text = lenguaje.GetTraduction("btnCrear");
-            btnDesbloquear.Text = lenguaje.GetTraduction("btnDesbloquear");
-            btnModificar.Text = lenguaje.GetTraduction("btnModificar");
-            btnActDes.Text = lenguaje.GetTraduction("btnActDes");
-            btnAplicar.Text = lenguaje.GetTraduction("btnAplicar");
-            btnCancelar.Text = lenguaje.GetTraduction("btnCancelar");
-            btnSalir.Text = lenguaje.GetTraduction("btnSalir");
+            LM830btnCrear.Text = LM830lenguaje.LM830GetTraduction("btnCrear");
+            LM830btnDesbloquear.Text = LM830lenguaje.LM830GetTraduction("btnDesbloquear");
+            LM830btnModificar.Text = LM830lenguaje.LM830GetTraduction("btnModificar");
+            LM830btnActDes.Text = LM830lenguaje.LM830GetTraduction("btnActDes");
+            LM830btnAplicar.Text = LM830lenguaje.LM830GetTraduction("btnAplicar");
+            LM830btnCancelar.Text = LM830lenguaje.LM830GetTraduction("btnCancelar");
+            LM830btnSalir.Text = LM830lenguaje.LM830GetTraduction("btnSalir");
 
-            rbTodos.Text = lenguaje.GetTraduction("rbTodos");
-            rbActivos.Text = lenguaje.GetTraduction("rbActivos");
+            LM830rbTodos.Text = LM830lenguaje.LM830GetTraduction("rbTodos");
+            LM830rbActivos.Text = LM830lenguaje.LM830GetTraduction("rbActivos");
         }
     }
 }

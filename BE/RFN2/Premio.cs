@@ -1,21 +1,21 @@
-﻿namespace BE.RFN2
+﻿namespace LM830BE.LM830RFN2
 {
-    public class Premio
+    public class LM830Premio
     {
-        private int idPremio;
-        private string nombre = "";
-        private string descripcion = "";
-        private int puntosRequeridos;
-        private int stock;
-        private decimal valorReferencia;
+        private int LM830idPremio;
+        private string LM830nombre = "";
+        private string LM830descripcion = "";
+        private int LM830puntosRequeridos;
+        private int LM830stock;
+        private decimal LM830valorReferencia;
 
-        public int IdPremio { get => idPremio; set => idPremio = value; }
-        public string Nombre { get => nombre; set => nombre = value; }
-        public string Descripcion { get => descripcion; set => descripcion = value; }
-        public int PuntosRequeridos { get => puntosRequeridos; set => puntosRequeridos = value; }
-        public int Stock { get => stock; set => stock = value; }
-        public decimal ValorReferencia { get => valorReferencia; set => valorReferencia = value; }
+        public int LM830IdPremio { get => LM830idPremio; set => LM830idPremio = value; }
+        public string LM830Nombre { get => LM830nombre; set => LM830nombre = value; }
+        public string LM830Descripcion { get => LM830descripcion; set => LM830descripcion = value; }
+        public int LM830PuntosRequeridos { get => LM830puntosRequeridos; set => LM830puntosRequeridos = value; }
+        public int LM830Stock { get => LM830stock; set => LM830stock = value; }
+        public decimal LM830ValorReferencia { get => LM830valorReferencia; set => LM830valorReferencia = value; }
 
-        public override string ToString() => Nombre;
+        public override string ToString() => LM830Nombre;
     }
 }

@@ -1,7 +1,7 @@
-﻿using BLL;
-using GUI.RFN1;
-using GUI.RFN2;
-using Servicios;
+﻿using LM830BLL;
+using LM830GUI.LM830RFN1;
+using LM830GUI.LM830RFN2;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,87 +12,87 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GUI
+namespace LM830GUI
 {
-    public partial class Menu : Form, IObserver
+    public partial class LM830Menu : Form, LM830IObserver
     {
-        int posX, posY;
-        bool arrastrando = false;
-        public Menu()
+        int LM830posX, LM830posY;
+        bool LM830arrastrando = false;
+        public LM830Menu()
         {
             InitializeComponent();
-            customMenu();
+            LM830customMenu();
         }
-        private void customMenu()
+        private void LM830customMenu()
         {
-            panelAdminSubmenu.Visible = false;
-            panelUsuarioSubmenu.Visible = false;
-            panelGestionSubmenu.Visible = false;
-            panelPremiosSubmenu.Visible = false;
+            LM830panelAdminSubmenu.Visible = false;
+            LM830panelUsuarioSubmenu.Visible = false;
+            LM830panelGestionSubmenu.Visible = false;
+            LM830panelPremiosSubmenu.Visible = false;
         }
-        private void esconderSubmenu()
+        private void LM830esconderSubmenu()
         {
-            if (panelAdminSubmenu.Visible == true)
-                panelAdminSubmenu.Visible = false;
-            if (panelUsuarioSubmenu.Visible == true)
-                panelUsuarioSubmenu.Visible = false;
-            if (panelGestionSubmenu.Visible == true)
-                panelGestionSubmenu.Visible = false;
-            if (panelPremiosSubmenu.Visible == true)
-                panelPremiosSubmenu.Visible = false;
+            if (LM830panelAdminSubmenu.Visible == true)
+                LM830panelAdminSubmenu.Visible = false;
+            if (LM830panelUsuarioSubmenu.Visible == true)
+                LM830panelUsuarioSubmenu.Visible = false;
+            if (LM830panelGestionSubmenu.Visible == true)
+                LM830panelGestionSubmenu.Visible = false;
+            if (LM830panelPremiosSubmenu.Visible == true)
+                LM830panelPremiosSubmenu.Visible = false;
         }
-        private void mostrarSubmenu(Panel submenu)
+        private void LM830mostrarSubmenu(Panel LM830submenu)
         {
-            if (submenu.Visible == false)
+            if (LM830submenu.Visible == false)
             {
-                esconderSubmenu();
-                submenu.Visible = true;
+                LM830esconderSubmenu();
+                LM830submenu.Visible = true;
             }
             else
-                submenu.Visible = false;
+                LM830submenu.Visible = false;
         }
 
-        private void btnAdmin_Click(object sender, EventArgs e)
+        private void LM830btnAdmin_Click(object LM830sender, EventArgs LM830e)
         {
-            mostrarSubmenu(panelAdminSubmenu);
+            LM830mostrarSubmenu(LM830panelAdminSubmenu);
         }
 
-        private void btnUsuario_Click(object sender, EventArgs e)
+        private void LM830btnUsuario_Click(object LM830sender, EventArgs LM830e)
         {
-            mostrarSubmenu(panelUsuarioSubmenu);
+            LM830mostrarSubmenu(LM830panelUsuarioSubmenu);
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void panelContenedor_Paint(object sender, PaintEventArgs e)
+        private void LM830button3_Click(object LM830sender, EventArgs LM830e)
         {
         }
 
-        private void Menu_Load(object sender, EventArgs e)
+        private void LM830panelContenedor_Paint(object LM830sender, PaintEventArgs LM830e)
         {
-            customMenu();
-            LanguageManager.Instance.AgregarObservador(this);
-            Actualizar(LanguageManager.Instance);
         }
 
-        private void btnAdmin_Click_1(object sender, EventArgs e)
+        private void LM830Menu_Load(object LM830sender, EventArgs LM830e)
         {
-            mostrarSubmenu(panelAdminSubmenu);
+            LM830customMenu();
+            LM830LanguageManager.LM830Instance.LM830AgregarObservador(this);
+            LM830Actualizar(LM830LanguageManager.LM830Instance);
         }
 
-        private void btnUsuario_Click_1(object sender, EventArgs e)
+        private void LM830btnAdmin_Click_1(object LM830sender, EventArgs LM830e)
         {
-            mostrarSubmenu(panelUsuarioSubmenu);
+            LM830mostrarSubmenu(LM830panelAdminSubmenu);
         }
 
-        private void btnCerrar_Click(object sender, EventArgs e)
+        private void LM830btnUsuario_Click_1(object LM830sender, EventArgs LM830e)
+        {
+            LM830mostrarSubmenu(LM830panelUsuarioSubmenu);
+        }
+
+        private void LM830btnCerrar_Click(object LM830sender, EventArgs LM830e)
         {
             Application.Exit();
         }
 
-        private void btnMaximizar_Click(object sender, EventArgs e)
+        private void LM830btnMaximizar_Click(object LM830sender, EventArgs LM830e)
         {
             if (this.WindowState == FormWindowState.Normal)
                 this.WindowState = FormWindowState.Maximized;
@@ -100,234 +100,246 @@ namespace GUI
                 this.WindowState = FormWindowState.Normal;
         }
 
-        private void btnMinimizar_Click(object sender, EventArgs e)
+        private void LM830btnMinimizar_Click(object LM830sender, EventArgs LM830e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void BarraTitulo_MouseDown(object sender, MouseEventArgs e)
+        private void LM830BarraTitulo_MouseDown(object LM830sender, MouseEventArgs LM830e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (LM830e.Button == MouseButtons.Left)
             {
-                arrastrando = true;
-                posX = e.X;
-                posY = e.Y;
+                LM830arrastrando = true;
+                LM830posX = LM830e.X;
+                LM830posY = LM830e.Y;
             }
         }
 
-        private void BarraTitulo_MouseMove(object sender, MouseEventArgs e)
+        private void LM830BarraTitulo_MouseMove(object LM830sender, MouseEventArgs LM830e)
         {
-            if (arrastrando)
+            if (LM830arrastrando)
             {
-                this.Location = new Point(this.Location.X + (e.X - posX), this.Location.Y + (e.Y - posY));
+                this.Location = new Point(this.Location.X + (LM830e.X - LM830posX), this.Location.Y + (LM830e.Y - LM830posY));
             }
         }
 
-        private void btnBitacora_Click(object sender, EventArgs e)
+        private void LM830btnBitacora_Click(object LM830sender, EventArgs LM830e)
         {
-            if (!SessionManager.Instance.UsuarioActual().TienePermiso("Ver Bitacora"))
+            if (!LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830TienePermiso("Ver Bitacora"))
             {
                 MessageBox.Show("No tiene permisos para acceder a la Bitácora.",
                     "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
             this.Hide();
-            FormBitacora formBitacora = new FormBitacora();
-            formBitacora.Show();
+            LM830FormBitacora LM830formBitacora = new LM830FormBitacora();
+            LM830formBitacora.Show();
         }
 
-        private void btnUsuarios_Click(object sender, EventArgs e)
+        private void LM830btnUsuarios_Click(object LM830sender, EventArgs LM830e)
         {
-            if (!SessionManager.Instance.UsuarioActual().TienePermiso("Ver Usuarios"))
+            if (!LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830TienePermiso("Ver Usuarios"))
             {
                 MessageBox.Show("No tiene permisos para acceder a la gestión de usuarios.",
                     "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
             this.Hide();
-            Usuarios usuarios = new Usuarios();
-            usuarios.Show();
+            LM830Usuarios LM830usuarios = new LM830Usuarios();
+            LM830usuarios.Show();
         }
 
-        private void btnReLogin_Click(object sender, EventArgs e)
+        private void LM830btnReLogin_Click(object LM830sender, EventArgs LM830e)
         {
-            if(SessionManager.Instance != null )
+            if(LM830SessionManager.LM830Instance != null )
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("YaHaySesionActiva"), LanguageManager.Instance.GetTraduction("Informacion"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("YaHaySesionActiva"), LM830LanguageManager.LM830Instance.LM830GetTraduction("Informacion"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private void LM830btnLogout_Click(object LM830sender, EventArgs LM830e)
         {
-            string Decision = MessageBox.Show(LanguageManager.Instance.GetTraduction("menumsj1"), LanguageManager.Instance.GetTraduction("menumsj2"), MessageBoxButtons.YesNo).ToString();
-            if (Decision == "Yes")
+            string LM830Decision = MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("menumsj1"), LM830LanguageManager.LM830Instance.LM830GetTraduction("menumsj2"), MessageBoxButtons.YesNo).ToString();
+            if (LM830Decision == "Yes")
             {
-                IdiomaBLL idiomaBLL = new IdiomaBLL();
+                LM830IdiomaBLL LM830idiomaBLL = new LM830IdiomaBLL();
 
-                string username = SessionManager.Instance.UsuarioActual().Username;
-                idiomaBLL.GuardarIdioma(username, LanguageManager.Instance.CodigoIdiomaActual);
+                string LM830username = LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830Username;
+                LM830idiomaBLL.LM830GuardarIdioma(LM830username, LM830LanguageManager.LM830Instance.LM830CodigoIdiomaActual);
 
-                new UsuarioBLL().Desloguear();
+                new LM830UsuarioBLL().LM830Desloguear();
 
-                Login login = new Login();
-                login.Show();
-                LanguageManager.Instance.EliminarObservador(this);
+                LM830Login LM830login = new LM830Login();
+                LM830login.Show();
+                LM830LanguageManager.LM830Instance.LM830EliminarObservador(this);
                 this.Close();
             }
         }
 
-        private void btnCambiarClave_Click(object sender, EventArgs e)
+        private void LM830btnCambiarClave_Click(object LM830sender, EventArgs LM830e)
         {
             this.Hide();
-            CambiarContraseña cambiarContraseña = new CambiarContraseña();
-            cambiarContraseña.Show();
+            LM830CambiarContraseña LM830cambiarContraseña = new LM830CambiarContraseña();
+            LM830cambiarContraseña.Show();
         }
 
-        private void btnPerfiles_Click(object sender, EventArgs e)
+        private void LM830btnPerfiles_Click(object LM830sender, EventArgs LM830e)
         {
-            if (!SessionManager.Instance.UsuarioActual().TienePermiso("Ver Perfiles"))
+            if (!LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830TienePermiso("Ver Perfiles"))
             {
                 MessageBox.Show("No tiene permisos para acceder a Gestión de Perfiles.",
                     "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
-            frmGestionPerfiles gestionPerfiles = new frmGestionPerfiles();
+            LM830frmGestionPerfiles LM830gestionPerfiles = new LM830frmGestionPerfiles();
             this.Hide();
-            gestionPerfiles.Show();
+            LM830gestionPerfiles.Show();
         }
 
-        private void btnBackUp_Click(object sender, EventArgs e)
+        private void LM830btnBackUp_Click(object LM830sender, EventArgs LM830e)
         {
-            if (!SessionManager.Instance.UsuarioActual().TienePermiso("Ver Respaldos"))
+            if (!LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830TienePermiso("Ver Respaldos"))
             {
                 MessageBox.Show("No tiene permisos para acceder a Backup.",
                     "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
             this.Hide();
-            FormBackup formBackup = new FormBackup();
-            formBackup.Show();
+            LM830FormBackup LM830formBackup = new LM830FormBackup();
+            LM830formBackup.Show();
         }
 
-        private void btnRestore_Click(object sender, EventArgs e)
+        private void LM830btnRestore_Click(object LM830sender, EventArgs LM830e)
         {
-            if (!SessionManager.Instance.UsuarioActual().TienePermiso("Ver Respaldos"))
+            if (!LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830TienePermiso("Ver Respaldos"))
             {
                 MessageBox.Show("No tiene permisos para acceder a Restore.",
                     "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
             this.Hide();
-            FormRestore formRestore = new FormRestore();
-            formRestore.Show();
+            LM830FormRestore LM830formRestore = new LM830FormRestore();
+            LM830formRestore.Show();
         }
 
-        private void BarraTitulo_MouseUp(object sender, MouseEventArgs e)
+        private void LM830BarraTitulo_MouseUp(object LM830sender, MouseEventArgs LM830e)
         {
-            arrastrando = false;
+            LM830arrastrando = false;
         }
 
-        private void btnCambiarIdioma_Click(object sender, EventArgs e)
+        private void LM830btnCambiarIdioma_Click(object LM830sender, EventArgs LM830e)
         {
             this.Hide();
-            CambiarIdioma cambiarContraseña = new CambiarIdioma();
-            cambiarContraseña.Show();
+            LM830CambiarIdioma LM830cambiarContraseña = new LM830CambiarIdioma();
+            LM830cambiarContraseña.Show();
         }
 
-        private void btnDigitoVerificador_Click(object sender, EventArgs e)
+        private void LM830btnBitacoraCambios_Click(object LM830sender, EventArgs LM830e) =>
+            LM830AbrirSiTienePermiso("Bitacora de Cambios", () => new LM830BitacoraCambios.LM830frmBitacoraCambios());
+
+        private void LM830btnDigitoVerificador_Click(object LM830sender, EventArgs LM830e)
         {
-            if (!SessionManager.Instance.UsuarioActual().TienePermiso("Gestionar DigitoVerificadores"))
+            if (!LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830TienePermiso("Gestionar DigitoVerificadores"))
             {
                 MessageBox.Show("No tiene permisos para acceder a Digitos Verificadores.",
                     "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
             this.Hide();
-            frmReparacionDV frmReparacionDV = new frmReparacionDV();
-            frmReparacionDV.Show();
+            LM830frmReparacionDV LM830frmReparacionDV = new LM830frmReparacionDV();
+            LM830frmReparacionDV.Show();
         }
 
-        private void btnGestion_Click(object sender, EventArgs e)
+        private void LM830btnGestion_Click(object LM830sender, EventArgs LM830e)
         {
-            mostrarSubmenu(panelGestionSubmenu);
+            LM830mostrarSubmenu(LM830panelGestionSubmenu);
         }
 
-        private bool AbrirSiTienePermiso(string permiso, Func<Form> crear)
+        private bool LM830AbrirSiTienePermiso(string LM830permiso, Func<Form> LM830crear)
         {
-            if (!SessionManager.Instance.UsuarioActual().TienePermiso(permiso))
+            if (!LM830SessionManager.LM830Instance.LM830UsuarioActual().LM830TienePermiso(LM830permiso))
             {
-                MessageBox.Show($"No tiene permisos para acceder a {permiso}.",
+                MessageBox.Show($"No tiene permisos para acceder a {LM830permiso}.",
                     "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return false;
             }
             this.Hide();
-            crear().Show();
+            LM830crear().Show();
             return true;
         }
 
-        private void btnRegistrarCliente_Click(object sender, EventArgs e) =>
-            AbrirSiTienePermiso("Registrar Cliente", () => new frmRegistrarCliente());
+        private void LM830btnRegistrarCliente_Click(object LM830sender, EventArgs LM830e) =>
+            LM830AbrirSiTienePermiso("Registrar Cliente", () => new LM830frmRegistrarCliente());
 
-        private void btnConsultarSaldo_Click(object sender, EventArgs e) =>
-            AbrirSiTienePermiso("Consultar Saldo", () => new frmSaldo());
+        private void LM830btnConsultarSaldo_Click(object LM830sender, EventArgs LM830e) =>
+            LM830AbrirSiTienePermiso("Consultar Saldo", () => new LM830frmSaldo());
 
-        private void btnRegistrarVenta_Click(object sender, EventArgs e) =>
-            AbrirSiTienePermiso("Registrar Venta", () => new frmVenta());
+        private void LM830btnRegistrarVenta_Click(object LM830sender, EventArgs LM830e) =>
+            LM830AbrirSiTienePermiso("Registrar Venta", () => new LM830frmVenta());
 
-        private void btnRegistrarReclamo_Click(object sender, EventArgs e) =>
-            AbrirSiTienePermiso("Registrar Reclamo", () => new frmReclamo());
+        private void LM830btnRegistrarReclamo_Click(object LM830sender, EventArgs LM830e) =>
+            LM830AbrirSiTienePermiso("Registrar Reclamo", () => new LM830frmReclamo());
 
-        private void btnResolverReclamos_Click(object sender, EventArgs e) =>
-            AbrirSiTienePermiso("Resolver Reclamo", () => new frmResolverReclamos());
+        private void LM830btnResolverReclamos_Click(object LM830sender, EventArgs LM830e) =>
+            LM830AbrirSiTienePermiso("Resolver Reclamo", () => new LM830frmResolverReclamos());
 
-        private void btnComprobantes_Click(object sender, EventArgs e) =>
-            AbrirSiTienePermiso("Emitir Comprobante", () => new frmComprobantes());
+        private void LM830btnComprobantes_Click(object LM830sender, EventArgs LM830e) =>
+            LM830AbrirSiTienePermiso("Emitir Comprobante", () => new LM830frmComprobantes());
 
-        private void btnPremios_Click(object sender, EventArgs e)
+        private void LM830btnGestionProductos_Click(object LM830sender, EventArgs LM830e) =>
+            LM830AbrirSiTienePermiso("Gestionar Productos", () => new LM830frmGestionProductos());
+
+        private void LM830btnPremios_Click(object LM830sender, EventArgs LM830e)
         {
-            mostrarSubmenu(panelPremiosSubmenu);
+            LM830mostrarSubmenu(LM830panelPremiosSubmenu);
         }
 
-        private void btnPremiosCanjeables_Click(object sender, EventArgs e) =>
-            AbrirSiTienePermiso("Consultar Premios", () => new frmPremios());
+        private void LM830btnPremiosCanjeables_Click(object LM830sender, EventArgs LM830e) =>
+            LM830AbrirSiTienePermiso("Consultar Premios", () => new LM830frmPremios());
 
-        private void btnAutorizarCanjes_Click(object sender, EventArgs e) =>
-            AbrirSiTienePermiso("Autorizar Canje", () => new frmAutorizarCanjes());
+        private void LM830btnAutorizarCanjes_Click(object LM830sender, EventArgs LM830e) =>
+            LM830AbrirSiTienePermiso("Autorizar Canje", () => new LM830frmAutorizarCanjes());
 
-        private void btnEntregarPremio_Click(object sender, EventArgs e) =>
-            AbrirSiTienePermiso("Entregar Premio", () => new frmEntregarPremio());
+        private void LM830btnEntregarPremio_Click(object LM830sender, EventArgs LM830e) =>
+            LM830AbrirSiTienePermiso("Entregar Premio", () => new LM830frmEntregarPremio());
 
-        private void btnAnularCanje_Click(object sender, EventArgs e) =>
-            AbrirSiTienePermiso("Anular Canje", () => new frmAnularCanje());
+        private void LM830btnAnularCanje_Click(object LM830sender, EventArgs LM830e) =>
+            LM830AbrirSiTienePermiso("Anular Canje", () => new LM830frmAnularCanje());
 
-        public void Actualizar(LanguageManager lenguaje)
+        private void LM830btnGestionPremios_Click(object LM830sender, EventArgs LM830e) =>
+            LM830AbrirSiTienePermiso("Gestionar Premios", () => new LM830frmGestionPremios());
+
+        public void LM830Actualizar(LM830LanguageManager LM830lenguaje)
         {
-            btnAdmin.Text = LanguageManager.Instance.GetTraduction("btnAdmin");
-            btnUsuarios.Text = LanguageManager.Instance.GetTraduction("btnUsuarios");
-            btnPerfiles.Text = LanguageManager.Instance.GetTraduction("btnPerfiles");
-            btnBackUp.Text = LanguageManager.Instance.GetTraduction("btnBackUp");
-            btnRestore.Text = LanguageManager.Instance.GetTraduction("btnRestore");
-            btnBitacora.Text = LanguageManager.Instance.GetTraduction("btnBitacora");
-            btnDigitoVerificador.Text = LanguageManager.Instance.GetTraduction("btnDigitoVerificador");
-            btnUsuario.Text = LanguageManager.Instance.GetTraduction("btnUsuario");
-            btnReLogin.Text = LanguageManager.Instance.GetTraduction("btnReLogin");
-            btnCambiarClave.Text = LanguageManager.Instance.GetTraduction("btnCambiarClave");
-            btnLogout.Text = LanguageManager.Instance.GetTraduction("btnLogout");
-            btnCambiarIdioma.Text = LanguageManager.Instance.GetTraduction("btnCambiarIdioma");
+            LM830btnAdmin.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnAdmin");
+            LM830btnUsuarios.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnUsuarios");
+            LM830btnPerfiles.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnPerfiles");
+            LM830btnBackUp.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnBackUp");
+            LM830btnRestore.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnRestore");
+            LM830btnBitacora.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnBitacora");
+            LM830btnDigitoVerificador.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnDigitoVerificador");
+            LM830btnBitacoraCambios.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnBitacoraCambios");
+            LM830btnUsuario.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnUsuario");
+            LM830btnReLogin.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnReLogin");
+            LM830btnCambiarClave.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnCambiarClave");
+            LM830btnLogout.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnLogout");
+            LM830btnCambiarIdioma.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnCambiarIdioma");
 
-            btnGestion.Text = LanguageManager.Instance.GetTraduction("btnGestion");
-            btnRegistrarCliente.Text = LanguageManager.Instance.GetTraduction("RFN1_RegistrarCliente");
-            btnConsultarSaldo.Text = LanguageManager.Instance.GetTraduction("RFN1_ConsultarSaldo");
-            btnRegistrarVenta.Text = LanguageManager.Instance.GetTraduction("RFN1_RegistrarVenta");
-            btnRegistrarReclamo.Text = LanguageManager.Instance.GetTraduction("RFN1_RegistrarReclamo");
-            btnResolverReclamos.Text = LanguageManager.Instance.GetTraduction("RFN1_ResolverReclamos");
-            btnComprobantes.Text = LanguageManager.Instance.GetTraduction("CMP_Comprobantes");
+            LM830btnGestion.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnGestion");
+            LM830btnRegistrarCliente.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RFN1_RegistrarCliente");
+            LM830btnConsultarSaldo.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RFN1_ConsultarSaldo");
+            LM830btnRegistrarVenta.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RFN1_RegistrarVenta");
+            LM830btnRegistrarReclamo.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RFN1_RegistrarReclamo");
+            LM830btnResolverReclamos.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RFN1_ResolverReclamos");
+            LM830btnComprobantes.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("CMP_Comprobantes");
 
-            btnPremios.Text = LanguageManager.Instance.GetTraduction("btnPremios");
-            btnPremiosCanjeables.Text = LanguageManager.Instance.GetTraduction("RFN2_PremiosCanjeables");
-            btnAutorizarCanjes.Text = LanguageManager.Instance.GetTraduction("RFN2_AutorizarCanjes");
-            btnEntregarPremio.Text = LanguageManager.Instance.GetTraduction("RFN2_EntregarPremio");
-            btnAnularCanje.Text = LanguageManager.Instance.GetTraduction("RFN2_AnularCanje");
+            LM830btnPremios.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnPremios");
+            LM830btnPremiosCanjeables.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RFN2_PremiosCanjeables");
+            LM830btnAutorizarCanjes.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RFN2_AutorizarCanjes");
+            LM830btnEntregarPremio.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RFN2_EntregarPremio");
+            LM830btnAnularCanje.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RFN2_AnularCanje");
+            LM830btnGestionProductos.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RFN1_GestionProductos");
+            LM830btnGestionPremios.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RFN2_GestionPremios");
         }
     }
 }

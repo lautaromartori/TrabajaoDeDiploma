@@ -1,123 +1,123 @@
-﻿using DAL;
-using Servicios;
+﻿using LM830DAL;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace BLL
+namespace LM830BLL
 {
-    public class RespaldoBLL
+    public class LM830RespaldoBLL
     {
-        RespaldoDAL DAL;
-        BitacoraBLL bitacoraBLL;
+        LM830RespaldoDAL LM830DAL;
+        LM830BitacoraBLL LM830bitacoraBLL;
 
-        public RespaldoBLL()
+        public LM830RespaldoBLL()
         {
-            DAL = new RespaldoDAL();
-            bitacoraBLL = new BitacoraBLL();
+            LM830DAL = new LM830RespaldoDAL();
+            LM830bitacoraBLL = new LM830BitacoraBLL();
         }
 
-        public string GenerarNombreArchivo()
+        public string LM830GenerarNombreArchivo()
         {
-            string fechaHora = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-            return $"LeMarchant_DB_{fechaHora}.bak";
+            string LM830fechaHora = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            return $"LeMarchant_DB_{LM830fechaHora}.bak";
         }
 
-        public List<string> ObtenerListaBackups()
+        public List<string> LM830ObtenerListaBackups()
         {
-            string rutaCarpetaPrograma = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Backups");
+            string LM830rutaCarpetaPrograma = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Backups");
 
-            if (!Directory.Exists(rutaCarpetaPrograma))
+            if (!Directory.Exists(LM830rutaCarpetaPrograma))
             {
-                Directory.CreateDirectory(rutaCarpetaPrograma);
+                Directory.CreateDirectory(LM830rutaCarpetaPrograma);
             }
 
-            DirectoryInfo directorio = new DirectoryInfo(rutaCarpetaPrograma);
+            DirectoryInfo LM830directorio = new DirectoryInfo(LM830rutaCarpetaPrograma);
 
-            FileInfo[] archivosBak = directorio.GetFiles("*.bak")
-                                               .OrderByDescending(f => f.CreationTime)
+            FileInfo[] LM830archivosBak = LM830directorio.GetFiles("*.bak")
+                                               .OrderByDescending(LM830f => LM830f.CreationTime)
                                                .ToArray();
 
-            List<string> nombresDeArchivos = new List<string>();
-            foreach (FileInfo archivo in archivosBak)
+            List<string> LM830nombresDeArchivos = new List<string>();
+            foreach (FileInfo LM830archivo in LM830archivosBak)
             {
-                nombresDeArchivos.Add(archivo.Name);
+                LM830nombresDeArchivos.Add(LM830archivo.Name);
             }
 
-            return nombresDeArchivos;
+            return LM830nombresDeArchivos;
         }
 
-        public string ObtenerRutaBakcup(string nombreArchivo)
+        public string LM830ObtenerRutaBakcup(string LM830nombreArchivo)
         {
-            string carpetaBackups = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Backups");
-            return Path.Combine(carpetaBackups, nombreArchivo);
+            string LM830carpetaBackups = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Backups");
+            return Path.Combine(LM830carpetaBackups, LM830nombreArchivo);
         }
 
-        public string RealizarBackup(string carpetaDestino)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(carpetaDestino))
-                    throw new Exception(LanguageManager.Instance.GetTraduction("TextDV14"));
-
-                if (!Directory.Exists(carpetaDestino))
-                    throw new Exception(LanguageManager.Instance.GetTraduction("TextDV15"));
-
-                string nombreArchivo = GenerarNombreArchivo();
-                string rutaCompleta = Path.Combine(carpetaDestino, nombreArchivo);
-
-                DAL.GenerarBackup(rutaCompleta);
-                RegistrarEvento("Backup generado exitosamente: " + nombreArchivo, 1);
-
-                return rutaCompleta;
-            }
-            catch (Exception ex)
-            {
-                RegistrarEvento("Error al generar Backup: " + ex.Message, 4);
-                throw new Exception(LanguageManager.Instance.GetTraduction("TextDV16"), ex);
-            }
-        }
-
-        public void RealizarRestore(string rutaArchivoBackup)
+        public string LM830RealizarBackup(string LM830carpetaDestino)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(rutaArchivoBackup))
-                    throw new Exception(LanguageManager.Instance.GetTraduction("TextDV17"));
+                if (string.IsNullOrWhiteSpace(LM830carpetaDestino))
+                    throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV14"));
 
-                if (!File.Exists(rutaArchivoBackup))
-                    throw new Exception(LanguageManager.Instance.GetTraduction("TextDV18"));
+                if (!Directory.Exists(LM830carpetaDestino))
+                    throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV15"));
 
-                if (!rutaArchivoBackup.EndsWith(".bak", StringComparison.OrdinalIgnoreCase))
-                    throw new Exception(LanguageManager.Instance.GetTraduction("TextDV19"));
+                string LM830nombreArchivo = LM830GenerarNombreArchivo();
+                string LM830rutaCompleta = Path.Combine(LM830carpetaDestino, LM830nombreArchivo);
 
-                if (!DAL.ValidarArchivoBackup(rutaArchivoBackup))
-                    throw new Exception(LanguageManager.Instance.GetTraduction("TextDV20"));
+                LM830DAL.LM830GenerarBackup(LM830rutaCompleta);
+                LM830RegistrarEvento("Backup generado exitosamente: " + LM830nombreArchivo, 1);
 
-                DAL.RestaurarBackup(rutaArchivoBackup);
-                RegistrarEvento("Restore ejecutado desde: " + Path.GetFileName(rutaArchivoBackup), 1);
+                return LM830rutaCompleta;
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                RegistrarEvento("Error al ejecutar Restore: " + ex.Message, 4);
-                throw new Exception(LanguageManager.Instance.GetTraduction("TextDV21"), ex);
+                LM830RegistrarEvento("Error al generar Backup: " + LM830ex.Message, 4);
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV16"), LM830ex);
             }
         }
 
-        private void RegistrarEvento(string descripcion, int criticidad)
+        public void LM830RealizarRestore(string LM830rutaArchivoBackup)
         {
             try
             {
-                string login = SessionManager.Instance?.UsuarioActual()?.Username ?? "Sistema";
-                Bitacora evento = new Bitacora
+                if (string.IsNullOrWhiteSpace(LM830rutaArchivoBackup))
+                    throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV17"));
+
+                if (!File.Exists(LM830rutaArchivoBackup))
+                    throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV18"));
+
+                if (!LM830rutaArchivoBackup.EndsWith(".bak", StringComparison.OrdinalIgnoreCase))
+                    throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV19"));
+
+                if (!LM830DAL.LM830ValidarArchivoBackup(LM830rutaArchivoBackup))
+                    throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV20"));
+
+                LM830DAL.LM830RestaurarBackup(LM830rutaArchivoBackup);
+                LM830RegistrarEvento("Restore ejecutado desde: " + Path.GetFileName(LM830rutaArchivoBackup), 1);
+            }
+            catch (Exception LM830ex)
+            {
+                LM830RegistrarEvento("Error al ejecutar Restore: " + LM830ex.Message, 4);
+                throw new Exception(LM830LanguageManager.LM830Instance.LM830GetTraduction("TextDV21"), LM830ex);
+            }
+        }
+
+        private void LM830RegistrarEvento(string LM830descripcion, int LM830criticidad)
+        {
+            try
+            {
+                string LM830login = LM830SessionManager.LM830Instance?.LM830UsuarioActual()?.LM830Username ?? "Sistema";
+                LM830Bitacora LM830evento = new LM830Bitacora
                 {
-                    Login = login,
-                    Modulo = "Respaldos",
-                    Evento = descripcion,
-                    Criticidad = criticidad
+                    LM830Login = LM830login,
+                    LM830Modulo = "Respaldos",
+                    LM830Evento = LM830descripcion,
+                    LM830Criticidad = LM830criticidad
                 };
-                bitacoraBLL.RegistrarEvento(evento);
+                LM830bitacoraBLL.LM830RegistrarEvento(LM830evento);
             }
             catch { }
         }

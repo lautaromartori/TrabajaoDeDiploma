@@ -1,39 +1,39 @@
 ﻿using System;
 using System.IO;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public static class ConexionConfig
+    public static class LM830ConexionConfig
     {
-        private static readonly string CarpetaConfig =
+        private static readonly string LM830CarpetaConfig =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LeMarchant");
 
-        private static readonly string ArchivoConfig =
-            Path.Combine(CarpetaConfig, "conexion.cfg");
+        private static readonly string LM830ArchivoConfig =
+            Path.Combine(LM830CarpetaConfig, "conexion.cfg");
 
-        public static bool ExisteConfiguracion()
+        public static bool LM830ExisteConfiguracion()
         {
-            return File.Exists(ArchivoConfig);
+            return File.Exists(LM830ArchivoConfig);
         }
 
-        public static void GuardarCadenaConexion(string cadenaConexion)
+        public static void LM830GuardarCadenaConexion(string LM830cadenaConexion)
         {
-            Directory.CreateDirectory(CarpetaConfig);
-            File.WriteAllText(ArchivoConfig, cadenaConexion);
+            Directory.CreateDirectory(LM830CarpetaConfig);
+            File.WriteAllText(LM830ArchivoConfig, LM830cadenaConexion);
         }
 
-        public static string ObtenerCadenaConexion()
+        public static string LM830ObtenerCadenaConexion()
         {
-            if (!ExisteConfiguracion())
+            if (!LM830ExisteConfiguracion())
                 throw new Exception("No hay una configuración de conexión guardada.");
 
-            return File.ReadAllText(ArchivoConfig);
+            return File.ReadAllText(LM830ArchivoConfig);
         }
 
-        public static void EliminarConfiguracion()
+        public static void LM830EliminarConfiguracion()
         {
-            if (File.Exists(ArchivoConfig))
-                File.Delete(ArchivoConfig);
+            if (File.Exists(LM830ArchivoConfig))
+                File.Delete(LM830ArchivoConfig);
         }
     }
 }

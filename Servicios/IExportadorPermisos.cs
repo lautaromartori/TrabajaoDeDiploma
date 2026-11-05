@@ -1,7 +1,7 @@
-﻿namespace Servicios
+﻿namespace LM830Servicios
 {
-    public interface IExportadorPermisos
+    public interface LM830IExportadorPermisos
     {
-        public string ExportarReporte(Familia raiz);
+        public string LM830ExportarReporte(LM830Familia LM830raiz);
     }
 }

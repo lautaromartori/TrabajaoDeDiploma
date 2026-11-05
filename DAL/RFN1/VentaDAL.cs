@@ -1,98 +1,98 @@
-﻿using BE.RFN1;
+﻿using LM830BE.LM830RFN1;
 using Microsoft.Data.SqlClient;
-using Servicios;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 
-namespace DAL.RFN1
+namespace LM830DAL.LM830RFN1
 {
-    public class VentaDAL : AbstractDAL<Venta>
+    public class LM830VentaDAL : LM830AbstractDAL<LM830Venta>
     {
-        public void Guardar(Venta v)
+        public void LM830Guardar(LM830Venta LM830v)
         {
-            _sqlserver.Open();
-            SqlTransaction tx = _sqlserver.BeginTransaction();
+            LM830_sqlserver.Open();
+            SqlTransaction LM830tx = LM830_sqlserver.BeginTransaction();
             try
             {
-                using (var cmd = new SqlCommand(@"INSERT INTO Venta (nroComprobante, fecha, idCliente, dniVendedor, total, puntosAcreditados, DVH)
+                using (var LM830cmd = new SqlCommand(@"INSERT INTO Venta (nroComprobante, fecha, idCliente, dniVendedor, total, puntosAcreditados, DVH)
                                                   VALUES (@nroTmp, @fecha, @idCliente, @dniVendedor, @total, @puntos, '');
-                                                  SELECT CAST(SCOPE_IDENTITY() AS int);", _sqlserver, tx))
+                                                  SELECT CAST(SCOPE_IDENTITY() AS int);", LM830_sqlserver, LM830tx))
                 {
-                    cmd.Parameters.AddWithValue("@nroTmp", "T" + Guid.NewGuid().ToString("N").Substring(0, 19));
-                    cmd.Parameters.AddWithValue("@fecha", v.Fecha);
-                    cmd.Parameters.AddWithValue("@idCliente", (object?)v.Cliente?.IdCliente ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@dniVendedor", v.Vendedor.DNI);
-                    cmd.Parameters.AddWithValue("@total", v.Total);
-                    cmd.Parameters.AddWithValue("@puntos", v.PuntosAcreditados);
-                    v.IdVenta = (int)cmd.ExecuteScalar();
+                    LM830cmd.Parameters.AddWithValue("@nroTmp", "T" + Guid.NewGuid().ToString("N").Substring(0, 19));
+                    LM830cmd.Parameters.AddWithValue("@fecha", LM830v.LM830Fecha);
+                    LM830cmd.Parameters.AddWithValue("@idCliente", (object?)LM830v.LM830Cliente?.LM830IdCliente ?? DBNull.Value);
+                    LM830cmd.Parameters.AddWithValue("@dniVendedor", LM830v.LM830Vendedor.LM830DNI);
+                    LM830cmd.Parameters.AddWithValue("@total", LM830v.LM830Total);
+                    LM830cmd.Parameters.AddWithValue("@puntos", LM830v.LM830PuntosAcreditados);
+                    LM830v.LM830IdVenta = (int)LM830cmd.ExecuteScalar();
                 }
 
-                v.NroComprobante = "V-" + v.IdVenta.ToString("D8");
-                v.DVH = DigitoVerificador.CalcularDVH(v.CadenaDVH());
-                using (var cmd = new SqlCommand("UPDATE Venta SET nroComprobante = @nro, DVH = @dvh WHERE idVenta = @id", _sqlserver, tx))
+                LM830v.LM830NroComprobante = "V-" + LM830v.LM830IdVenta.ToString("D8");
+                LM830v.LM830DVH = LM830DigitoVerificador.LM830CalcularDVH(LM830v.LM830CadenaDVH());
+                using (var LM830cmd = new SqlCommand("UPDATE Venta SET nroComprobante = @nro, DVH = @dvh WHERE idVenta = @id", LM830_sqlserver, LM830tx))
                 {
-                    cmd.Parameters.AddWithValue("@nro", v.NroComprobante);
-                    cmd.Parameters.AddWithValue("@dvh", v.DVH);
-                    cmd.Parameters.AddWithValue("@id", v.IdVenta);
-                    cmd.ExecuteNonQuery();
+                    LM830cmd.Parameters.AddWithValue("@nro", LM830v.LM830NroComprobante);
+                    LM830cmd.Parameters.AddWithValue("@dvh", LM830v.LM830DVH);
+                    LM830cmd.Parameters.AddWithValue("@id", LM830v.LM830IdVenta);
+                    LM830cmd.ExecuteNonQuery();
                 }
 
-                foreach (DetalleVenta d in v.Detalle)
+                foreach (LM830DetalleVenta LM830d in LM830v.LM830Detalle)
                 {
-                    d.IdVenta = v.IdVenta;
-                    using (var cmd = new SqlCommand(@"INSERT INTO DetalleVenta (idVenta, idProducto, cantidad, precioUnitario, subtotal, puntosCalculados, DVH)
+                    LM830d.LM830IdVenta = LM830v.LM830IdVenta;
+                    using (var LM830cmd = new SqlCommand(@"INSERT INTO DetalleVenta (idVenta, idProducto, cantidad, precioUnitario, subtotal, puntosCalculados, DVH)
                                                       VALUES (@idVenta, @idProducto, @cantidad, @precio, @subtotal, @puntos, '');
-                                                      SELECT CAST(SCOPE_IDENTITY() AS int);", _sqlserver, tx))
+                                                      SELECT CAST(SCOPE_IDENTITY() AS int);", LM830_sqlserver, LM830tx))
                     {
-                        cmd.Parameters.AddWithValue("@idVenta", d.IdVenta);
-                        cmd.Parameters.AddWithValue("@idProducto", d.Producto.IdProducto);
-                        cmd.Parameters.AddWithValue("@cantidad", d.Cantidad);
-                        cmd.Parameters.AddWithValue("@precio", d.PrecioUnitario);
-                        cmd.Parameters.AddWithValue("@subtotal", d.Subtotal);
-                        cmd.Parameters.AddWithValue("@puntos", d.PuntosCalculados);
-                        d.IdDetalle = (int)cmd.ExecuteScalar();
+                        LM830cmd.Parameters.AddWithValue("@idVenta", LM830d.LM830IdVenta);
+                        LM830cmd.Parameters.AddWithValue("@idProducto", LM830d.LM830Producto.LM830IdProducto);
+                        LM830cmd.Parameters.AddWithValue("@cantidad", LM830d.LM830Cantidad);
+                        LM830cmd.Parameters.AddWithValue("@precio", LM830d.LM830PrecioUnitario);
+                        LM830cmd.Parameters.AddWithValue("@subtotal", LM830d.LM830Subtotal);
+                        LM830cmd.Parameters.AddWithValue("@puntos", LM830d.LM830PuntosCalculados);
+                        LM830d.LM830IdDetalle = (int)LM830cmd.ExecuteScalar();
                     }
 
-                    d.DVH = DigitoVerificador.CalcularDVH(d.CadenaDVH());
-                    using (var cmd = new SqlCommand("UPDATE DetalleVenta SET DVH = @dvh WHERE idDetalle = @id", _sqlserver, tx))
+                    LM830d.LM830DVH = LM830DigitoVerificador.LM830CalcularDVH(LM830d.LM830CadenaDVH());
+                    using (var LM830cmd = new SqlCommand("UPDATE DetalleVenta SET DVH = @dvh WHERE idDetalle = @id", LM830_sqlserver, LM830tx))
                     {
-                        cmd.Parameters.AddWithValue("@dvh", d.DVH);
-                        cmd.Parameters.AddWithValue("@id", d.IdDetalle);
-                        cmd.ExecuteNonQuery();
+                        LM830cmd.Parameters.AddWithValue("@dvh", LM830d.LM830DVH);
+                        LM830cmd.Parameters.AddWithValue("@id", LM830d.LM830IdDetalle);
+                        LM830cmd.ExecuteNonQuery();
                     }
                 }
 
-                if (v.Lote != null)
+                if (LM830v.LM830Lote != null)
                 {
-                    v.Lote.IdVenta = v.IdVenta;
-                    LoteDAL.Insertar(v.Lote, _sqlserver, tx);
+                    LM830v.LM830Lote.LM830IdVenta = LM830v.LM830IdVenta;
+                    LM830LoteDAL.LM830Insertar(LM830v.LM830Lote, LM830_sqlserver, LM830tx);
                 }
 
-                if (v.Cliente != null)
+                if (LM830v.LM830Cliente != null)
                 {
-                    ClienteDAL.ActualizarNivel(v.Cliente, _sqlserver, tx);
+                    LM830ClienteDAL.LM830ActualizarNivel(LM830v.LM830Cliente, LM830_sqlserver, LM830tx);
                 }
 
-                tx.Commit();
+                LM830tx.Commit();
             }
             catch
             {
-                tx.Rollback();
+                LM830tx.Rollback();
                 throw;
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
         }
 
-        public Venta? ObtenerPorNro(string nro)
+        public LM830Venta? LM830ObtenerPorNro(string LM830nro)
         {
-            Venta? venta = null;
+            LM830Venta? LM830venta = null;
             try
             {
-                _sqlserver.Open();
-                using (var cmd = new SqlCommand(@"SELECT v.idVenta, v.nroComprobante, v.fecha, v.dniVendedor, v.total, v.puntosAcreditados, v.DVH,
+                LM830_sqlserver.Open();
+                using (var LM830cmd = new SqlCommand(@"SELECT v.idVenta, v.nroComprobante, v.fecha, v.dniVendedor, v.total, v.puntosAcreditados, v.DVH,
                                                          CASE WHEN EXISTS (SELECT 1 FROM LotePuntos l WHERE l.idVenta = v.idVenta)
                                                                 OR EXISTS (SELECT 1 FROM Reclamo r WHERE r.idVenta = v.idVenta AND r.estado = 'aprobado')
                                                               THEN 1 ELSE 0 END AS tieneLote,
@@ -103,48 +103,48 @@ namespace DAL.RFN1
                                                   LEFT JOIN Cliente c ON c.idCliente = v.idCliente
                                                   LEFT JOIN Nivel n ON n.idNivel = c.idNivel
                                                   LEFT JOIN Usuario u ON u.DNI = v.dniVendedor
-                                                  WHERE v.nroComprobante = @nro", _sqlserver))
+                                                  WHERE v.nroComprobante = @nro", LM830_sqlserver))
                 {
-                    cmd.Parameters.AddWithValue("@nro", nro);
-                    using (SqlDataReader r = cmd.ExecuteReader())
+                    LM830cmd.Parameters.AddWithValue("@nro", LM830nro);
+                    using (SqlDataReader LM830r = LM830cmd.ExecuteReader())
                     {
-                        if (r.Read())
+                        if (LM830r.Read())
                         {
-                            venta = new Venta
+                            LM830venta = new LM830Venta
                             {
-                                IdVenta = r.GetInt32(0),
-                                NroComprobante = r.GetString(1),
-                                Fecha = r.GetDateTime(2),
-                                Vendedor = new Usuario
+                                LM830IdVenta = LM830r.GetInt32(0),
+                                LM830NroComprobante = LM830r.GetString(1),
+                                LM830Fecha = LM830r.GetDateTime(2),
+                                LM830Vendedor = new LM830Usuario
                                 {
-                                    DNI = r.GetString(3),
-                                    Nombre = r.IsDBNull(20) ? "" : r.GetString(20),
-                                    Apellido = r.IsDBNull(21) ? "" : r.GetString(21),
-                                    Username = r.IsDBNull(22) ? "" : r.GetString(22)
+                                    LM830DNI = LM830r.GetString(3),
+                                    LM830Nombre = LM830r.IsDBNull(20) ? "" : LM830r.GetString(20),
+                                    LM830Apellido = LM830r.IsDBNull(21) ? "" : LM830r.GetString(21),
+                                    LM830Username = LM830r.IsDBNull(22) ? "" : LM830r.GetString(22)
                                 },
-                                Total = r.GetDecimal(4),
-                                PuntosAcreditados = r.GetInt32(5),
-                                DVH = r.GetString(6),
-                                TieneLote = r.GetInt32(7) == 1
+                                LM830Total = LM830r.GetDecimal(4),
+                                LM830PuntosAcreditados = LM830r.GetInt32(5),
+                                LM830DVH = LM830r.GetString(6),
+                                LM830TieneLote = LM830r.GetInt32(7) == 1
                             };
-                            if (!r.IsDBNull(8))
+                            if (!LM830r.IsDBNull(8))
                             {
-                                venta.Cliente = new Cliente
+                                LM830venta.LM830Cliente = new LM830Cliente
                                 {
-                                    IdCliente = r.GetInt32(8),
-                                    Dni = r.GetString(9),
-                                    Nombre = r.GetString(10),
-                                    Apellido = r.GetString(11),
-                                    Email = r.GetString(12),
-                                    Telefono = r.GetString(13),
-                                    FechaInscripcion = r.GetDateTime(14),
-                                    DVH = r.GetString(15),
-                                    Nivel = new Nivel
+                                    LM830IdCliente = LM830r.GetInt32(8),
+                                    LM830Dni = LM830r.GetString(9),
+                                    LM830Nombre = LM830r.GetString(10),
+                                    LM830Apellido = LM830r.GetString(11),
+                                    LM830Email = LM830r.GetString(12),
+                                    LM830Telefono = LM830r.GetString(13),
+                                    LM830FechaInscripcion = LM830r.GetDateTime(14),
+                                    LM830DVH = LM830r.GetString(15),
+                                    LM830Nivel = new LM830Nivel
                                     {
-                                        IdNivel = r.GetInt32(16),
-                                        Nombre = r.GetString(17),
-                                        PuntosMinimos = r.GetInt32(18),
-                                        Multiplicador = r.GetDecimal(19)
+                                        LM830IdNivel = LM830r.GetInt32(16),
+                                        LM830Nombre = LM830r.GetString(17),
+                                        LM830PuntosMinimos = LM830r.GetInt32(18),
+                                        LM830Multiplicador = LM830r.GetDecimal(19)
                                     }
                                 };
                             }
@@ -152,149 +152,149 @@ namespace DAL.RFN1
                     }
                 }
 
-                if (venta != null)
+                if (LM830venta != null)
                 {
-                    venta.Detalle = ObtenerDetalle(venta.IdVenta);
+                    LM830venta.LM830Detalle = LM830ObtenerDetalle(LM830venta.LM830IdVenta);
                 }
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
-            return venta;
+            return LM830venta;
         }
 
-        private List<DetalleVenta> ObtenerDetalle(int idVenta)
+        private List<LM830DetalleVenta> LM830ObtenerDetalle(int LM830idVenta)
         {
-            var lista = new List<DetalleVenta>();
-            using (var cmd = new SqlCommand(@"SELECT d.idDetalle, d.idVenta, d.cantidad, d.precioUnitario, d.subtotal, d.puntosCalculados, d.DVH,
+            var LM830lista = new List<LM830DetalleVenta>();
+            using (var LM830cmd = new SqlCommand(@"SELECT d.idDetalle, d.idVenta, d.cantidad, d.precioUnitario, d.subtotal, d.puntosCalculados, d.DVH,
                                                      p.idProducto, p.nombre, p.precio, c.idCategoria, c.nombre, c.multiplicador
                                               FROM DetalleVenta d
                                               INNER JOIN Producto p ON p.idProducto = d.idProducto
                                               INNER JOIN Categoria c ON c.idCategoria = p.idCategoria
                                               WHERE d.idVenta = @id
-                                              ORDER BY d.idDetalle", _sqlserver))
+                                              ORDER BY d.idDetalle", LM830_sqlserver))
             {
-                cmd.Parameters.AddWithValue("@id", idVenta);
-                using (SqlDataReader r = cmd.ExecuteReader())
+                LM830cmd.Parameters.AddWithValue("@id", LM830idVenta);
+                using (SqlDataReader LM830r = LM830cmd.ExecuteReader())
                 {
-                    while (r.Read())
+                    while (LM830r.Read())
                     {
-                        lista.Add(new DetalleVenta
+                        LM830lista.Add(new LM830DetalleVenta
                         {
-                            IdDetalle = r.GetInt32(0),
-                            IdVenta = r.GetInt32(1),
-                            Cantidad = r.GetInt32(2),
-                            PrecioUnitario = r.GetDecimal(3),
-                            Subtotal = r.GetDecimal(4),
-                            PuntosCalculados = r.GetInt32(5),
-                            DVH = r.GetString(6),
-                            Producto = new Producto
+                            LM830IdDetalle = LM830r.GetInt32(0),
+                            LM830IdVenta = LM830r.GetInt32(1),
+                            LM830Cantidad = LM830r.GetInt32(2),
+                            LM830PrecioUnitario = LM830r.GetDecimal(3),
+                            LM830Subtotal = LM830r.GetDecimal(4),
+                            LM830PuntosCalculados = LM830r.GetInt32(5),
+                            LM830DVH = LM830r.GetString(6),
+                            LM830Producto = new LM830Producto
                             {
-                                IdProducto = r.GetInt32(7),
-                                Nombre = r.GetString(8),
-                                Precio = r.GetDecimal(9),
-                                Categoria = new Categoria
+                                LM830IdProducto = LM830r.GetInt32(7),
+                                LM830Nombre = LM830r.GetString(8),
+                                LM830Precio = LM830r.GetDecimal(9),
+                                LM830Categoria = new LM830Categoria
                                 {
-                                    IdCategoria = r.GetInt32(10),
-                                    Nombre = r.GetString(11),
-                                    Multiplicador = r.GetDecimal(12)
+                                    LM830IdCategoria = LM830r.GetInt32(10),
+                                    LM830Nombre = LM830r.GetString(11),
+                                    LM830Multiplicador = LM830r.GetDecimal(12)
                                 }
                             }
                         });
                     }
                 }
             }
-            return lista;
+            return LM830lista;
         }
 
-        public List<Venta> ListarParaDV()
+        public List<LM830Venta> LM830ListarParaDV()
         {
-            var lista = new List<Venta>();
+            var LM830lista = new List<LM830Venta>();
             try
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.CommandText = @"SELECT idVenta, nroComprobante, fecha, idCliente, dniVendedor, total, puntosAcreditados, DVH
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.CommandText = @"SELECT idVenta, nroComprobante, fecha, idCliente, dniVendedor, total, puntosAcreditados, DVH
                                             FROM Venta ORDER BY idVenta";
-                _sqlserver.Open();
-                using (SqlDataReader r = _sqlcommand.ExecuteReader())
+                LM830_sqlserver.Open();
+                using (SqlDataReader LM830r = LM830_sqlcommand.ExecuteReader())
                 {
-                    while (r.Read())
+                    while (LM830r.Read())
                     {
-                        lista.Add(new Venta
+                        LM830lista.Add(new LM830Venta
                         {
-                            IdVenta = r.GetInt32(0),
-                            NroComprobante = r.GetString(1),
-                            Fecha = r.GetDateTime(2),
-                            Cliente = r.IsDBNull(3) ? null : new Cliente { IdCliente = r.GetInt32(3) },
-                            Vendedor = new Usuario { DNI = r.GetString(4) },
-                            Total = r.GetDecimal(5),
-                            PuntosAcreditados = r.GetInt32(6),
-                            DVH = r.GetString(7)
+                            LM830IdVenta = LM830r.GetInt32(0),
+                            LM830NroComprobante = LM830r.GetString(1),
+                            LM830Fecha = LM830r.GetDateTime(2),
+                            LM830Cliente = LM830r.IsDBNull(3) ? null : new LM830Cliente { LM830IdCliente = LM830r.GetInt32(3) },
+                            LM830Vendedor = new LM830Usuario { LM830DNI = LM830r.GetString(4) },
+                            LM830Total = LM830r.GetDecimal(5),
+                            LM830PuntosAcreditados = LM830r.GetInt32(6),
+                            LM830DVH = LM830r.GetString(7)
                         });
                     }
                 }
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
-            return lista;
+            return LM830lista;
         }
 
-        public List<DetalleVenta> ListarDetalleParaDV()
+        public List<LM830DetalleVenta> LM830ListarDetalleParaDV()
         {
-            var lista = new List<DetalleVenta>();
+            var LM830lista = new List<LM830DetalleVenta>();
             try
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.CommandText = @"SELECT idDetalle, idVenta, idProducto, cantidad, precioUnitario, subtotal, puntosCalculados, DVH
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.CommandText = @"SELECT idDetalle, idVenta, idProducto, cantidad, precioUnitario, subtotal, puntosCalculados, DVH
                                             FROM DetalleVenta ORDER BY idDetalle";
-                _sqlserver.Open();
-                using (SqlDataReader r = _sqlcommand.ExecuteReader())
+                LM830_sqlserver.Open();
+                using (SqlDataReader LM830r = LM830_sqlcommand.ExecuteReader())
                 {
-                    while (r.Read())
+                    while (LM830r.Read())
                     {
-                        lista.Add(new DetalleVenta
+                        LM830lista.Add(new LM830DetalleVenta
                         {
-                            IdDetalle = r.GetInt32(0),
-                            IdVenta = r.GetInt32(1),
-                            Producto = new Producto { IdProducto = r.GetInt32(2) },
-                            Cantidad = r.GetInt32(3),
-                            PrecioUnitario = r.GetDecimal(4),
-                            Subtotal = r.GetDecimal(5),
-                            PuntosCalculados = r.GetInt32(6),
-                            DVH = r.GetString(7)
+                            LM830IdDetalle = LM830r.GetInt32(0),
+                            LM830IdVenta = LM830r.GetInt32(1),
+                            LM830Producto = new LM830Producto { LM830IdProducto = LM830r.GetInt32(2) },
+                            LM830Cantidad = LM830r.GetInt32(3),
+                            LM830PrecioUnitario = LM830r.GetDecimal(4),
+                            LM830Subtotal = LM830r.GetDecimal(5),
+                            LM830PuntosCalculados = LM830r.GetInt32(6),
+                            LM830DVH = LM830r.GetString(7)
                         });
                     }
                 }
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
-            return lista;
+            return LM830lista;
         }
 
-        public void ActualizarDVH(int idVenta, string dvh) => EjecutarUpdateDVH("UPDATE Venta SET DVH = @dvh WHERE idVenta = @id", idVenta, dvh);
+        public void LM830ActualizarDVH(int LM830idVenta, string LM830dvh) => LM830EjecutarUpdateDVH("UPDATE Venta SET DVH = @dvh WHERE idVenta = @id", LM830idVenta, LM830dvh);
 
-        public void ActualizarDVHDetalle(int idDetalle, string dvh) => EjecutarUpdateDVH("UPDATE DetalleVenta SET DVH = @dvh WHERE idDetalle = @id", idDetalle, dvh);
+        public void LM830ActualizarDVHDetalle(int LM830idDetalle, string LM830dvh) => LM830EjecutarUpdateDVH("UPDATE DetalleVenta SET DVH = @dvh WHERE idDetalle = @id", LM830idDetalle, LM830dvh);
 
-        private void EjecutarUpdateDVH(string sql, int id, string dvh)
+        private void LM830EjecutarUpdateDVH(string LM830sql, int LM830id, string LM830dvh)
         {
             try
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.CommandText = sql;
-                _sqlcommand.Parameters.AddWithValue("@dvh", dvh);
-                _sqlcommand.Parameters.AddWithValue("@id", id);
-                _sqlserver.Open();
-                _sqlcommand.ExecuteNonQuery();
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.CommandText = LM830sql;
+                LM830_sqlcommand.Parameters.AddWithValue("@dvh", LM830dvh);
+                LM830_sqlcommand.Parameters.AddWithValue("@id", LM830id);
+                LM830_sqlserver.Open();
+                LM830_sqlcommand.ExecuteNonQuery();
             }
             finally
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlserver.Close();
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlserver.Close();
             }
         }
     }

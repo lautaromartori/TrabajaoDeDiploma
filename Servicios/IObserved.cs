@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public interface IObserved
+    public interface LM830IObserved
     {
-        void NotificarObservadores();
-        void AgregarObservador(IObserver observable);
-        void EliminarObservador(IObserver observable);
+        void LM830NotificarObservadores();
+        void LM830AgregarObservador(LM830IObserver LM830observable);
+        void LM830EliminarObservador(LM830IObserver LM830observable);
     }
 }

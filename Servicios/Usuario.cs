@@ -3,76 +3,88 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace Servicios
+namespace LM830Servicios
 {
-    public class Usuario
+    public class LM830Usuario
     {
-        public string DNI { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
-        public string Username { get; set; }
+        [System.ComponentModel.DisplayName("DNI")]
+        public string LM830DNI { get; set; }
+        [System.ComponentModel.DisplayName("Nombre")]
+        public string LM830Nombre { get; set; }
+        [System.ComponentModel.DisplayName("Apellido")]
+        public string LM830Apellido { get; set; }
+        [System.ComponentModel.DisplayName("Username")]
+        public string LM830Username { get; set; }
         [Browsable(false)]
-        public string Password { get; set; }
-        public string Email { get; set; }
+        [System.ComponentModel.DisplayName("Password")]
+        public string LM830Password { get; set; }
+        [System.ComponentModel.DisplayName("Email")]
+        public string LM830Email { get; set; }
         [Browsable(false)]
-        public bool Bloqueado { get; set; }
+        [System.ComponentModel.DisplayName("Bloqueado")]
+        public bool LM830Bloqueado { get; set; }
         [Browsable(false)]
-        public bool Activo { get; set; }
-        public string Rol { get; set; }
-        public int Intentos { get; set; }
-        public string DVH { get; set; }
+        [System.ComponentModel.DisplayName("Activo")]
+        public bool LM830Activo { get; set; }
+        [System.ComponentModel.DisplayName("Rol")]
+        public string LM830Rol { get; set; }
+        [System.ComponentModel.DisplayName("Intentos")]
+        public int LM830Intentos { get; set; }
+        [System.ComponentModel.DisplayName("DVH")]
+        public string LM830DVH { get; set; }
 
-        public Usuario() { }
+        public LM830Usuario() { }
 
-        public Usuario(string dNI, string nombre, string apellido, string nombreUsuario, string password, string email, bool bloqueado, bool activo, string nombre_rol)
+        public LM830Usuario(string LM830dNI, string LM830nombre, string LM830apellido, string LM830nombreUsuario, string LM830password, string LM830email, bool LM830bloqueado, bool LM830activo, string LM830nombre_rol)
         {
-            DNI = dNI;
-            Nombre = nombre;
-            Apellido = apellido;
-            Username = nombreUsuario;
-            Password = password.Trim();
-            Email = email;
-            Bloqueado = bloqueado;
-            Activo = activo;
-            Rol = nombre_rol;
+            LM830DNI = LM830dNI;
+            LM830Nombre = LM830nombre;
+            LM830Apellido = LM830apellido;
+            LM830Username = LM830nombreUsuario;
+            LM830Password = LM830password.Trim();
+            LM830Email = LM830email;
+            LM830Bloqueado = LM830bloqueado;
+            LM830Activo = LM830activo;
+            LM830Rol = LM830nombre_rol;
         }
-        public Usuario(string dNI, string nombre, string apellido, string nombreUsuario, string password, string email, bool bloqueado, bool activo, string nombre_rol, int intentos)
+        public LM830Usuario(string LM830dNI, string LM830nombre, string LM830apellido, string LM830nombreUsuario, string LM830password, string LM830email, bool LM830bloqueado, bool LM830activo, string LM830nombre_rol, int LM830intentos)
         {
-            DNI = dNI;
-            Nombre = nombre;
-            Apellido = apellido;
-            Username = nombreUsuario;
-            Password = password.Trim();
-            Email = email;
-            Bloqueado = bloqueado;
-            Activo = activo;
-            Rol = nombre_rol;
-            Intentos = intentos;
+            LM830DNI = LM830dNI;
+            LM830Nombre = LM830nombre;
+            LM830Apellido = LM830apellido;
+            LM830Username = LM830nombreUsuario;
+            LM830Password = LM830password.Trim();
+            LM830Email = LM830email;
+            LM830Bloqueado = LM830bloqueado;
+            LM830Activo = LM830activo;
+            LM830Rol = LM830nombre_rol;
+            LM830Intentos = LM830intentos;
         }
-        public Usuario(string dNI, string nombre, string apellido, string nombreUsuario, string password, string email, bool bloqueado, bool activo, string nombre_rol, int intentos, string dvh)
+        public LM830Usuario(string LM830dNI, string LM830nombre, string LM830apellido, string LM830nombreUsuario, string LM830password, string LM830email, bool LM830bloqueado, bool LM830activo, string LM830nombre_rol, int LM830intentos, string LM830dvh)
         {
-            DNI = dNI;
-            Nombre = nombre;
-            Apellido = apellido;
-            Username = nombreUsuario;
-            Password = password.Trim();
-            Email = email;
-            Bloqueado = bloqueado;
-            Activo = activo;
-            Rol = nombre_rol;
-            Intentos = intentos;
-            DVH = dvh;
+            LM830DNI = LM830dNI;
+            LM830Nombre = LM830nombre;
+            LM830Apellido = LM830apellido;
+            LM830Username = LM830nombreUsuario;
+            LM830Password = LM830password.Trim();
+            LM830Email = LM830email;
+            LM830Bloqueado = LM830bloqueado;
+            LM830Activo = LM830activo;
+            LM830Rol = LM830nombre_rol;
+            LM830Intentos = LM830intentos;
+            LM830DVH = LM830dvh;
         }
 
         [Browsable(false)]
-        public List<ComponentePermiso> Permisos { get; set; } = new List<ComponentePermiso>();
-        public bool TienePermiso(string nombrePermiso)
+        [System.ComponentModel.DisplayName("Permisos")]
+        public List<LM830ComponentePermiso> LM830Permisos { get; set; } = new List<LM830ComponentePermiso>();
+        public bool LM830TienePermiso(string LM830nombrePermiso)
         {
-            if (Permisos == null) return false;
+            if (LM830Permisos == null) return false;
 
-            foreach (var componente in Permisos)
+            foreach (var LM830componente in LM830Permisos)
             {
-                if (componente.TienePermiso(nombrePermiso))
+                if (LM830componente.LM830TienePermiso(LM830nombrePermiso))
                     return true;
             }
             return false;

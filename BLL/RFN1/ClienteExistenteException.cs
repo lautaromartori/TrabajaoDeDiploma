@@ -1,16 +1,16 @@
-﻿using BE.RFN1;
+﻿using LM830BE.LM830RFN1;
 using System;
 
-namespace BLL.RFN1
+namespace LM830BLL.LM830RFN1
 {
-    public class ClienteExistenteException : Exception
+    public class LM830ClienteExistenteException : Exception
     {
-        public Cliente Cliente { get; }
+        public LM830Cliente LM830Cliente { get; }
 
-        public ClienteExistenteException(Cliente cliente)
-            : base($"El DNI {cliente.Dni} ya está registrado ({cliente.NombreCompleto}).")
+        public LM830ClienteExistenteException(LM830Cliente LM830cliente)
+            : base($"El DNI {LM830cliente.LM830Dni} ya está registrado ({LM830cliente.LM830NombreCompleto}).")
         {
-            Cliente = cliente;
+            LM830Cliente = LM830cliente;
         }
     }
 }

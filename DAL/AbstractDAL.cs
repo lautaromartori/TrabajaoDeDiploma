@@ -1,22 +1,22 @@
 ﻿using Microsoft.Data.SqlClient;
-using Servicios;
+using LM830Servicios;
 using System;
 
-namespace DAL
+namespace LM830DAL
 {
-    public abstract class AbstractDAL<T> where T : class
+    public abstract class LM830AbstractDAL<LM830T> where LM830T : class
     {
-        protected SqlConnection _sqlserver;
-        protected SqlCommand _sqlcommand;
+        protected SqlConnection LM830_sqlserver;
+        protected SqlCommand LM830_sqlcommand;
 
-        protected AbstractDAL()
+        protected LM830AbstractDAL()
         {
-            string cadenaConexion = ConexionConfig.ObtenerCadenaConexion();
+            string LM830cadenaConexion = LM830ConexionConfig.LM830ObtenerCadenaConexion();
 
-            _sqlserver = new SqlConnection(cadenaConexion);
-            _sqlcommand = new SqlCommand();
-            _sqlcommand.Connection = _sqlserver;
-            _sqlcommand.CommandType = System.Data.CommandType.Text;
+            LM830_sqlserver = new SqlConnection(LM830cadenaConexion);
+            LM830_sqlcommand = new SqlCommand();
+            LM830_sqlcommand.Connection = LM830_sqlserver;
+            LM830_sqlcommand.CommandType = System.Data.CommandType.Text;
         }
     }
 }

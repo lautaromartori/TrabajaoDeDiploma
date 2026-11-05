@@ -1,36 +1,36 @@
-﻿using BE.RFN1;
+﻿using LM830BE.LM830RFN1;
 using Microsoft.Data.SqlClient;
 using System;
 
-namespace DAL.RFN1
+namespace LM830DAL.LM830RFN1
 {
-    public class ProgramaPuntosDAL : AbstractDAL<ProgramaPuntos>
+    public class LM830ProgramaPuntosDAL : LM830AbstractDAL<LM830ProgramaPuntos>
     {
-        public ProgramaPuntos ObtenerVigente()
+        public LM830ProgramaPuntos LM830ObtenerVigente()
         {
             try
             {
-                _sqlcommand.Parameters.Clear();
-                _sqlcommand.CommandText = @"SELECT TOP 1 idPrograma, nombre, montoPorPunto, mesesVencimiento,
+                LM830_sqlcommand.Parameters.Clear();
+                LM830_sqlcommand.CommandText = @"SELECT TOP 1 idPrograma, nombre, montoPorPunto, mesesVencimiento,
                                                    plazoReclamoDias, vigenciaDesde, umbralAutorizacion, plazoAnulacionDias
                                             FROM ProgramaPuntos
                                             WHERE vigenciaDesde <= CAST(GETDATE() AS date)
                                             ORDER BY vigenciaDesde DESC";
-                _sqlserver.Open();
-                using (SqlDataReader r = _sqlcommand.ExecuteReader())
+                LM830_sqlserver.Open();
+                using (SqlDataReader LM830r = LM830_sqlcommand.ExecuteReader())
                 {
-                    if (r.Read())
+                    if (LM830r.Read())
                     {
-                        return new ProgramaPuntos
+                        return new LM830ProgramaPuntos
                         {
-                            IdPrograma = r.GetInt32(0),
-                            Nombre = r.GetString(1),
-                            MontoPorPunto = r.GetDecimal(2),
-                            MesesVencimiento = r.GetInt32(3),
-                            PlazoReclamoDias = r.GetInt32(4),
-                            VigenciaDesde = r.GetDateTime(5),
-                            UmbralAutorizacion = r.GetDecimal(6),
-                            PlazoAnulacionDias = r.GetInt32(7)
+                            LM830IdPrograma = LM830r.GetInt32(0),
+                            LM830Nombre = LM830r.GetString(1),
+                            LM830MontoPorPunto = LM830r.GetDecimal(2),
+                            LM830MesesVencimiento = LM830r.GetInt32(3),
+                            LM830PlazoReclamoDias = LM830r.GetInt32(4),
+                            LM830VigenciaDesde = LM830r.GetDateTime(5),
+                            LM830UmbralAutorizacion = LM830r.GetDecimal(6),
+                            LM830PlazoAnulacionDias = LM830r.GetInt32(7)
                         };
                     }
                 }
@@ -38,7 +38,7 @@ namespace DAL.RFN1
             }
             finally
             {
-                _sqlserver.Close();
+                LM830_sqlserver.Close();
             }
         }
     }

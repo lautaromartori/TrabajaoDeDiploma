@@ -1,67 +1,67 @@
 ﻿using Microsoft.Data.SqlClient;
-using Servicios;
+using LM830Servicios;
 using System;
 using System.Windows.Forms;
 
-namespace GUI
+namespace LM830GUI
 {
-    public partial class FrmConexionInicial : Form
+    public partial class LM830FrmConexionInicial : Form
     {
-        private const string BASE_DATOS = "LeMarchant_DB";
+        private const string LM830BASE_DATOS = "LeMarchant_DB";
 
-        public FrmConexionInicial()
+        public LM830FrmConexionInicial()
         {
             InitializeComponent();
         }
 
-        private void FrmConexionInicial_Load(object sender, EventArgs e)
+        private void LM830FrmConexionInicial_Load(object LM830sender, EventArgs LM830e)
         {
-            btnBuscar_Click(sender, e);
+            LM830btnBuscar_Click(LM830sender, LM830e);
         }
 
-        private void btnBuscar_Click(object sender, EventArgs e)
+        private void LM830btnBuscar_Click(object LM830sender, EventArgs LM830e)
         {
             Cursor = Cursors.WaitCursor;
-            cmbServidor.Items.Clear();
+            LM830cmbServidor.Items.Clear();
 
-            var instancias = SqlInstanceFinder.ObtenerInstancias();
-            foreach (var instancia in instancias)
-                cmbServidor.Items.Add(instancia);
+            var LM830instancias = LM830SqlInstanceFinder.LM830ObtenerInstancias();
+            foreach (var LM830instancia in LM830instancias)
+                LM830cmbServidor.Items.Add(LM830instancia);
 
-            if (cmbServidor.Items.Count > 0)
-                cmbServidor.SelectedIndex = 0;
+            if (LM830cmbServidor.Items.Count > 0)
+                LM830cmbServidor.SelectedIndex = 0;
 
             Cursor = Cursors.Default;
         }
 
-        private void btnConectar_Click(object sender, EventArgs e)
+        private void LM830btnConectar_Click(object LM830sender, EventArgs LM830e)
         {
-            string servidor = cmbServidor.Text.Trim();
+            string LM830servidor = LM830cmbServidor.Text.Trim();
 
-            if (string.IsNullOrEmpty(servidor))
+            if (string.IsNullOrEmpty(LM830servidor))
             {
                 MessageBox.Show("Seleccioná o escribí un servidor.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string cadenaConexion = $"Data Source={servidor};Initial Catalog={BASE_DATOS};Integrated Security=True;TrustServerCertificate=True";
+            string LM830cadenaConexion = $"Data Source={LM830servidor};Initial Catalog={LM830BASE_DATOS};Integrated Security=True;TrustServerCertificate=True";
 
             try
             {
-                using (SqlConnection conexion = new SqlConnection(cadenaConexion))
+                using (SqlConnection LM830conexion = new SqlConnection(LM830cadenaConexion))
                 {
-                    conexion.Open();
+                    LM830conexion.Open();
                 }
 
-                ConexionConfig.GuardarCadenaConexion(cadenaConexion);
+                LM830ConexionConfig.LM830GuardarCadenaConexion(LM830cadenaConexion);
 
                 MessageBox.Show("Conexión exitosa. Configuración guardada.", "Listo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show($"No se pudo conectar:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"No se pudo conectar:\n{LM830ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using Servicios;
+﻿using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,105 +9,105 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GUI
+namespace LM830GUI
 {
-    public partial class CambiarIdioma : Form,IObserver
+    public partial class LM830CambiarIdioma : Form,LM830IObserver
     {
-        int posX, posY;
-        bool arrastrando = false;
-        public CambiarIdioma()
+        int LM830posX, LM830posY;
+        bool LM830arrastrando = false;
+        public LM830CambiarIdioma()
         {
             InitializeComponent();
         }
-        private void IniciarListaDeIdiomas()
+        private void LM830IniciarListaDeIdiomas()
         {
-            var lista = new List<object>()
+            var LM830lista = new List<object>()
             {
-                new {Idioma=LanguageManager.Instance.GetTraduction("Español"), Codigo="es"},
-                new {Idioma=LanguageManager.Instance.GetTraduction("Ingles"), Codigo="en"},
-                new {Idioma=LanguageManager.Instance.GetTraduction("Japones"), Codigo="ja"}
+                new {Idioma=LM830LanguageManager.LM830Instance.LM830GetTraduction("Español"), Codigo="es"},
+                new {Idioma=LM830LanguageManager.LM830Instance.LM830GetTraduction("Ingles"), Codigo="en"},
+                new {Idioma=LM830LanguageManager.LM830Instance.LM830GetTraduction("Japones"), Codigo="ja"}
             };
 
-            cbIdiomas.DisplayMember = "Idioma";
-            cbIdiomas.ValueMember = "Codigo";
-            cbIdiomas.DataSource = lista;
+            LM830cbIdiomas.DisplayMember = "Idioma";
+            LM830cbIdiomas.ValueMember = "Codigo";
+            LM830cbIdiomas.DataSource = LM830lista;
 
-            int ind = 0;
-            foreach (object item in cbIdiomas.Items)
+            int LM830ind = 0;
+            foreach (object LM830item in LM830cbIdiomas.Items)
             {
-                if (item.GetType().GetProperty("Idioma").GetValue(item) as string
-                    == LanguageManager.Instance.GetCurrentLanguage().EnglishName)
+                if (LM830item.GetType().GetProperty("Idioma").GetValue(LM830item) as string
+                    == LM830LanguageManager.LM830Instance.LM830GetCurrentLanguage().EnglishName)
                 {
-                    ind = cbIdiomas.Items.IndexOf(item);
+                    LM830ind = LM830cbIdiomas.Items.IndexOf(LM830item);
                 }
             }
-            cbIdiomas.SelectedIndex = ind;
+            LM830cbIdiomas.SelectedIndex = LM830ind;
         }
 
-        private void btnCambiar_Click(object sender, EventArgs e)
+        private void LM830btnCambiar_Click(object LM830sender, EventArgs LM830e)
         {
             try
             {
-                string idioma =
-                    cbIdiomas.SelectedValue.ToString();
+                string LM830idioma =
+                    LM830cbIdiomas.SelectedValue.ToString();
 
-                LanguageManager.Instance
-                    .CargarIdioma(idioma);
+                LM830LanguageManager.LM830Instance
+                    .LM830CargarIdioma(LM830idioma);
 
                 MessageBox.Show(
-                    LanguageManager.Instance.GetTraduction("MsjCambiarIdioma"),
-                    LanguageManager.Instance.GetTraduction("MsjConfirmacion"),
+                    LM830LanguageManager.LM830Instance.LM830GetTraduction("MsjCambiarIdioma"),
+                    LM830LanguageManager.LM830Instance.LM830GetTraduction("MsjConfirmacion"),
                     MessageBoxButtons.OK);
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(LM830ex.Message);
             }
         }
-        public void Actualizar(LanguageManager lenguaje)
+        public void LM830Actualizar(LM830LanguageManager LM830lenguaje)
         {
             try
             {
-                btnCambiarCI.Text = lenguaje.GetTraduction("btnCambiarCI");
-                lblCambiarIdioma.Text = lenguaje.GetTraduction("lblCambiarIdioma");
-                button1.Text = LanguageManager.Instance.GetTraduction("Salir");
+                LM830btnCambiarCI.Text = LM830lenguaje.LM830GetTraduction("btnCambiarCI");
+                LM830lblCambiarIdioma.Text = LM830lenguaje.LM830GetTraduction("lblCambiarIdioma");
+                LM830button1.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("Salir");
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(LM830ex.Message);
             }
         }
 
-        private void CambiarIdioma_Load(object sender, EventArgs e)
+        private void LM830CambiarIdioma_Load(object LM830sender, EventArgs LM830e)
         {
-            LanguageManager.Instance.AgregarObservador(this);
-            LanguageManager.Instance.NotificarObservadores();
-            IniciarListaDeIdiomas();
+            LM830LanguageManager.LM830Instance.LM830AgregarObservador(this);
+            LM830LanguageManager.LM830Instance.LM830NotificarObservadores();
+            LM830IniciarListaDeIdiomas();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void LM830button1_Click(object LM830sender, EventArgs LM830e)
         {
-            Navegacion.VolverAlMenu(this);
+            LM830Navegacion.LM830VolverAlMenu(this);
         }
-        private void BarraTitulo_MouseDown(object sender, MouseEventArgs e)
+        private void LM830BarraTitulo_MouseDown(object LM830sender, MouseEventArgs LM830e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (LM830e.Button == MouseButtons.Left)
             {
-                arrastrando = true;
-                posX = e.X;
-                posY = e.Y;
+                LM830arrastrando = true;
+                LM830posX = LM830e.X;
+                LM830posY = LM830e.Y;
             }
         }
-        private void BarraTitulo_MouseMove(object sender, MouseEventArgs e)
+        private void LM830BarraTitulo_MouseMove(object LM830sender, MouseEventArgs LM830e)
         {
-            if (arrastrando)
+            if (LM830arrastrando)
             {
-                this.Location = new Point(this.Location.X + (e.X - posX), this.Location.Y + (e.Y - posY));
+                this.Location = new Point(this.Location.X + (LM830e.X - LM830posX), this.Location.Y + (LM830e.Y - LM830posY));
             }
         }
-        private void BarraTitulo_MouseUp(object sender, MouseEventArgs e)
+        private void LM830BarraTitulo_MouseUp(object LM830sender, MouseEventArgs LM830e)
         {
-            arrastrando = false;
+            LM830arrastrando = false;
         }
     }
 }

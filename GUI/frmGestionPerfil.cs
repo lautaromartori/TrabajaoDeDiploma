@@ -1,62 +1,62 @@
-﻿using BLL;
-using Servicios;
+﻿using LM830BLL;
+using LM830Servicios;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace GUI
+namespace LM830GUI
 {
-    public partial class frmGestionPerfiles : Form, IObserver
+    public partial class LM830frmGestionPerfiles : Form, LM830IObserver
     {
-        int posX, posY;
-        bool arrastrando = false;
-        private readonly PerfilBLL _bll;
-        private readonly Menu _menuPadre;
+        int LM830posX, LM830posY;
+        bool LM830arrastrando = false;
+        private readonly LM830PerfilBLL LM830_bll;
+        private readonly LM830Menu LM830_menuPadre;
 
-        private List<PermisoSimple> _permisos = new List<PermisoSimple>();
-        private List<Familia> _familias = new List<Familia>();
-        private List<Familia> _perfiles = new List<Familia>();
+        private List<LM830PermisoSimple> LM830_permisos = new List<LM830PermisoSimple>();
+        private List<LM830Familia> LM830_familias = new List<LM830Familia>();
+        private List<LM830Familia> LM830_perfiles = new List<LM830Familia>();
 
-        private Familia _familiaSeleccionada = null;
-        private Familia _perfilSeleccionado = null;
+        private LM830Familia LM830_familiaSeleccionada = null;
+        private LM830Familia LM830_perfilSeleccionado = null;
 
-        public frmGestionPerfiles()
+        public LM830frmGestionPerfiles()
         {
             InitializeComponent();
-            _bll = new PerfilBLL();
+            LM830_bll = new LM830PerfilBLL();
 
-            ValidarPermisos();
+            LM830ValidarPermisos();
 
-            RbFamilias.CheckedChanged += RbFamilias_CheckedChanged_1;
-            RbPerfiles.CheckedChanged += RbPerfiles_CheckedChanged;
+            LM830RbFamilias.CheckedChanged += LM830RbFamilias_CheckedChanged_1;
+            LM830RbPerfiles.CheckedChanged += LM830RbPerfiles_CheckedChanged;
 
-            if (!this.Controls.Contains(pnlFamilias)) this.Controls.Add(pnlFamilias);
-            if (!this.Controls.Contains(pnlPerfiles)) this.Controls.Add(pnlPerfiles);
+            if (!this.Controls.Contains(LM830pnlFamilias)) this.Controls.Add(LM830pnlFamilias);
+            if (!this.Controls.Contains(LM830pnlPerfiles)) this.Controls.Add(LM830pnlPerfiles);
 
-            this.SizeChanged += FrmGestionPerfiles_SizeChanged;
+            this.SizeChanged += LM830FrmGestionPerfiles_SizeChanged;
 
-            RbFamilias.Checked = true;
-            SincronizarVisibilidadPaneles();
-            CargarDatosFormulario();
+            LM830RbFamilias.Checked = true;
+            LM830SincronizarVisibilidadPaneles();
+            LM830CargarDatosFormulario();
         }
 
-        private void ValidarPermisos()
+        private void LM830ValidarPermisos()
         {
-            Usuario usuarioActual = SessionManager.Instance.UsuarioActual();
+            LM830Usuario LM830usuarioActual = LM830SessionManager.LM830Instance.LM830UsuarioActual();
 
-            if (!usuarioActual.TienePermiso("Ver Perfiles"))
+            if (!LM830usuarioActual.LM830TienePermiso("Ver Perfiles"))
             {
                 MessageBox.Show("No tiene permisos para acceder a Gestión de Perfiles.",
                     "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 
-                if (Application.OpenForms["Menu"] != null)
-                    Application.OpenForms["Menu"].Show();
+                if (Application.OpenForms["LM830Menu"] != null)
+                    Application.OpenForms["LM830Menu"].Show();
                 else
                 {
-                    Menu menu = new Menu();
-                    menu.Show();
+                    LM830Menu LM830menu = new LM830Menu();
+                    LM830menu.Show();
                 }
 
                 this.DialogResult = DialogResult.Cancel;
@@ -64,709 +64,709 @@ namespace GUI
                 return;
             }
 
-            ActualizarEstadoBotonesSegunPermisos();
+            LM830ActualizarEstadoBotonesSegunPermisos();
         }
 
-        private void ActualizarEstadoBotonesSegunPermisos()
+        private void LM830ActualizarEstadoBotonesSegunPermisos()
         {
-            Usuario usuarioActual = SessionManager.Instance.UsuarioActual();
+            LM830Usuario LM830usuarioActual = LM830SessionManager.LM830Instance.LM830UsuarioActual();
 
-            btnCrearPermiso.Enabled = usuarioActual.TienePermiso("Crear Permiso");
-            btnEliminarPermiso.Enabled = usuarioActual.TienePermiso("Eliminar Permiso");
+            LM830btnCrearPermiso.Enabled = LM830usuarioActual.LM830TienePermiso("Crear Permiso");
+            LM830btnEliminarPermiso.Enabled = LM830usuarioActual.LM830TienePermiso("Eliminar Permiso");
 
-            btnCrearFamilia.Enabled = usuarioActual.TienePermiso("Crear Familia");
-            btnEliminarFamilia.Enabled = usuarioActual.TienePermiso("Eliminar Familia");
-            btnAsignarPermisos.Enabled = usuarioActual.TienePermiso("Asignar Permiso Familia");
-            btnQuitarPermisos.Enabled = usuarioActual.TienePermiso("Quitar Permiso Familia");
-            btnAsignarSubfamilia.Enabled = usuarioActual.TienePermiso("Asignar Subfamilia");
-            btnQuitarSubfamilia.Enabled = usuarioActual.TienePermiso("Quitar Subfamilia");
+            LM830btnCrearFamilia.Enabled = LM830usuarioActual.LM830TienePermiso("Crear Familia");
+            LM830btnEliminarFamilia.Enabled = LM830usuarioActual.LM830TienePermiso("Eliminar Familia");
+            LM830btnAsignarPermisos.Enabled = LM830usuarioActual.LM830TienePermiso("Asignar Permiso Familia");
+            LM830btnQuitarPermisos.Enabled = LM830usuarioActual.LM830TienePermiso("Quitar Permiso Familia");
+            LM830btnAsignarSubfamilia.Enabled = LM830usuarioActual.LM830TienePermiso("Asignar Subfamilia");
+            LM830btnQuitarSubfamilia.Enabled = LM830usuarioActual.LM830TienePermiso("Quitar Subfamilia");
 
-            btnCrearPerfil.Enabled = usuarioActual.TienePermiso("Crear Perfil");
-            btnEliminarPerfil.Enabled = usuarioActual.TienePermiso("Eliminar Perfil");
-            btnAsignarFamiliaPerfil.Enabled = usuarioActual.TienePermiso("Asignar Familia Perfil");
-            btnQuitarFamiliaPerfil.Enabled = usuarioActual.TienePermiso("Quitar Familia Perfil");
-            BtnAsignarPermisoPerfil.Enabled = usuarioActual.TienePermiso("Asignar Permiso Perfil");
-            BtnQuitarPermisoPerfil.Enabled = usuarioActual.TienePermiso("Quitar Permiso Perfil");
+            LM830btnCrearPerfil.Enabled = LM830usuarioActual.LM830TienePermiso("Crear Perfil");
+            LM830btnEliminarPerfil.Enabled = LM830usuarioActual.LM830TienePermiso("Eliminar Perfil");
+            LM830btnAsignarFamiliaPerfil.Enabled = LM830usuarioActual.LM830TienePermiso("Asignar Familia Perfil");
+            LM830btnQuitarFamiliaPerfil.Enabled = LM830usuarioActual.LM830TienePermiso("Quitar Familia Perfil");
+            LM830BtnAsignarPermisoPerfil.Enabled = LM830usuarioActual.LM830TienePermiso("Asignar Permiso Perfil");
+            LM830BtnQuitarPermisoPerfil.Enabled = LM830usuarioActual.LM830TienePermiso("Quitar Permiso Perfil");
         }
 
-        private void CentrarPanelesContenedores()
+        private void LM830CentrarPanelesContenedores()
         {
-            int contenedorAncho = this.ClientSize.Width;
+            int LM830contenedorAncho = this.ClientSize.Width;
 
-            Panel panelActivo = null;
-            if (RbPermisos.Checked) panelActivo = pnlPermisos;
-            else if (RbFamilias.Checked) panelActivo = pnlFamilias;
-            else if (RbPerfiles.Checked) panelActivo = pnlPerfiles;
+            Panel LM830panelActivo = null;
+            if (LM830RbPermisos.Checked) LM830panelActivo = LM830pnlPermisos;
+            else if (LM830RbFamilias.Checked) LM830panelActivo = LM830pnlFamilias;
+            else if (LM830RbPerfiles.Checked) LM830panelActivo = LM830pnlPerfiles;
 
-            if (panelActivo != null)
+            if (LM830panelActivo != null)
             {
-                int xDelCentro = panel4.Right;
-                int yAlineada = panel4.Top - 10;
+                int LM830xDelCentro = LM830panel4.Right;
+                int LM830yAlineada = LM830panel4.Top - 10;
 
-                panelActivo.Location = new Point(xDelCentro, yAlineada);
+                LM830panelActivo.Location = new Point(LM830xDelCentro, LM830yAlineada);
             }
         }
 
-        private void FrmGestionPerfiles_SizeChanged(object sender, EventArgs e)
+        private void LM830FrmGestionPerfiles_SizeChanged(object LM830sender, EventArgs LM830e)
         {
-            CentrarPanelesContenedores();
+            LM830CentrarPanelesContenedores();
         }
 
-        private void ActualizarTreeViewConsulta(Familia componenteRaiz)
+        private void LM830ActualizarTreeViewConsulta(LM830Familia LM830componenteRaiz)
         {
-            treeView1.BeginUpdate();
-            treeView1.Nodes.Clear();
+            LM830treeView1.BeginUpdate();
+            LM830treeView1.Nodes.Clear();
 
-            if (componenteRaiz != null)
+            if (LM830componenteRaiz != null)
             {
-                _bll.ArmarArbolEstructural(componenteRaiz, treeView1.Nodes);
-                treeView1.ExpandAll();
+                LM830_bll.LM830ArmarArbolEstructural(LM830componenteRaiz, LM830treeView1.Nodes);
+                LM830treeView1.ExpandAll();
             }
 
-            treeView1.EndUpdate();
+            LM830treeView1.EndUpdate();
         }
 
-        private void CargarDatosFormulario()
+        private void LM830CargarDatosFormulario()
         {
             try
             {
-                string nombreFamAnterior = _familiaSeleccionada?.Nombre;
-                string nombrePerfAnterior = _perfilSeleccionado?.Nombre;
+                string LM830nombreFamAnterior = LM830_familiaSeleccionada?.LM830Nombre;
+                string LM830nombrePerfAnterior = LM830_perfilSeleccionado?.LM830Nombre;
 
-                _permisos = _bll.ObtenerPermisos();
-                _familias = _bll.ObtenerFamilias();
-                _perfiles = _bll.ObtenerPerfiles();
+                LM830_permisos = LM830_bll.LM830ObtenerPermisos();
+                LM830_familias = LM830_bll.LM830ObtenerFamilias();
+                LM830_perfiles = LM830_bll.LM830ObtenerPerfiles();
 
-                _familiaSeleccionada = !string.IsNullOrEmpty(nombreFamAnterior)
-                    ? _familias.FirstOrDefault(f => f.Nombre == nombreFamAnterior)
-                    : _familias.FirstOrDefault();
+                LM830_familiaSeleccionada = !string.IsNullOrEmpty(LM830nombreFamAnterior)
+                    ? LM830_familias.FirstOrDefault(LM830f => LM830f.LM830Nombre == LM830nombreFamAnterior)
+                    : LM830_familias.FirstOrDefault();
 
-                _perfilSeleccionado = !string.IsNullOrEmpty(nombrePerfAnterior)
-                    ? _perfiles.FirstOrDefault(p => p.Nombre == nombrePerfAnterior)
-                    : _perfiles.FirstOrDefault();
+                LM830_perfilSeleccionado = !string.IsNullOrEmpty(LM830nombrePerfAnterior)
+                    ? LM830_perfiles.FirstOrDefault(LM830p => LM830p.LM830Nombre == LM830nombrePerfAnterior)
+                    : LM830_perfiles.FirstOrDefault();
 
-                SincronizarVisibilidadPaneles();
-                RefrescarSeguridad();
+                LM830SincronizarVisibilidadPaneles();
+                LM830RefrescarSeguridad();
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
                 MessageBox.Show(
-                    LanguageManager.Instance.GetTraduction("ErrorSincrop") + ex.Message,
-                    LanguageManager.Instance.GetTraduction("ErrorOperacionalP"),
+                    LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorSincrop") + LM830ex.Message,
+                    LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorOperacionalP"),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
 
-        private void SincronizarVisibilidadPaneles()
+        private void LM830SincronizarVisibilidadPaneles()
         {
-            pnlPermisos.Visible = RbPermisos.Checked;
-            pnlFamilias.Visible = RbFamilias.Checked;
-            pnlPerfiles.Visible = RbPerfiles.Checked;
+            LM830pnlPermisos.Visible = LM830RbPermisos.Checked;
+            LM830pnlFamilias.Visible = LM830RbFamilias.Checked;
+            LM830pnlPerfiles.Visible = LM830RbPerfiles.Checked;
 
-            CentrarPanelesContenedores();
+            LM830CentrarPanelesContenedores();
 
-            if (RbPermisos.Checked)
+            if (LM830RbPermisos.Checked)
             {
-                treeView1.Visible = false;
-                treeView1.Nodes.Clear();
-                CargarComponentesPermisos();
+                LM830treeView1.Visible = false;
+                LM830treeView1.Nodes.Clear();
+                LM830CargarComponentesPermisos();
             }
-            else if (RbFamilias.Checked)
+            else if (LM830RbFamilias.Checked)
             {
-                treeView1.Visible = true;
-                CargarComponentesFamilias();
+                LM830treeView1.Visible = true;
+                LM830CargarComponentesFamilias();
             }
-            else if (RbPerfiles.Checked)
+            else if (LM830RbPerfiles.Checked)
             {
-                treeView1.Visible = true;
-                CargarComponentesPerfiles();
+                LM830treeView1.Visible = true;
+                LM830CargarComponentesPerfiles();
             }
         }
 
-        private void CargarComponentesPermisos()
+        private void LM830CargarComponentesPermisos()
         {
-            dgvPermisos.DataSource = null;
-            dgvPermisos.DataSource = _permisos.Select(p => new
+            LM830dgvPermisos.DataSource = null;
+            LM830dgvPermisos.DataSource = LM830_permisos.Select(LM830p => new
             {
-                Nombre = p.Nombre,
+                Nombre = LM830p.LM830Nombre,
                 Tipo = "Permiso Simple"
             }).ToList();
         }
 
-        private void BtnCrearPermiso_Click(object sender, EventArgs e)
+        private void LM830BtnCrearPermiso_Click(object LM830sender, EventArgs LM830e)
         {
-            string nombre = txtNombrePermiso.Text.Trim();
+            string LM830nombre = LM830txtNombrePermiso.Text.Trim();
 
-            if (string.IsNullOrEmpty(nombre))
+            if (string.IsNullOrEmpty(LM830nombre))
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("IngreseUnNombreParaPermisoP"), LanguageManager.Instance.GetTraduction("CampoRequeridoP"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtNombrePermiso.Focus();
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("IngreseUnNombreParaPermisoP"), LM830LanguageManager.LM830Instance.LM830GetTraduction("CampoRequeridoP"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LM830txtNombrePermiso.Focus();
                 return;
             }
 
             try
             {
-                _bll.CrearPermiso(nombre);
-                txtNombrePermiso.Clear();
-                CargarDatosFormulario();
-                MessageBox.Show($"{LanguageManager.Instance.GetTraduction("Permisomsjp")} '{nombre}' {LanguageManager.Instance.GetTraduction("CreadoExitoP")}", LanguageManager.Instance.GetTraduction("ExitoP"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LM830_bll.LM830CrearPermiso(LM830nombre);
+                LM830txtNombrePermiso.Clear();
+                LM830CargarDatosFormulario();
+                MessageBox.Show($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("Permisomsjp")} '{LM830nombre}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("CreadoExitoP")}", LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message, LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (Exception LM830ex) { MessageBox.Show(LM830ex.Message, LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-        private void BtnEliminarPermiso_Click(object sender, EventArgs e)
+        private void LM830BtnEliminarPermiso_Click(object LM830sender, EventArgs LM830e)
         {
-            if (dgvPermisos.CurrentRow == null) return;
-            string nombre = dgvPermisos.CurrentRow.Cells["Nombre"].Value.ToString();
+            if (LM830dgvPermisos.CurrentRow == null) return;
+            string LM830nombre = LM830dgvPermisos.CurrentRow.Cells["Nombre"].Value.ToString();
 
-            if (MessageBox.Show($"¿{LanguageManager.Instance.GetTraduction("EliminarP")} '{nombre}'?", LanguageManager.Instance.GetTraduction("Confirmarp"), MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show($"¿{LM830LanguageManager.LM830Instance.LM830GetTraduction("EliminarP")} '{LM830nombre}'?", LM830LanguageManager.LM830Instance.LM830GetTraduction("Confirmarp"), MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             try
             {
-                _bll.EliminarPermiso(nombre);
-                CargarDatosFormulario();
+                LM830_bll.LM830EliminarPermiso(LM830nombre);
+                LM830CargarDatosFormulario();
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception LM830ex) { MessageBox.Show(LM830ex.Message); }
         }
 
-        private void CargarComponentesFamilias()
+        private void LM830CargarComponentesFamilias()
         {
-            lstFamilias.SelectedIndexChanged -= LstFamilias_SelectedIndexChanged;
-            lstFamilias.DataSource = null;
-            lstFamilias.DataSource = _familias;
-            lstFamilias.DisplayMember = "Nombre";
+            LM830lstFamilias.SelectedIndexChanged -= LM830LstFamilias_SelectedIndexChanged;
+            LM830lstFamilias.DataSource = null;
+            LM830lstFamilias.DataSource = LM830_familias;
+            LM830lstFamilias.DisplayMember = "LM830Nombre";
 
-            if (_familiaSeleccionada != null)
+            if (LM830_familiaSeleccionada != null)
             {
-                lstFamilias.SelectedItem = _familias.FirstOrDefault(f => f.Nombre == _familiaSeleccionada.Nombre);
+                LM830lstFamilias.SelectedItem = LM830_familias.FirstOrDefault(LM830f => LM830f.LM830Nombre == LM830_familiaSeleccionada.LM830Nombre);
             }
 
-            lstFamilias.SelectedIndexChanged += LstFamilias_SelectedIndexChanged;
-            VisualizarDetallesFamilia();
+            LM830lstFamilias.SelectedIndexChanged += LM830LstFamilias_SelectedIndexChanged;
+            LM830VisualizarDetallesFamilia();
         }
 
-        private void VisualizarDetallesFamilia()
+        private void LM830VisualizarDetallesFamilia()
         {
-            if (_familiaSeleccionada == null)
+            if (LM830_familiaSeleccionada == null)
             {
-                clbPermisosDisp.DataSource = null;
-                clbPermisosAsig.DataSource = null;
-                clbSubfamiliasDisp.DataSource = null;
-                clbSubfamiliasAsig.DataSource = null;
-                treeView1.Nodes.Clear();
+                LM830clbPermisosDisp.DataSource = null;
+                LM830clbPermisosAsig.DataSource = null;
+                LM830clbSubfamiliasDisp.DataSource = null;
+                LM830clbSubfamiliasAsig.DataSource = null;
+                LM830treeView1.Nodes.Clear();
                 return;
             }
 
-            clbPermisosDisp.DataSource = _bll.ObtenerPermisosDisponibles(_familiaSeleccionada);
-            clbPermisosDisp.DisplayMember = "Nombre";
+            LM830clbPermisosDisp.DataSource = LM830_bll.LM830ObtenerPermisosDisponibles(LM830_familiaSeleccionada);
+            LM830clbPermisosDisp.DisplayMember = "LM830Nombre";
 
-            clbPermisosAsig.DataSource = _familiaSeleccionada.ListaHijos.OfType<PermisoSimple>().ToList();
-            clbPermisosAsig.DisplayMember = "Nombre";
+            LM830clbPermisosAsig.DataSource = LM830_familiaSeleccionada.LM830ListaHijos.OfType<LM830PermisoSimple>().ToList();
+            LM830clbPermisosAsig.DisplayMember = "LM830Nombre";
 
-            clbSubfamiliasDisp.DataSource = _bll.ObtenerFamiliasDisponibles(_familiaSeleccionada.Nombre)
-                .Where(f => !_familiaSeleccionada.ListaHijos.Any(x => x.Nombre == f.Nombre)).ToList();
-            clbSubfamiliasDisp.DisplayMember = "Nombre";
+            LM830clbSubfamiliasDisp.DataSource = LM830_bll.LM830ObtenerFamiliasDisponibles(LM830_familiaSeleccionada.LM830Nombre)
+                .Where(LM830f => !LM830_familiaSeleccionada.LM830ListaHijos.Any(LM830x => LM830x.LM830Nombre == LM830f.LM830Nombre)).ToList();
+            LM830clbSubfamiliasDisp.DisplayMember = "LM830Nombre";
 
-            clbSubfamiliasAsig.DataSource = _familiaSeleccionada.ListaHijos.OfType<Familia>().ToList();
-            clbSubfamiliasAsig.DisplayMember = "Nombre";
+            LM830clbSubfamiliasAsig.DataSource = LM830_familiaSeleccionada.LM830ListaHijos.OfType<LM830Familia>().ToList();
+            LM830clbSubfamiliasAsig.DisplayMember = "LM830Nombre";
 
-            ActualizarTreeViewConsulta(_familiaSeleccionada);
+            LM830ActualizarTreeViewConsulta(LM830_familiaSeleccionada);
         }
 
-        private void LstFamilias_SelectedIndexChanged(object sender, EventArgs e)
+        private void LM830LstFamilias_SelectedIndexChanged(object LM830sender, EventArgs LM830e)
         {
-            _familiaSeleccionada = lstFamilias.SelectedItem as Familia;
-            VisualizarDetallesFamilia();
+            LM830_familiaSeleccionada = LM830lstFamilias.SelectedItem as LM830Familia;
+            LM830VisualizarDetallesFamilia();
         }
 
-        private void BtnCrearFamilia_Click(object sender, EventArgs e)
+        private void LM830BtnCrearFamilia_Click(object LM830sender, EventArgs LM830e)
         {
-            string nombre = txtNombreFamilia.Text.Trim();
+            string LM830nombre = LM830txtNombreFamilia.Text.Trim();
 
-            if (string.IsNullOrEmpty(nombre))
+            if (string.IsNullOrEmpty(LM830nombre))
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("ingreseNombreFamiliaP"), LanguageManager.Instance.GetTraduction("CampoRequeridoP"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtNombreFamilia.Focus();
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("ingreseNombreFamiliaP"), LM830LanguageManager.LM830Instance.LM830GetTraduction("CampoRequeridoP"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LM830txtNombreFamilia.Focus();
                 return;
             }
 
             try
             {
-                _bll.CrearFamilia(nombre);
-                txtNombreFamilia.Clear();
-                CargarDatosFormulario();
-                MessageBox.Show($"{LanguageManager.Instance.GetTraduction("Familiap")} '{nombre}' {LanguageManager.Instance.GetTraduction("CreadoExitoP")}", LanguageManager.Instance.GetTraduction("ExitoP"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LM830_bll.LM830CrearFamilia(LM830nombre);
+                LM830txtNombreFamilia.Clear();
+                LM830CargarDatosFormulario();
+                MessageBox.Show($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("Familiap")} '{LM830nombre}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("CreadoExitoP")}", LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message, LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (Exception LM830ex) { MessageBox.Show(LM830ex.Message, LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-        private void BtnAsignarPermisos_Click(object sender, EventArgs e)
+        private void LM830BtnAsignarPermisos_Click(object LM830sender, EventArgs LM830e)
         {
-            if (_familiaSeleccionada == null) return;
-            var seleccionados = clbPermisosDisp.CheckedItems.Cast<PermisoSimple>().Select(p => p.Nombre).ToList();
-            if (!seleccionados.Any()) return;
+            if (LM830_familiaSeleccionada == null) return;
+            var LM830seleccionados = LM830clbPermisosDisp.CheckedItems.Cast<LM830PermisoSimple>().Select(LM830p => LM830p.LM830Nombre).ToList();
+            if (!LM830seleccionados.Any()) return;
 
-            foreach (var permiso in seleccionados)
+            foreach (var LM830permiso in LM830seleccionados)
             {
-                var res = _bll.AsignarComponentesHijos(_familiaSeleccionada.Nombre, new List<string> { permiso }, true);
+                var LM830res = LM830_bll.LM830AsignarComponentesHijos(LM830_familiaSeleccionada.LM830Nombre, new List<string> { LM830permiso }, true);
 
-                if (res.Estado == EstadoAsignacion.ConflictoPermisos)
+                if (LM830res.LM830Estado == LM830EstadoAsignacion.LM830ConflictoPermisos)
                 {
-                    string detalleError = res.OrigenConflicto[permiso];
+                    string LM830detalleError = LM830res.LM830OrigenConflicto[LM830permiso];
 
-                    if (detalleError != null && detalleError.Contains("Redundancia detectada"))
+                    if (LM830detalleError != null && LM830detalleError.Contains("Redundancia detectada"))
                     {
-                        MostrarModalResolucionHeredada(_familiaSeleccionada.Nombre, permiso, permiso, (estrategia) =>
+                        LM830MostrarModalResolucionHeredada(LM830_familiaSeleccionada.LM830Nombre, LM830permiso, LM830permiso, (LM830estrategia) =>
                         {
-                            if (estrategia == "RESOLVER")
+                            if (LM830estrategia == "RESOLVER")
                             {
-                                _bll.EliminarPermisoRedundanteDeNodoContenedor(_familiaSeleccionada.Nombre, new List<string> { permiso });
-                                var reintento = _bll.AsignarComponentesHijos(_familiaSeleccionada.Nombre, new List<string> { permiso }, true);
-                                if (reintento.Estado == EstadoAsignacion.Ok)
+                                LM830_bll.LM830EliminarPermisoRedundanteDeNodoContenedor(LM830_familiaSeleccionada.LM830Nombre, new List<string> { LM830permiso });
+                                var LM830reintento = LM830_bll.LM830AsignarComponentesHijos(LM830_familiaSeleccionada.LM830Nombre, new List<string> { LM830permiso }, true);
+                                if (LM830reintento.LM830Estado == LM830EstadoAsignacion.LM830Ok)
                                 {
-                                    MessageBox.Show($"{LanguageManager.Instance.GetTraduction("Permisomsjp")} '{permiso}' {LanguageManager.Instance.GetTraduction("UcExitoEnLaRaizp")} '{_familiaSeleccionada.Nombre}' {LanguageManager.Instance.GetTraduction("RemovidoDeSubfami")}", LanguageManager.Instance.GetTraduction("ExitoP"));
+                                    MessageBox.Show($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("Permisomsjp")} '{LM830permiso}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("UcExitoEnLaRaizp")} '{LM830_familiaSeleccionada.LM830Nombre}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("RemovidoDeSubfami")}", LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"));
                                 }
                             }
-                            CargarDatosFormulario();
+                            LM830CargarDatosFormulario();
                         });
                         return;
                     }
 
-                    if (detalleError != null && detalleError.StartsWith("CONFLICTO_HORIZONTAL_DETALLADO|"))
+                    if (LM830detalleError != null && LM830detalleError.StartsWith("CONFLICTO_HORIZONTAL_DETALLADO|"))
                     {
-                        var partes = detalleError.Split('|');
-                        string perm = partes[1];
-                        string nodoDest = partes[2];
-                        string ancestro = partes[3];
-                        string ramaColat = partes[4];
-                        string contenedorDirecto = partes[5];
+                        var LM830partes = LM830detalleError.Split('|');
+                        string LM830perm = LM830partes[1];
+                        string LM830nodoDest = LM830partes[2];
+                        string LM830ancestro = LM830partes[3];
+                        string LM830ramaColat = LM830partes[4];
+                        string LM830contenedorDirecto = LM830partes[5];
 
-                        MostrarModalResolucionHorizontal(ancestro, ramaColat, contenedorDirecto, nodoDest, perm, (estrategia) =>
+                        LM830MostrarModalResolucionHorizontal(LM830ancestro, LM830ramaColat, LM830contenedorDirecto, LM830nodoDest, LM830perm, (LM830estrategia) =>
                         {
-                            if (estrategia == "RESOLVER")
+                            if (LM830estrategia == "RESOLVER")
                             {
-                                _bll.EliminarPermisoDeContenedorEspecifico(contenedorDirecto, perm);
-                                var reintento = _bll.AsignarComponentesHijos(nodoDest, new List<string> { perm }, true);
-                                if (reintento.Estado == EstadoAsignacion.Ok)
+                                LM830_bll.LM830EliminarPermisoDeContenedorEspecifico(LM830contenedorDirecto, LM830perm);
+                                var LM830reintento = LM830_bll.LM830AsignarComponentesHijos(LM830nodoDest, new List<string> { LM830perm }, true);
+                                if (LM830reintento.LM830Estado == LM830EstadoAsignacion.LM830Ok)
                                 {
-                                    MessageBox.Show($"{LanguageManager.Instance.GetTraduction("Permisomsjp")} '{perm}' {LanguageManager.Instance.GetTraduction("AsConExitoaP")} '{nodoDest}' {LanguageManager.Instance.GetTraduction("TrasResolverRedun")}", LanguageManager.Instance.GetTraduction("TrasResolverRedun"));
+                                    MessageBox.Show($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("Permisomsjp")} '{LM830perm}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("AsConExitoaP")} '{LM830nodoDest}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("TrasResolverRedun")}", LM830LanguageManager.LM830Instance.LM830GetTraduction("TrasResolverRedun"));
                                 }
                             }
-                            CargarDatosFormulario();
+                            LM830CargarDatosFormulario();
                         });
                         return;
                     }
 
-                    MessageBox.Show(detalleError, LanguageManager.Instance.GetTraduction("validacionesDePermisosmsj"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(LM830detalleError, LM830LanguageManager.LM830Instance.LM830GetTraduction("validacionesDePermisosmsj"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
 
-            CargarDatosFormulario();
-            MessageBox.Show(LanguageManager.Instance.GetTraduction("PermisosAsignadosCorrectmsjP"), LanguageManager.Instance.GetTraduction("ExitoP"));
+            LM830CargarDatosFormulario();
+            MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("PermisosAsignadosCorrectmsjP"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"));
         }
 
-        private void BtnQuitarPermisos_Click(object sender, EventArgs e)
+        private void LM830BtnQuitarPermisos_Click(object LM830sender, EventArgs LM830e)
         {
-            if (_familiaSeleccionada == null) return;
-            var seleccionados = clbPermisosAsig.CheckedItems.Cast<PermisoSimple>().Select(p => p.Nombre).ToList();
-            if (!seleccionados.Any()) return;
+            if (LM830_familiaSeleccionada == null) return;
+            var LM830seleccionados = LM830clbPermisosAsig.CheckedItems.Cast<LM830PermisoSimple>().Select(LM830p => LM830p.LM830Nombre).ToList();
+            if (!LM830seleccionados.Any()) return;
 
-            _bll.QuitarHijos(_familiaSeleccionada.Nombre, seleccionados, true);
-            CargarDatosFormulario();
-            MessageBox.Show(LanguageManager.Instance.GetTraduction("PermisosRemovep"), LanguageManager.Instance.GetTraduction("ExitoP"));
+            LM830_bll.LM830QuitarHijos(LM830_familiaSeleccionada.LM830Nombre, LM830seleccionados, true);
+            LM830CargarDatosFormulario();
+            MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("PermisosRemovep"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"));
         }
 
-        private void BtnAsignarSubfamilia_Click(object sender, EventArgs e)
+        private void LM830BtnAsignarSubfamilia_Click(object LM830sender, EventArgs LM830e)
         {
-            if (_familiaSeleccionada == null) return;
-            var seleccionadas = clbSubfamiliasDisp.CheckedItems.Cast<Familia>().Select(f => f.Nombre).ToList();
-            if (!seleccionadas.Any()) return;
+            if (LM830_familiaSeleccionada == null) return;
+            var LM830seleccionadas = LM830clbSubfamiliasDisp.CheckedItems.Cast<LM830Familia>().Select(LM830f => LM830f.LM830Nombre).ToList();
+            if (!LM830seleccionadas.Any()) return;
 
-            foreach (var subfamiliaHijo in seleccionadas)
+            foreach (var LM830subfamiliaHijo in LM830seleccionadas)
             {
-                var res = _bll.AsignarComponentesHijos(_familiaSeleccionada.Nombre, new List<string> { subfamiliaHijo }, false);
+                var LM830res = LM830_bll.LM830AsignarComponentesHijos(LM830_familiaSeleccionada.LM830Nombre, new List<string> { LM830subfamiliaHijo }, false);
 
-                if (res.Estado == EstadoAsignacion.ConflictoPermisos)
+                if (LM830res.LM830Estado == LM830EstadoAsignacion.LM830ConflictoPermisos)
                 {
-                    string claveConflicto = res.OrigenConflicto.Values.FirstOrDefault();
+                    string LM830claveConflicto = LM830res.LM830OrigenConflicto.Values.FirstOrDefault();
 
-                    if (claveConflicto != null && claveConflicto.StartsWith("CONFLICTO_REDUNDANCIA_HEREDADA|"))
+                    if (LM830claveConflicto != null && LM830claveConflicto.StartsWith("CONFLICTO_REDUNDANCIA_HEREDADA|"))
                     {
-                        var partes = claveConflicto.Split('|');
-                        var permisosConflictivos = partes[1].Split(',').ToList();
-                        string subFamiliaConflictiva = partes[2];
-                        string nodoDondeYaExiste = partes[3];
+                        var LM830partes = LM830claveConflicto.Split('|');
+                        var LM830permisosConflictivos = LM830partes[1].Split(',').ToList();
+                        string LM830subFamiliaConflictiva = LM830partes[2];
+                        string LM830nodoDondeYaExiste = LM830partes[3];
 
-                        MostrarModalResolucionHeredada(nodoDondeYaExiste, subFamiliaConflictiva, partes[1], (estrategia) =>
+                        LM830MostrarModalResolucionHeredada(LM830nodoDondeYaExiste, LM830subFamiliaConflictiva, LM830partes[1], (LM830estrategia) =>
                         {
-                            if (estrategia == "RESOLVER")
+                            if (LM830estrategia == "RESOLVER")
                             {
-                                _bll.EliminarPermisoRedundanteDeNodoContenedor(_familiaSeleccionada.Nombre, permisosConflictivos);
-                                var reintento = _bll.AsignarComponentesHijos(_familiaSeleccionada.Nombre, new List<string> { subfamiliaHijo }, false);
-                                if (reintento.Estado == EstadoAsignacion.Ok)
+                                LM830_bll.LM830EliminarPermisoRedundanteDeNodoContenedor(LM830_familiaSeleccionada.LM830Nombre, LM830permisosConflictivos);
+                                var LM830reintento = LM830_bll.LM830AsignarComponentesHijos(LM830_familiaSeleccionada.LM830Nombre, new List<string> { LM830subfamiliaHijo }, false);
+                                if (LM830reintento.LM830Estado == LM830EstadoAsignacion.LM830Ok)
                                 {
-                                    MessageBox.Show($"'{subfamiliaHijo}' {LanguageManager.Instance.GetTraduction("AsigCorrecmsjP")}", LanguageManager.Instance.GetTraduction("ExitoP"));
+                                    MessageBox.Show($"'{LM830subfamiliaHijo}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("AsigCorrecmsjP")}", LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"));
                                 }
                             }
-                            CargarDatosFormulario();
+                            LM830CargarDatosFormulario();
                         });
                         return;
                     }
 
-                    MessageBox.Show(claveConflicto, LanguageManager.Instance.GetTraduction("Restriccionp"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(LM830claveConflicto, LM830LanguageManager.LM830Instance.LM830GetTraduction("Restriccionp"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
 
-            CargarDatosFormulario();
-            MessageBox.Show(LanguageManager.Instance.GetTraduction("SubFamiliaAsigCorrectp"), LanguageManager.Instance.GetTraduction("ExitoP"));
+            LM830CargarDatosFormulario();
+            MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("SubFamiliaAsigCorrectp"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"));
         }
 
-        private void BtnQuitarSubfamilia_Click(object sender, EventArgs e)
+        private void LM830BtnQuitarSubfamilia_Click(object LM830sender, EventArgs LM830e)
         {
-            if (_familiaSeleccionada == null) return;
-            var seleccionadas = clbSubfamiliasAsig.CheckedItems.Cast<Familia>().Select(f => f.Nombre).ToList();
-            if (!seleccionadas.Any()) return;
+            if (LM830_familiaSeleccionada == null) return;
+            var LM830seleccionadas = LM830clbSubfamiliasAsig.CheckedItems.Cast<LM830Familia>().Select(LM830f => LM830f.LM830Nombre).ToList();
+            if (!LM830seleccionadas.Any()) return;
 
-            _bll.QuitarHijos(_familiaSeleccionada.Nombre, seleccionadas, false);
-            CargarDatosFormulario();
-            MessageBox.Show(LanguageManager.Instance.GetTraduction("SubFamiliaRemovep"), LanguageManager.Instance.GetTraduction("ExitoP"));
+            LM830_bll.LM830QuitarHijos(LM830_familiaSeleccionada.LM830Nombre, LM830seleccionadas, false);
+            LM830CargarDatosFormulario();
+            MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("SubFamiliaRemovep"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"));
         }
 
-        private void BtnEliminarFamilia_Click(object sender, EventArgs e)
+        private void LM830BtnEliminarFamilia_Click(object LM830sender, EventArgs LM830e)
         {
-            if (_familiaSeleccionada == null) return;
-            if (MessageBox.Show($"¿{LanguageManager.Instance.GetTraduction("EstasSeguroEliFami")} '{_familiaSeleccionada.Nombre}'? {LanguageManager.Instance.GetTraduction("EstasAcciQuiToRelap")}", LanguageManager.Instance.GetTraduction("ConfirmarElimip"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            if (LM830_familiaSeleccionada == null) return;
+            if (MessageBox.Show($"¿{LM830LanguageManager.LM830Instance.LM830GetTraduction("EstasSeguroEliFami")} '{LM830_familiaSeleccionada.LM830Nombre}'? {LM830LanguageManager.LM830Instance.LM830GetTraduction("EstasAcciQuiToRelap")}", LM830LanguageManager.LM830Instance.LM830GetTraduction("ConfirmarElimip"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
 
             try
             {
-                _bll.EliminarFamiliaOPerfil(_familiaSeleccionada.Nombre);
+                LM830_bll.LM830EliminarFamiliaOPerfil(LM830_familiaSeleccionada.LM830Nombre);
 
-                string nombreEliminado = _familiaSeleccionada.Nombre;
-                _familiaSeleccionada = null;
+                string LM830nombreEliminado = LM830_familiaSeleccionada.LM830Nombre;
+                LM830_familiaSeleccionada = null;
 
-                CargarDatosFormulario();
-                MessageBox.Show($"{LanguageManager.Instance.GetTraduction("LaFamiliamsjP")} '{nombreEliminado}' {LanguageManager.Instance.GetTraduction("SeEliminodelSistema")}", LanguageManager.Instance.GetTraduction("ExitoP"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LM830CargarDatosFormulario();
+                MessageBox.Show($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("LaFamiliamsjP")} '{LM830nombreEliminado}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("SeEliminodelSistema")}", LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, LanguageManager.Instance.GetTraduction("RestrIntegraJerarmsjP"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(LM830ex.Message, LM830LanguageManager.LM830Instance.LM830GetTraduction("RestrIntegraJerarmsjP"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
-        private void CargarComponentesPerfiles()
+        private void LM830CargarComponentesPerfiles()
         {
-            lstPerfiles.SelectedIndexChanged -= LstPerfiles_SelectedIndexChanged;
-            lstPerfiles.DataSource = null;
-            lstPerfiles.DataSource = _perfiles;
-            lstPerfiles.DisplayMember = "Nombre";
+            LM830lstPerfiles.SelectedIndexChanged -= LM830LstPerfiles_SelectedIndexChanged;
+            LM830lstPerfiles.DataSource = null;
+            LM830lstPerfiles.DataSource = LM830_perfiles;
+            LM830lstPerfiles.DisplayMember = "LM830Nombre";
 
-            if (_perfilSeleccionado != null)
+            if (LM830_perfilSeleccionado != null)
             {
-                lstPerfiles.SelectedItem = _perfiles.FirstOrDefault(p => p.Nombre == _perfilSeleccionado.Nombre);
+                LM830lstPerfiles.SelectedItem = LM830_perfiles.FirstOrDefault(LM830p => LM830p.LM830Nombre == LM830_perfilSeleccionado.LM830Nombre);
             }
 
-            lstPerfiles.SelectedIndexChanged += LstPerfiles_SelectedIndexChanged;
-            VisualizarDetallesPerfil();
+            LM830lstPerfiles.SelectedIndexChanged += LM830LstPerfiles_SelectedIndexChanged;
+            LM830VisualizarDetallesPerfil();
         }
 
-        private void VisualizarDetallesPerfil()
+        private void LM830VisualizarDetallesPerfil()
         {
-            if (_perfilSeleccionado == null)
+            if (LM830_perfilSeleccionado == null)
             {
-                clbFamiliasDispPerfil.DataSource = null;
-                clbFamiliasAsigPerfil.DataSource = null;
-                clbPermisosDispPerfil.DataSource = null;
-                clbPermisosAsigPerfil.DataSource = null;
-                treeView1.Nodes.Clear();
+                LM830clbFamiliasDispPerfil.DataSource = null;
+                LM830clbFamiliasAsigPerfil.DataSource = null;
+                LM830clbPermisosDispPerfil.DataSource = null;
+                LM830clbPermisosAsigPerfil.DataSource = null;
+                LM830treeView1.Nodes.Clear();
                 return;
             }
 
-            clbFamiliasDispPerfil.DataSource = _bll.ObtenerFamiliasDisponibles(_perfilSeleccionado.Nombre)
-                .Where(f => !_perfilSeleccionado.ListaHijos.Any(x => x.Nombre == f.Nombre)).ToList();
-            clbFamiliasDispPerfil.DisplayMember = "Nombre";
+            LM830clbFamiliasDispPerfil.DataSource = LM830_bll.LM830ObtenerFamiliasDisponibles(LM830_perfilSeleccionado.LM830Nombre)
+                .Where(LM830f => !LM830_perfilSeleccionado.LM830ListaHijos.Any(LM830x => LM830x.LM830Nombre == LM830f.LM830Nombre)).ToList();
+            LM830clbFamiliasDispPerfil.DisplayMember = "LM830Nombre";
 
-            clbFamiliasAsigPerfil.DataSource = _perfilSeleccionado.ListaHijos.OfType<Familia>().ToList();
-            clbFamiliasAsigPerfil.DisplayMember = "Nombre";
+            LM830clbFamiliasAsigPerfil.DataSource = LM830_perfilSeleccionado.LM830ListaHijos.OfType<LM830Familia>().ToList();
+            LM830clbFamiliasAsigPerfil.DisplayMember = "LM830Nombre";
 
-            clbPermisosDispPerfil.DataSource = _bll.ObtenerPermisosDisponibles(_perfilSeleccionado);
-            clbPermisosDispPerfil.DisplayMember = "Nombre";
+            LM830clbPermisosDispPerfil.DataSource = LM830_bll.LM830ObtenerPermisosDisponibles(LM830_perfilSeleccionado);
+            LM830clbPermisosDispPerfil.DisplayMember = "LM830Nombre";
 
-            clbPermisosAsigPerfil.DataSource = _perfilSeleccionado.ListaHijos.OfType<PermisoSimple>().ToList();
-            clbPermisosAsigPerfil.DisplayMember = "Nombre";
+            LM830clbPermisosAsigPerfil.DataSource = LM830_perfilSeleccionado.LM830ListaHijos.OfType<LM830PermisoSimple>().ToList();
+            LM830clbPermisosAsigPerfil.DisplayMember = "LM830Nombre";
 
-            ActualizarTreeViewConsulta(_perfilSeleccionado);
+            LM830ActualizarTreeViewConsulta(LM830_perfilSeleccionado);
         }
 
-        private void LstPerfiles_SelectedIndexChanged(object sender, EventArgs e)
+        private void LM830LstPerfiles_SelectedIndexChanged(object LM830sender, EventArgs LM830e)
         {
-            _perfilSeleccionado = lstPerfiles.SelectedItem as Familia;
-            VisualizarDetallesPerfil();
+            LM830_perfilSeleccionado = LM830lstPerfiles.SelectedItem as LM830Familia;
+            LM830VisualizarDetallesPerfil();
         }
 
-        private void BtnCrearPerfil_Click(object sender, EventArgs e)
+        private void LM830BtnCrearPerfil_Click(object LM830sender, EventArgs LM830e)
         {
-            string nombre = txtNombrePerfil.Text.Trim();
+            string LM830nombre = LM830txtNombrePerfil.Text.Trim();
 
-            if (string.IsNullOrEmpty(nombre))
+            if (string.IsNullOrEmpty(LM830nombre))
             {
-                MessageBox.Show(LanguageManager.Instance.GetTraduction("ingUnNombrePerfilP"), LanguageManager.Instance.GetTraduction("CampoRequeridoP"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtNombrePerfil.Focus();
+                MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("ingUnNombrePerfilP"), LM830LanguageManager.LM830Instance.LM830GetTraduction("CampoRequeridoP"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LM830txtNombrePerfil.Focus();
                 return;
             }
 
             try
             {
-                _bll.CrearPerfil(nombre);
-                txtNombrePerfil.Clear();
-                CargarDatosFormulario();
-                MessageBox.Show($"{LanguageManager.Instance.GetTraduction("PerfilmsjP")} '{nombre}'{LanguageManager.Instance.GetTraduction("CreadoExitoP")}", LanguageManager.Instance.GetTraduction("ExitoP"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LM830_bll.LM830CrearPerfil(LM830nombre);
+                LM830txtNombrePerfil.Clear();
+                LM830CargarDatosFormulario();
+                MessageBox.Show($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("PerfilmsjP")} '{LM830nombre}'{LM830LanguageManager.LM830Instance.LM830GetTraduction("CreadoExitoP")}", LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message, LanguageManager.Instance.GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (Exception LM830ex) { MessageBox.Show(LM830ex.Message, LM830LanguageManager.LM830Instance.LM830GetTraduction("ErrorP"), MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-        private void BtnAsignarFamiliaPerfil_Click(object sender, EventArgs e)
+        private void LM830BtnAsignarFamiliaPerfil_Click(object LM830sender, EventArgs LM830e)
         {
-            if (_perfilSeleccionado == null) return;
-            var seleccionados = clbFamiliasDispPerfil.CheckedItems.Cast<Familia>().Select(f => f.Nombre).ToList();
-            if (!seleccionados.Any()) return;
+            if (LM830_perfilSeleccionado == null) return;
+            var LM830seleccionados = LM830clbFamiliasDispPerfil.CheckedItems.Cast<LM830Familia>().Select(LM830f => LM830f.LM830Nombre).ToList();
+            if (!LM830seleccionados.Any()) return;
 
-            foreach (var familia in seleccionados)
+            foreach (var LM830familia in LM830seleccionados)
             {
-                var res = _bll.AsignarComponentesHijos(_perfilSeleccionado.Nombre, new List<string> { familia }, false);
+                var LM830res = LM830_bll.LM830AsignarComponentesHijos(LM830_perfilSeleccionado.LM830Nombre, new List<string> { LM830familia }, false);
 
-                if (res.Estado == EstadoAsignacion.ConflictoPermisos)
+                if (LM830res.LM830Estado == LM830EstadoAsignacion.LM830ConflictoPermisos)
                 {
-                    string detalleError = res.OrigenConflicto[familia];
+                    string LM830detalleError = LM830res.LM830OrigenConflicto[LM830familia];
 
-                    if (detalleError != null && detalleError.StartsWith("CONFLICTO_REDUNDANCIA_HEREDADA|"))
+                    if (LM830detalleError != null && LM830detalleError.StartsWith("CONFLICTO_REDUNDANCIA_HEREDADA|"))
                     {
-                        var partes = detalleError.Split('|');
-                        var permisosConflictivos = partes[1].Split(',').ToList();
-                        string subFamiliaConflictiva = partes[2];
-                        string nodoDondeYaExiste = partes[3];
+                        var LM830partes = LM830detalleError.Split('|');
+                        var LM830permisosConflictivos = LM830partes[1].Split(',').ToList();
+                        string LM830subFamiliaConflictiva = LM830partes[2];
+                        string LM830nodoDondeYaExiste = LM830partes[3];
 
-                        MostrarModalResolucionHeredada(nodoDondeYaExiste, subFamiliaConflictiva, partes[1], (estrategia) =>
+                        LM830MostrarModalResolucionHeredada(LM830nodoDondeYaExiste, LM830subFamiliaConflictiva, LM830partes[1], (LM830estrategia) =>
                         {
-                            if (estrategia == "RESOLVER")
+                            if (LM830estrategia == "RESOLVER")
                             {
-                                _bll.EliminarPermisoRedundanteDeNodoContenedor(_perfilSeleccionado.Nombre, permisosConflictivos);
-                                var reintento = _bll.AsignarComponentesHijos(_perfilSeleccionado.Nombre, new List<string> { subFamiliaConflictiva }, false);
-                                if (reintento.Estado == EstadoAsignacion.Ok)
+                                LM830_bll.LM830EliminarPermisoRedundanteDeNodoContenedor(LM830_perfilSeleccionado.LM830Nombre, LM830permisosConflictivos);
+                                var LM830reintento = LM830_bll.LM830AsignarComponentesHijos(LM830_perfilSeleccionado.LM830Nombre, new List<string> { LM830subFamiliaConflictiva }, false);
+                                if (LM830reintento.LM830Estado == LM830EstadoAsignacion.LM830Ok)
                                 {
-                                    MessageBox.Show($"{LanguageManager.Instance.GetTraduction("Familiap")} '{subFamiliaConflictiva}' {LanguageManager.Instance.GetTraduction("integradaAlPerfilExitosamentep")}", LanguageManager.Instance.GetTraduction("ExitoP"));
+                                    MessageBox.Show($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("Familiap")} '{LM830subFamiliaConflictiva}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("integradaAlPerfilExitosamentep")}", LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"));
                                 }
                             }
-                            CargarDatosFormulario();
+                            LM830CargarDatosFormulario();
                         });
                         return;
                     }
 
-                    MessageBox.Show(detalleError, LanguageManager.Instance.GetTraduction("ValiEstrucPerfP"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(LM830detalleError, LM830LanguageManager.LM830Instance.LM830GetTraduction("ValiEstrucPerfP"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
 
-            CargarDatosFormulario();
-            MessageBox.Show(LanguageManager.Instance.GetTraduction("FamiAsigAPerfCorrecp"), LanguageManager.Instance.GetTraduction("ExitoP"));
+            LM830CargarDatosFormulario();
+            MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("FamiAsigAPerfCorrecp"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"));
         }
 
-        private void BtnQuitarFamiliaPerfil_Click(object sender, EventArgs e)
+        private void LM830BtnQuitarFamiliaPerfil_Click(object LM830sender, EventArgs LM830e)
         {
-            if (_perfilSeleccionado == null) return;
-            var seleccionadas = clbFamiliasAsigPerfil.CheckedItems.Cast<Familia>().Select(f => f.Nombre).ToList();
-            if (!seleccionadas.Any()) return;
+            if (LM830_perfilSeleccionado == null) return;
+            var LM830seleccionadas = LM830clbFamiliasAsigPerfil.CheckedItems.Cast<LM830Familia>().Select(LM830f => LM830f.LM830Nombre).ToList();
+            if (!LM830seleccionadas.Any()) return;
 
-            _bll.QuitarHijos(_perfilSeleccionado.Nombre, seleccionadas, false);
-            CargarDatosFormulario();
-            MessageBox.Show(LanguageManager.Instance.GetTraduction("FamiRemovep"), LanguageManager.Instance.GetTraduction("ExitoP"));
+            LM830_bll.LM830QuitarHijos(LM830_perfilSeleccionado.LM830Nombre, LM830seleccionadas, false);
+            LM830CargarDatosFormulario();
+            MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("FamiRemovep"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"));
         }
 
-        private void BtnAsignarPermisoPerfil_Click(object sender, EventArgs e)
+        private void LM830BtnAsignarPermisoPerfil_Click(object LM830sender, EventArgs LM830e)
         {
-            if (_perfilSeleccionado == null) return;
-            var seleccionados = clbPermisosDispPerfil.CheckedItems.Cast<PermisoSimple>().Select(p => p.Nombre).ToList();
-            if (!seleccionados.Any()) return;
+            if (LM830_perfilSeleccionado == null) return;
+            var LM830seleccionados = LM830clbPermisosDispPerfil.CheckedItems.Cast<LM830PermisoSimple>().Select(LM830p => LM830p.LM830Nombre).ToList();
+            if (!LM830seleccionados.Any()) return;
 
-            foreach (var permiso in seleccionados)
+            foreach (var LM830permiso in LM830seleccionados)
             {
-                var res = _bll.AsignarComponentesHijos(_perfilSeleccionado.Nombre, new List<string> { permiso }, true);
+                var LM830res = LM830_bll.LM830AsignarComponentesHijos(LM830_perfilSeleccionado.LM830Nombre, new List<string> { LM830permiso }, true);
 
-                if (res.Estado == EstadoAsignacion.ConflictoPermisos)
+                if (LM830res.LM830Estado == LM830EstadoAsignacion.LM830ConflictoPermisos)
                 {
-                    string detalleError = res.OrigenConflicto[permiso];
+                    string LM830detalleError = LM830res.LM830OrigenConflicto[LM830permiso];
 
-                    if (detalleError != null && detalleError.Contains("Redundancia detectada"))
+                    if (LM830detalleError != null && LM830detalleError.Contains("Redundancia detectada"))
                     {
-                        MostrarModalResolucionHeredada(_perfilSeleccionado.Nombre, permiso, permiso, (estrategia) =>
+                        LM830MostrarModalResolucionHeredada(LM830_perfilSeleccionado.LM830Nombre, LM830permiso, LM830permiso, (LM830estrategia) =>
                         {
-                            if (estrategia == "RESOLVER")
+                            if (LM830estrategia == "RESOLVER")
                             {
-                                _bll.EliminarPermisoRedundanteDeNodoContenedor(_perfilSeleccionado.Nombre, new List<string> { permiso });
-                                var reintento = _bll.AsignarComponentesHijos(_perfilSeleccionado.Nombre, new List<string> { permiso }, true);
-                                if (reintento.Estado == EstadoAsignacion.Ok)
+                                LM830_bll.LM830EliminarPermisoRedundanteDeNodoContenedor(LM830_perfilSeleccionado.LM830Nombre, new List<string> { LM830permiso });
+                                var LM830reintento = LM830_bll.LM830AsignarComponentesHijos(LM830_perfilSeleccionado.LM830Nombre, new List<string> { LM830permiso }, true);
+                                if (LM830reintento.LM830Estado == LM830EstadoAsignacion.LM830Ok)
                                 {
-                                    MessageBox.Show($"{LanguageManager.Instance.GetTraduction("Permisomsjp")} '{permiso}' {LanguageManager.Instance.GetTraduction("UnifiConExitoRaizFamilia")} '{_perfilSeleccionado.Nombre}' {LanguageManager.Instance.GetTraduction("YRemoveDeSusFamilp")}", LanguageManager.Instance.GetTraduction("ExitoP"));
+                                    MessageBox.Show($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("Permisomsjp")} '{LM830permiso}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("UnifiConExitoRaizFamilia")} '{LM830_perfilSeleccionado.LM830Nombre}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("YRemoveDeSusFamilp")}", LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"));
                                 }
                             }
-                            CargarDatosFormulario();
+                            LM830CargarDatosFormulario();
                         });
                         return;
                     }
 
-                    if (detalleError != null && detalleError.StartsWith("CONFLICTO_HORIZONTAL_DETALLADO|"))
+                    if (LM830detalleError != null && LM830detalleError.StartsWith("CONFLICTO_HORIZONTAL_DETALLADO|"))
                     {
-                        var partes = detalleError.Split('|');
-                        string perm = partes[1];
-                        string nodoDest = partes[2];
-                        string ancestro = partes[3];
-                        string ramaColat = partes[4];
-                        string contenedorDirecto = partes[5];
+                        var LM830partes = LM830detalleError.Split('|');
+                        string LM830perm = LM830partes[1];
+                        string LM830nodoDest = LM830partes[2];
+                        string LM830ancestro = LM830partes[3];
+                        string LM830ramaColat = LM830partes[4];
+                        string LM830contenedorDirecto = LM830partes[5];
 
-                        MostrarModalResolucionHorizontal(ancestro, ramaColat, contenedorDirecto, nodoDest, perm, (estrategia) =>
+                        LM830MostrarModalResolucionHorizontal(LM830ancestro, LM830ramaColat, LM830contenedorDirecto, LM830nodoDest, LM830perm, (LM830estrategia) =>
                         {
-                            if (estrategia == "RESOLVER")
+                            if (LM830estrategia == "RESOLVER")
                             {
-                                _bll.EliminarPermisoDeContenedorEspecifico(contenedorDirecto, perm);
-                                var reintento = _bll.AsignarComponentesHijos(nodoDest, new List<string> { perm }, true);
-                                if (reintento.Estado == EstadoAsignacion.Ok)
+                                LM830_bll.LM830EliminarPermisoDeContenedorEspecifico(LM830contenedorDirecto, LM830perm);
+                                var LM830reintento = LM830_bll.LM830AsignarComponentesHijos(LM830nodoDest, new List<string> { LM830perm }, true);
+                                if (LM830reintento.LM830Estado == LM830EstadoAsignacion.LM830Ok)
                                 {
-                                    MessageBox.Show($"{LanguageManager.Instance.GetTraduction("Permisomsjp")} '{perm}' {LanguageManager.Instance.GetTraduction("UnificandoExtoPermisop")} '{nodoDest}'.", LanguageManager.Instance.GetTraduction("ExitoP"));
+                                    MessageBox.Show($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("Permisomsjp")} '{LM830perm}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("UnificandoExtoPermisop")} '{LM830nodoDest}'.", LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"));
                                 }
                             }
-                            CargarDatosFormulario();
+                            LM830CargarDatosFormulario();
                         });
                         return;
                     }
 
-                    MessageBox.Show(detalleError, LanguageManager.Instance.GetTraduction("ValiPerPerfp"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(LM830detalleError, LM830LanguageManager.LM830Instance.LM830GetTraduction("ValiPerPerfp"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
 
-            CargarDatosFormulario();
-            MessageBox.Show(LanguageManager.Instance.GetTraduction("PermiAsigPerfCorrectP"), LanguageManager.Instance.GetTraduction("ExitoP"));
+            LM830CargarDatosFormulario();
+            MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("PermiAsigPerfCorrectP"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"));
         }
 
-        private void BtnQuitarPermisoPerfil_Click(object sender, EventArgs e)
+        private void LM830BtnQuitarPermisoPerfil_Click(object LM830sender, EventArgs LM830e)
         {
-            if (_perfilSeleccionado == null) return;
-            var seleccionados = clbPermisosAsigPerfil.CheckedItems.Cast<PermisoSimple>().Select(p => p.Nombre).ToList();
-            if (!seleccionados.Any()) return;
+            if (LM830_perfilSeleccionado == null) return;
+            var LM830seleccionados = LM830clbPermisosAsigPerfil.CheckedItems.Cast<LM830PermisoSimple>().Select(LM830p => LM830p.LM830Nombre).ToList();
+            if (!LM830seleccionados.Any()) return;
 
-            _bll.QuitarHijos(_perfilSeleccionado.Nombre, seleccionados, true);
-            CargarDatosFormulario();
-            MessageBox.Show(LanguageManager.Instance.GetTraduction("PermisosRemovep"), LanguageManager.Instance.GetTraduction("ExitoP"));
+            LM830_bll.LM830QuitarHijos(LM830_perfilSeleccionado.LM830Nombre, LM830seleccionados, true);
+            LM830CargarDatosFormulario();
+            MessageBox.Show(LM830LanguageManager.LM830Instance.LM830GetTraduction("PermisosRemovep"), LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"));
         }
 
-        private void BtnEliminarPerfil_Click(object sender, EventArgs e)
+        private void LM830BtnEliminarPerfil_Click(object LM830sender, EventArgs LM830e)
         {
-            if (_perfilSeleccionado == null) return;
-            if (MessageBox.Show($"¿{LanguageManager.Instance.GetTraduction("SeguEliminaPerfP")} '{_perfilSeleccionado.Nombre}'?", LanguageManager.Instance.GetTraduction("ConfirmarElimip"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            if (LM830_perfilSeleccionado == null) return;
+            if (MessageBox.Show($"¿{LM830LanguageManager.LM830Instance.LM830GetTraduction("SeguEliminaPerfP")} '{LM830_perfilSeleccionado.LM830Nombre}'?", LM830LanguageManager.LM830Instance.LM830GetTraduction("ConfirmarElimip"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
 
             try
             {
-                _bll.EliminarFamiliaOPerfil(_perfilSeleccionado.Nombre);
+                LM830_bll.LM830EliminarFamiliaOPerfil(LM830_perfilSeleccionado.LM830Nombre);
 
-                string nombreEliminado = _perfilSeleccionado.Nombre;
-                _perfilSeleccionado = null;
+                string LM830nombreEliminado = LM830_perfilSeleccionado.LM830Nombre;
+                LM830_perfilSeleccionado = null;
 
-                CargarDatosFormulario();
-                MessageBox.Show($"{LanguageManager.Instance.GetTraduction("ELPerfilP")} '{nombreEliminado}' {LanguageManager.Instance.GetTraduction("SeEliminodelSistema")}", LanguageManager.Instance.GetTraduction("ExitoP"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LM830CargarDatosFormulario();
+                MessageBox.Show($"{LM830LanguageManager.LM830Instance.LM830GetTraduction("ELPerfilP")} '{LM830nombreEliminado}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("SeEliminodelSistema")}", LM830LanguageManager.LM830Instance.LM830GetTraduction("ExitoP"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
+            catch (Exception LM830ex)
             {
-                MessageBox.Show(ex.Message, LanguageManager.Instance.GetTraduction("RestAsigUsup"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(LM830ex.Message, LM830LanguageManager.LM830Instance.LM830GetTraduction("RestAsigUsup"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
-        private void MostrarModalResolucionHorizontal(string ancestro, string ramaColateral, string contenedorDirecto, string nodoDestino, string permiso, Action<string> callback)
+        private void LM830MostrarModalResolucionHorizontal(string LM830ancestro, string LM830ramaColateral, string LM830contenedorDirecto, string LM830nodoDestino, string LM830permiso, Action<string> LM830callback)
         {
-            Control panelActivo = RbPerfiles.Checked ? (Control)panelPerfiles : (Control)panelFamilias;
-            panelActivo.Enabled = false;
+            Control LM830panelActivo = LM830RbPerfiles.Checked ? (Control)LM830panelPerfiles : (Control)LM830panelFamilias;
+            LM830panelActivo.Enabled = false;
 
-            Panel pnlModal = new Panel
+            Panel LM830pnlModal = new Panel
             {
                 Name = "pnlModalHorizontal",
                 Size = new Size(600, 390),
                 BackColor = Color.FromArgb(255, 244, 244),
                 BorderStyle = BorderStyle.FixedSingle
             };
-            pnlModal.Location = new Point((this.ClientSize.Width - pnlModal.Width) / 2, (this.ClientSize.Height - pnlModal.Height) / 2);
+            LM830pnlModal.Location = new Point((this.ClientSize.Width - LM830pnlModal.Width) / 2, (this.ClientSize.Height - LM830pnlModal.Height) / 2);
 
-            var lblTitulo = new Label
+            var LM830lblTitulo = new Label
             {
-                Text = LanguageManager.Instance.GetTraduction("AlerCritiP"),
+                Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("AlerCritiP"),
                 Location = new Point(15, 15),
                 Size = new Size(570, 25),
                 Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                 ForeColor = Color.Firebrick
             };
 
-            string textoExplicativo = "";
+            string LM830textoExplicativo = "";
 
-            if (RbFamilias.Checked)
+            if (LM830RbFamilias.Checked)
             {
-                string familiaActual = _familiaSeleccionada != null ? _familiaSeleccionada.Nombre : nodoDestino;
+                string LM830familiaActual = LM830_familiaSeleccionada != null ? LM830_familiaSeleccionada.LM830Nombre : LM830nodoDestino;
 
-                textoExplicativo =
-                    $"{LanguageManager.Instance.GetTraduction("textexpli1")} '{permiso}' {LanguageManager.Instance.GetTraduction("textexpli2")} '{familiaActual}'.\n\n" +
-                    $"[{LanguageManager.Instance.GetTraduction("text3")}]:\n" +
-                    $"{LanguageManager.Instance.GetTraduction("text4")} '{ancestro}').\n\n" +
-                    $"{LanguageManager.Instance.GetTraduction("Text5")} '{ramaColateral}', {LanguageManager.Instance.GetTraduction("text6")} '{contenedorDirecto}').\n\n" +
-                    $"{LanguageManager.Instance.GetTraduction("text7")} '{permiso}' {LanguageManager.Instance.GetTraduction("text8")}";
+                LM830textoExplicativo =
+                    $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("textexpli1")} '{LM830permiso}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("textexpli2")} '{LM830familiaActual}'.\n\n" +
+                    $"[{LM830LanguageManager.LM830Instance.LM830GetTraduction("text3")}]:\n" +
+                    $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("text4")} '{LM830ancestro}').\n\n" +
+                    $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("Text5")} '{LM830ramaColateral}', {LM830LanguageManager.LM830Instance.LM830GetTraduction("text6")} '{LM830contenedorDirecto}').\n\n" +
+                    $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("text7")} '{LM830permiso}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("text8")}";
             }
             else
             {
-                string perfilActual = _perfilSeleccionado != null ? _perfilSeleccionado.Nombre : nodoDestino;
+                string LM830perfilActual = LM830_perfilSeleccionado != null ? LM830_perfilSeleccionado.LM830Nombre : LM830nodoDestino;
 
-                if (ancestro == perfilActual)
+                if (LM830ancestro == LM830perfilActual)
                 {
-                    textoExplicativo =
-                        $"{LanguageManager.Instance.GetTraduction("text9")} '{permiso}' {LanguageManager.Instance.GetTraduction("text10")} '{perfilActual}'.\n\n" +
-                        $"[{LanguageManager.Instance.GetTraduction("text11")}]:\n" +
-                        $"{LanguageManager.Instance.GetTraduction("text12")} '{perfilActual}' {LanguageManager.Instance.GetTraduction("text13")} '{contenedorDirecto}'. {LanguageManager.Instance.GetTraduction("text14")}";
+                    LM830textoExplicativo =
+                        $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("text9")} '{LM830permiso}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("text10")} '{LM830perfilActual}'.\n\n" +
+                        $"[{LM830LanguageManager.LM830Instance.LM830GetTraduction("text11")}]:\n" +
+                        $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("text12")} '{LM830perfilActual}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("text13")} '{LM830contenedorDirecto}'. {LM830LanguageManager.LM830Instance.LM830GetTraduction("text14")}";
                 }
                 else
                 {
-                    textoExplicativo =
-                        $"{LanguageManager.Instance.GetTraduction("text15")} '{permiso}' {LanguageManager.Instance.GetTraduction("text16")} '{perfilActual}'.\n\n" +
-                        $"[{LanguageManager.Instance.GetTraduction("text17")}]:\n" +
-                        $"{LanguageManager.Instance.GetTraduction("text18")} '{ancestro}' {LanguageManager.Instance.GetTraduction("text19")} '{ramaColateral}'.";
+                    LM830textoExplicativo =
+                        $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("text15")} '{LM830permiso}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("text16")} '{LM830perfilActual}'.\n\n" +
+                        $"[{LM830LanguageManager.LM830Instance.LM830GetTraduction("text17")}]:\n" +
+                        $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("text18")} '{LM830ancestro}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("text19")} '{LM830ramaColateral}'.";
                 }
             }
 
-            var lblDescripcion = new Label
+            var LM830lblDescripcion = new Label
             {
-                Text = textoExplicativo,
+                Text = LM830textoExplicativo,
                 Location = new Point(15, 45),
                 Size = new Size(570, 170),
                 Font = new Font("Segoe UI", 9F),
                 ForeColor = Color.FromArgb(50, 50, 50)
             };
 
-            var rbtnResolver = new RadioButton
+            var LM830rbtnResolver = new RadioButton
             {
-                Text = $"{LanguageManager.Instance.GetTraduction("text20")} '{contenedorDirecto}' {LanguageManager.Instance.GetTraduction("text21")} '{nodoDestino}')",
+                Text = $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("text20")} '{LM830contenedorDirecto}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("text21")} '{LM830nodoDestino}')",
                 Location = new Point(20, 230),
                 Size = new Size(560, 30),
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                 Checked = true
             };
 
-            var rbtnCancelar = new RadioButton
+            var LM830rbtnCancelar = new RadioButton
             {
-                Text = LanguageManager.Instance.GetTraduction("text22"),
+                Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("text22"),
                 Location = new Point(20, 265),
                 Size = new Size(560, 30),
                 Font = new Font("Segoe UI", 9F)
             };
 
-            var btnEjecutar = new Button
+            var LM830btnEjecutar = new Button
             {
-                Text = LanguageManager.Instance.GetTraduction("text23"),
+                Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("text23"),
                 Location = new Point(220, 320),
                 Size = new Size(160, 35),
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
@@ -775,79 +775,79 @@ namespace GUI
                 FlatStyle = FlatStyle.Flat
             };
 
-            btnEjecutar.Click += (s, e) =>
+            LM830btnEjecutar.Click += (LM830s, LM830e) =>
             {
-                string estrategia = rbtnResolver.Checked ? "RESOLVER" : "CANCEL";
-                this.Controls.Remove(pnlModal);
-                pnlModal.Dispose();
-                panelActivo.Enabled = true;
-                callback?.Invoke(estrategia);
+                string LM830estrategia = LM830rbtnResolver.Checked ? "RESOLVER" : "CANCEL";
+                this.Controls.Remove(LM830pnlModal);
+                LM830pnlModal.Dispose();
+                LM830panelActivo.Enabled = true;
+                LM830callback?.Invoke(LM830estrategia);
             };
 
-            pnlModal.Controls.Add(lblTitulo);
-            pnlModal.Controls.Add(lblDescripcion);
-            pnlModal.Controls.Add(rbtnResolver);
-            pnlModal.Controls.Add(rbtnCancelar);
-            pnlModal.Controls.Add(btnEjecutar);
+            LM830pnlModal.Controls.Add(LM830lblTitulo);
+            LM830pnlModal.Controls.Add(LM830lblDescripcion);
+            LM830pnlModal.Controls.Add(LM830rbtnResolver);
+            LM830pnlModal.Controls.Add(LM830rbtnCancelar);
+            LM830pnlModal.Controls.Add(LM830btnEjecutar);
 
-            this.Controls.Add(pnlModal);
-            pnlModal.BringToFront();
+            this.Controls.Add(LM830pnlModal);
+            LM830pnlModal.BringToFront();
         }
 
-        private void MostrarModalResolucionHeredada(string nodoDondeYaExiste, string hijo, string permisos, Action<string> callback)
+        private void LM830MostrarModalResolucionHeredada(string LM830nodoDondeYaExiste, string LM830hijo, string LM830permisos, Action<string> LM830callback)
         {
-            Control panelActivo = RbPerfiles.Checked ? (Control)panelPerfiles : (Control)panelFamilias;
-            panelActivo.Enabled = false;
+            Control LM830panelActivo = LM830RbPerfiles.Checked ? (Control)LM830panelPerfiles : (Control)LM830panelFamilias;
+            LM830panelActivo.Enabled = false;
 
-            Panel pnlModal = new Panel
+            Panel LM830pnlModal = new Panel
             {
                 Name = "pnlModalConflictos",
                 Size = new Size(500, 280),
                 BackColor = Color.FromArgb(245, 245, 245),
                 BorderStyle = BorderStyle.FixedSingle
             };
-            pnlModal.Location = new Point((this.ClientSize.Width - pnlModal.Width) / 2, (this.ClientSize.Height - pnlModal.Height) / 2);
+            LM830pnlModal.Location = new Point((this.ClientSize.Width - LM830pnlModal.Width) / 2, (this.ClientSize.Height - LM830pnlModal.Height) / 2);
 
-            var lblTitulo = new Label
+            var LM830lblTitulo = new Label
             {
-                Text = LanguageManager.Instance.GetTraduction("text26"),
+                Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("text26"),
                 Location = new Point(15, 15),
                 Size = new Size(470, 20),
                 Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                 ForeColor = Color.FromArgb(40, 40, 40)
             };
 
-            var lblDescripcion = new Label
+            var LM830lblDescripcion = new Label
             {
-                Text = $"{LanguageManager.Instance.GetTraduction("text27")} '{hijo}' {LanguageManager.Instance.GetTraduction("text28")}: [{permisos}].\n" +
-                       $"{LanguageManager.Instance.GetTraduction("text29")} '{nodoDondeYaExiste}'.\n\n" +
-                       LanguageManager.Instance.GetTraduction("text30"),
+                Text = $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("text27")} '{LM830hijo}' {LM830LanguageManager.LM830Instance.LM830GetTraduction("text28")}: [{LM830permisos}].\n" +
+                       $"{LM830LanguageManager.LM830Instance.LM830GetTraduction("text29")} '{LM830nodoDondeYaExiste}'.\n\n" +
+                       LM830LanguageManager.LM830Instance.LM830GetTraduction("text30"),
                 Location = new Point(15, 45),
                 Size = new Size(470, 75),
                 Font = new Font("Segoe UI", 9F),
                 ForeColor = Color.FromArgb(60, 60, 60)
             };
 
-            var rbtnResolver = new RadioButton
+            var LM830rbtnResolver = new RadioButton
             {
-                Text = LanguageManager.Instance.GetTraduction("text31"),
+                Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("text31"),
                 Location = new Point(20, 135),
                 Size = new Size(460, 25),
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                 Checked = true
             };
 
-            var rbtnCancelar = new RadioButton
+            var LM830rbtnCancelar = new RadioButton
             {
-                Text = LanguageManager.Instance.GetTraduction("text32"),
+                Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("text32"),
                 Location = new Point(20, 165),
                 Size = new Size(460, 25),
                 Font = new Font("Segoe UI", 9F)
             };
 
-            var btnEjecutar = new Button
+            var LM830btnEjecutar = new Button
             {
-                Text = LanguageManager.Instance.GetTraduction("Confirmarp"),
+                Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("Confirmarp"),
                 Location = new Point(170, 215),
                 Size = new Size(160, 32),
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
@@ -856,67 +856,67 @@ namespace GUI
                 FlatStyle = FlatStyle.Flat
             };
 
-            btnEjecutar.Click += (s, e) =>
+            LM830btnEjecutar.Click += (LM830s, LM830e) =>
             {
-                string estrategia = rbtnResolver.Checked ? "RESOLVER" : "CANCEL";
-                this.Controls.Remove(pnlModal);
-                pnlModal.Dispose();
-                panelActivo.Enabled = true;
-                callback?.Invoke(estrategia);
+                string LM830estrategia = LM830rbtnResolver.Checked ? "RESOLVER" : "CANCEL";
+                this.Controls.Remove(LM830pnlModal);
+                LM830pnlModal.Dispose();
+                LM830panelActivo.Enabled = true;
+                LM830callback?.Invoke(LM830estrategia);
             };
 
-            pnlModal.Controls.Add(lblTitulo);
-            pnlModal.Controls.Add(lblDescripcion);
-            pnlModal.Controls.Add(rbtnResolver);
-            pnlModal.Controls.Add(rbtnCancelar);
-            pnlModal.Controls.Add(btnEjecutar);
+            LM830pnlModal.Controls.Add(LM830lblTitulo);
+            LM830pnlModal.Controls.Add(LM830lblDescripcion);
+            LM830pnlModal.Controls.Add(LM830rbtnResolver);
+            LM830pnlModal.Controls.Add(LM830rbtnCancelar);
+            LM830pnlModal.Controls.Add(LM830btnEjecutar);
 
-            this.Controls.Add(pnlModal);
-            pnlModal.BringToFront();
+            this.Controls.Add(LM830pnlModal);
+            LM830pnlModal.BringToFront();
         }
 
-        private void RbPermisos_CheckedChanged(object sender, EventArgs e)
+        private void LM830RbPermisos_CheckedChanged(object LM830sender, EventArgs LM830e)
         {
-            if (RbPermisos.Checked)
+            if (LM830RbPermisos.Checked)
             {
-                ActualizarEstadoBotonesSegunPermisos();
-                SincronizarVisibilidadPaneles();
+                LM830ActualizarEstadoBotonesSegunPermisos();
+                LM830SincronizarVisibilidadPaneles();
             }
         }
 
-        private void RbFamilias_CheckedChanged_1(object sender, EventArgs e)
+        private void LM830RbFamilias_CheckedChanged_1(object LM830sender, EventArgs LM830e)
         {
-            if (RbFamilias.Checked)
+            if (LM830RbFamilias.Checked)
             {
-                ActualizarEstadoBotonesSegunPermisos();
-                SincronizarVisibilidadPaneles();
+                LM830ActualizarEstadoBotonesSegunPermisos();
+                LM830SincronizarVisibilidadPaneles();
             }
         }
 
-        private void RbPerfiles_CheckedChanged(object sender, EventArgs e)
+        private void LM830RbPerfiles_CheckedChanged(object LM830sender, EventArgs LM830e)
         {
-            if (RbPerfiles.Checked)
+            if (LM830RbPerfiles.Checked)
             {
-                ActualizarEstadoBotonesSegunPermisos();
-                SincronizarVisibilidadPaneles();
+                LM830ActualizarEstadoBotonesSegunPermisos();
+                LM830SincronizarVisibilidadPaneles();
             }
         }
 
-        private void btnCerrar_Click(object sender, EventArgs e)
+        private void LM830btnCerrar_Click(object LM830sender, EventArgs LM830e)
         {
-            if (Application.OpenForms["Menu"] != null)
+            if (Application.OpenForms["LM830Menu"] != null)
             {
-                Application.OpenForms["Menu"].Show();
+                Application.OpenForms["LM830Menu"].Show();
             }
             else
             {
-                Menu menu = new Menu();
-                menu.Show();
+                LM830Menu LM830menu = new LM830Menu();
+                LM830menu.Show();
             }
             this.Close();
         }
 
-        private void btnMaximizar_Click(object sender, EventArgs e)
+        private void LM830btnMaximizar_Click(object LM830sender, EventArgs LM830e)
         {
             if (this.WindowState == FormWindowState.Normal)
                 this.WindowState = FormWindowState.Maximized;
@@ -924,113 +924,113 @@ namespace GUI
                 this.WindowState = FormWindowState.Normal;
         }
 
-        private void btnMinimizar_Click(object sender, EventArgs e)
+        private void LM830btnMinimizar_Click(object LM830sender, EventArgs LM830e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void RefrescarSeguridad()
+        private void LM830RefrescarSeguridad()
         {
-            ActualizarEstadoBotonesSegunPermisos();
+            LM830ActualizarEstadoBotonesSegunPermisos();
 
-            Usuario usuarioActual = SessionManager.Instance.UsuarioActual();
+            LM830Usuario LM830usuarioActual = LM830SessionManager.LM830Instance.LM830UsuarioActual();
 
-            if (!usuarioActual.TienePermiso("Ver Perfiles"))
+            if (!LM830usuarioActual.LM830TienePermiso("Ver Perfiles"))
             {
                 MessageBox.Show(
-                    LanguageManager.Instance.GetTraduction("text33"),
-                    LanguageManager.Instance.GetTraduction("text34"),
+                    LM830LanguageManager.LM830Instance.LM830GetTraduction("text33"),
+                    LM830LanguageManager.LM830Instance.LM830GetTraduction("text34"),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
 
-                if (Application.OpenForms["Menu"] != null)
+                if (Application.OpenForms["LM830Menu"] != null)
                 {
-                    Application.OpenForms["Menu"].Show();
+                    Application.OpenForms["LM830Menu"].Show();
                 }
                 else
                 {
-                    Menu menu = new Menu();
-                    menu.Show();
+                    LM830Menu LM830menu = new LM830Menu();
+                    LM830menu.Show();
                 }
 
                 this.Close();
             }
         }
 
-        private void frmGestionPerfiles_Load(object sender, EventArgs e)
+        private void LM830frmGestionPerfiles_Load(object LM830sender, EventArgs LM830e)
         {
-            LanguageManager.Instance.AgregarObservador(this);
-            Actualizar(LanguageManager.Instance);
+            LM830LanguageManager.LM830Instance.LM830AgregarObservador(this);
+            LM830Actualizar(LM830LanguageManager.LM830Instance);
         }
 
-        private void BarraTitulo_MouseDown(object sender, MouseEventArgs e)
+        private void LM830BarraTitulo_MouseDown(object LM830sender, MouseEventArgs LM830e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (LM830e.Button == MouseButtons.Left)
             {
-                arrastrando = true;
-                posX = e.X;
-                posY = e.Y;
+                LM830arrastrando = true;
+                LM830posX = LM830e.X;
+                LM830posY = LM830e.Y;
             }
         }
 
-        private void BarraTitulo_MouseMove(object sender, MouseEventArgs e)
+        private void LM830BarraTitulo_MouseMove(object LM830sender, MouseEventArgs LM830e)
         {
-            if (arrastrando)
+            if (LM830arrastrando)
             {
-                this.Location = new Point(this.Location.X + (e.X - posX), this.Location.Y + (e.Y - posY));
+                this.Location = new Point(this.Location.X + (LM830e.X - LM830posX), this.Location.Y + (LM830e.Y - LM830posY));
             }
         }
 
-        private void BarraTitulo_MouseUp(object sender, MouseEventArgs e)
+        private void LM830BarraTitulo_MouseUp(object LM830sender, MouseEventArgs LM830e)
         {
-            arrastrando = false;
+            LM830arrastrando = false;
         }
 
-        public void Actualizar(LanguageManager lenguaje)
+        public void LM830Actualizar(LM830LanguageManager LM830lenguaje)
         {
-            RbPermisos.Text = LanguageManager.Instance.GetTraduction("RbPermisos");
-            RbFamilias.Text = LanguageManager.Instance.GetTraduction("RbFamilias");
-            RbPerfiles.Text = LanguageManager.Instance.GetTraduction("RbPerfiles");
+            LM830RbPermisos.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RbPermisos");
+            LM830RbFamilias.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RbFamilias");
+            LM830RbPerfiles.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("RbPerfiles");
 
-            lblArbol.Text = LanguageManager.Instance.GetTraduction("lblArbol");
-            lblPerfiles.Text = LanguageManager.Instance.GetTraduction("lblPerfiles");
-            lblNombreP.Text = LanguageManager.Instance.GetTraduction("lblNombreP");
+            LM830lblArbol.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("lblArbol");
+            LM830lblPerfiles.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("lblPerfiles");
+            LM830lblNombreP.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("lblNombreP");
 
-            btnCrearPerfil.Text = LanguageManager.Instance.GetTraduction("btnCrearPerfil");
-            btnEliminarPerfil.Text = LanguageManager.Instance.GetTraduction("btnEliminarPerfil");
+            LM830btnCrearPerfil.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnCrearPerfil");
+            LM830btnEliminarPerfil.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnEliminarPerfil");
 
-            lblGestionPerfiles.Text = LanguageManager.Instance.GetTraduction("lblGestionPerfiles");
+            LM830lblGestionPerfiles.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("lblGestionPerfiles");
 
-            lblFamiliaDisponible.Text = LanguageManager.Instance.GetTraduction("lblFamiliaDisponible");
-            lblFamiliaAsignadas.Text = LanguageManager.Instance.GetTraduction("lblFamiliaAsignadas");
+            LM830lblFamiliaDisponible.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("lblFamiliaDisponible");
+            LM830lblFamiliaAsignadas.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("lblFamiliaAsignadas");
 
-            lblPermisoDisponible.Text = LanguageManager.Instance.GetTraduction("lblPermisoDisponible");
-            lblAsignados.Text = LanguageManager.Instance.GetTraduction("lblAsignados");
+            LM830lblPermisoDisponible.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("lblPermisoDisponible");
+            LM830lblAsignados.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("lblAsignados");
 
-            btnAsignarFamiliaPerfil.Text = LanguageManager.Instance.GetTraduction("btnAsignarFamiliaPerfil");
-            btnQuitarFamiliaPerfil.Text = LanguageManager.Instance.GetTraduction("btnQuitarFamiliaPerfil");
+            LM830btnAsignarFamiliaPerfil.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnAsignarFamiliaPerfil");
+            LM830btnQuitarFamiliaPerfil.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnQuitarFamiliaPerfil");
 
-            BtnAsignarPermisoPerfil.Text = LanguageManager.Instance.GetTraduction("BtnAsignarPermisoPerfil");
-            BtnQuitarPermisoPerfil.Text = LanguageManager.Instance.GetTraduction("BtnQuitarPermisoPerfil");
+            LM830BtnAsignarPermisoPerfil.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("BtnAsignarPermisoPerfil");
+            LM830BtnQuitarPermisoPerfil.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("BtnQuitarPermisoPerfil");
 
-            label6.Text = LanguageManager.Instance.GetTraduction("label6");
-            label10.Text = LanguageManager.Instance.GetTraduction("label10");
-            label15.Text = LanguageManager.Instance.GetTraduction("label15");
+            LM830label6.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("label6");
+            LM830label10.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("label10");
+            LM830label15.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("label15");
 
-            lblNombrePermisos.Text = LanguageManager.Instance.GetTraduction("lblNombrePermisos");
-            btnCrearPermiso.Text = LanguageManager.Instance.GetTraduction("btnCrearPermiso");
-            btnEliminarPermiso.Text = LanguageManager.Instance.GetTraduction("btnEliminarPermiso");
-            label2.Text = LanguageManager.Instance.GetTraduction("label2");
-            btnCrearFamilia.Text = LanguageManager.Instance.GetTraduction("btnCrearFamilia");
-            btnEliminarFamilia.Text = LanguageManager.Instance.GetTraduction("btnEliminarFamilia");
-            label4.Text = LanguageManager.Instance.GetTraduction("label4");
-            btnAsignarSubfamilia.Text = LanguageManager.Instance.GetTraduction("btnAsignarSubfamilia");
-            label5.Text = LanguageManager.Instance.GetTraduction("label5");
-            btnQuitarSubfamilia.Text = LanguageManager.Instance.GetTraduction("btnQuitarSubfamilia");
-            label7.Text = LanguageManager.Instance.GetTraduction("label7");
-            btnAsignarPermisos.Text = LanguageManager.Instance.GetTraduction("btnAsignarPermisos");
-            label8.Text = LanguageManager.Instance.GetTraduction("label8");
-            btnQuitarPermisos.Text = LanguageManager.Instance.GetTraduction("btnQuitarPermisos");
+            LM830lblNombrePermisos.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("lblNombrePermisos");
+            LM830btnCrearPermiso.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnCrearPermiso");
+            LM830btnEliminarPermiso.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnEliminarPermiso");
+            LM830label2.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("label2");
+            LM830btnCrearFamilia.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnCrearFamilia");
+            LM830btnEliminarFamilia.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnEliminarFamilia");
+            LM830label4.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("label4");
+            LM830btnAsignarSubfamilia.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnAsignarSubfamilia");
+            LM830label5.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("label5");
+            LM830btnQuitarSubfamilia.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnQuitarSubfamilia");
+            LM830label7.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("label7");
+            LM830btnAsignarPermisos.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnAsignarPermisos");
+            LM830label8.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("label8");
+            LM830btnQuitarPermisos.Text = LM830LanguageManager.LM830Instance.LM830GetTraduction("btnQuitarPermisos");
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿#nullable enable
-using BE.RFN1;
-using BE.RFN2;
+using LM830BE.LM830RFN1;
+using LM830BE.LM830RFN2;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.draw;
 using System;
@@ -10,249 +10,249 @@ using System.IO;
 using System.Windows.Forms;
 using iText = iTextSharp.text;
 
-namespace GUI.Comprobantes
+namespace LM830GUI.LM830Comprobantes
 {
-    internal static class GeneradorPDF
+    internal static class LM830GeneradorPDF
     {
-        private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
-        private static readonly iText.BaseColor Verde = new iText.BaseColor(46, 125, 50);
-        private static readonly iText.BaseColor VerdeOscuro = new iText.BaseColor(27, 94, 32);
-        private static readonly iText.BaseColor VerdeClaro = new iText.BaseColor(232, 245, 233);
-        private static readonly iText.BaseColor Gris = new iText.BaseColor(97, 97, 97);
+        private static readonly CultureInfo LM830Cultura = new CultureInfo("es-AR");
+        private static readonly iText.BaseColor LM830Verde = new iText.BaseColor(46, 125, 50);
+        private static readonly iText.BaseColor LM830VerdeOscuro = new iText.BaseColor(27, 94, 32);
+        private static readonly iText.BaseColor LM830VerdeClaro = new iText.BaseColor(232, 245, 233);
+        private static readonly iText.BaseColor LM830Gris = new iText.BaseColor(97, 97, 97);
 
-        private static readonly BaseFont Base = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-        private static readonly BaseFont BaseNegrita = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+        private static readonly BaseFont LM830Base = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+        private static readonly BaseFont LM830BaseNegrita = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 
-        private static iText.Font Fuente(float tamanio, bool negrita = false, iText.BaseColor? color = null) =>
-            new iText.Font(negrita ? BaseNegrita : Base, tamanio, iText.Font.NORMAL, color ?? iText.BaseColor.BLACK);
+        private static iText.Font LM830Fuente(float LM830tamanio, bool LM830negrita = false, iText.BaseColor? LM830color = null) =>
+            new iText.Font(LM830negrita ? LM830BaseNegrita : LM830Base, LM830tamanio, iText.Font.NORMAL, LM830color ?? iText.BaseColor.BLACK);
 
-        public static string? ElegirRuta(IWin32Window owner, string nombreSugerido)
+        public static string? LM830ElegirRuta(IWin32Window LM830owner, string LM830nombreSugerido)
         {
-            using (var dialogo = new SaveFileDialog())
+            using (var LM830dialogo = new SaveFileDialog())
             {
-                dialogo.Filter = "PDF (*.pdf)|*.pdf";
-                dialogo.FileName = nombreSugerido + ".pdf";
-                dialogo.Title = "Guardar comprobante";
-                return dialogo.ShowDialog(owner) == DialogResult.OK ? dialogo.FileName : null;
+                LM830dialogo.Filter = "PDF (*.pdf)|*.pdf";
+                LM830dialogo.FileName = LM830nombreSugerido + ".pdf";
+                LM830dialogo.Title = "Guardar comprobante";
+                return LM830dialogo.ShowDialog(LM830owner) == DialogResult.OK ? LM830dialogo.FileName : null;
             }
         }
 
-        public static void Abrir(string ruta)
+        public static void LM830Abrir(string LM830ruta)
         {
             try
             {
-                Process.Start(new ProcessStartInfo(ruta) { UseShellExecute = true });
+                Process.Start(new ProcessStartInfo(LM830ruta) { UseShellExecute = true });
             }
             catch
             {
             }
         }
 
-        public static void ComprobanteVenta(ComprobanteVenta c, string ruta)
+        public static void LM830ComprobanteVenta(LM830ComprobanteVenta LM830c, string LM830ruta)
         {
-            Generar(ruta, doc =>
+            LM830Generar(LM830ruta, LM830doc =>
             {
-                Encabezado(doc, "Comprobante de venta", c.NroComprobante);
+                LM830Encabezado(LM830doc, "Comprobante de venta", LM830c.LM830NroComprobante);
 
-                PdfPTable datos = TablaDatos();
-                Dato(datos, "Fecha", c.Fecha.ToString("dd/MM/yyyy HH:mm", Cultura));
-                Dato(datos, "Vendedor", c.Vendedor);
-                if (c.TieneCliente())
+                PdfPTable LM830datos = LM830TablaDatos();
+                LM830Dato(LM830datos, "Fecha", LM830c.LM830Fecha.ToString("dd/MM/yyyy HH:mm", LM830Cultura));
+                LM830Dato(LM830datos, "Vendedor", LM830c.LM830Vendedor);
+                if (LM830c.LM830TieneCliente())
                 {
-                    Dato(datos, "Cliente", $"{c.Cliente} (DNI {c.DniCliente})");
-                    Dato(datos, "Nivel", c.Nivel);
+                    LM830Dato(LM830datos, "Cliente", $"{LM830c.LM830Cliente} (DNI {LM830c.LM830DniCliente})");
+                    LM830Dato(LM830datos, "Nivel", LM830c.LM830Nivel);
                 }
                 else
                 {
-                    Dato(datos, "Cliente", "Venta sin cliente identificado");
+                    LM830Dato(LM830datos, "Cliente", "Venta sin cliente identificado");
                 }
-                doc.Add(datos);
-                doc.Add(Espacio(8));
+                LM830doc.Add(LM830datos);
+                LM830doc.Add(LM830Espacio(8));
 
-                PdfPTable items = new PdfPTable(6) { WidthPercentage = 100 };
-                items.SetWidths(new float[] { 34, 18, 9, 14, 15, 10 });
-                Titulos(items, "Producto", "Categoría", "Cant.", "P. unitario", "Subtotal", "Puntos");
-                int fila = 0;
-                foreach (ItemComprobante i in c.Items)
+                PdfPTable LM830items = new PdfPTable(6) { WidthPercentage = 100 };
+                LM830items.SetWidths(new float[] { 34, 18, 9, 14, 15, 10 });
+                LM830Titulos(LM830items, "Producto", "Categoría", "Cant.", "P. unitario", "Subtotal", "Puntos");
+                int LM830fila = 0;
+                foreach (LM830ItemComprobante LM830i in LM830c.LM830Items)
                 {
-                    iText.BaseColor fondo = fila++ % 2 == 0 ? iText.BaseColor.WHITE : VerdeClaro;
-                    Celda(items, i.Producto, fondo);
-                    Celda(items, i.Categoria, fondo);
-                    Celda(items, i.Cantidad.ToString("N0", Cultura), fondo, iText.Element.ALIGN_RIGHT);
-                    Celda(items, "$ " + i.PrecioUnitario.ToString("N2", Cultura), fondo, iText.Element.ALIGN_RIGHT);
-                    Celda(items, "$ " + i.Subtotal.ToString("N2", Cultura), fondo, iText.Element.ALIGN_RIGHT);
-                    Celda(items, i.Puntos.ToString("N0", Cultura), fondo, iText.Element.ALIGN_RIGHT);
+                    iText.BaseColor LM830fondo = LM830fila++ % 2 == 0 ? iText.BaseColor.WHITE : LM830VerdeClaro;
+                    LM830Celda(LM830items, LM830i.LM830Producto, LM830fondo);
+                    LM830Celda(LM830items, LM830i.LM830Categoria, LM830fondo);
+                    LM830Celda(LM830items, LM830i.LM830Cantidad.ToString("N0", LM830Cultura), LM830fondo, iText.Element.ALIGN_RIGHT);
+                    LM830Celda(LM830items, "$ " + LM830i.LM830PrecioUnitario.ToString("N2", LM830Cultura), LM830fondo, iText.Element.ALIGN_RIGHT);
+                    LM830Celda(LM830items, "$ " + LM830i.LM830Subtotal.ToString("N2", LM830Cultura), LM830fondo, iText.Element.ALIGN_RIGHT);
+                    LM830Celda(LM830items, LM830i.LM830Puntos.ToString("N0", LM830Cultura), LM830fondo, iText.Element.ALIGN_RIGHT);
                 }
-                doc.Add(items);
-                doc.Add(Espacio(8));
+                LM830doc.Add(LM830items);
+                LM830doc.Add(LM830Espacio(8));
 
-                PdfPTable totales = TablaTotales();
-                Total(totales, "Total", "$ " + c.Total.ToString("N2", Cultura), true);
-                if (c.TieneCliente())
+                PdfPTable LM830totales = LM830TablaTotales();
+                LM830Total(LM830totales, "Total", "$ " + LM830c.LM830Total.ToString("N2", LM830Cultura), true);
+                if (LM830c.LM830TieneCliente())
                 {
-                    Total(totales, "Puntos acreditados", c.PuntosAcreditados.ToString("N0", Cultura) + " pts", false);
-                    Total(totales, "Saldo vigente", c.SaldoVigente.ToString("N0", Cultura) + " pts", false);
+                    LM830Total(LM830totales, "Puntos acreditados", LM830c.LM830PuntosAcreditados.ToString("N0", LM830Cultura) + " pts", false);
+                    LM830Total(LM830totales, "Saldo vigente", LM830c.LM830SaldoVigente.ToString("N0", LM830Cultura) + " pts", false);
                 }
-                doc.Add(totales);
+                LM830doc.Add(LM830totales);
 
-                Pie(doc, c.FechaEmision);
+                LM830Pie(LM830doc, LM830c.LM830FechaEmision);
             });
         }
 
-        public static void ComprobanteCanje(Canje k, int saldoRestante, string ruta)
+        public static void LM830ComprobanteCanje(LM830Canje LM830k, int LM830saldoRestante, string LM830ruta)
         {
-            Generar(ruta, doc =>
+            LM830Generar(LM830ruta, LM830doc =>
             {
-                Encabezado(doc, "Comprobante de canje", k.NroCanje);
+                LM830Encabezado(LM830doc, "Comprobante de canje", LM830k.LM830NroCanje);
 
-                PdfPTable datos = TablaDatos();
-                Dato(datos, "Fecha de entrega", (k.FechaEntrega ?? DateTime.Now).ToString("dd/MM/yyyy HH:mm", Cultura));
-                Dato(datos, "Cliente", $"{k.Cliente.NombreCompleto} (DNI {k.Cliente.Dni})");
-                Dato(datos, "Nivel", k.Cliente.Nivel.Nombre);
-                Dato(datos, "Premio", k.Premio.Nombre);
-                if (!string.IsNullOrWhiteSpace(k.Premio.Descripcion)) Dato(datos, "Descripción", k.Premio.Descripcion);
-                doc.Add(datos);
-                doc.Add(Espacio(8));
+                PdfPTable LM830datos = LM830TablaDatos();
+                LM830Dato(LM830datos, "Fecha de entrega", (LM830k.LM830FechaEntrega ?? DateTime.Now).ToString("dd/MM/yyyy HH:mm", LM830Cultura));
+                LM830Dato(LM830datos, "Cliente", $"{LM830k.LM830Cliente.LM830NombreCompleto} (DNI {LM830k.LM830Cliente.LM830Dni})");
+                LM830Dato(LM830datos, "Nivel", LM830k.LM830Cliente.LM830Nivel.LM830Nombre);
+                LM830Dato(LM830datos, "Premio", LM830k.LM830Premio.LM830Nombre);
+                if (!string.IsNullOrWhiteSpace(LM830k.LM830Premio.LM830Descripcion)) LM830Dato(LM830datos, "Descripción", LM830k.LM830Premio.LM830Descripcion);
+                LM830doc.Add(LM830datos);
+                LM830doc.Add(LM830Espacio(8));
 
-                doc.Add(new iText.Paragraph("Puntos descontados por vencimiento", Fuente(10, true, VerdeOscuro)));
-                doc.Add(Espacio(4));
-                PdfPTable lotes = new PdfPTable(4) { WidthPercentage = 100 };
-                lotes.SetWidths(new float[] { 20, 30, 30, 20 });
-                Titulos(lotes, "Lote", "Acreditado", "Vence", "Puntos");
-                int fila = 0;
-                foreach (DetalleCanje d in k.Detalle)
+                LM830doc.Add(new iText.Paragraph("Puntos descontados por vencimiento", LM830Fuente(10, true, LM830VerdeOscuro)));
+                LM830doc.Add(LM830Espacio(4));
+                PdfPTable LM830lotes = new PdfPTable(4) { WidthPercentage = 100 };
+                LM830lotes.SetWidths(new float[] { 20, 30, 30, 20 });
+                LM830Titulos(LM830lotes, "Lote", "Acreditado", "Vence", "Puntos");
+                int LM830fila = 0;
+                foreach (LM830DetalleCanje LM830d in LM830k.LM830Detalle)
                 {
-                    iText.BaseColor fondo = fila++ % 2 == 0 ? iText.BaseColor.WHITE : VerdeClaro;
-                    Celda(lotes, d.Lote.IdLote.ToString(Cultura), fondo);
-                    Celda(lotes, d.Lote.FechaAcreditacion.ToString("dd/MM/yyyy", Cultura), fondo);
-                    Celda(lotes, d.Lote.FechaVencimiento.ToString("dd/MM/yyyy", Cultura), fondo);
-                    Celda(lotes, d.PuntosDescontados.ToString("N0", Cultura), fondo, iText.Element.ALIGN_RIGHT);
+                    iText.BaseColor LM830fondo = LM830fila++ % 2 == 0 ? iText.BaseColor.WHITE : LM830VerdeClaro;
+                    LM830Celda(LM830lotes, LM830d.LM830Lote.LM830IdLote.ToString(LM830Cultura), LM830fondo);
+                    LM830Celda(LM830lotes, LM830d.LM830Lote.LM830FechaAcreditacion.ToString("dd/MM/yyyy", LM830Cultura), LM830fondo);
+                    LM830Celda(LM830lotes, LM830d.LM830Lote.LM830FechaVencimiento.ToString("dd/MM/yyyy", LM830Cultura), LM830fondo);
+                    LM830Celda(LM830lotes, LM830d.LM830PuntosDescontados.ToString("N0", LM830Cultura), LM830fondo, iText.Element.ALIGN_RIGHT);
                 }
-                doc.Add(lotes);
-                doc.Add(Espacio(8));
+                LM830doc.Add(LM830lotes);
+                LM830doc.Add(LM830Espacio(8));
 
-                PdfPTable totales = TablaTotales();
-                Total(totales, "Puntos descontados", k.PuntosRequeridos.ToString("N0", Cultura) + " pts", true);
-                Total(totales, "Saldo restante", saldoRestante.ToString("N0", Cultura) + " pts", false);
-                Total(totales, "Stock restante del premio", k.Premio.Stock.ToString("N0", Cultura), false);
-                doc.Add(totales);
+                PdfPTable LM830totales = LM830TablaTotales();
+                LM830Total(LM830totales, "Puntos descontados", LM830k.LM830PuntosRequeridos.ToString("N0", LM830Cultura) + " pts", true);
+                LM830Total(LM830totales, "Saldo restante", LM830saldoRestante.ToString("N0", LM830Cultura) + " pts", false);
+                LM830Total(LM830totales, "Stock restante del premio", LM830k.LM830Premio.LM830Stock.ToString("N0", LM830Cultura), false);
+                LM830doc.Add(LM830totales);
 
-                Pie(doc, DateTime.Now);
+                LM830Pie(LM830doc, DateTime.Now);
             });
         }
 
-        private static void Generar(string ruta, Action<iText.Document> contenido)
+        private static void LM830Generar(string LM830ruta, Action<iText.Document> LM830contenido)
         {
-            var doc = new iText.Document(iText.PageSize.A4, 40f, 40f, 36f, 36f);
-            using (var archivo = new FileStream(ruta, FileMode.Create, FileAccess.Write))
+            var LM830doc = new iText.Document(iText.PageSize.A4, 40f, 40f, 36f, 36f);
+            using (var LM830archivo = new FileStream(LM830ruta, FileMode.Create, FileAccess.Write))
             {
-                PdfWriter.GetInstance(doc, archivo);
-                doc.AddTitle("Le Marchant");
-                doc.AddCreator("Le Marchant");
-                doc.Open();
+                PdfWriter.GetInstance(LM830doc, LM830archivo);
+                LM830doc.AddTitle("Le Marchant");
+                LM830doc.AddCreator("Le Marchant");
+                LM830doc.Open();
                 try
                 {
-                    contenido(doc);
+                    LM830contenido(LM830doc);
                 }
                 finally
                 {
-                    doc.Close();
+                    LM830doc.Close();
                 }
             }
         }
 
-        private static void Encabezado(iText.Document doc, string tipo, string numero)
+        private static void LM830Encabezado(iText.Document LM830doc, string LM830tipo, string LM830numero)
         {
-            PdfPTable t = new PdfPTable(2) { WidthPercentage = 100 };
-            t.SetWidths(new float[] { 18, 82 });
+            PdfPTable LM830t = new PdfPTable(2) { WidthPercentage = 100 };
+            LM830t.SetWidths(new float[] { 18, 82 });
 
-            iText.Image logo = iText.Image.GetInstance(Properties.Resources.LeMarchant, System.Drawing.Imaging.ImageFormat.Png);
-            logo.ScaleToFit(72f, 72f);
-            t.AddCell(new PdfPCell(logo) { Border = iText.Rectangle.NO_BORDER, VerticalAlignment = iText.Element.ALIGN_MIDDLE });
+            iText.Image LM830logo = iText.Image.GetInstance(Properties.Resources.LeMarchant, System.Drawing.Imaging.ImageFormat.Png);
+            LM830logo.ScaleToFit(72f, 72f);
+            LM830t.AddCell(new PdfPCell(LM830logo) { Border = iText.Rectangle.NO_BORDER, VerticalAlignment = iText.Element.ALIGN_MIDDLE });
 
-            var texto = new PdfPCell { Border = iText.Rectangle.NO_BORDER, VerticalAlignment = iText.Element.ALIGN_MIDDLE };
-            texto.AddElement(new iText.Paragraph("Le Marchant", Fuente(22, true, VerdeOscuro)));
-            texto.AddElement(new iText.Paragraph("Mercado de barrio · Ciudad Autónoma de Buenos Aires", Fuente(9, false, Gris)));
-            texto.AddElement(new iText.Paragraph($"{tipo} N° {numero}", Fuente(13, true, Verde)) { SpacingBefore = 6 });
-            t.AddCell(texto);
-            doc.Add(t);
+            var LM830texto = new PdfPCell { Border = iText.Rectangle.NO_BORDER, VerticalAlignment = iText.Element.ALIGN_MIDDLE };
+            LM830texto.AddElement(new iText.Paragraph("Le Marchant", LM830Fuente(22, true, LM830VerdeOscuro)));
+            LM830texto.AddElement(new iText.Paragraph("Mercado de barrio · Ciudad Autónoma de Buenos Aires", LM830Fuente(9, false, LM830Gris)));
+            LM830texto.AddElement(new iText.Paragraph($"{LM830tipo} N° {LM830numero}", LM830Fuente(13, true, LM830Verde)) { SpacingBefore = 6 });
+            LM830t.AddCell(LM830texto);
+            LM830doc.Add(LM830t);
 
-            doc.Add(new iText.Chunk(new LineSeparator(2f, 100f, Verde, iText.Element.ALIGN_CENTER, -4f)));
-            doc.Add(Espacio(10));
+            LM830doc.Add(new iText.Chunk(new LineSeparator(2f, 100f, LM830Verde, iText.Element.ALIGN_CENTER, -4f)));
+            LM830doc.Add(LM830Espacio(10));
         }
 
-        private static PdfPTable TablaDatos()
+        private static PdfPTable LM830TablaDatos()
         {
-            PdfPTable t = new PdfPTable(2) { WidthPercentage = 100 };
-            t.SetWidths(new float[] { 22, 78 });
-            return t;
+            PdfPTable LM830t = new PdfPTable(2) { WidthPercentage = 100 };
+            LM830t.SetWidths(new float[] { 22, 78 });
+            return LM830t;
         }
 
-        private static void Dato(PdfPTable t, string etiqueta, string valor)
+        private static void LM830Dato(PdfPTable LM830t, string LM830etiqueta, string LM830valor)
         {
-            t.AddCell(new PdfPCell(new iText.Phrase(etiqueta, Fuente(10, true, VerdeOscuro))) { Border = iText.Rectangle.NO_BORDER, PaddingBottom = 4 });
-            t.AddCell(new PdfPCell(new iText.Phrase(valor, Fuente(10))) { Border = iText.Rectangle.NO_BORDER, PaddingBottom = 4 });
+            LM830t.AddCell(new PdfPCell(new iText.Phrase(LM830etiqueta, LM830Fuente(10, true, LM830VerdeOscuro))) { Border = iText.Rectangle.NO_BORDER, PaddingBottom = 4 });
+            LM830t.AddCell(new PdfPCell(new iText.Phrase(LM830valor, LM830Fuente(10))) { Border = iText.Rectangle.NO_BORDER, PaddingBottom = 4 });
         }
 
-        private static void Titulos(PdfPTable t, params string[] titulos)
+        private static void LM830Titulos(PdfPTable LM830t, params string[] LM830titulos)
         {
-            foreach (string titulo in titulos)
+            foreach (string LM830titulo in LM830titulos)
             {
-                t.AddCell(new PdfPCell(new iText.Phrase(titulo, Fuente(9, true, iText.BaseColor.WHITE)))
+                LM830t.AddCell(new PdfPCell(new iText.Phrase(LM830titulo, LM830Fuente(9, true, iText.BaseColor.WHITE)))
                 {
-                    BackgroundColor = Verde,
-                    BorderColor = Verde,
+                    BackgroundColor = LM830Verde,
+                    BorderColor = LM830Verde,
                     Padding = 5,
                     HorizontalAlignment = iText.Element.ALIGN_CENTER
                 });
             }
-            t.HeaderRows = 1;
+            LM830t.HeaderRows = 1;
         }
 
-        private static void Celda(PdfPTable t, string texto, iText.BaseColor fondo, int alineacion = 0)
+        private static void LM830Celda(PdfPTable LM830t, string LM830texto, iText.BaseColor LM830fondo, int LM830alineacion = 0)
         {
-            t.AddCell(new PdfPCell(new iText.Phrase(texto, Fuente(9)))
+            LM830t.AddCell(new PdfPCell(new iText.Phrase(LM830texto, LM830Fuente(9)))
             {
-                BackgroundColor = fondo,
+                BackgroundColor = LM830fondo,
                 BorderColor = new iText.BaseColor(200, 230, 201),
                 Padding = 4,
-                HorizontalAlignment = alineacion
+                HorizontalAlignment = LM830alineacion
             });
         }
 
-        private static PdfPTable TablaTotales()
+        private static PdfPTable LM830TablaTotales()
         {
-            PdfPTable t = new PdfPTable(2) { WidthPercentage = 50, HorizontalAlignment = iText.Element.ALIGN_RIGHT };
-            t.SetWidths(new float[] { 55, 45 });
-            return t;
+            PdfPTable LM830t = new PdfPTable(2) { WidthPercentage = 50, HorizontalAlignment = iText.Element.ALIGN_RIGHT };
+            LM830t.SetWidths(new float[] { 55, 45 });
+            return LM830t;
         }
 
-        private static void Total(PdfPTable t, string etiqueta, string valor, bool destacado)
+        private static void LM830Total(PdfPTable LM830t, string LM830etiqueta, string LM830valor, bool LM830destacado)
         {
-            iText.BaseColor fondo = destacado ? Verde : VerdeClaro;
-            iText.BaseColor letra = destacado ? iText.BaseColor.WHITE : VerdeOscuro;
-            t.AddCell(new PdfPCell(new iText.Phrase(etiqueta, Fuente(destacado ? 11 : 10, true, letra)))
+            iText.BaseColor LM830fondo = LM830destacado ? LM830Verde : LM830VerdeClaro;
+            iText.BaseColor LM830letra = LM830destacado ? iText.BaseColor.WHITE : LM830VerdeOscuro;
+            LM830t.AddCell(new PdfPCell(new iText.Phrase(LM830etiqueta, LM830Fuente(LM830destacado ? 11 : 10, true, LM830letra)))
             {
-                BackgroundColor = fondo, BorderColor = fondo, Padding = 5
+                BackgroundColor = LM830fondo, BorderColor = LM830fondo, Padding = 5
             });
-            t.AddCell(new PdfPCell(new iText.Phrase(valor, Fuente(destacado ? 11 : 10, destacado, letra)))
+            LM830t.AddCell(new PdfPCell(new iText.Phrase(LM830valor, LM830Fuente(LM830destacado ? 11 : 10, LM830destacado, LM830letra)))
             {
-                BackgroundColor = fondo, BorderColor = fondo, Padding = 5, HorizontalAlignment = iText.Element.ALIGN_RIGHT
+                BackgroundColor = LM830fondo, BorderColor = LM830fondo, Padding = 5, HorizontalAlignment = iText.Element.ALIGN_RIGHT
             });
         }
 
-        private static void Pie(iText.Document doc, DateTime emision)
+        private static void LM830Pie(iText.Document LM830doc, DateTime LM830emision)
         {
-            doc.Add(Espacio(18));
-            doc.Add(new iText.Chunk(new LineSeparator(0.5f, 100f, new iText.BaseColor(200, 230, 201), iText.Element.ALIGN_CENTER, -2f)));
-            var pie = new iText.Paragraph($"Emitido el {emision.ToString("dd/MM/yyyy HH:mm", Cultura)} · Documento no válido como factura · ¡Gracias por elegirnos!", Fuente(8, false, Gris))
+            LM830doc.Add(LM830Espacio(18));
+            LM830doc.Add(new iText.Chunk(new LineSeparator(0.5f, 100f, new iText.BaseColor(200, 230, 201), iText.Element.ALIGN_CENTER, -2f)));
+            var LM830pie = new iText.Paragraph($"Emitido el {LM830emision.ToString("dd/MM/yyyy HH:mm", LM830Cultura)} · Documento no válido como factura · ¡Gracias por elegirnos!", LM830Fuente(8, false, LM830Gris))
             {
                 Alignment = iText.Element.ALIGN_CENTER,
                 SpacingBefore = 6
             };
-            doc.Add(pie);
+            LM830doc.Add(LM830pie);
         }
 
-        private static iText.Paragraph Espacio(float alto) => new iText.Paragraph(" ", Fuente(1)) { SpacingAfter = alto };
+        private static iText.Paragraph LM830Espacio(float LM830alto) => new iText.Paragraph(" ", LM830Fuente(1)) { SpacingAfter = LM830alto };
     }
 }
