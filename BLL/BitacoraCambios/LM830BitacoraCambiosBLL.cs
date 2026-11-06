@@ -24,7 +24,7 @@ namespace LM830BLL.LM830BitacoraCambios
         {
             if (LM830version.LM830Activo) throw new Exception("La versión elegida ya es la vigente.");
 
-            // El DVH del cliente se recalcula con los datos que vuelven.
+            
             var LM830cliente = new LM830Cliente
             {
                 LM830IdCliente = LM830version.LM830IdCliente,

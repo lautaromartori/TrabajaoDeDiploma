@@ -56,7 +56,7 @@ namespace LM830DAL.LM830BitacoraCambios
         }
 
         // Vuelve el cliente a la versión elegida: actualiza Cliente con esos datos (y su DVH),
-        // desactiva la versión vigente y marca como activa la restaurada. Todo en una transacción.
+        // desactiva la versión vigente y marca como activa la restaurada.
         public void LM830RestaurarCliente(LM830BitacoraCambioCliente LM830version, string LM830dvh)
         {
             LM830_sqlserver.Open();

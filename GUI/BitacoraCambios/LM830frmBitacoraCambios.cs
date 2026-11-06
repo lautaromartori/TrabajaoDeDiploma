@@ -9,8 +9,7 @@ using System.Windows.Forms;
 
 namespace LM830GUI.LM830BitacoraCambios
 {
-    // Bitácora de cambios: historial de Cliente que guardan los triggers.
-    // Permite filtrar por DNI y por fechas, y volver a una versión anterior.
+    
     public partial class LM830frmBitacoraCambios : Form, LM830IObserver
     {
         private readonly LM830BitacoraCambiosBLL LM830_bll = new LM830BitacoraCambiosBLL();
@@ -30,7 +29,7 @@ namespace LM830GUI.LM830BitacoraCambios
             LM830Buscar();
         }
 
-        // Sin DNI y con las versiones del último mes, igual que al abrir la pantalla.
+       
         private void LM830FiltrosPorDefecto()
         {
             LM830txtFiltro.Clear();

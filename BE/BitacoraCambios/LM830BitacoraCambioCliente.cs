@@ -2,7 +2,7 @@ using System;
 
 namespace LM830BE.LM830BitacoraCambios
 {
-    // Una versión de un cliente guardada por el trigger en BitacoraCambiosCliente.
+    
     public class LM830BitacoraCambioCliente
     {
         public int LM830IdCambio { get; set; }

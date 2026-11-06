@@ -2,9 +2,7 @@
 
 namespace LM830Servicios
 {
-    // Los valores de los enum llevan el prefijo LM830 en el código, pero en la base de datos,
-    // en los dígitos verificadores y en las claves de traducción se guardan sin prefijo
-    // (pendiente, aprobado, venta, ...). Esta clase hace la conversión en los dos sentidos.
+   
     public static class LM830EnumTexto
     {
         private const string LM830Prefijo = "LM830";
